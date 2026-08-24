@@ -217,7 +217,9 @@
     return out;
   }
   var POS_N = { PG: 0, SG: 1, SF: 2, PF: 3, C: 4 };
-  function posN(p) { return POS_N[(p && p.pos) || 'SF'] != null ? POS_N[p.pos] : 2; }
+  function courtPositions(p) { return String((p && p.pos) || 'SF').split('/'); }
+  function courtCanPlay(p, pos) { return courtPositions(p).indexOf(pos) >= 0; }
+  function posN(p) { var primary = courtPositions(p)[0]; return POS_N[primary] != null ? POS_N[primary] : 2; }
 
   function homeAway(p, input) {
     if (!p) return 'away';
@@ -234,9 +236,9 @@
     var passer = findP(off, input.passer);
     var rest = off.filter(function (p) { return p && ball && p.id !== ball.id; });
     rest.sort(function (a, b) { return posN(a) - posN(b); });
-    var big = rest.filter(function (p) { return p.pos === 'C' || p.pos === 'PF'; })[0] || rest[0];
-    if (passer && (passer.pos === 'C' || passer.pos === 'PF')) big = passer;
-    var wing = rest.filter(function (p) { return p !== big && (p.pos === 'SG' || p.pos === 'SF'); })[0] || rest.filter(function (p) { return p !== big; })[0];
+    var big = rest.filter(function (p) { return courtCanPlay(p, 'C') || courtCanPlay(p, 'PF'); })[0] || rest[0];
+    if (passer && (courtCanPlay(passer, 'C') || courtCanPlay(passer, 'PF'))) big = passer;
+    var wing = rest.filter(function (p) { return p !== big && (courtCanPlay(p, 'SG') || courtCanPlay(p, 'SF')); })[0] || rest.filter(function (p) { return p !== big; })[0];
     var corner = rest.filter(function (p) { return p !== big && p !== wing; })[0];
     var extra = rest.filter(function (p) { return p !== big && p !== wing && p !== corner; })[0];
     var offOrder = [];

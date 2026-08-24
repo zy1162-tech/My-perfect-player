@@ -20,7 +20,7 @@
       ['assets/js/perfect-player-allstar.js?v=20260824-double-points-mod-v1', '全明星周末']
     ],
     live: [
-      ['assets/js/perfect-player-live-court.js?v=20260823-court-v36', '俯瞰球场'],
+    ['assets/js/perfect-player-live-court.js?v=20260824-era-positions-v7', '俯瞰球场'],
     ['assets/js/perfect-player-live-sim.js?v=20260824-shot-roster-ui-v7', '文字直播']
     ]
   };

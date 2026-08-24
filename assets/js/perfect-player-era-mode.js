@@ -19,6 +19,13 @@
     var p = POS[value] || String(value || 'SF').split('/')[0].trim();
     return TEMPLATES[p] ? p : 'SF';
   }
+  function normalizedPositions(value) {
+    if (POS[value]) return POS[value];
+    var positions = String(value || 'SF').split(/\s*[\/-]\s*/).filter(function(pos, idx, all) {
+      return !!TEMPLATES[pos] && all.indexOf(pos) === idx;
+    });
+    return positions.length ? positions.join('/') : 'SF';
+  }
   function normalizeTeam(team) {
     return ({ SEA:'OKC', NJN:'BKN', NOH:'NOP', NOK:'NOP', CHH:'CHA', VAN:'MEM' })[team] || team;
   }
@@ -35,9 +42,9 @@
   }
   function makePlayer(row, options) {
     options = options || {};
-    var pos = mainPos(row.pos);
+    var pos = normalizedPositions(row.pos);
     var ovr = clamp(options.ovr != null ? options.ovr : row.ovr, 50, 99);
-    var attrs = row.attrs ? Object.assign({}, row.attrs) : generatedAttrs(pos, ovr);
+    var attrs = row.attrs ? Object.assign({}, row.attrs) : generatedAttrs(mainPos(pos), ovr);
     var nameEn = row.nameEn || ('Era Player ' + Math.random());
     var p = {
       name: nameEn,
@@ -90,6 +97,27 @@
     roster.push(player);
     return true;
   }
+  function repairLegendEraPositions(start) {
+    start = Number(start || STATE.eraStart);
+    if (STATE.mode !== 'legend' || !start) return 0;
+    var base = completeRosters()[String(start)] || completeRosters()[start] || {};
+    var repaired = 0;
+    Object.keys(NBA2K_DATA || {}).forEach(function(team) {
+      var positionsByName = {};
+      (base[team] || []).forEach(function(row) { positionsByName[nameKey(row.nameEn)] = normalizedPositions(row.pos); });
+      (NBA2K_DATA[team] || []).forEach(function(player) {
+        if (!player || player._isUser) return;
+        var historical = positionsByName[nameKey(player.nameEN || player.name)];
+        if (historical && player.pos !== historical) {
+          player.pos = historical;
+          repaired++;
+        }
+      });
+    });
+    if (repaired && typeof clearLineupCache === 'function') clearLineupCache();
+    return repaired;
+  }
+  global.repairLegendEraPositions = repairLegendEraPositions;
   function addDraftClass(year, elapsed, recordChanges) {
     var rows = data().draftClasses[String(year)] || [];
     if (!rows.length) return 0;
@@ -117,7 +145,10 @@
   global.applyLegendEraLeague = function() {
     if (STATE.mode !== 'legend' || !STATE.eraStart) return;
     var start = Number(STATE.eraStart);
-    if (STATE._legendLeagueApplied === start) return;
+    if (STATE._legendLeagueApplied === start) {
+      repairLegendEraPositions(start);
+      return;
+    }
     var base = completeRosters()[String(start)] || completeRosters()[start] || {};
     var localizedNames = buildLocalizedNameMap();
     NBA2K_TEAMS.forEach(function(team) {

@@ -52,6 +52,32 @@ const TEAM_MAP = {
 };
 const TEAMS = ['ATL','BOS','BKN','CHA','CHI','CLE','DAL','DEN','DET','GSW','HOU','IND','LAC','LAL','MEM','MIA','MIL','MIN','NOP','NYK','OKC','ORL','PHI','PHX','POR','SAC','SAS','TOR','UTA','WAS'];
 
+// 历史阵容的位置既要尊重当季登记，也要覆盖球员真实承担过的阵容角色。
+// 第一位是主要位置；后续位置只用于排阵，不会改变能力值模板。
+const HISTORICAL_POSITION_OVERRIDES = {
+  'lebron james':'SF/PF/PG/SG', 'stephen curry':'PG/SG', 'kobe bryant':'SG/SF',
+  'dwyane wade':'SG/PG', 'allen iverson':'SG/PG', 'tracy mcgrady':'SG/SF',
+  'vince carter':'SG/SF', 'paul pierce':'SF/SG', 'ray allen':'SG/SF',
+  'carmelo anthony':'SF/PF', 'kevin durant':'SF/PF', 'chris bosh':'PF/C',
+  'tim duncan':'PF/C', 'kevin garnett':'PF/C', 'dirk nowitzki':'PF/C',
+  'pau gasol':'PF/C', 'rasheed wallace':'PF/C', 'ben wallace':'C/PF',
+  'jermaine oneal':'PF/C', 'elton brand':'PF/C', 'chris webber':'PF/C',
+  'shawn marion':'SF/PF', 'andrei kirilenko':'SF/PF', 'lamar odom':'PF/SF/PG',
+  'jalen rose':'SF/SG/PG', 'grant hill':'SF/PG', 'penny hardaway':'PG/SG/SF',
+  'manu ginobili':'SG/PG/SF', 'joe johnson':'SG/SF/PG', 'brandon roy':'SG/PG',
+  'james harden':'SG/PG', 'russell westbrook':'PG/SG', 'derrick rose':'PG/SG',
+  'monta ellis':'SG/PG', 'chauncey billups':'PG/SG', 'gilbert arenas':'PG/SG',
+  'draymond green':'PF/SF/C', 'klay thompson':'SG/SF', 'andre iguodala':'SF/SG/PG',
+  'shaun livingston':'PG/SG', 'kawhi leonard':'SF/SG/PF', 'paul george':'SF/SG/PF',
+  'giannis antetokounmpo':'SF/PF/PG', 'khris middleton':'SF/SG',
+  'kyrie irving':'PG/SG', 'kevin love':'PF/C', 'tristan thompson':'C/PF',
+  'boris diaw':'PF/C/SF', 'kyle anderson':'SF/PF/PG', 'al horford':'C/PF',
+  'joakim noah':'C/PF', 'blake griffin':'PF/C', 'anthony davis':'PF/C',
+  'demarcus cousins':'C/PF', 'chris paul':'PG', 'rajon rondo':'PG',
+  'demar derozan':'SG/SF', 'jimmy butler':'SG/SF', 'gordon hayward':'SF/SG',
+  'lance stephenson':'SG/SF/PG', 'tyreke evans':'SG/PG/SF', 'jrue holiday':'PG/SG'
+};
+
 const csvLines = fs.readFileSync(statsPath, 'utf8').replace(/^\uFEFF/, '').split(/\r?\n/).filter(Boolean);
 const headers = parseCsvLine(csvLines.shift());
 const index = Object.fromEntries(headers.map((name, i) => [name, i]));
@@ -81,11 +107,20 @@ for (const line of csvLines) {
 const ratingsSource = fs.readFileSync(ratingsPath, 'utf8');
 const ratings = JSON.parse(ratingsSource.slice(ratingsSource.indexOf('=') + 1).replace(/;\s*$/, ''));
 
+function normalizePositions(value) {
+  const aliases = { G:['PG','SG'], F:['SF','PF'], 'G-F':['SG','SF'], 'F-G':['SF','SG'], 'F-C':['PF','C'], 'C-F':['C','PF'] };
+  const rawValue = String(value || 'SF').trim().toUpperCase();
+  const tokens = aliases[rawValue] || rawValue.split(/[\/-]/).flatMap(token => aliases[token] || [token]);
+  const unique = tokens.filter((pos, index) => ['PG','SG','SF','PF','C'].includes(pos) && tokens.indexOf(pos) === index);
+  return unique.length ? unique.join('/') : 'SF';
+}
+
 function playerPosition(value) {
-  const raw = String(value || 'SF').split('-')[0].split('/')[0];
-  if (raw === 'G') return 'PG';
-  if (raw === 'F') return 'SF';
-  return ['PG','SG','SF','PF','C'].includes(raw) ? raw : 'SF';
+  return normalizePositions(value).split('/')[0];
+}
+
+function historicalPositions(name, sourcePosition) {
+  return HISTORICAL_POSITION_OVERRIDES[normalizedName(name)] || normalizePositions(sourcePosition);
 }
 
 function calibratedOvr(row) {
@@ -129,7 +164,7 @@ function toRosterPlayer(row, rating, year, specialSource) {
   const exact = rating && rating.ovr != null;
   return {
     nameEn: rating ? rating.nameEn : row.nameEn,
-    pos: playerPosition(row && row.pos),
+    pos: historicalPositions(rating ? rating.nameEn : row.nameEn, row && row.pos),
     age: row ? row.age : 27,
     ovr: exact ? rating.ovr : calibratedOvr(row),
     threePT: rating && rating.threePT != null ? rating.threePT : calibratedThree(row, year),

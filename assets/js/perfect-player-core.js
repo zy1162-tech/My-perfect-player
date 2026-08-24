@@ -14257,6 +14257,8 @@ function manualLoadGame(slot) {
           Object.keys(NBA2K_DATA).forEach(function(k) { delete NBA2K_DATA[k]; });
           Object.assign(NBA2K_DATA, snap.league);
         }
+        // V7：旧传奇存档沿用单位置数据时，读档后按对应年代名单补齐真实副位置。
+        if (STATE.mode === 'legend' && typeof repairLegendEraPositions === 'function') repairLegendEraPositions(STATE.eraStart);
         _rngState = snap.rng || null;
         _playerAges = snap.ages || {};
         _playerGenes = snap.genes || {};
