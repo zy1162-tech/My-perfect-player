@@ -388,7 +388,7 @@ function renderModeSelect() {
       tag: 'LEGEND',
       tagClass: 'new',
       title: '传奇年代',
-      sub: '从 2003 白金一代或 2009 新世代开启生涯，后续选秀接入真实历史届',
+      sub: '选择 2003、2010 或 2016 历史时代，从完整传奇联盟开启生涯',
       btnLabel: '🏆 选择年代',
       mode: 'legend',
     },
@@ -406,6 +406,9 @@ function renderModeSelect() {
       <button class="fc-btn" ${c.disabled ? 'disabled' : ''}>
         ${c.btnLabel}
       </button>
+      <button type="button" class="fc-btn mode-continue-btn" id="continue-${c.mode}-btn" style="display:none;margin-top:10px;background:#2f6fed;box-shadow:0 4px 0 #1d4fb8;">
+        ▶ 继续${c.mode === 'legend' ? '传奇' : '生涯'}
+      </button>
       
     `;
     const btn = card.querySelector('.fc-btn');
@@ -416,16 +419,22 @@ function renderModeSelect() {
         if (c.mode === 'legend' && typeof showLegendEraPicker === 'function') showLegendEraPicker();
         else { STATE.mode = c.mode; startGame(); }
       };
+      const continueBtn = card.querySelector('.mode-continue-btn');
+      continueBtn.onclick = (e) => {
+        e.stopPropagation();
+        manualLoadGame(c.mode === 'legend' ? 2 : 1);
+      };
     }
     container.appendChild(card);
-    if (c.mode === 'current') {
-      var mainBtn = card.querySelector('.fc-btn');
-      if (mainBtn) {
-        mainBtn.insertAdjacentHTML('afterend', '<button type="button" class="fc-btn" id="continue-activity-btn" style="margin-top:10px;background:#2f6fed;box-shadow:0 4px 0 #1d4fb8;" onclick="event.stopPropagation();manualLoadGame(1)">▶ 继续活动</button>' +
-          '<button class="fc-btn career-archive-home-btn" id="career-archive-btn" onclick="event.stopPropagation();showCareerArchive()">🏛️ 生涯档案馆 <span id="career-archive-count">0</span></button>');
-      }
-    }
   });
+
+  const localNav = document.createElement('div');
+  localNav.style.cssText = 'grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:4px;';
+  localNav.innerHTML =
+    '<button class="btn btn-secondary btn-sm" style="min-height:48px;" onclick="if(window.PP_FX) PP_FX.openPanel()">🏆<br>成就殿堂</button>' +
+    '<button class="btn btn-secondary btn-sm" style="min-height:48px;" onclick="if(window.PP_FX) PP_FX.openLegacyPanel()">🧬<br>传承祭坛</button>' +
+    '<button class="btn btn-secondary btn-sm career-archive-home-btn" id="career-archive-btn" style="min-height:48px;" onclick="showCareerArchive()">📁<br>生涯档案 <span id="career-archive-count">0</span></button>';
+  container.appendChild(localNav);
 
   if (STATE.mode !== 'legend') STATE.mode = 'current';
   refreshContinueActivityButton();
@@ -2558,6 +2567,7 @@ function liveOrSkipUserPack(opponent, options, onPack) {
       runSkip();
       return false;
     }
+    if (typeof autoSaveGame === 'function') autoSaveGame();
     PP_LIVE.promptChoice({
       kicker: '梦境挑战',
       title: options.title || '观看本场？',
@@ -2570,6 +2580,7 @@ function liveOrSkipUserPack(opponent, options, onPack) {
   }
   if (options.isPlayoff) {
     if (typeof PP_LIVE.shouldOfferPlayoff === 'function' && !PP_LIVE.shouldOfferPlayoff()) { runSkip(); return false; }
+    if (typeof autoSaveGame === 'function') autoSaveGame();
     PP_LIVE.promptChoice({
       kicker: options.playIn ? '附加赛' : '季后赛',
       title: options.title || '观看本场？',
@@ -2581,6 +2592,7 @@ function liveOrSkipUserPack(opponent, options, onPack) {
     return true;
   }
   if (options.game && typeof PP_LIVE.shouldOfferRegular === 'function' && PP_LIVE.shouldOfferRegular(options.game, options.index || 0, options.total || 82)) {
+    if (typeof autoSaveGame === 'function') autoSaveGame();
     PP_LIVE.promptChoice({
       kicker: '关键赛事',
       title: '观看本场？',
@@ -2621,6 +2633,7 @@ function quickSimAllGames() {
       processAllRemainingDays();
       reconcileStandings();
       calcSeasonAwards();
+      if (typeof autoSaveGame === 'function') autoSaveGame();
 
       var w2 = STATE.season.wins || 0, l2 = STATE.season.losses || 0;
       var seed2 = getConferenceSeed(STATE.careerTeam);
@@ -4237,6 +4250,10 @@ function syncUserStarterStatus() {
 function calcTeamPowerWithPlayer(team) {
   const lineup = calcTeamLineup(team);
   const cfg = SIM_CONFIG.TEAM_POWER;
+  // “领袖气质”只抬升我的队友，不重复强化玩家本人。
+  const legacyTeammateBoost = (typeof PP_FX !== 'undefined' && PP_FX && typeof PP_FX.getLegacyTeamBoost === 'function')
+    ? Number(PP_FX.getLegacyTeamBoost(team)) || 0
+    : 0;
   
   const starters = Object.values(lineup.starters).sort(function(a, b) { return (parseInt(b.ovr) || 50) - (parseInt(a.ovr) || 50); });
   const bench = lineup.bench.slice().sort(function(a, b) { return (parseInt(b.ovr) || 50) - (parseInt(a.ovr) || 50); }).slice(0, 5);
@@ -4258,16 +4275,20 @@ function calcTeamPowerWithPlayer(team) {
   function calcDim(weights) {
     let sum = 0, totalW = 0;
     Object.entries(weights).forEach(([attr, w]) => {
-      const weightedAvg = weightedRoster.reduce((s, { player, weight }) => 
-        s + softCap99(parseInt(player[attr]) || 50) * weight, 0);
+      const weightedAvg = weightedRoster.reduce((s, { player, weight }) => {
+        const boost = legacyTeammateBoost && !player._isUser ? legacyTeammateBoost : 0;
+        return s + softCap99((parseInt(player[attr]) || 50) + boost) * weight;
+      }, 0);
       sum += weightedAvg * w;
       totalW += w;
     });
     return totalW > 0 ? sum / totalW : 50;
   }
   
-  const overall = weightedRoster.reduce((s, { player, weight }) => 
-    s + (parseInt(player.ovr) || 50) * weight, 0);
+  const overall = weightedRoster.reduce((s, { player, weight }) => {
+    const boost = legacyTeammateBoost && !player._isUser ? legacyTeammateBoost : 0;
+    return s + ((parseInt(player.ovr) || 50) + boost) * weight;
+  }, 0);
   
   return {
     offense: calcDim(cfg.offense),
@@ -6587,9 +6608,11 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
         renderPlayoffGameBrief(skipEntry, teamA, teamB, true, roundName, gameNum + 1, 7, round, seriesIdx);
       }
       seriesGames.push(skipEntry);
-      setTimeout(function() {
+      var continueSkippedGame = function() { setTimeout(function() {
         simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, skipNewWinsA, skipNewWinsB, seriesGames, userGameStats, roundName, onDone);
-      }, isMySeries ? 600 : 50);
+      }, isMySeries ? 120 : 50); };
+      if (isMySeries) showPlayoffGameDataPanel(skipEntry, teamA, teamB, roundName, continueSkippedGame);
+      else continueSkippedGame();
     };
     var runPlayedThroughPlayoffGame = function(severity) {
       skipEv.injuryGamesLeft = Math.max(0, (skipEv.injuryGamesLeft || 0) - 1);
@@ -6620,9 +6643,10 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
       seriesGames.push(hurtEntry);
       renderPlayoffGameBrief(hurtEntry, teamA, teamB, true, roundName, gameNum + 1, 7, round, seriesIdx);
       maybeWorsenInjuryAfterPlaying(skipEv, severity);
-      setTimeout(function() {
+      var continueHurtGame = function() { setTimeout(function() {
         simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, hurtNewWinsA, hurtNewWinsB, seriesGames, userGameStats, roundName, onDone);
-      }, 600);
+      }, 120); };
+      showPlayoffGameDataPanel(hurtEntry, teamA, teamB, roundName, continueHurtGame);
     };
     if (isMySeries && skipReason === 'injury' && shouldOfferPlayThroughInjury('po-season', false)) {
       showPlayThroughInjuryModal({
@@ -6667,7 +6691,7 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
       renderPlayoffGameBrief(gameEntry, teamA, teamB, true, roundName, gameNum + 1, 7, round, seriesIdx);
     }
     seriesGames.push(gameEntry);
-    setTimeout(function() {
+    var continueAfterGamePanel = function() { setTimeout(function() {
       if (isMySeries && !legendImmune) {
         try {
           var poEvData = checkRandomEvents({ opponent: teamB, isWin: won, day: 0, simulated: true }, { won: won, scoreA: finalA, scoreB: finalB }, gameEntry.myStats || null);
@@ -6689,7 +6713,9 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
         } catch(ex) {}
       }
       simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, newWinsA, newWinsB, seriesGames, userGameStats, roundName, onDone);
-    }, isMySeries ? 600 : 50);
+    }, isMySeries ? 120 : 50); };
+    if (isMySeries) showPlayoffGameDataPanel(gameEntry, teamA, teamB, roundName, continueAfterGamePanel);
+    else continueAfterGamePanel();
   };
 
   if (isMySeries) {
@@ -6858,7 +6884,6 @@ function simPlayoffSeries(round, seriesIdx) {
         bracket.currentRound = 3;
       }
     }
-    
     // 如果是用户的系列赛，直接刷新页面
     if (isMySeries) {
       // ★ 用户获胜后自动切换到下一轮tab
@@ -6877,6 +6902,7 @@ function simPlayoffSeries(round, seriesIdx) {
           if (poStats.games > 0 && fmvpPpg >= fmvpNeed) {
             STATE.season.awards.push({ act: 'fmvp', label: '👑 总决赛MVP', winner: getHupuDisplayName(), winnerEN: '', team: STATE.careerTeam, isUser: true });
           }
+          if (typeof autoSaveGame === 'function') autoSaveGame();
           setTimeout(function() {
             showChampionshipCelebration(function() {
               if (typeof prepareLegendChallengeAfterChampion === 'function') prepareLegendChallengeAfterChampion();
@@ -6891,11 +6917,13 @@ function simPlayoffSeries(round, seriesIdx) {
         }
       }
       if (!userWonSeries) {
+        if (typeof autoSaveGame === 'function') autoSaveGame();
         clearPlayoffGamecast();
         renderPlayoffBracketUI();
         showSeriesResult(result);
         return;
       }
+      if (typeof autoSaveGame === 'function') autoSaveGame();
       clearPlayoffGamecast();
       renderPlayoffBracketUI();
       return;
@@ -8071,6 +8099,53 @@ function getVeteranMaintenanceLevel(age) {
   level = Math.min(2, level);
   if (getStaminaAttr() >= 3) level++;
   return Math.min(3, level);
+}
+
+/** 用户系列赛每场结束后的强制数据面板；关闭后才继续下一场。 */
+function showPlayoffGameDataPanel(gameEntry, teamA, teamB, roundName, onContinue) {
+  var existing = document.getElementById('playoff-game-data-panel');
+  if (existing) existing.remove();
+  var box = gameEntry.boxScore || {};
+  var teamABox = (box[teamA] || []).slice().sort(function(a, b) { return (b.pts || 0) - (a.pts || 0); });
+  var teamBBox = (box[teamB] || []).slice().sort(function(a, b) { return (b.pts || 0) - (a.pts || 0); });
+  function totals(players) {
+    return players.reduce(function(sum, p) {
+      ['pts','reb','ast','stl','blk','tov','fgm','fga','threeM','threeA'].forEach(function(key) { sum[key] += Number(p[key]) || 0; });
+      return sum;
+    }, { pts:0,reb:0,ast:0,stl:0,blk:0,tov:0,fgm:0,fga:0,threeM:0,threeA:0 });
+  }
+  var ta = totals(teamABox), tb = totals(teamBBox);
+  function statRow(label, key) {
+    return '<div style="display:grid;grid-template-columns:1fr 66px 1fr;gap:5px;align-items:center;padding:3px 0;border-bottom:1px solid var(--border-light);font-size:10px;">' +
+      '<strong style="text-align:right;">' + ta[key] + '</strong><span style="text-align:center;color:var(--text-muted);">' + label + '</span><strong>' + tb[key] + '</strong></div>';
+  }
+  function boxRows(players) {
+    return players.slice(0, 8).map(function(p) {
+      return '<div style="display:grid;grid-template-columns:minmax(0,1fr) 24px 22px 22px 22px 34px;gap:3px;padding:3px 0;border-bottom:1px solid var(--border-light);font-size:9px;' + (p.isUser ? 'background:var(--orange-dim);color:var(--orange);font-weight:700;' : '') + '">' +
+        '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (p.name || '球员') + '</span><b style="text-align:right;">' + (p.pts || 0) + '</b><span style="text-align:right;">' + (p.reb || 0) + '</span><span style="text-align:right;">' + (p.ast || 0) + '</span><span style="text-align:right;">' + (p.tov || 0) + '</span><span style="text-align:right;">' + (p.fgm || 0) + '-' + (p.fga || 0) + '</span></div>';
+    }).join('');
+  }
+  function teamBox(team, players) {
+    return '<section style="min-width:0;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);padding:7px;">' +
+      '<strong style="display:block;font-size:11px;margin-bottom:4px;">' + getTeamLogo(team, 16) + ' ' + getTeamName(team) + '</strong>' +
+      '<div style="display:grid;grid-template-columns:minmax(0,1fr) 24px 22px 22px 22px 34px;gap:3px;color:var(--text-muted);font-size:8px;padding-bottom:2px;"><span>球员</span><span>分</span><span>板</span><span>助</span><span>误</span><span>投篮</span></div>' + boxRows(players) + '</section>';
+  }
+  var overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'playoff-game-data-panel';
+  overlay.innerHTML = '<div class="modal-content" style="width:min(94vw,660px);max-width:660px;max-height:90vh;overflow:auto;">' +
+    '<div class="modal-header"><span style="font-family:var(--font-display);">📊 ' + roundName + ' G' + gameEntry.game + ' · 赛后数据</span></div>' +
+    '<div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:10px 14px;text-align:center;">' +
+      '<strong>' + getTeamName(teamA) + '</strong><span style="font-family:var(--font-display);font-size:23px;color:var(--orange);">' + gameEntry.myScore + ' - ' + gameEntry.oppScore + '</span><strong>' + getTeamName(teamB) + '</strong></div>' +
+    '<div style="padding:0 14px 8px;">' + statRow('篮板','reb') + statRow('助攻','ast') + statRow('抢断','stl') + statRow('盖帽','blk') + statRow('失误','tov') +
+      '<div style="display:grid;grid-template-columns:1fr 66px 1fr;gap:5px;padding:3px 0;font-size:10px;"><strong style="text-align:right;">' + ta.fgm + '-' + ta.fga + '</strong><span style="text-align:center;color:var(--text-muted);">投篮</span><strong>' + tb.fgm + '-' + tb.fga + '</strong></div></div>' +
+    '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:4px 10px 10px;">' + teamBox(teamA, teamABox) + teamBox(teamB, teamBBox) + '</div>' +
+    '<div style="padding:0 12px 13px;"><button class="btn btn-primary btn-sm" id="playoff-game-data-continue" style="width:100%;">继续下一场</button></div></div>';
+  document.body.appendChild(overlay);
+  document.getElementById('playoff-game-data-continue').onclick = function() {
+    overlay.remove();
+    if (typeof onContinue === 'function') onContinue();
+  };
 }
 
 var ATTRIBUTE_AGING_GROUPS = {
@@ -13934,8 +14009,10 @@ function renderTrainingCamp() {
   renderTrainingAttrs(tpl);
 }
 
-var MANUAL_SAVE_KEYS = ['lenf_auto_slot'];
+// 现役与传奇分别保留一个自动存档，互不覆盖。旧版存档继续沿用第一个键。
+var MANUAL_SAVE_KEYS = ['lenf_auto_slot', 'lenf_legend_auto_slot'];
 var MANUAL_SAVE_META = {};
+var AUTO_SAVE_WRITE_CHAIN = Promise.resolve();
 
 function getManualSaveSummary(slot) {
   return MANUAL_SAVE_META[slot] || null;
@@ -13956,21 +14033,22 @@ function storageSet(key, value) {
 }
 
 function refreshManualSaveMeta() {
-  return storageGet(MANUAL_SAVE_KEYS[0]).then(function(raw) {
-    if (raw == null || raw === '') {
-      MANUAL_SAVE_META[1] = null;
-    } else {
+  return Promise.all(MANUAL_SAVE_KEYS.map(function(key) { return storageGet(key); })).then(function(rows) {
+    rows.forEach(function(raw, idx) {
+      var slot = idx + 1;
+      if (raw == null || raw === '') { MANUAL_SAVE_META[slot] = null; return; }
       var data = null;
       try { data = typeof raw === 'string' ? JSON.parse(raw) : raw; } catch(e) {}
       if (data && (data.c === 1 || data.state)) {
-        MANUAL_SAVE_META[1] = { label: data.label || '自动存档', savedAt: data.savedAt || 0 };
-      } else {
-        MANUAL_SAVE_META[1] = null;
-      }
-    }
+        MANUAL_SAVE_META[slot] = {
+          label: data.label || '自动存档', savedAt: data.savedAt || 0,
+          mode: data.mode || (data.state && data.state.mode) || (slot === 2 ? 'legend' : 'current')
+        };
+      } else MANUAL_SAVE_META[slot] = null;
+    });
     refreshContinueActivityButton();
     renderMenuSavePanel();
-    return MANUAL_SAVE_META[1];
+    return MANUAL_SAVE_META;
   });
 }
 
@@ -14067,7 +14145,7 @@ function manualSaveGame(slot) {
     storageSet(key, rawStr).then(function() {
       var meta = null;
       try { var parsed = JSON.parse(rawStr); meta = { label: parsed.label || '自动存档', savedAt: parsed.savedAt || 0 }; } catch(e) {}
-      MANUAL_SAVE_META[slot] = meta;
+      MANUAL_SAVE_META[slot] = meta && Object.assign(meta, { mode: snap.state.mode || 'current' });
       renderAfterSaveLoad(snap.screen);
       renderMenuSavePanel();
       showManualSaveToast('已保存到存档' + slot + '（' + snap.label + '）');
@@ -14078,7 +14156,7 @@ function manualSaveGame(slot) {
     return;
   }
   compressText(raw).then(function(compressed) {
-    write(JSON.stringify({ c: 1, d: compressed, label: snap.label, savedAt: snap.savedAt }));
+    write(JSON.stringify({ c: 1, d: compressed, label: snap.label, savedAt: snap.savedAt, mode: snap.state.mode || 'current' }));
   }, function() {
     write(raw);
   });
@@ -14093,25 +14171,28 @@ function autoSaveGame() {
   } catch(e) {
     return;
   }
-  var key = MANUAL_SAVE_KEYS[0];
+  var slot = STATE.mode === 'legend' ? 2 : 1;
+  var key = MANUAL_SAVE_KEYS[slot - 1];
   var raw = JSON.stringify(snap);
   function write(rawStr) {
     return storageSet(key, rawStr).then(function() {
       var meta = null;
       try { var parsed = JSON.parse(rawStr); meta = { label: parsed.label || '自动存档', savedAt: parsed.savedAt || 0 }; } catch(e) {}
-      MANUAL_SAVE_META[1] = meta;
+      MANUAL_SAVE_META[slot] = meta && Object.assign(meta, { mode: snap.state.mode || 'current' });
       refreshContinueActivityButton();
     });
   }
-  if (typeof CompressionStream === 'undefined' || typeof DecompressionStream === 'undefined') {
-    write(raw);
-    return;
+  function persistSnapshot() {
+    if (typeof CompressionStream === 'undefined' || typeof DecompressionStream === 'undefined') return write(raw);
+    return compressText(raw).then(function(compressed) {
+      return write(JSON.stringify({ c: 1, d: compressed, label: snap.label, savedAt: snap.savedAt, mode: snap.state.mode || 'current' }));
+    }, function() {
+      return write(raw);
+    });
   }
-  compressText(raw).then(function(compressed) {
-    write(JSON.stringify({ c: 1, d: compressed, label: snap.label, savedAt: snap.savedAt }));
-  }, function() {
-    write(raw);
-  });
+  // 大存档压缩是异步的，串行写入可防止较旧检查点后完成、反而覆盖新进度。
+  AUTO_SAVE_WRITE_CHAIN = AUTO_SAVE_WRITE_CHAIN.then(persistSnapshot, persistSnapshot);
+  return AUTO_SAVE_WRITE_CHAIN;
 }
 
 function manualLoadGame(slot) {
@@ -14209,6 +14290,17 @@ function manualClearSave(slot) {
 function renderAfterSaveLoad(targetScreen) {
   if (targetScreen === 'screen-roster-review' && typeof showRosterReview === 'function') {
     showRosterReview();
+  } else if (targetScreen === 'screen-season' && STATE.season && Array.isArray(STATE.season.schedule)) {
+    showScreen('screen-season');
+    if (typeof renderSeasonScreenDOM === 'function') renderSeasonScreenDOM();
+    if (STATE.season.schedule.some(function(game) { return !game.simulated; }) && typeof quickSimAllGames === 'function') {
+      setTimeout(quickSimAllGames, 80);
+    } else if (typeof showEndOfSeason === 'function') {
+      showEndOfSeason();
+    }
+  } else if (targetScreen === 'screen-playoffs' && STATE.season && STATE.season.playoffBracket) {
+    showScreen('screen-playoffs');
+    if (typeof renderPlayoffBracketUI === 'function') renderPlayoffBracketUI();
   } else {
     renderTrainingCamp();
   }
@@ -14234,7 +14326,7 @@ function renderMenuSavePanel() {
     var sum = getManualSaveSummary(si);
     html += '<div style="display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid var(--border-light);">';
     html += '<div style="flex:1;min-width:0;">';
-    html += '<div style="font-size:12px;font-weight:700;">存档' + si + '</div>';
+    html += '<div style="font-size:12px;font-weight:700;">' + (si === 2 ? '传奇模式存档' : '生涯模式存档') + '</div>';
     html += '<div style="font-size:10px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (sum ? sum.label + ' · ' + new Date(sum.savedAt).toLocaleString() : '空槽位') + '</div>';
     html += '</div>';
     html += '<button class="btn btn-xs" onclick="manualLoadGame(' + si + ')">读取</button>';
@@ -14245,37 +14337,44 @@ function renderMenuSavePanel() {
   el.innerHTML = html;
 }
 
-function hasAutoSave() {
-  return !!MANUAL_SAVE_META[1];
+function hasAutoSave(mode) {
+  return !!MANUAL_SAVE_META[mode === 'legend' ? 2 : 1];
 }
 
 function refreshContinueActivityButton() {
-  var btn = document.getElementById('continue-activity-btn');
+  ['current', 'legend'].forEach(function(mode) {
+    var btn = document.getElementById('continue-' + mode + '-btn');
+    if (!btn) return;
+    if (!hasAutoSave(mode)) { btn.style.display = 'none'; return; }
+    btn.style.display = '';
+    btn.textContent = '▶ 继续' + (mode === 'legend' ? '传奇' : '生涯');
+  });
+  var btn = document.getElementById('continue-current-btn') || document.getElementById('continue-legend-btn');
   if (!btn) return;
-  if (!hasAutoSave()) { btn.style.display = 'none'; return; }
-  btn.style.display = '';
   var groups = ['create', 'career', 'story'];
   var ready = window.__PP_groupsReady && window.__PP_groupsReady(groups);
   if (ready) {
     btn.classList.remove('is-waiting');
-    btn.textContent = '▶ 继续活动';
+    document.querySelectorAll('.mode-continue-btn').forEach(function(b) { b.classList.remove('is-waiting'); });
     return;
   }
   btn.classList.add('is-waiting');
-  btn.textContent = '▶ 加载中…';
+  document.querySelectorAll('.mode-continue-btn').forEach(function(b) { if (b.style.display !== 'none') { b.classList.add('is-waiting'); b.textContent = '▶ 加载中…'; } });
   if (typeof window.__PP_ensure === 'function') {
     window.__PP_ensure(groups).then(function () {
-      var b = document.getElementById('continue-activity-btn');
-      if (!b || b.style.display === 'none') return;
-      b.classList.remove('is-waiting');
-      b.textContent = '▶ 继续活动';
+      document.querySelectorAll('.mode-continue-btn').forEach(function(b) {
+        if (b.style.display === 'none') return;
+        b.classList.remove('is-waiting');
+        b.textContent = '▶ 继续' + (b.id.indexOf('legend') >= 0 ? '传奇' : '生涯');
+      });
     });
   }
 }
 
 function clearAutoSaveStorage() {
-  storageSet(MANUAL_SAVE_KEYS[0], null).then(function() {
-    MANUAL_SAVE_META[1] = null;
+  var slot = STATE.mode === 'legend' ? 2 : 1;
+  storageSet(MANUAL_SAVE_KEYS[slot - 1], null).then(function() {
+    MANUAL_SAVE_META[slot] = null;
     refreshContinueActivityButton();
   });
 }
@@ -14287,12 +14386,12 @@ function showLoadMenu() {
   html += '<div class="team-picker-modal" style="max-width:400px;">';
   html += '<div class="team-picker-header"><span>📂 继续活动</span><button class="team-picker-close" onclick="closeLoadMenu()">✕</button></div>';
   html += '<div style="padding:14px;">';
-  html += '<div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;">自动存档会在每个休赛期开始新赛季前自动写入</div>';
-  for (var si = 1; si <= 1; si++) {
+  html += '<div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;">两个模式各自保留自动存档；新赛季、关键比赛与季后赛轮次结束时会自动更新。</div>';
+  for (var si = 1; si <= 2; si++) {
     var sum = getManualSaveSummary(si);
     html += '<div style="display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid var(--border-light);">';
     html += '<div style="flex:1;min-width:0;">';
-    html += '<div style="font-size:12px;font-weight:700;">自动存档</div>';
+    html += '<div style="font-size:12px;font-weight:700;">' + (si === 2 ? '传奇模式存档' : '生涯模式存档') + '</div>';
     html += '<div style="font-size:10px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (sum ? sum.label + ' · ' + new Date(sum.savedAt).toLocaleString() : '暂无自动存档') + '</div>';
     html += '</div>';
     html += '<button class="btn btn-xs" onclick="manualLoadGame(' + si + ')">读取</button>';

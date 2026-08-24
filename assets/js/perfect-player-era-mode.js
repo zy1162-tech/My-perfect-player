@@ -1,4 +1,4 @@
-/* Perfect Player V6 — 独立传奇年代模式（2003 / 2009） */
+/* Perfect Player V7 — 独立传奇年代模式（2003 / 2010 / 2016） */
 (function(global) {
   'use strict';
 
@@ -13,6 +13,7 @@
   };
 
   function data() { return global.__PP_ERA_MODE_DATA__ || { roster2003:{}, draftClasses:{} }; }
+  function completeRosters() { return global.__PP_COMPLETE_ERA_ROSTERS__ || {}; }
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, Math.round(Number(v) || lo))); }
   function mainPos(value) {
     var p = POS[value] || String(value || 'SF').split('/')[0].trim();
@@ -35,7 +36,7 @@
   function makePlayer(row, options) {
     options = options || {};
     var pos = mainPos(row.pos);
-    var ovr = clamp(options.ovr != null ? options.ovr : row.ovr, 55, 99);
+    var ovr = clamp(options.ovr != null ? options.ovr : row.ovr, 50, 99);
     var attrs = row.attrs ? Object.assign({}, row.attrs) : generatedAttrs(pos, ovr);
     var nameEn = row.nameEn || ('Era Player ' + Math.random());
     var p = {
@@ -49,20 +50,31 @@
       _eraRoster: true,
       _draftYear: options.draftYear || row.draftYear || null,
       _potential: Number(row.potential) || 6,
-      contract: 1 + ((nameEn.length + ovr) % 4)
+      contract: 1 + ((nameEn.length + ovr) % 4),
+      _ratingSource: row.ratingSource || '时代数值校准',
+      _ratingOfficial: !!row.ratingOfficial,
+      _seasonLine: row.seasonLine || null
     };
     ATTRS.forEach(function(key) { p[key] = clamp(attrs[key], 25, 99); });
+    if (row.threePT != null) p.threePT = clamp(row.threePT, 25, 99);
+    if (row.DNK != null) p.DNK = clamp(row.DNK, 25, 99);
     return p;
   }
-  function rolePlayer(team, idx, year) {
-    var positions = ['PG','SG','SF','PF','C'];
-    var pos = positions[idx % positions.length];
-    var ovr = 72 - Math.floor(idx / 3) - ((idx + year) % 3);
-    return makePlayer({
-      nameEn:'EraRole_' + year + '_' + team + '_' + (idx + 1),
-      nameCn:(typeof getTeamName === 'function' ? getTeamName(team) : team) + '·时代轮换' + (idx + 1),
-      pos:pos, ovr:ovr, age:23 + ((idx * 3 + year) % 9)
-    });
+  function nameKey(value) {
+    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+  function buildLocalizedNameMap() {
+    var map = {};
+    function harvest(player) {
+      if (!player) return;
+      var english = player.nameEn || player.nameEN || player.name;
+      var localized = player.nameCn || player.cname;
+      if (english && localized && localized !== english) map[nameKey(english)] = localized;
+    }
+    Object.keys(global.NBA2K_DATA || {}).forEach(function(team) { (NBA2K_DATA[team] || []).forEach(harvest); });
+    Object.keys(data().roster2003 || {}).forEach(function(team) { (data().roster2003[team] || []).forEach(harvest); });
+    Object.keys(data().draftClasses || {}).forEach(function(year) { (data().draftClasses[year] || []).forEach(harvest); });
+    return map;
   }
   function replaceWeakest(team, player) {
     var roster = NBA2K_DATA[team] || (NBA2K_DATA[team] = []);
@@ -106,28 +118,23 @@
     if (STATE.mode !== 'legend' || !STATE.eraStart) return;
     var start = Number(STATE.eraStart);
     if (STATE._legendLeagueApplied === start) return;
-    var base = data().roster2003 || {};
+    var base = completeRosters()[String(start)] || completeRosters()[start] || {};
+    var localizedNames = buildLocalizedNameMap();
     NBA2K_TEAMS.forEach(function(team) {
       var rows = base[team] || [];
       var roster = rows.map(function(row) {
-        var elapsed = Math.max(0, start - 2003);
-        var age = (Number(row.age) || 28) + elapsed;
-        var ageChange = elapsed ? (age <= 28 ? Math.min(5, elapsed) : (age >= 34 ? -Math.min(8, age - 33) : 0)) : 0;
-        return makePlayer(row, { age:age, ovr:clamp((Number(row.ovr) || 70) + ageChange, 58, 99), draftYear:2003 });
-      }).filter(function(p) { return p._age <= 39; });
-    // 开局直接给足完整轮换，避免首个休赛期为了补人数而混入大批陌生虚构新秀。
-    while (roster.length < 18) roster.push(rolePlayer(team, roster.length, start));
+        var enriched = Object.assign({}, row);
+        enriched.nameCn = enriched.nameCn || localizedNames[nameKey(enriched.nameEn)] || enriched.nameEn;
+        return makePlayer(enriched, { age:Number(row.age) || 27, ovr:Number(row.ovr) || 65, draftYear:start });
+      });
       NBA2K_DATA[team] = roster;
     });
-    if (start >= 2009) {
-      for (var year = 2004; year <= start; year++) addDraftClass(year, start - year, false);
-    }
     STATE._legendLeagueApplied = start;
     STATE.draftMode = 'historical';
     if (STATE.career) {
       STATE.career.flags = STATE.career.flags || {};
       STATE.career.flags.legendEraStart = start;
-      STATE.career.flags.legendEraLabel = start === 2003 ? '2003 白金一代' : '2009 新世代';
+      STATE.career.flags.legendEraLabel = ({ 2003:'2003 白金一代', 2010:'2010 吾皇登基纪元', 2016:'2016 三分之王纪元' })[start] || (start + ' 传奇年代');
     }
     if (typeof clearLineupCache === 'function') clearLineupCache();
   };
@@ -140,10 +147,11 @@
     overlay.id = 'legend-era-picker';
     overlay.innerHTML = '<div class="team-picker-modal" style="max-width:390px;">' +
       '<div class="team-picker-header"><span>🏆 选择传奇年代</span><button class="modal-close" id="legend-era-close">✕</button></div>' +
-      '<div style="padding:10px 12px 4px;font-size:11px;line-height:1.6;color:var(--text-dim);">现役生涯会完整保留。传奇年代使用历史球员开局，之后按年份加入真实选秀届；角色球员属性由本项目独立生成。</div>' +
+      '<div style="padding:10px 12px 4px;font-size:11px;line-height:1.6;color:var(--text-dim);">现役生涯会完整保留。传奇年代使用完整真实名单开局；有原始 2K 数值的球员采用对应版本评分，其余标注为当季数据校准。</div>' +
       '<div style="padding:7px 12px 14px;display:grid;gap:8px;">' +
         '<button class="btn btn-secondary" data-era="2003" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2003 白金一代</strong><small>科比、邓肯、艾弗森等时代核心同场；詹姆斯、韦德、安东尼、波什从这一届开始。</small></button>' +
-        '<button class="btn btn-secondary" data-era="2009" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2009 新世代</strong><small>从 2003 联盟演进六年，加入霍华德、保罗、杜兰特、罗斯，并迎来库里、哈登、格里芬。</small></button>' +
+        '<button class="btn btn-secondary" data-era="2010" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2010 吾皇登基纪元</strong><small>NBA 2K10 名单：詹姆斯冲击王座，科比卫冕，杜兰特崛起，库里开启新秀赛季。</small></button>' +
+        '<button class="btn btn-secondary" data-era="2016" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2016 三分之王纪元</strong><small>NBA 2K16 名单：库里与 73 胜勇士领衔，骑士、雷霆、马刺共同争冠。</small></button>' +
       '</div></div>';
     document.body.appendChild(overlay);
     document.getElementById('legend-era-close').onclick = function() { overlay.remove(); };

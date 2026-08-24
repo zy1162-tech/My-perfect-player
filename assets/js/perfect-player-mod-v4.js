@@ -44,7 +44,7 @@
   }
 
   function rosterRows(snapshot) {
-    return snapshot.roster.slice(0, 12).map(function(p, idx) {
+    return snapshot.roster.slice(0, 18).map(function(p, idx) {
       var isStarter = snapshot.starters.indexOf(p) >= 0;
       var age = p && p._isUser
         ? Number(STATE.career && STATE.career.currentAge) || 19
@@ -54,7 +54,7 @@
       return '<div style="display:grid;grid-template-columns:24px minmax(0,1fr) 34px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-light);">' +
         '<span style="font-size:9px;color:' + (isStarter ? 'var(--orange)' : 'var(--text-muted)') + ';font-weight:700;">' + (isStarter ? '首发' : (idx < 8 ? '轮换' : '替补')) + '</span>' +
         '<span style="min-width:0;"><strong style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;' + (p && p._isUser ? 'color:var(--orange);' : '') + '">' + esc(name) + '</strong>' +
-          '<small style="display:block;color:var(--text-dim);font-size:9px;margin-top:1px;">' + esc(p.pos || '—') + ' · ' + age + '岁 · ' + (contract > 0 ? contract + '年合同' : '合同待定') + '</small></span>' +
+          '<small style="display:block;color:var(--text-dim);font-size:9px;margin-top:1px;">' + esc(p.pos || '—') + ' · ' + age + '岁 · ' + (contract > 0 ? contract + '年合同' : '合同待定') + (p._ratingSource ? ' · ' + esc(p._ratingSource) : '') + '</small></span>' +
         '<strong style="text-align:right;font-family:var(--font-display);font-size:12px;">' + playerOvr(p) + '</strong></div>';
     }).join('');
   }
@@ -67,7 +67,7 @@
           '<div style="font-size:9px;color:var(--text-dim);margin-top:2px;">攻 ' + Math.round(Number(p.offense) || 0) + ' · 防 ' + Math.round(Number(p.defense) || 0) + ' · 深度 ' + Math.round(Number(p.depth) || 0) + '</div></div>' +
         '<div style="text-align:right;"><strong style="display:block;color:var(--orange);font-size:18px;line-height:1;">' + snapshot.powerRating + '</strong><small style="font-size:8px;color:var(--text-muted);">球队评分</small></div>' +
       '</div>' + rosterRows(snapshot) +
-      '<div style="font-size:9px;color:var(--text-muted);padding-top:6px;">轮换评分 ' + snapshot.rotationRating + ' · 展示前 12 人</div></section>';
+      '<div style="font-size:9px;color:var(--text-muted);padding-top:6px;">轮换评分 ' + snapshot.rotationRating + ' · 展示完整 18 人名单</div></section>';
   }
 
   global.showTeamRosterModal = function(team, compareTeam, title) {

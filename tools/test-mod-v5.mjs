@@ -26,11 +26,11 @@ skillContext.window = skillContext;
 vm.createContext(skillContext);
 vm.runInContext(await readFile('assets/js/perfect-player-skills.js', 'utf8'), skillContext);
 const minimum = skillContext.PP_SKILLS.computeSeasonStyleGrant();
-assert.equal(minimum.total, 15);
-assert.equal(skillContext.PP_SKILLS.grantSeasonStylePoints().total, 30);
-assert.equal(skillState.career.skills.points, 30);
-assert.equal(skillContext.PP_SKILLS.grantSeasonStylePoints().total, 30, 'same season returns the original grant');
-assert.equal(skillState.career.skills.points, 30, 'same season cannot grant twice');
+assert.equal(minimum.total, 20);
+assert.equal(skillContext.PP_SKILLS.grantSeasonStylePoints().total, 20);
+assert.equal(skillState.career.skills.points, 20);
+assert.equal(skillContext.PP_SKILLS.grantSeasonStylePoints().total, 20, 'same season returns the original grant');
+assert.equal(skillState.career.skills.points, 20, 'same season cannot grant twice');
 
 skillState.season = {
   playerStats: { games: 82, pts: 82 * 30, reb: 82 * 12, ast: 82 * 8, stl: 82 * 2, blk: 82 * 2 },
@@ -44,8 +44,8 @@ skillState.season = {
   isChampion: true
 };
 skillState.careerTeam = 'GSW';
-assert.equal(skillContext.PP_SKILLS.computeSeasonStyleGrant().total, 25);
-assert.equal(skillContext.PP_SKILLS.grantSeasonStylePoints().total, 50);
+assert.equal(skillContext.PP_SKILLS.computeSeasonStyleGrant().total, 30);
+assert.equal(skillContext.PP_SKILLS.grantSeasonStylePoints().total, 30);
 
 const core = await readFile('assets/js/perfect-player-core.js', 'utf8');
 assert.match(core, /function repairLeagueAgesFromBundledData\(\)/);
@@ -74,6 +74,6 @@ assert.equal(repairContext.NBA2K_DATA.GSW[1]._age, 20);
 assert.equal(repairContext.repairLeagueAgesFromBundledData(), 0, 'age repair must only run once per save');
 
 const boot = await readFile('assets/js/perfect-player-boot.js', 'utf8');
-assert.match(boot, /perfect-player-skills\.js\?v=20260824-(?:season-points-v5|turnovers-v6)/);
+assert.match(boot, /perfect-player-skills\.js\?v=20260824-(?:season-points-v5|turnovers-v6|balance-v7)/);
 
-console.log('V5 checks passed: local ages, Curry age 37, save repair, 30-50 season points, no duplicate scripts.');
+console.log('V5 compatibility checks passed: local ages, save repair, 20-30 season points, no duplicate scripts.');

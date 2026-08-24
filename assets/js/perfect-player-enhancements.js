@@ -830,7 +830,7 @@
   // 每次开启新生涯(揭晓球员时)按已购强化，给初始属性/OVR 永久加成——即"重生奖励"。
   // 设计要点：LP 由成就稀有度决定，跨生涯保留；强化可叠加但有上限，避免破坏平衡。
   var LEGACY_KEY = 'pp_legacy_v1';
-  var LEGACY_SCHEMA_VERSION = 2;
+  var LEGACY_SCHEMA_VERSION = 3;
   var LP_BY_RARITY = { common: 1, rare: 2, epic: 4, legend: 8 };
   var LP_PER_ARCHIVE_RECORD = 5;
 
@@ -843,6 +843,10 @@
     { id: 'defender',  icon: '🛡️', name: '防守本能', desc: '每级 外防/内防/盖帽 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['PDEF', 'IDEF', 'BLK'] },
     { id: 'athlete',   icon: '💪', name: '身体天赋', desc: '每级 运动/力量/篮板 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['ATH', 'STR', 'REB'] },
     { id: 'clutch',    icon: '❄️', name: '大心脏',   desc: '每级 关键 +2', max: 4, costs: [4, 6, 8, 10], attrs: ['CLU'], step: 2 },
+    { id: 'rim_runner', icon: '🛫', name: '冲框达人', desc: '每级 扣篮 +2', max: 4, costs: [4, 6, 8, 11], attrs: ['DNK'], step: 2 },
+    { id: 'floor_general', icon: '🧠', name: '控场大师', desc: '每级 控球/传球 +1', max: 4, costs: [4, 6, 8, 11], attrs: ['HAN', 'PAS'] },
+    { id: 'glass_cleaner', icon: '🧹', name: '篮板嗅觉', desc: '每级 篮板 +2', max: 4, costs: [4, 6, 8, 11], attrs: ['REB'], step: 2 },
+    { id: 'leader', icon: '📣', name: '领袖气质', desc: '每级 队友攻防效率 +0.5（满级约 +2）', max: 4, costs: [5, 7, 9, 12], attrs: [], teamBoost: 0.5 },
     { id: 'prodigy',   icon: '🌟', name: '天选之才', desc: '每级 全属性 +1（最贵）', max: 3, costs: [10, 14, 20],
       attrs: ['threePT', 'MID', 'FIN', 'DNK', 'HAN', 'PAS', 'PDEF', 'IDEF', 'BLK', 'REB', 'ATH', 'STR', 'CLU'] }
   ];
@@ -878,10 +882,8 @@
       var o = JSON.parse(localStorage.getItem(LEGACY_KEY) || '{}');
       if (!o || typeof o !== 'object') o = {};
       if (Number(o.version) !== LEGACY_SCHEMA_VERSION) {
-        var hadOldProgress = !!(o.levels && Object.keys(o.levels).some(function(k) { return Number(o.levels[k]) > 0; }));
-        // 旧版使用固定低价。直接保留等级会绕过新成本，因此一次性重置等级；
-        // LP 来自成就而非 spent，所有点数会自动完整返还，不损失任何已解锁成就。
-        o = { version: LEGACY_SCHEMA_VERSION, levels: {}, spent: 0, rebalanceNoticePending: hadOldProgress };
+        // V7 开局点数足够升满整棵树，因此旧版已购买等级可直接保留。
+        o = { version: LEGACY_SCHEMA_VERSION, levels: o.levels || {}, spent: 0, rebalanceNoticePending: false };
         saveLegacy(o);
       }
       return o;
@@ -943,11 +945,16 @@
       var lvl = legacy.levels[p.id] || 0;
       if (!lvl) return;
       var per = p.step || 1;
-      p.attrs.forEach(function (a) { bon[a] = (bon[a] || 0) + per * lvl; });
+      (p.attrs || []).forEach(function (a) { bon[a] = (bon[a] || 0) + per * lvl; });
     });
     return bon;
   }
   PP_FX.legacyAttrBonuses = legacyAttrBonuses;
+  PP_FX.getLegacyTeamBoost = function(team) {
+    if (typeof STATE === 'undefined' || !STATE || team !== STATE.careerTeam) return 0;
+    var perk = PERK_MAP.leader;
+    return (Number(legacy.levels.leader) || 0) * (Number(perk && perk.teamBoost) || 0);
+  };
 
   // 购买一级强化
   PP_FX.buyPerk = function (id) {

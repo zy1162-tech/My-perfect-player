@@ -7,7 +7,7 @@ const context = {
   console,
   Math,
   window:null,
-  STATE:{ mode:'legend', eraStart:2009, career:{ seasonCount:0, flags:{} } },
+  STATE:{ mode:'legend', eraStart:2010, career:{ seasonCount:0, flags:{} } },
   NBA2K_TEAMS:teams,
   NBA2K_DATA:Object.fromEntries(teams.map(team => [team, []])),
   getTeamName:team => team,
@@ -18,26 +18,49 @@ const context = {
 context.window = context;
 vm.createContext(context);
 vm.runInContext(await readFile(new URL('../assets/data/era-mode-data.js', import.meta.url), 'utf8'), context);
+vm.runInContext(await readFile(new URL('../assets/data/era-complete-rosters.js', import.meta.url), 'utf8'), context);
 vm.runInContext(await readFile(new URL('../assets/js/perfect-player-era-mode.js', import.meta.url), 'utf8'), context);
 
+for (const year of [2003, 2010, 2016]) {
+  const eraPlayers = Object.values(context.__PP_COMPLETE_ERA_ROSTERS__[year]).flat();
+  const identities = new Set(eraPlayers.map(player => player.nameEn.toLowerCase().replace(/[^a-z0-9]/g, '')));
+  assert.equal(eraPlayers.length, 540, year + ' should contain 30 x 18 roster slots');
+  assert.equal(identities.size, 540, year + ' should not duplicate one player across teams');
+}
+
 context.applyLegendEraLeague();
-assert.equal(context.STATE._legendLeagueApplied, 2009);
-teams.forEach(team => assert.ok(context.NBA2K_DATA[team].length >= 18, team + ' roster should have a full 18-player rotation'));
-assert.ok(context.NBA2K_DATA.GSW.some(player => player.name === 'Stephen Curry'), '2009 mode should include Curry on GSW');
-assert.ok(context.NBA2K_DATA.OKC.some(player => player.name === 'James Harden'), '2009 mode should include Harden on OKC');
-assert.ok(context.NBA2K_DATA.LAC.some(player => player.name === 'Blake Griffin'), '2009 mode should include Griffin on LAC');
+assert.equal(context.STATE._legendLeagueApplied, 2010);
+teams.forEach(team => assert.equal(context.NBA2K_DATA[team].length, 18, team + ' roster should contain 18 real players'));
+assert.equal(context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James')?.ovr, 96, 'NBA 2K10 anchor rating');
+assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Stephen Curry')?.ovr, 69, 'NBA 2K10 rookie Curry rating');
+assert.ok(context.NBA2K_DATA.OKC.some(player => player.name === 'James Harden'), '2010 mode should include Harden on OKC');
 assert.ok(Object.values(context.NBA2K_DATA).flat().every(player => player._eraRoster), 'legend league must not leak current roster players');
+assert.ok(Object.values(context.NBA2K_DATA).flat().every(player => !/EraRole|时代轮换/.test(player.name)), 'placeholder roster names are forbidden');
 
 context.STATE.career.seasonCount = 1;
 context.processDraft();
-assert.ok(context.NBA2K_DATA.WAS.some(player => player.name === 'John Wall'), '2010 real draft class should enter after first 2009 season');
+assert.ok(context.NBA2K_DATA.CLE.some(player => player.name === 'Kyrie Irving'), '2011 real draft class should enter after first 2010 season');
 assert.equal(context.originalDraftCalled, undefined, 'historical class should replace fictional draft while data exists');
+
+context.STATE.eraStart = 2016;
+context.STATE.career.seasonCount = 0;
+context.STATE._legendLeagueApplied = null;
+context.applyLegendEraLeague();
+assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Stephen Curry')?.ovr, 93, 'NBA 2K16 Curry anchor rating');
+assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Klay Thompson')?.ovr, 87, 'NBA 2K16 Klay anchor rating');
+teams.forEach(team => assert.equal(context.NBA2K_DATA[team].length, 18, team + ' 2016 roster should contain 18 real players'));
 
 const core = await readFile(new URL('../assets/js/perfect-player-core.js', import.meta.url), 'utf8');
 const v4 = await readFile(new URL('../assets/js/perfect-player-mod-v4.js', import.meta.url), 'utf8');
 assert.match(core, /showPlayoffMatchupPreview/);
 assert.match(core, /renderBoxRows\(topHome/);
+assert.match(core, /showPlayoffGameDataPanel\(gameEntry/);
+assert.match(core, /continue-current-btn/);
+assert.match(core, /lenf_legend_auto_slot/);
+assert.match(core, /targetScreen === 'screen-season'/);
+assert.match(core, /targetScreen === 'screen-playoffs'/);
 assert.match(core, /tempoTurnoverDivider/);
+assert.match(v4, /slice\(0, 18\)/);
 assert.ok(v4.indexOf('processTrades();') < v4.indexOf('showRecruitmentMarket(function()'), 'trades must finish before recruitment decision');
 
-console.log('V6 checks passed: era rosters, historical drafts, roster preview, box score, turnover balance, recruitment order.');
+console.log('V7 checks passed: complete 2010/2016 rosters, anchor ratings, real names, per-game panel, dual saves.');

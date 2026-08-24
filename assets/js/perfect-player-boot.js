@@ -9,8 +9,8 @@
       ['assets/js/perfect-player-hupu-extensions.js?v=20260824-roster-stamina-v6', '角色扩展']
     ],
     career: [
-      ['assets/js/perfect-player-skills.js?v=20260824-turnovers-v6', '球风技能'],
-      ['assets/js/perfect-player-enhancements.js?v=20260824-stamina-v6', '成就特效']
+      ['assets/js/perfect-player-skills.js?v=20260824-balance-v7', '球风技能'],
+      ['assets/js/perfect-player-enhancements.js?v=20260824-legacy-v7', '成就特效']
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20260821-events-v3', '赛季事件'],

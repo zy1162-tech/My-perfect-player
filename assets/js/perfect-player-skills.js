@@ -11,12 +11,10 @@
     3: { mu: 1.13, sigma: 0.07, lo: 0.99, hi: 1.28 },
     4: { mu: 1.21, sigma: 0.085, lo: 1.00, hi: 1.36 }
   };
-  // 赛季结算先按基础值与三类奖励计分，再统一应用魔改倍率。
-  // 15 基础点 × 2 = 每个完整赛季至少 30 点；奖励后最高 50 点。
-  var SEASON_POINT_BASE = 15;
-  var SEASON_POINT_CAP = 25;
-  // 魔改设置：所有新获得的球风点按此倍率结算。
-  var STYLE_POINT_REWARD_MULTIPLIER = 2;
+  // 完整赛季保底20点，出场、表现与高光奖励可提高到30点，不再二次翻倍。
+  var SEASON_POINT_BASE = 20;
+  var SEASON_POINT_CAP = 30;
+  var STYLE_POINT_REWARD_MULTIPLIER = 1;
 
   /** 梦境挑战击败传奇队后可解锁第四级的球风技能 */
   var LEGEND_TIER_SKILL_IDS = {
