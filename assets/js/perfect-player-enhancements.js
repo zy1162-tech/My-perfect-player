@@ -545,44 +545,34 @@
     try {
       if (typeof getVeteranMaintenanceLevel === 'function') level = Number(getVeteranMaintenanceLevel(age)) || 0;
     } catch (e) {}
-    var mods = {};
     var profile = {};
-    try { if (typeof getNextSeasonMods === 'function') mods = getNextSeasonMods() || {}; } catch (e) {}
     try { if (typeof getCareerProfile === 'function') profile = getCareerProfile() || {}; } catch (e) {}
-    var stamina = 0;
-    try {
-      if (typeof getStaminaAttr === 'function') stamina = Number(getStaminaAttr()) || 0;
-      else {
-        var st = (typeof STATE !== 'undefined') ? STATE : window.STATE;
-        stamina = Math.max(0, Number(st && st.attrs && st.attrs.STA) || 0);
-      }
-    } catch (e) {}
+    var coachTrust = Number(profile.coachTrust) || 0;
+    var leadership = Number(profile.leadership) || 0;
     var conds = [
-      { ok: (Number(mods.staminaLoad) || 0) <= -2, text: '体能负荷 ≤ -2' },
-      { ok: (Number(mods.injuryRiskBonus) || 0) <= -2, text: '伤病风险 ≤ -2' },
-      { ok: (Number(profile.coachTrust) || 0) >= 10, text: '教练信任 ≥ 10' },
-      { ok: stamina >= 3, text: '耐力 ' + stamina + ' / 3（满后额外 +1 级）' }
+      { ok: coachTrust >= 10, text: '教练信任 ' + coachTrust + ' / 10' },
+      { ok: leadership >= 10, text: '领导力 ' + leadership + ' / 10' }
     ];
     var eligible = age >= 31;
     if (!eligible) level = 0;
     var activated = eligible && level > 0;
     var canUpgrade = eligible && level < 3;
     var effect = !eligible
-      ? '31 岁后，满足保养条件即可激活。耐力攒满后还能再升一级。'
+      ? '31 岁自动激活 Lv.1；教练信任或领导力达标后继续升级。'
       : (level >= 3
-        ? '老化掉点经常能扛住；34 岁后再掉，也还会留一点底。'
+        ? '每项已触发的老化掉点有 78% 概率减少 1 点；34 岁后仍至少下降 1 点。'
         : (level >= 2
-          ? '老化掉点多半能扛住一次；34 岁后再掉，也还会留一点底。'
+          ? '每项已触发的老化掉点有 58% 概率减少 1 点；两项条件都达标即满级。'
           : (level === 1
-            ? '老化掉点偶尔能扛住一次；34 岁后再掉，也还会留一点底。'
-            : '已满 31 岁，达成下方任意一条即可激活。')));
+            ? '每项已触发的老化掉点有 30% 概率减少 1 点；任一条件达标即升 Lv.2。'
+            : '31 岁后自动激活。')));
     var status = !eligible ? '未解锁' : (level >= 3 ? '满级' : (activated ? '可升级' : '可激活'));
     return {
       id: 'veteran_maintenance',
       icon: '🛡️',
       name: '老将保养',
       group: '条件',
-      desc: '31 岁起根据体能负荷、伤病风险和教练信任判定等级；耐力 ≥ 3 时额外 +1 级，最高 Lv.3。',
+      desc: '31 岁自动 Lv.1；教练信任或领导力任一达到 10 为 Lv.2，两项都达到 10 为 Lv.3。每级分别有 30% / 58% / 78% 概率让单项老化少掉 1 点。',
       max: 3,
       purchased: level,
       level: level,
@@ -1550,3 +1540,4 @@
   }
 
 })();
+

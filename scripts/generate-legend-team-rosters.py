@@ -40,6 +40,8 @@ HUPU_HIST = os.path.join(ROOT, "assets", "data", "historical", "hupu-historical-
 HUPU_CACHE = os.path.join(os.path.dirname(__file__), "_hupu-ai-app.html")
 POOL_PATH = os.path.join(ROOT, "assets", "data", "perfect-player-pool.json")
 NBA2K_PATH = os.path.join(ROOT, "assets", "js", "hupu", "script-01-2678-5hu3djrc-upload-1783494754597-12.js")
+LEGEND_PATH = os.path.join(ROOT, "assets", "data", "historical", "legend-team-rosters.json")
+PRESERVE_TEAM_IDS = {"chi-1995-96", "gsw-2016-17", "bos-1985-86", "lal-2000-01", "lal-1986-87"}
 
 
 def norm(s):
@@ -190,6 +192,7 @@ def draft_ovr_from_chunk(chunk):
 
 # 虎扑选秀/历史表未收录的阵容成员：按巅峰赛季估计展示 OVR（属性仍按位置模板缩放）
 MANUAL_PEAK_OVR = {
+    "Ron Harper": 86,
     "Luc Longley": 76,
     "Toni Kukoc": 80,
     "Steve Kerr": 82,
@@ -200,6 +203,8 @@ MANUAL_PEAK_OVR = {
     "Shaun Livingston": 78,
     "JaVale McGee": 74,
     "Patrick McCaw": 72,
+    "Andre Iguodala": 86,
+    "David West": 85,
     "Robert Parish": 88,
     "Dennis Johnson": 86,
     "Danny Ainge": 78,
@@ -208,6 +213,9 @@ MANUAL_PEAK_OVR = {
     "Rick Carlisle": 74,
     "Sam Vincent": 72,
     "Rick Fox": 78,
+    "Derek Fisher": 82,
+    "Horace Grant": 86,
+    "Robert Horry": 82,
     "Brian Shaw": 76,
     "Tyronn Lue": 74,
     "Mike Penberthy": 70,
@@ -220,6 +228,22 @@ MANUAL_PEAK_OVR = {
     "Kurt Rambis": 72,
     "Wes Matthews": 74,
     "Adrian Branch": 68,
+    "Bruce Bowen": 84,
+    # 2011-12 Heat rotation
+    "Mario Chalmers": 78,
+    "Udonis Haslem": 78,
+    "Shane Battier": 80,
+    "Mike Miller": 78,
+    "Norris Cole": 74,
+    "Joel Anthony": 72,
+    "James Jones": 74,
+    # 2004-05 Spurs rotation
+    "Manu Ginobili": 90,
+    "Rasho Nesterovic": 76,
+    "Brent Barry": 80,
+    "Nazr Mohammed": 76,
+    "Beno Udrih": 74,
+    "Devin Brown": 72,
 }
 
 # 人工校正展示 OVR（保留原属性结构，按比例微调属性）
@@ -451,6 +475,40 @@ ROSTER_META = [
             ("local:adrianbranch", "阿德里安·布兰奇", "Adrian Branch", 3, 0),
         ],
     },
+    {
+        "id": "mia-2011-12",
+        "label": "2011-12 迈阿密热火",
+        "teamId": 14,
+        "players": [
+            ("local:lebronjames", "勒布朗·詹姆斯", "LeBron James", 3, 4),
+            ("local:dwyanewade", "德维恩·韦德", "Dwyane Wade", 2, 1),
+            ("local:chrisbosh", "克里斯·波什", "Chris Bosh", 4, 5),
+            ("local:mariochalmers", "马里奥·查尔默斯", "Mario Chalmers", 1, 0),
+            ("local:udonishaslem", "犹多尼斯·哈斯勒姆", "Udonis Haslem", 4, 5),
+            ("local:shanebattier", "肖恩·巴蒂尔", "Shane Battier", 3, 4),
+            ("local:mikemiller", "迈克·米勒", "Mike Miller", 3, 2),
+            ("local:norriscole", "诺里斯·科尔", "Norris Cole", 1, 0),
+            ("local:joelanthony", "乔尔·安东尼", "Joel Anthony", 5, 0),
+            ("local:jamesjones", "詹姆斯·琼斯", "James Jones", 3, 0),
+        ],
+    },
+    {
+        "id": "sas-2004-05",
+        "label": "2004-05 圣安东尼奥马刺",
+        "teamId": 30,
+        "players": [
+            ("local:timduncan", "蒂姆·邓肯", "Tim Duncan", 4, 5),
+            ("local:tonyparker", "托尼·帕克", "Tony Parker", 1, 0),
+            ("local:manuginobili", "马努·吉诺比利", "Manu Ginobili", 2, 3),
+            ("local:brucebowen", "布鲁斯·鲍文", "Bruce Bowen", 3, 2),
+            ("local:roberthorry", "罗伯特·霍里", "Robert Horry", 4, 3),
+            ("local:rashonesterovic", "拉多斯拉夫·内斯特洛维奇", "Rasho Nesterovic", 5, 0),
+            ("local:brentbarry", "布伦特·巴里", "Brent Barry", 2, 1),
+            ("local:nazrmohammed", "纳兹尔·穆罕默德", "Nazr Mohammed", 5, 0),
+            ("local:benoudrih", "本诺·尤德里", "Beno Udrih", 1, 0),
+            ("local:devinbrown", "德文·布朗", "Devin Brown", 2, 3),
+        ],
+    },
 ]
 
 
@@ -489,7 +547,17 @@ def main():
     idx = build_index()
     teams = []
     errors = []
+    existing_by_id = {}
+    if os.path.isfile(LEGEND_PATH):
+        try:
+            old = json.load(open(LEGEND_PATH, encoding="utf-8"))
+            existing_by_id = {t.get("id"): t for t in old.get("teams", []) if t.get("id")}
+        except (OSError, ValueError):
+            existing_by_id = {}
     for meta in ROSTER_META:
+        if meta["id"] in PRESERVE_TEAM_IDS and meta["id"] in existing_by_id:
+            teams.append(existing_by_id[meta["id"]])
+            continue
         players = []
         for identity, cn, en, pos, pos2 in meta["players"]:
             try:
@@ -508,9 +576,9 @@ def main():
         raise SystemExit("Missing data:\n" + "\n".join(errors))
 
     out = {
-        "version": 3,
-        "status": "draft",
-        "wiredToGame": False,
+        "version": 4,
+        "status": "active",
+        "wiredToGame": True,
         "purpose": "hidden_challenge",
         "description": (
             "隐藏挑战专用传奇阵容。属性与展示 OVR 来自虎扑完美球员 HISTORICAL_PLAYERS / "
@@ -524,7 +592,7 @@ def main():
         },
         "teams": teams,
     }
-    path = os.path.join(ROOT, "assets", "data", "historical", "legend-team-rosters.json")
+    path = LEGEND_PATH
     with open(path, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
     print("Wrote", path)
@@ -535,3 +603,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

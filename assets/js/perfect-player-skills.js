@@ -26,7 +26,14 @@
     ice_ft: true,
     clutch_heart: true,
     mid_craftsman: true,
-    steal_instinct: true
+    steal_instinct: true,
+    finisher: true,
+    fast_break: true,
+    perimeter_lock: true,
+    rim_protector: true,
+    box_out: true,
+    iron_man: true,
+    leader_aura: true
   };
 
   var STYLE_SKILLS = [
@@ -70,7 +77,8 @@
         null,
         [{ key: 'FIN', min: 80 }, { key: 'STR', min: 70 }],
         [{ key: 'FIN', min: 86 }, { key: 'STR', min: 76 }],
-        [{ key: 'FIN', min: 92 }, { key: 'STR', min: 82 }]
+        [{ key: 'FIN', min: 92 }, { key: 'STR', min: 82 }],
+        [{ key: 'FIN', min: 96 }, { key: 'STR', min: 88 }]
       ]
     },
     {
@@ -124,7 +132,8 @@
         null,
         [{ key: 'HAN', min: 80 }, { key: 'ATH', min: 76 }],
         [{ key: 'HAN', min: 86 }, { key: 'ATH', min: 82 }],
-        [{ key: 'HAN', min: 92 }, { key: 'ATH', min: 88 }]
+        [{ key: 'HAN', min: 92 }, { key: 'ATH', min: 88 }],
+        [{ key: 'HAN', min: 96 }, { key: 'ATH', min: 92 }]
       ]
     },
     {
@@ -134,7 +143,8 @@
         null,
         [{ key: 'PDEF', min: 80 }],
         [{ key: 'PDEF', min: 86 }],
-        [{ key: 'PDEF', min: 92 }]
+        [{ key: 'PDEF', min: 92 }],
+        [{ key: 'PDEF', min: 96 }]
       ]
     },
     {
@@ -144,7 +154,8 @@
         null,
         [{ key: 'BLK', min: 80 }, { key: 'IDEF', min: 76 }],
         [{ key: 'BLK', min: 86 }, { key: 'IDEF', min: 82 }],
-        [{ key: 'BLK', min: 92 }, { key: 'IDEF', min: 88 }]
+        [{ key: 'BLK', min: 92 }, { key: 'IDEF', min: 88 }],
+        [{ key: 'BLK', min: 96 }, { key: 'IDEF', min: 92 }]
       ]
     },
     {
@@ -165,7 +176,8 @@
         null,
         [{ key: 'REB', min: 80 }, { key: 'STR', min: 72 }],
         [{ key: 'REB', min: 86 }, { key: 'STR', min: 78 }],
-        [{ key: 'REB', min: 92 }, { key: 'STR', min: 84 }]
+        [{ key: 'REB', min: 92 }, { key: 'STR', min: 84 }],
+        [{ key: 'REB', min: 96 }, { key: 'STR', min: 90 }]
       ]
     },
     {
@@ -175,7 +187,8 @@
         null,
         [{ key: 'ATH', min: 75 }],
         [{ key: 'ATH', min: 82 }],
-        [{ key: 'ATH', min: 88 }]
+        [{ key: 'ATH', min: 88 }],
+        [{ key: 'ATH', min: 94 }]
       ]
     },
     {
@@ -196,7 +209,8 @@
         null,
         [{ key: 'CLU', min: 70 }, { key: 'PAS', min: 70 }, { key: 'leadership', min: 3, from: 'profile' }],
         [{ key: 'CLU', min: 78 }, { key: 'PAS', min: 76 }, { key: 'leadership', min: 7, from: 'profile' }],
-        [{ key: 'CLU', min: 86 }, { key: 'PAS', min: 82 }, { key: 'leadership', min: 12, from: 'profile' }]
+        [{ key: 'CLU', min: 86 }, { key: 'PAS', min: 82 }, { key: 'leadership', min: 12, from: 'profile' }],
+        [{ key: 'CLU', min: 92 }, { key: 'PAS', min: 88 }, { key: 'leadership', min: 16, from: 'profile' }]
       ]
     },
     {
@@ -649,3 +663,4 @@
   global.getStyleSkillRoll = getStyleSkillRoll;
   global.grantSeasonStylePoints = grantSeasonStylePoints;
 })(typeof window !== 'undefined' ? window : this);
+

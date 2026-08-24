@@ -9,13 +9,13 @@
       ['assets/js/perfect-player-hupu-extensions.js?v=20260824-local-player-pool-v3', '角色扩展']
     ],
     career: [
-      ['assets/js/perfect-player-skills.js?v=20260824-double-points-mod-v1', '球风技能'],
-      ['assets/js/perfect-player-enhancements.js?v=20260824-full-legacy-mod-v2', '成就特效']
+      ['assets/js/perfect-player-skills.js?v=20260824-mod-v4', '球风技能'],
+      ['assets/js/perfect-player-enhancements.js?v=20260824-mod-v4', '成就特效']
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20260821-events-v3', '赛季事件'],
       ['assets/js/perfect-player-story-events.js?v=20260824-double-points-mod-v1', '生涯剧情'],
-      ['assets/js/perfect-player-legend-challenge.js?v=20260824-legend-v11', '传奇挑战'],
+      ['assets/js/perfect-player-legend-challenge.js?v=20260824-legend-v12', '传奇挑战'],
       ['assets/js/perfect-player-awards.js?v=20260823-allstar-v3', '荣誉评选'],
       ['assets/js/perfect-player-allstar.js?v=20260824-double-points-mod-v1', '全明星周末']
     ],
@@ -194,3 +194,4 @@
     run();
   }
 })();
+

@@ -1,8 +1,8 @@
-/* 隐藏挑战：梦境传奇系列赛（≥3 MVP + ≥3 FMVP 触发） */
+/* 隐藏挑战：梦境传奇系列赛（生涯至少 1 MVP 或 1 FMVP，夺冠后触发） */
 (function () {
   'use strict';
 
-  var LEGEND_ROSTERS_URL = 'assets/data/historical/legend-team-rosters.json?v=20260823-legend-v3';
+  var LEGEND_ROSTERS_URL = 'assets/data/historical/legend-team-rosters.json?v=20260824-legend-v4';
   var LEGEND_ROUND = -99;
   var LEGEND_SERIES_IDX = -99;
   var LEGEND_ABBR = {
@@ -10,7 +10,9 @@
     'gsw-2016-17': '_LEG_GSW',
     'bos-1985-86': '_LEG_BOS',
     'lal-2000-01': '_LEG_LAL01',
-    'lal-1986-87': '_LEG_LAL87'
+    'lal-1986-87': '_LEG_LAL87',
+    'mia-2011-12': '_LEG_MIA12',
+    'sas-2004-05': '_LEG_SAS05'
   };
   var ALL_LEGEND_IDS = Object.keys(LEGEND_ABBR);
 
@@ -20,7 +22,9 @@
     'lal-1986-87': ['tempo_master', 'pnr_maestro'],
     'lal-2000-01': ['post_bully', 'dunk_threat'],
     'bos-1985-86': ['ice_ft', 'clutch_heart'],
-    'chi-1995-96': ['mid_craftsman', 'steal_instinct']
+    'chi-1995-96': ['mid_craftsman', 'steal_instinct'],
+    'mia-2011-12': ['dunk_threat', 'finisher', 'fast_break', 'leader_aura'],
+    'sas-2004-05': ['box_out', 'perimeter_lock', 'rim_protector', 'iron_man']
   };
 
   var _legendData = null;
@@ -41,6 +45,8 @@
     var f = STATE.career.flags.legendChallenge;
     f.defeated = Array.isArray(f.defeated) ? f.defeated : [];
     f.skillUnlocks = f.skillUnlocks || {};
+    // 旧版只有 5 支队，旧存档可能已经写入 completed=true；新增球队后按实际击败列表重算。
+    f.completed = ALL_LEGEND_IDS.every(function (id) { return f.defeated.indexOf(id) >= 0; });
     syncLegendSkillUnlocksFromDefeated(f);
     return f;
   }
@@ -79,6 +85,11 @@
   function ensureLegendRostersLoaded() {
     if (_legendData) return Promise.resolve(_legendData);
     if (_legendDataPromise) return _legendDataPromise;
+    // 本地双击 HTML 时 fetch(file://...) 会被浏览器拦截，优先使用预加载的 JS 数据包。
+    if (window.__PP_LEGEND_ROSTERS__ && window.__PP_LEGEND_ROSTERS__.teams) {
+      _legendData = window.__PP_LEGEND_ROSTERS__;
+      return Promise.resolve(_legendData);
+    }
     _legendDataPromise = fetch(LEGEND_ROSTERS_URL, { credentials: 'same-origin' })
       .then(function (r) {
         if (!r.ok) throw new Error('legend rosters http ' + r.status);
@@ -120,7 +131,7 @@
 
   function isLegendChallengeEligible() {
     if (!STATE.career || !STATE.season) return false;
-    return countCareerRegularMvp() >= 3 && countCareerFmvp() >= 3;
+    return countCareerRegularMvp() >= 1 || countCareerFmvp() >= 1;
   }
 
   function getLegendTeamById(id) {
@@ -453,3 +464,4 @@
 
   ensureLegendRostersLoaded();
 })();
+

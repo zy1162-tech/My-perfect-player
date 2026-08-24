@@ -1,4 +1,5 @@
-{
+/* Generated from legend-team-rosters.json for file:// compatibility. */
+window.__PP_LEGEND_ROSTERS__ = {
   "version": 4,
   "status": "active",
   "wiredToGame": true,
@@ -1965,4 +1966,5 @@
       ]
     }
   ]
-}
+};
+
