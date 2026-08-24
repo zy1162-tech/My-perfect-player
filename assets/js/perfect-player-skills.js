@@ -11,7 +11,10 @@
     3: { mu: 1.13, sigma: 0.07, lo: 0.99, hi: 1.28 },
     4: { mu: 1.21, sigma: 0.085, lo: 1.00, hi: 1.36 }
   };
-  var SEASON_POINT_CAP = 12;
+  // 赛季结算先按基础值与三类奖励计分，再统一应用魔改倍率。
+  // 15 基础点 × 2 = 每个完整赛季至少 30 点；奖励后最高 50 点。
+  var SEASON_POINT_BASE = 15;
+  var SEASON_POINT_CAP = 25;
   // 魔改设置：所有新获得的球风点按此倍率结算。
   var STYLE_POINT_REWARD_MULTIPLIER = 2;
 
@@ -592,13 +595,14 @@
     }
     highlight += honor;
     highlight += playoffHighlightPoints();
-    highlight = Math.min(5, highlight);
+    highlight = Math.min(3, highlight);
 
-    var raw = appear + play + highlight;
+    var raw = SEASON_POINT_BASE + appear + play + highlight;
     var total = Math.min(SEASON_POINT_CAP, raw);
     return {
       total: total,
       parts: [
+        { key: 'base', label: '赛季基础', amount: SEASON_POINT_BASE },
         { key: 'appear', label: '出场', amount: appear },
         { key: 'play', label: '表现', amount: play },
         { key: 'highlight', label: '高光', amount: highlight }

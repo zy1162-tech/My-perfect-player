@@ -37,10 +37,12 @@ html.pp-booting #app{visibility:hidden}
   </style>
   <link rel="preload" href="assets/data/perfect-player-pool-local.js?v=20260824-local-player-pool-v3" as="script">
   <script defer src="assets/data/perfect-player-pool-local.js?v=20260824-local-player-pool-v3"></script>
+  <link rel="preload" href="assets/data/player-ages-local.js?v=20260824-age-local-v5" as="script">
+  <script src="assets/data/player-ages-local.js?v=20260824-age-local-v5"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20260824-mod-v4" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20260824-mod-v4"></script>
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20260824-mod-v5" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20260824-mod-v5"></script>
   <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260823-allstar-draft-ui">
 
 
@@ -816,25 +818,7 @@ var Storage = {
   }
 };
 </script>
-<script>
-(function () {
-  var AGE_URL = 'assets/data/player-ages.json?v=20260821-phase-a';
-  var prev = window.PERFECT_PLAYER_DATA_READY || Promise.resolve();
-  window.PERFECT_PLAYER_DATA_READY = prev.then(function () {
-    return fetch(AGE_URL, { credentials: 'same-origin' })
-      .then(function (r) {
-        if (!r.ok) throw new Error('age http ' + r.status);
-        return r.json();
-      })
-      .then(function (rows) { window.__PLAYER_AGE_ROWS__ = rows; })
-      .catch(function (err) {
-        try { console.warn('[ages] fetch failed', err); } catch (e) {}
-        window.__PLAYER_AGE_ROWS__ = window.__PLAYER_AGE_ROWS__ || [];
-      });
-  });
-})();
-</script>
-<script src="assets/js/perfect-player-core.js?v=20260824-age19-mod-v1"></script>
+<script src="assets/js/perfect-player-core.js?v=20260824-age-local-v5"></script>
 <script src="assets/js/perfect-player-mod-v4.js?v=20260824-mod-v4"></script>
 
 <!-- ====== 随机事件系统 — EVENT REGISTRY ====== -->

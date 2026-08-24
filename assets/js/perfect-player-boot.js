@@ -9,7 +9,7 @@
       ['assets/js/perfect-player-hupu-extensions.js?v=20260824-local-player-pool-v3', '角色扩展']
     ],
     career: [
-      ['assets/js/perfect-player-skills.js?v=20260824-mod-v4', '球风技能'],
+      ['assets/js/perfect-player-skills.js?v=20260824-season-points-v5', '球风技能'],
       ['assets/js/perfect-player-enhancements.js?v=20260824-mod-v4', '成就特效']
     ],
     story: [

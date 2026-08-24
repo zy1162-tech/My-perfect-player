@@ -14088,14 +14088,18 @@ function manualLoadGame(slot) {
           Object.keys(NBA2K_DATA).forEach(function(k) { delete NBA2K_DATA[k]; });
           Object.assign(NBA2K_DATA, snap.league);
         }
+        _rngState = snap.rng || null;
         _playerAges = snap.ages || {};
         _playerGenes = snap.genes || {};
+        // V5：旧离线存档可能因 file:// 无法读取 JSON 而把库里等球星误判为 28 岁。
+        // 合并随页面加载的权威年龄表，并只向上修复明显偏小的现实球员年龄。
+        mergeBundledPlayerAgeRows();
+        repairLeagueAgesFromBundledData();
         if (snap.rookieState) {
           _starRookieQueue = JSON.parse(JSON.stringify(snap.rookieState.starQueue || []));
           _usedRookieCandidateNames = Object.assign({}, snap.rookieState.usedCandidateNames || {});
           _rookieNameSeq = snap.rookieState.rookieNameSeq || 0;
         }
-        _rngState = snap.rng || null;
         if (snap.hupuUser) {
           HUPU_USER.nickname = snap.hupuUser.nickname || HUPU_USER.nickname;
           HUPU_USER.avatar = snap.hupuUser.avatar || HUPU_USER.avatar;
@@ -17969,6 +17973,21 @@ function calcOVR(attrs, pos) {
 var _playerAges = null;
 var _playerGenes = null;
 
+function mergeBundledPlayerAgeRows() {
+  _playerAges = _playerAges || {};
+  _playerGenes = _playerGenes || {};
+  var rows = window.__PLAYER_AGE_ROWS__;
+  if (!rows || !rows.length) return;
+  rows.forEach(function(r) {
+    if (!r || !r.n) return;
+    // 年龄表是现实球员的权威开局年龄；基因则优先保留存档中已经生成的值。
+    _playerAges[r.n] = Number(r.a) || _playerAges[r.n];
+    if (!_playerGenes[r.n]) {
+      _playerGenes[r.n] = { v: r.v || (1 + Math.floor(rngNext() * 4)), l: r.l || (1 + Math.floor(rngNext() * 4)) };
+    }
+  });
+}
+
 function loadPlayerAges() {
   if (_playerAges) return;
   _playerAges = {};
@@ -17980,11 +17999,34 @@ function loadPlayerAges() {
       if (data && data.textContent) rows = JSON.parse(data.textContent);
     }
     if (!rows || !rows.length) return;
-    rows.forEach(function(r) {
-      _playerAges[r.n] = r.a;
-      _playerGenes[r.n] = { v: r.v || (1 + Math.floor(rngNext() * 4)), l: r.l || (1 + Math.floor(rngNext() * 4)) };
-    });
+    mergeBundledPlayerAgeRows();
   } catch(e) {}
+}
+
+function repairLeagueAgesFromBundledData() {
+  if (!STATE.career) return 0;
+  STATE.career.flags = STATE.career.flags || {};
+  if (STATE.career.flags.v5LeagueAgeRepair) return 0;
+  if (!window.__PLAYER_AGE_ROWS__ || !window.__PLAYER_AGE_ROWS__.length) return 0;
+  mergeBundledPlayerAgeRows();
+  var completedSeasons = Math.max(0, Number(STATE.career.seasonCount) || 0);
+  var minimumSeasonSteps = Math.max(0, completedSeasons - 1);
+  var repaired = 0;
+  if (typeof NBA2K_DATA !== 'undefined' && typeof NBA2K_TEAMS !== 'undefined') {
+    NBA2K_TEAMS.forEach(function(team) {
+      (NBA2K_DATA[team] || []).forEach(function(player) {
+        var baseAge = _playerAges && _playerAges[player && player.name];
+        if (!baseAge) return;
+        var minimumAge = Number(baseAge) + minimumSeasonSteps;
+        if (typeof player._age !== 'number' || player._age < minimumAge) {
+          player._age = minimumAge;
+          repaired++;
+        }
+      });
+    });
+  }
+  STATE.career.flags.v5LeagueAgeRepair = true;
+  return repaired;
 }
 
 function getPlayerAge(playerName) {
