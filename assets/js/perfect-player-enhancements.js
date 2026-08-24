@@ -850,6 +850,8 @@
       return sum + p.costs.reduce(function(costSum, cost) { return costSum + cost; }, 0);
     }, 0);
   }
+  // 魔改设置：开局即获得升满整棵传承强化树所需的全部传承点。
+  var STARTING_LEGACY_LP = legacyTreeCost();
 
   function loadLegacy() {
     try {
@@ -871,7 +873,7 @@
   legacy.spent = legacySpentForLevels(legacy.levels);
   saveLegacy(legacy);
 
-  // 总 LP = 已解锁成就按稀有度求和 + 生涯档案馆每条记录 5 点
+  // 总 LP = 开局全满点数 + 已解锁成就按稀有度求和 + 生涯档案馆每条记录 5 点
   function achievementLP() {
     var sum = 0;
     for (var k in unlocked) {
@@ -893,7 +895,7 @@
     return archiveRecordCount() * LP_PER_ARCHIVE_RECORD;
   }
   function totalLP() {
-    return achievementLP() + archiveLP();
+    return STARTING_LEGACY_LP + achievementLP() + archiveLP();
   }
   function maxAchievementLP() {
     return ACHIEVEMENTS.reduce(function(sum, achievement) {
@@ -901,7 +903,7 @@
     }, 0);
   }
   function maxLegacyLP() {
-    return maxAchievementLP() + archiveLP();
+    return STARTING_LEGACY_LP + maxAchievementLP() + archiveLP();
   }
   function availableLP() { return Math.max(0, totalLP() - (legacy.spent || 0)); }
   PP_FX.totalLP = totalLP;
@@ -911,6 +913,7 @@
   PP_FX.archiveLP = archiveLP;
   PP_FX.getLegacy = function () { return legacy; };
   PP_FX.getLegacyTreeCost = legacyTreeCost;
+  PP_FX.STARTING_LEGACY_LP = STARTING_LEGACY_LP;
   PP_FX.getPerkLevelCost = function(id, level) { return getPerkLevelCost(PERK_MAP[id], level); };
 
   // 计算某强化当前等级带来的属性增量表 {attrKey: delta}

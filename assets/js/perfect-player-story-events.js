@@ -1063,10 +1063,15 @@
     if (!flagKey || flags[flagKey]) return '';
     if (typeof PP_SKILLS === 'undefined' || typeof PP_SKILLS.ensureSkillState !== 'function') return '';
     flags[flagKey] = true;
-    var st = PP_SKILLS.ensureSkillState();
-    st.points += 1;
-    st.earned += 1;
-    return '球风点+1。';
+    var credited = 2;
+    if (typeof PP_SKILLS.grantStylePoints === 'function') {
+      credited = PP_SKILLS.grantStylePoints(1);
+    } else {
+      var st = PP_SKILLS.ensureSkillState();
+      st.points += credited;
+      st.earned += credited;
+    }
+    return '球风点+' + credited + '。';
   }
 
   // ——— 招牌动作线：赛季发现 → 夏天打磨 → 比赛验证 → 收束给球风点 ———

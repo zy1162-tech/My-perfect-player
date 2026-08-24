@@ -4,6 +4,9 @@
 
 window.PP_DEBUG = false;
 
+// 魔改设置：新生涯进入联盟时的默认年龄。
+const PLAYER_STARTING_AGE = 19;
+
 // ==================== 游戏状态 ====================
 const STATE = {
   mode: null,           // 'current' | 'legend'
@@ -58,7 +61,7 @@ const STATE = {
   // 生涯
   career: {
     seasonCount: 0,
-    currentAge: 22,
+    currentAge: PLAYER_STARTING_AGE,
     contract: 4,
     seasons: [],
     totalStats: { pts: 0, reb: 0, ast: 0, stl: 0, blk: 0, tov: 0, fgm: 0, fga: 0, ftm: 0, fta: 0, threeM: 0, threeA: 0, games: 0, mins: 0 },
@@ -287,7 +290,7 @@ function restoreBaseLeagueRoster() {
 function createFreshCareer() {
   return {
     seasonCount: 0,
-    currentAge: 22,
+    currentAge: PLAYER_STARTING_AGE,
     contract: 4,
     seasons: [],
     totalStats: { pts:0, reb:0, ast:0, stl:0, blk:0, tov:0, fgm:0, fga:0, ftm:0, fta:0, threeM:0, threeA:0, games:0, mins:0 },

@@ -115,10 +115,18 @@
     }
     var profile = { name: name.slice(0, 12), avatar: selectedAvatar };
     applyProfile(profile);
-    if (typeof beginAttributeBuild === 'function') {
-      beginAttributeBuild();
-    } else if (typeof showScreen === 'function') {
-      showScreen('screen-build');
+    var enterBuild = function () {
+      if (typeof beginAttributeBuild === 'function') {
+        beginAttributeBuild();
+      } else if (typeof showScreen === 'function') {
+        showScreen('screen-build');
+      }
+    };
+    if (window.PERFECT_PLAYER_DATA_READY && typeof window.PERFECT_PLAYER_DATA_READY.then === 'function') {
+      if (error) error.textContent = '正在载入现役与传奇球员库…';
+      window.PERFECT_PLAYER_DATA_READY.then(enterBuild, enterBuild);
+    } else {
+      enterBuild();
     }
   };
 
@@ -188,11 +196,15 @@
   window.PERFECT_PLAYER_DISPLAY_BY_NAME = window.PERFECT_PLAYER_DISPLAY_BY_NAME || {};
   window.PERFECT_PLAYER_BUILD_DATA = window.PERFECT_PLAYER_BUILD_DATA || {};
   window.PERFECT_PLAYER_HISTORICAL_SURPRISE_DATA = window.PERFECT_PLAYER_HISTORICAL_SURPRISE_DATA || {};
-  window.PERFECT_PLAYER_DATA_READY = fetch('assets/data/perfect-player-pool.json?v=20260809-static-peak-table')
-    .then(function (response) {
-      if (!response.ok) throw new Error('球员库加载失败：' + response.status);
-      return response.json();
-    })
+  // 本地直接打开 file:// 页面时浏览器会拦截 fetch(JSON)。V3 优先使用预载的 JS 球员库，
+  // 部署到网站且未提供预载数据时仍保留 JSON fetch 作为兼容后备。
+  var playerPoolSource = window.PERFECT_PLAYER_POOL_DATA
+    ? Promise.resolve(window.PERFECT_PLAYER_POOL_DATA)
+    : fetch('assets/data/perfect-player-pool.json?v=20260824-local-player-pool-v3').then(function (response) {
+        if (!response.ok) throw new Error('球员库加载失败：' + response.status);
+        return response.json();
+      });
+  window.PERFECT_PLAYER_DATA_READY = playerPoolSource
     .then(function (payload) {
       var report = {
         teams: 0,

@@ -855,10 +855,14 @@
     pack.rewardsApplied = true;
     var rewards = { style: 0, training: 0, fame: 0 };
     if (window.PP_SKILLS && typeof PP_SKILLS.ensureSkillState === 'function') {
-      var st = PP_SKILLS.ensureSkillState();
-      st.points = n(st.points) + 1;
-      st.earned = n(st.earned) + 1;
-      rewards.style = 1;
+      if (typeof PP_SKILLS.grantStylePoints === 'function') {
+        rewards.style = PP_SKILLS.grantStylePoints(1);
+      } else {
+        var st = PP_SKILLS.ensureSkillState();
+        st.points = n(st.points) + 2;
+        st.earned = n(st.earned) + 2;
+        rewards.style = 2;
+      }
     }
     if (typeof addEventTrainingPoints === 'function') {
       rewards.training = addEventTrainingPoints(1) || 0;
@@ -894,7 +898,7 @@
       html += '<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--orange-bg);border:1px solid rgba(255,107,53,.28);">';
       html += '<div style="font-size:11px;font-weight:800;color:var(--orange);margin-bottom:6px;">胜利奖励</div>';
       html += '<div style="font-size:12px;line-height:1.7;color:var(--text);">';
-      if (rewards && rewards.style) html += '球风点 <strong>+1</strong><br>';
+      if (rewards && rewards.style) html += '球风点 <strong>+' + rewards.style + '</strong><br>';
       if (rewards && rewards.fame) html += '人气 <strong>+1</strong><br>';
       if (rewards && rewards.training) {
         html += '训练点 <strong>+' + rewards.training + '</strong>';
@@ -917,7 +921,7 @@
 
     if (won && rewards && window.PP_FX && typeof PP_FX.toast === 'function') {
       var bits = [];
-      if (rewards.style) bits.push('球风点+1');
+      if (rewards.style) bits.push('球风点+' + rewards.style);
       if (rewards.fame) bits.push('人气+1');
       if (rewards.training) bits.push('训练点+' + rewards.training);
       if (bits.length) PP_FX.toast('全明星胜利 · ' + bits.join(' · '), { gold: true, icon: '⭐', duration: 3600 });

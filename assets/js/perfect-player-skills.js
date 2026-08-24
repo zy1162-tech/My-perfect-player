@@ -12,6 +12,8 @@
     4: { mu: 1.21, sigma: 0.085, lo: 1.00, hi: 1.36 }
   };
   var SEASON_POINT_CAP = 12;
+  // 魔改设置：所有新获得的球风点按此倍率结算。
+  var STYLE_POINT_REWARD_MULTIPLIER = 2;
 
   /** 梦境挑战击败传奇队后可解锁第四级的球风技能 */
   var LEGEND_TIER_SKILL_IDS = {
@@ -270,6 +272,15 @@
     c.skills.earned = Number(c.skills.earned) || 0;
     c.skills.purchased = c.skills.purchased || {};
     return c.skills;
+  }
+
+  function grantStylePoints(amount) {
+    var baseAmount = Math.max(0, Number(amount) || 0);
+    var creditedAmount = baseAmount * STYLE_POINT_REWARD_MULTIPLIER;
+    var st = ensureSkillState();
+    st.points += creditedAmount;
+    st.earned += creditedAmount;
+    return creditedAmount;
   }
 
   function meetsReqs(reqs, attrs) {
@@ -587,9 +598,12 @@
     if (!s || !s.season || !s.career) return null;
     if (s.season._stylePointsGranted) return s.career.skills && s.career.skills.lastGrant;
     var grant = computeSeasonStyleGrant();
+    grant.total = grantStylePoints(grant.total);
+    grant.parts = (grant.parts || []).map(function (part) {
+      return Object.assign({}, part, { amount: part.amount * STYLE_POINT_REWARD_MULTIPLIER });
+    });
+    grant.multiplier = STYLE_POINT_REWARD_MULTIPLIER;
     var st = ensureSkillState();
-    st.points += grant.total;
-    st.earned += grant.total;
     st.lastGrant = grant;
     s.season._stylePointsGranted = true;
     return grant;
@@ -606,7 +620,9 @@
     STYLE_SKILLS: STYLE_SKILLS,
     SKILL_COSTS: SKILL_COSTS,
     SKILL_MULT: SKILL_MULT,
+    STYLE_POINT_REWARD_MULTIPLIER: STYLE_POINT_REWARD_MULTIPLIER,
     ensureSkillState: ensureSkillState,
+    grantStylePoints: grantStylePoints,
     getPurchasedLevel: getPurchasedLevel,
     getEffectiveSkillLevel: getEffectiveSkillLevel,
     getStyleSkillMu: getStyleSkillMu,
