@@ -429,11 +429,12 @@ function renderModeSelect() {
   });
 
   const localNav = document.createElement('div');
+  localNav.className = 'mode-local-nav';
   localNav.style.cssText = 'grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:4px;';
   localNav.innerHTML =
-    '<button class="btn btn-secondary btn-sm" style="min-height:48px;" onclick="if(window.PP_FX) PP_FX.openPanel()">🏆<br>成就殿堂</button>' +
-    '<button class="btn btn-secondary btn-sm" style="min-height:48px;" onclick="if(window.PP_FX) PP_FX.openLegacyPanel()">🧬<br>传承祭坛</button>' +
-    '<button class="btn btn-secondary btn-sm career-archive-home-btn" id="career-archive-btn" style="min-height:48px;" onclick="showCareerArchive()">📁<br>生涯档案 <span id="career-archive-count">0</span></button>';
+    '<button class="btn btn-secondary btn-sm mode-local-nav-btn" onclick="if(window.PP_FX) PP_FX.openPanel()"><span class="mode-local-nav-icon">🏆</span><span>成就殿堂</span></button>' +
+    '<button class="btn btn-secondary btn-sm mode-local-nav-btn" onclick="if(window.PP_FX) PP_FX.openLegacyPanel()"><span class="mode-local-nav-icon">🧬</span><span>传承祭坛</span></button>' +
+    '<button class="btn btn-secondary btn-sm mode-local-nav-btn career-archive-home-btn" id="career-archive-btn" onclick="showCareerArchive()"><span class="mode-local-nav-icon">📁</span><span>生涯档案 <b id="career-archive-count">0</b></span></button>';
   container.appendChild(localNav);
 
   if (STATE.mode !== 'legend') STATE.mode = 'current';
@@ -4568,9 +4569,33 @@ function generateBoxScore(teamA, teamB, totalA, totalB) {
       return { player:player, pos:getSimPrimaryPosition(player), mins:minutes[i], offense:offense, creation:creation };
     });
 
-    const scoringWeights = profiles.map(function(profile) {
-      var form = Math.max(0.78, Math.min(1.22, simGaussian(1, 0.09)));
-      return profile.mins * (0.22 + Math.pow(simSkill01(profile.creation), 1.35) * 1.45) * form;
+    var hierarchy = profiles.slice().sort(function(a, b) {
+      var aScore = a.creation * 0.68 + a.offense * 0.22 + (parseInt(a.player.ovr) || 50) * 0.10;
+      var bScore = b.creation * 0.68 + b.offense * 0.22 + (parseInt(b.player.ovr) || 50) * 0.10;
+      return bScore - aScore;
+    });
+    profiles.forEach(function(profile) {
+      profile.hierarchyRank = hierarchy.indexOf(profile);
+      var form = Math.max(0.74, Math.min(1.30, simGaussian(1, 0.12)));
+      var heatRoll = Math.random();
+      if (heatRoll < 0.12) form = Math.min(1.70, form + 0.38); // 替补/次核心偶尔手热
+      else if (profile.hierarchyRank === 0 && heatRoll > 0.84 && heatRoll <= 0.96) form *= 0.68; // 核心主动让权或手感一般
+      else if (heatRoll > 0.96) form = Math.max(0.68, form - 0.18);
+      profile.gameForm = form;
+    });
+    var teamFga = Math.max(82, Math.min(105, Math.round(89 + (totalPts - 112) * 0.22 + simGaussian(0, 2.8))));
+    var shotWeights = profiles.map(function(profile) {
+      var role = [1.30, 1.18, 1.06, 0.96, 0.88][profile.hierarchyRank] || (profile.hierarchyRank < starters.length ? 0.82 : 0.70);
+      var skill = 0.30 + Math.pow(simSkill01(profile.creation), 1.85) * 1.75;
+      return profile.mins * skill * role * profile.gameForm;
+    });
+    var attemptMinimums = profiles.map(function(profile) { return profile.mins >= 28 ? 4 : (profile.mins >= 16 ? 2 : 1); });
+    var attempts = allocateIntegerTotal(teamFga, shotWeights, attemptMinimums);
+    const scoringWeights = profiles.map(function(profile, i) {
+      var shooting = (parseInt(profile.player.threePT)||50) * 0.34 + (parseInt(profile.player.MID)||50) * 0.22 +
+        (parseInt(profile.player.FIN)||50) * 0.34 + (parseInt(profile.player.CLU)||50) * 0.10;
+      var scoringForm = Math.max(0.78, Math.min(1.25, simGaussian(0.92 + profile.gameForm * 0.08, 0.09)));
+      return Math.max(0.2, attempts[i]) * (0.72 + simSkill01(shooting) * 0.58) * scoringForm;
     });
     const points = allocateIntegerTotal(totalPts, scoringWeights);
     function minuteAverage(attr) {
@@ -4607,18 +4632,27 @@ function generateBoxScore(teamA, teamB, totalA, totalB) {
       var player = profile.player;
       var shooting = (parseInt(player.threePT)||50) * 0.34 + (parseInt(player.MID)||50) * 0.22 + (parseInt(player.FIN)||50) * 0.34 + (parseInt(player.CLU)||50) * 0.10;
       var shooting01 = simSkill01(shooting);
-      var fga = points[i] <= 0 ? 0 : Math.max(1, Math.round(points[i] / (0.92 + shooting01 * 0.42) + simGaussian(0, 1.1)));
+      var fga = attempts[i];
       var threeShare = Math.max(0.04, Math.min(0.68, 0.18 + ((parseInt(player.threePT)||50) - 60) * 0.008));
       var threeA = Math.min(fga, Math.max(0, Math.round(fga * threeShare)));
-      var threePct = Math.max(0.24, Math.min(0.45, 0.28 + simSkill01(player.threePT) * 0.17));
-      var twoPct = Math.max(0.38, Math.min(0.70, 0.43 + simSkill01((parseInt(player.MID)||50) * 0.35 + (parseInt(player.FIN)||50) * 0.65) * 0.27));
-      var threeM = Math.min(threeA, Math.max(0, Math.round(threeA * threePct)));
-      var twoM = Math.min(fga - threeA, Math.max(0, Math.round((fga - threeA) * twoPct)));
+      var formPct = (profile.gameForm - 1) * 0.055;
+      var threePct = Math.max(0.20, Math.min(0.52, 0.27 + simSkill01(player.threePT) * 0.17 + formPct));
+      var twoPct = Math.max(0.34, Math.min(0.72, 0.41 + simSkill01((parseInt(player.MID)||50) * 0.35 + (parseInt(player.FIN)||50) * 0.65) * 0.27 + formPct));
+      var threeM = sampleBinomial(threeA, threePct);
+      var twoM = sampleBinomial(fga - threeA, twoPct);
+      while (threeM * 3 + twoM * 2 > points[i]) {
+        if (twoM > 0) twoM--;
+        else if (threeM > 0) threeM--;
+        else break;
+      }
+      var ftm = Math.max(0, points[i] - threeM * 3 - twoM * 2);
+      var fta = ftm + (ftm > 0 ? Math.max(0, Math.round(simGaussian(1.2, 1.0))) : 0);
       return {
         name: player.cname || player.name,
         pos: profile.pos,
         pts: points[i], reb: rebounds[i], ast: assists[i], stl: steals[i], blk: blocks[i], tov: turnovers[i],
         fgm: threeM + twoM, fga: fga, threeM: threeM, threeA: threeA,
+        ftm: ftm, fta: fta,
         mins: profile.mins,
         isUser: player._isUser || false,
       };
@@ -8121,14 +8155,14 @@ function showPlayoffGameDataPanel(gameEntry, teamA, teamB, roundName, onContinue
   }
   function boxRows(players) {
     return players.slice(0, 8).map(function(p) {
-      return '<div style="display:grid;grid-template-columns:minmax(0,1fr) 24px 22px 22px 22px 34px;gap:3px;padding:3px 0;border-bottom:1px solid var(--border-light);font-size:9px;' + (p.isUser ? 'background:var(--orange-dim);color:var(--orange);font-weight:700;' : '') + '">' +
-        '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (p.name || '球员') + '</span><b style="text-align:right;">' + (p.pts || 0) + '</b><span style="text-align:right;">' + (p.reb || 0) + '</span><span style="text-align:right;">' + (p.ast || 0) + '</span><span style="text-align:right;">' + (p.tov || 0) + '</span><span style="text-align:right;">' + (p.fgm || 0) + '-' + (p.fga || 0) + '</span></div>';
+      return '<div class="pp-game-box-row' + (p.isUser ? ' is-user' : '') + '">' +
+        '<span class="pp-game-box-name">' + (p.name || '球员') + '</span><b class="pp-game-box-num">' + (p.pts || 0) + '</b><span class="pp-game-box-num">' + (p.reb || 0) + '</span><span class="pp-game-box-num">' + (p.ast || 0) + '</span><span class="pp-game-box-num">' + (p.tov || 0) + '</span><span class="pp-game-box-num pp-game-box-fg">' + (p.fgm || 0) + '-' + (p.fga || 0) + '</span></div>';
     }).join('');
   }
   function teamBox(team, players) {
     return '<section style="min-width:0;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);padding:7px;">' +
       '<strong style="display:block;font-size:11px;margin-bottom:4px;">' + getTeamLogo(team, 16) + ' ' + getTeamName(team) + '</strong>' +
-      '<div style="display:grid;grid-template-columns:minmax(0,1fr) 24px 22px 22px 22px 34px;gap:3px;color:var(--text-muted);font-size:8px;padding-bottom:2px;"><span>球员</span><span>分</span><span>板</span><span>助</span><span>误</span><span>投篮</span></div>' + boxRows(players) + '</section>';
+      '<div class="pp-game-box-head"><span>球员</span><span>分</span><span>板</span><span>助</span><span>误</span><span>投篮</span></div>' + boxRows(players) + '</section>';
   }
   var overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
@@ -8139,7 +8173,7 @@ function showPlayoffGameDataPanel(gameEntry, teamA, teamB, roundName, onContinue
       '<strong>' + getTeamName(teamA) + '</strong><span style="font-family:var(--font-display);font-size:23px;color:var(--orange);">' + gameEntry.myScore + ' - ' + gameEntry.oppScore + '</span><strong>' + getTeamName(teamB) + '</strong></div>' +
     '<div style="padding:0 14px 8px;">' + statRow('篮板','reb') + statRow('助攻','ast') + statRow('抢断','stl') + statRow('盖帽','blk') + statRow('失误','tov') +
       '<div style="display:grid;grid-template-columns:1fr 66px 1fr;gap:5px;padding:3px 0;font-size:10px;"><strong style="text-align:right;">' + ta.fgm + '-' + ta.fga + '</strong><span style="text-align:center;color:var(--text-muted);">投篮</span><strong>' + tb.fgm + '-' + tb.fga + '</strong></div></div>' +
-    '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:4px 10px 10px;">' + teamBox(teamA, teamABox) + teamBox(teamB, teamBBox) + '</div>' +
+    '<div class="pp-game-box-grid">' + teamBox(teamA, teamABox) + teamBox(teamB, teamBBox) + '</div>' +
     '<div style="padding:0 12px 13px;"><button class="btn btn-primary btn-sm" id="playoff-game-data-continue" style="width:100%;">继续下一场</button></div></div>';
   document.body.appendChild(overlay);
   document.getElementById('playoff-game-data-continue').onclick = function() {
@@ -17862,7 +17896,7 @@ function assignFreeAgents() {
         if (hasStar) continue;
       }
       var roster = NBA2K_DATA[t];
-      if (!roster || roster.length >= 18) continue;
+      if (!roster || roster.length >= 15) continue;
       var posCount = 0;
       roster.forEach(function(p) {
         if (canPlayPosition(p.pos || '', pos)) posCount++;
@@ -17893,7 +17927,7 @@ function assignFreeAgents() {
         if (hasStarFB) continue;
       }
       var fbRoster = NBA2K_DATA[fb];
-      if (fbRoster && fbRoster.length < 18) {
+      if (fbRoster && fbRoster.length < 15) {
         fbRoster.push(fa);
         fa._justSigned = true;
         if (fa.ovr > 86) starSignedTeams[fb] = true;
@@ -18302,7 +18336,15 @@ function evolveLeague() {
       if (p.type === '新秀') p.type = '球员';
       newRoster.push(p);
     });
-    while (newRoster.length < 18) { // 休赛期名单补齐到 18 人
+    // 兼容旧存档：休赛期自动收缩到 NBA 标准的 15 人上限，并始终保留玩家本人。
+    if (newRoster.length > 15) {
+      newRoster.sort(function(a, b) {
+        if (!!a._isUser !== !!b._isUser) return a._isUser ? -1 : 1;
+        return (Number(b.ovr) || 0) - (Number(a.ovr) || 0);
+      });
+      newRoster = newRoster.slice(0, 15);
+    }
+    while (newRoster.length < 15) { // 休赛期名单补齐到 15 人
       var rk = generateRookie();
       rk._enterYear = incomingSeasonStart;
       newRoster.push(rk);

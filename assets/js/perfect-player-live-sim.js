@@ -728,7 +728,21 @@
     return base * 0.94;
   }
 
-  function pickShooter(court, userOnCourt, usage, clutch) {
+  function shotFormFor(game, player) {
+    if (!game || !player) return 1;
+    game.shotForms = game.shotForms || {};
+    var id = pid(player);
+    if (game.shotForms[id] == null) {
+      var form = 0.78 + rand() * 0.46;
+      var heat = rand();
+      if (heat < 0.10) form += 0.28;
+      else if (heat > 0.96) form -= 0.18;
+      game.shotForms[id] = clamp(form, 0.66, 1.52);
+    }
+    return game.shotForms[id];
+  }
+
+  function pickShooter(court, userOnCourt, usage, clutch, game) {
     var user = court.filter(function (p) { return p && p._isUser; })[0];
     if (userOnCourt && user && usage > 0) {
       var uUsage = clamp(usage * userLiveScoringScale(), 0.06, 0.39);
@@ -738,11 +752,15 @@
     if (!pool.length) pool = court;
     if (clutch) {
       return pickWeighted(pool, function (p) {
-        return Math.pow(skill01(creationOf(p)), 1.2) * (0.7 + skill01(attr(p, 'CLU')) * 0.8);
+        var rank = pool.slice().sort(function(a, b) { return creationOf(b) - creationOf(a); }).indexOf(p);
+        var role = [1.55, 1.22, 1.02, 0.88, 0.78][rank] || 0.72;
+        return Math.pow(skill01(creationOf(p)), 1.65) * (0.7 + skill01(attr(p, 'CLU')) * 0.8) * role * shotFormFor(game, p);
       });
     }
     return pickWeighted(pool, function (p) {
-      return Math.pow(skill01(creationOf(p)), 1.35) * (0.35 + ovrOf(p) / 120);
+      var rank = pool.slice().sort(function(a, b) { return (creationOf(b) + ovrOf(b) * 0.20) - (creationOf(a) + ovrOf(a) * 0.20); }).indexOf(p);
+      var role = [1.52, 1.20, 1.00, 0.86, 0.76][rank] || 0.70;
+      return Math.pow(skill01(creationOf(p)), 1.95) * (0.28 + ovrOf(p) / 115) * role * shotFormFor(game, p);
     });
   }
 
@@ -2111,7 +2129,7 @@
     }
 
     if (!labReb && !labShotOnly && (fx.forceTov || fx.stl || chance(tovRate))) {
-      var loser = pickShooter(ctx.offCourt, ctx.userOn, ctx.usage * 0.55, false) || ctx.offCourt[0];
+      var loser = pickShooter(ctx.offCourt, ctx.userOn, ctx.usage * 0.55, false, game) || ctx.offCourt[0];
       if (loser && loser._isUser) {
         var userControl = attr(loser, 'HAN') * 0.58 + attr(loser, 'PAS') * 0.27 + attr(loser, 'CLU') * 0.15;
         var userPassing = attr(loser, 'PAS') * 0.65 + attr(loser, 'HAN') * 0.25 + attr(loser, 'CLU') * 0.10;
@@ -2180,7 +2198,7 @@
 
     var shooter = (ev && ev._bind && ev._bind.actor && ctx.offCourt.indexOf(ev._bind.actor) >= 0)
       ? ev._bind.actor
-      : pickShooter(ctx.offCourt, ctx.userOn, ctx.usage, ctx.clutch);
+      : pickShooter(ctx.offCourt, ctx.userOn, ctx.usage, ctx.clutch, game);
     if (!shooter) shooter = ctx.offCourt[0];
     var passer = null;
     if (fx.helperAst && ev._bind && ev._bind.helper && pid(ev._bind.helper) !== pid(shooter)) passer = ev._bind.helper;

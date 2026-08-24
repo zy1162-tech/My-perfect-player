@@ -200,11 +200,11 @@ for (const year of [2003, 2010, 2016]) {
       if (!(year === 2003 && team === 'CHA') && seasonOwner[key] && seasonOwner[key].team !== team) continue;
       claimed.add(key);
       roster.push(toRosterPlayer(row, null, year, team === 'CHA' && year === 2003 ? '2004-05 夏洛特扩军名单校准' : null));
-      if (roster.length >= 18) break;
+      if (roster.length >= 15) break;
     }
   }
 
-  // 第三轮：按队轮流从球队前后数年的真实名单补足到 18 人。
+  // 第三轮：按 NBA 大名单上限，从球队历史真实名单补足到 15 人。
   const adjacentByTeam = {};
   const adjacentIndex = {};
   TEAMS.forEach(team => {
@@ -215,11 +215,11 @@ for (const year of [2003, 2010, 2016]) {
     adjacentIndex[team] = 0;
   });
   let madeProgress = true;
-  while (madeProgress && TEAMS.some(team => output[year][team].length < 18)) {
+  while (madeProgress && TEAMS.some(team => output[year][team].length < 15)) {
     madeProgress = false;
     for (const team of TEAMS) {
       const roster = output[year][team];
-      if (roster.length >= 18) continue;
+      if (roster.length >= 15) continue;
       const adjacent = adjacentByTeam[team];
       while (adjacentIndex[team] < adjacent.length) {
         const nearby = adjacent[adjacentIndex[team]++];
@@ -236,7 +236,7 @@ for (const year of [2003, 2010, 2016]) {
   for (const team of TEAMS) {
     const roster = output[year][team];
     roster.sort((a, b) => b.ovr - a.ovr);
-    output[year][team] = roster.slice(0, 18);
+    output[year][team] = roster.slice(0, 15);
   }
 }
 

@@ -80,7 +80,7 @@
     var roster = NBA2K_DATA[team] || (NBA2K_DATA[team] = []);
     var duplicate = roster.some(function(p) { return p && String(p.name).toLowerCase() === String(player.name).toLowerCase(); });
     if (duplicate) return false;
-    if (roster.length >= 18) {
+    if (roster.length >= 15) {
       var weakest = -1;
       roster.forEach(function(p, idx) {
         if (p && !p._isUser && (weakest < 0 || Number(p.ovr) < Number(roster[weakest].ovr))) weakest = idx;
@@ -147,7 +147,7 @@
     overlay.id = 'legend-era-picker';
     overlay.innerHTML = '<div class="team-picker-modal" style="max-width:390px;">' +
       '<div class="team-picker-header"><span>🏆 选择传奇年代</span><button class="modal-close" id="legend-era-close">✕</button></div>' +
-      '<div style="padding:10px 12px 4px;font-size:11px;line-height:1.6;color:var(--text-dim);">现役生涯会完整保留。传奇年代使用完整真实名单开局；有原始 2K 数值的球员采用对应版本评分，其余标注为当季数据校准。</div>' +
+      '<div style="padding:10px 12px 4px;font-size:11px;line-height:1.6;color:var(--text-dim);">现役生涯会完整保留。传奇年代每队最多 15 人；有原始 2K 数值的球员采用对应版本评分，其余标注为当季数据校准。</div>' +
       '<div style="padding:7px 12px 14px;display:grid;gap:8px;">' +
         '<button class="btn btn-secondary" data-era="2003" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2003 白金一代</strong><small>科比、邓肯、艾弗森等时代核心同场；詹姆斯、韦德、安东尼、波什从这一届开始。</small></button>' +
         '<button class="btn btn-secondary" data-era="2010" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2010 吾皇登基纪元</strong><small>NBA 2K10 名单：詹姆斯冲击王座，科比卫冕，杜兰特崛起，库里开启新秀赛季。</small></button>' +

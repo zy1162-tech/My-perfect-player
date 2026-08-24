@@ -44,7 +44,7 @@
   }
 
   function rosterRows(snapshot) {
-    return snapshot.roster.slice(0, 18).map(function(p, idx) {
+    return snapshot.roster.slice(0, 15).map(function(p, idx) {
       var isStarter = snapshot.starters.indexOf(p) >= 0;
       var age = p && p._isUser
         ? Number(STATE.career && STATE.career.currentAge) || 19
@@ -67,7 +67,7 @@
           '<div style="font-size:9px;color:var(--text-dim);margin-top:2px;">攻 ' + Math.round(Number(p.offense) || 0) + ' · 防 ' + Math.round(Number(p.defense) || 0) + ' · 深度 ' + Math.round(Number(p.depth) || 0) + '</div></div>' +
         '<div style="text-align:right;"><strong style="display:block;color:var(--orange);font-size:18px;line-height:1;">' + snapshot.powerRating + '</strong><small style="font-size:8px;color:var(--text-muted);">球队评分</small></div>' +
       '</div>' + rosterRows(snapshot) +
-      '<div style="font-size:9px;color:var(--text-muted);padding-top:6px;">轮换评分 ' + snapshot.rotationRating + ' · 展示完整 18 人名单</div></section>';
+      '<div style="font-size:9px;color:var(--text-muted);padding-top:6px;">轮换评分 ' + snapshot.rotationRating + ' · 展示最多 15 人大名单</div></section>';
   }
 
   global.showTeamRosterModal = function(team, compareTeam, title) {
@@ -200,7 +200,7 @@
     if (poolIdx >= 0) pool.splice(poolIdx, 1);
     var roster = NBA2K_DATA[STATE.careerTeam] || (NBA2K_DATA[STATE.careerTeam] = []);
     var released = null;
-    if (roster.length >= 18) {
+    if (roster.length >= 15) {
       var weakestIdx = -1;
       for (var i = 0; i < roster.length; i++) {
         var member = roster[i];

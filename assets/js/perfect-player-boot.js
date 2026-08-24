@@ -21,7 +21,7 @@
     ],
     live: [
       ['assets/js/perfect-player-live-court.js?v=20260823-court-v36', '俯瞰球场'],
-      ['assets/js/perfect-player-live-sim.js?v=20260824-stat-balance-v6', '文字直播']
+    ['assets/js/perfect-player-live-sim.js?v=20260824-shot-roster-ui-v7', '文字直播']
     ]
   };
 
