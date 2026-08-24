@@ -91,6 +91,10 @@ function $$(sel) { return document.querySelectorAll(sel); }
 
 function getSeasonLabel(seasonNum) {
   var n = Math.max(1, parseInt(seasonNum) || 1);
+  if (STATE.mode === 'legend' && STATE.eraStart) {
+    var eraYear = Number(STATE.eraStart) + n - 1;
+    return eraYear + '-' + String((eraYear + 1) % 100).padStart(2, '0') + '赛季';
+  }
   var start = 2025 + n;
   return start + '-' + String((start + 1) % 100) + '赛季';
 }
@@ -370,7 +374,7 @@ function renderModeSelect() {
   const container = html('feature-grid');
   container.innerHTML = '';
   
-  // 保留虎扑原模式卡布局，只移除未实现的传奇占位模式。
+  // 现役生涯与本地独立实现的传奇年代并列保留。
   const cards = [
     {
       tag: 'Current',
@@ -380,13 +384,21 @@ function renderModeSelect() {
       btnLabel: '🎮 进入活动',
       mode: 'current',
     },
+    {
+      tag: 'LEGEND',
+      tagClass: 'new',
+      title: '传奇年代',
+      sub: '从 2003 白金一代或 2009 新世代开启生涯，后续选秀接入真实历史届',
+      btnLabel: '🏆 选择年代',
+      mode: 'legend',
+    },
   ];
   
   cards.forEach((c) => {
     const card = document.createElement('div');
     card.className = 'feature-card';
     if (c.disabled) card.classList.add('disabled-card');
-    if (c.mode === 'current') card.classList.add('selected');
+    if ((c.mode === 'current' && STATE.mode !== 'legend') || (c.mode === 'legend' && STATE.mode === 'legend')) card.classList.add('selected');
     card.innerHTML = `
       <span class="fc-tag ${c.tagClass}">${c.tag}</span>
       <div class="fc-title">${c.title}</div>
@@ -401,8 +413,8 @@ function renderModeSelect() {
       btn.onclick = (e) => {
         trackEvent({act:"click",blk:"BMC098",pos:"TC1",label:"开始游戏"});
         e.stopPropagation();
-        STATE.mode = c.mode;
-        startGame();
+        if (c.mode === 'legend' && typeof showLegendEraPicker === 'function') showLegendEraPicker();
+        else { STATE.mode = c.mode; startGame(); }
       };
     }
     container.appendChild(card);
@@ -415,14 +427,14 @@ function renderModeSelect() {
     }
   });
 
-  STATE.mode = 'current';
+  if (STATE.mode !== 'legend') STATE.mode = 'current';
   refreshContinueActivityButton();
   refreshCareerArchiveButton();
 }
 
 async function startGame() {
   if (window.PERFECT_PLAYER_DATA_READY) await window.PERFECT_PLAYER_DATA_READY;
-  if (STATE.mode === 'current') {
+  if (STATE.mode === 'current' || STATE.mode === 'legend') {
     showCharacterCreate();
   } else {
     alert('该模式开发中');
@@ -794,6 +806,9 @@ function drawBuildPlayers(pool, count, team) {
   const targetCount = Math.min(count || 5, source.length);
   const shuffled = shuffleArr(source.slice());
   const historical = shuffleArr(getBuildHistoricalSurprisePool(team).filter(Boolean));
+  if (STATE.mode === 'legend' && historical.length) {
+    return historical.slice(0, Math.min(targetCount, historical.length));
+  }
   if (historical.length && targetCount >= 1 && Math.random() < HISTORICAL_SURPRISE_DRAW_CHANCE) {
     const currentCards = shuffled.slice(0, Math.max(0, targetCount - 1));
     const historicalCard = historical[0];
@@ -2088,6 +2103,7 @@ function spinCareerSlot() {
 }
 
 function selectCareerTeam(team) {
+  if (STATE.mode === 'legend' && typeof applyLegendEraLeague === 'function') applyLegendEraLeague();
   STATE.careerTeam = team;
   const teamPlayers = NBA2K_DATA[team];
   const cnName = getTeamName(team);
@@ -2482,6 +2498,9 @@ function skipUserGamePack(opponent, isPlayoff, seedBonus, probMultiplier, attrs,
   if (teamAHome == null) teamAHome = gameIdx >= 0 ? !!schedule[gameIdx].home : true;
   if (fatigueA == null) {
     fatigueA = gameIdx > 0 && schedule[gameIdx - 1] && schedule[gameIdx - 1].isB2B ? 1 : 0;
+    if (fatigueA && typeof getStaminaAttr === 'function') {
+      fatigueA *= Math.max(0.46, 1 - Math.min(12, getStaminaAttr()) * 0.045);
+    }
     if (fatigueA && typeof getStyleSkillMu === 'function') {
       var ironMu = getStyleSkillMu('iron_man');
       if (ironMu > 1) fatigueA *= Math.max(0.35, 1 - (ironMu - 1) * 3.5);
@@ -4407,6 +4426,9 @@ function simulateGameNew(teamA, teamB, seedBonus, probMultiplier) {
   var isHome = gameIdx >= 0 ? !!schedule[gameIdx].home : true;
   var isB2B = gameIdx > 0 && !!schedule[gameIdx - 1].isB2B;
   var fatigue = isB2B ? 1 : 0;
+  if (fatigue && typeof getStaminaAttr === 'function') {
+    fatigue *= Math.max(0.46, 1 - Math.min(12, getStaminaAttr()) * 0.045);
+  }
   if (fatigue && typeof getStyleSkillMu === 'function') {
     var ironMu = getStyleSkillMu('iron_man');
     if (ironMu > 1) fatigue *= Math.max(0.35, 1 - (ironMu - 1) * 3.5);
@@ -4461,6 +4483,21 @@ function simSkill01(value) {
   var v = softCap99(value);
   if (!isFinite(v)) v = 25;
   return Math.max(0, (v - 25) / 74);
+}
+
+/** 92 以上进入明显递减区，避免 100+ 属性把长期场均推到脱离 NBA 尺度。 */
+function userProductionRating(value) {
+  var v = softCap99(value);
+  if (!isFinite(v)) return 25;
+  return v <= 92 ? v : 92 + (v - 92) * 0.24;
+}
+
+function userProductionSkill01(value) {
+  return Math.max(0, (userProductionRating(value) - 25) / 74);
+}
+
+function dampenProductionSkill(multiplier, strength) {
+  return 1 + ((Number(multiplier) || 1) - 1) * (strength == null ? 0.65 : strength);
 }
 
 function allocateIntegerTotal(total, weights, minimums) {
@@ -4693,7 +4730,10 @@ function getPlayerRotationMinutes(attrs, pos, isPlayoff) {
     var boxMu = getStyleSkillMu('box_out');
     if (boxMu > 1) roleMinutes += (boxMu - 1) * 14;
   }
-  return Math.max(6, Math.min(42, Math.round(simGaussian(roleMinutes, 1.35))));
+  var stamina = typeof getStaminaAttr === 'function' ? Math.min(12, getStaminaAttr()) : 0;
+  roleMinutes += stamina * 0.10;
+  var minuteSigma = Math.max(0.75, 1.35 - stamina * 0.05);
+  return Math.max(6, Math.min(42, Math.round(simGaussian(roleMinutes, minuteSigma))));
 }
 
 function syncUserStatsIntoBoxScore(gameResult, stats) {
@@ -4743,11 +4783,11 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   const mins = getPlayerRotationMinutes(attrs, pos, isPlayoff);
   const minsFactor = mins / 48;
   const creation = calcPlayerCreationRating(attrs, pos);
-  const creation01 = simSkill01(creation);
+  const creation01 = userProductionSkill01(creation);
   const posUsage = { PG:.005, SG:.012, SF:.004, PF:-.004, C:-.002 };
   let usage = 0.10 + Math.pow(creation01, 1.24) * 0.27 + (posUsage[pos] || 0);
   if (isPlayoff && creation01 > 0.62) usage += 0.01;
-  usage = Math.max(0.10, Math.min(0.39, usage));
+  usage = Math.max(0.10, Math.min(0.36, usage));
   var styleRoll = typeof getStyleSkillRoll === 'function' ? getStyleSkillRoll : function () { return 1; };
   var coldM = styleRoll('cold_arrow');
   var midM = styleRoll('mid_craftsman');
@@ -4766,26 +4806,26 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   var iceM = styleRoll('ice_ft');
   usage *= 1 - (offBallM - 1) * 0.35;
   usage *= 1 + (breakM - 1) * 0.18;
-  usage = Math.max(0.10, Math.min(0.39, usage));
+  usage = Math.max(0.10, Math.min(0.36, usage));
 
   const baseline = getSimulationPowerBaseline();
   const opponentDefense = gameResult && gameResult.teamB && gameResult.teamB.power ? Number(gameResult.teamB.power.defense) : baseline.defense;
   const defensePressure = Math.max(-0.035, Math.min(0.045, (opponentDefense - baseline.defense) * 0.003));
   const teamFGA = pace * 0.896;
-  const scoringAverage = ((parseInt(attrs.threePT)||50) + (parseInt(attrs.MID)||50) + (parseInt(attrs.FIN)||50)) / 3;
-  const aggression = Math.max(0.78, Math.min(1.12, 0.96 + (scoringAverage - 70) * 0.004));
+  const scoringAverage = userProductionRating(((parseInt(attrs.threePT)||50) + (parseInt(attrs.MID)||50) + (parseInt(attrs.FIN)||50)) / 3);
+  const aggression = Math.max(0.78, Math.min(1.08, 0.96 + (scoringAverage - 70) * 0.004));
   const expectedFgaRaw = teamFGA * minsFactor * usage * aggression * (1 - defensePressure * 1.5) * USER_PLAYER_SCORING_SCALE;
   const expectedFga = expectedFgaRaw * 0.90;
   const fgaSigma = Math.max(0.8, expectedFgaRaw * 0.10) * 1.20;
   const minimumFga = mins >= 12 ? 2 : 0;
-  let fga = Math.max(minimumFga, Math.min(32, Math.round(simGaussian(expectedFga, fgaSigma))));
+  let fga = Math.max(minimumFga, Math.min(29, Math.round(simGaussian(expectedFga, fgaSigma))));
 
   const baseDist = SIM_CONFIG.SHOT_DIST[pos] || SIM_CONFIG.SHOT_DIST.PG;
   const finRating = (parseInt(attrs.FIN)||50) * 0.72 + (parseInt(attrs.DNK)||50) * 0.28;
   var distWeights = {
-    threePT: baseDist.threePT * (0.45 + Math.pow(simSkill01(attrs.threePT), 1.15) * 1.25),
-    MID: baseDist.MID * (0.45 + Math.pow(simSkill01(attrs.MID), 1.15) * 1.25),
-    FIN: baseDist.FIN * (0.45 + Math.pow(simSkill01(finRating), 1.15) * 1.25),
+    threePT: baseDist.threePT * (0.45 + Math.pow(userProductionSkill01(attrs.threePT), 1.15) * 1.25),
+    MID: baseDist.MID * (0.45 + Math.pow(userProductionSkill01(attrs.MID), 1.15) * 1.25),
+    FIN: baseDist.FIN * (0.45 + Math.pow(userProductionSkill01(finRating), 1.15) * 1.25),
   };
   distWeights.threePT *= 1 + (coldM - 1) * 0.55 - (postM - 1) * 0.35;
   distWeights.MID *= 1 + (midM - 1) * 0.55;
@@ -4799,15 +4839,15 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   var margin = Math.abs((Number(gameResult && gameResult.scoreA) || 0) - (Number(gameResult && gameResult.scoreB) || 0));
   var clutchShot = margin <= 7 ? (1 + (clutchM - 1) * 0.45) : 1;
   var midPressure = defensePressure * (1 - (midM - 1) * 0.7);
-  const threePct = clampWithHalfOverflow(calcShotPct('threePT', attrs.threePT || 50, 0, defensePressure, gameForm) * coldM * (1 + (offBallM - 1) * 0.45) * clutchShot, 0.18, 0.52, 0.58);
-  const midPct = clampWithHalfOverflow(calcShotPct('MID', attrs.MID || 50, 0, midPressure, gameForm) * midM * (1 + (offBallM - 1) * 0.35) * clutchShot, 0.22, 0.58, 0.66);
-  const finPct = clampWithHalfOverflow(calcShotPct('FIN', finRating, 0, defensePressure, gameForm) * (1 + (dunkM - 1) * 0.35) * clutchShot, 0.32, 0.80, 0.88);
+  const threePct = clampWithHalfOverflow(calcShotPct('threePT', userProductionRating(attrs.threePT || 50), 0, defensePressure, gameForm) * dampenProductionSkill(coldM, 0.62) * (1 + (offBallM - 1) * 0.30) * clutchShot, 0.18, 0.52, 0.58);
+  const midPct = clampWithHalfOverflow(calcShotPct('MID', userProductionRating(attrs.MID || 50), 0, midPressure, gameForm) * dampenProductionSkill(midM, 0.62) * (1 + (offBallM - 1) * 0.24) * clutchShot, 0.22, 0.58, 0.66);
+  const finPct = clampWithHalfOverflow(calcShotPct('FIN', userProductionRating(finRating), 0, defensePressure, gameForm) * (1 + (dunkM - 1) * 0.24) * clutchShot, 0.32, 0.80, 0.88);
   const threeM = sampleBinomial(threeA, threePct);
   const midMade = sampleBinomial(midA, midPct);
   const finM = sampleBinomial(finA, finPct);
   const fgm = threeM + midMade + finM;
 
-  const ftRate = Math.max(0.07, Math.min(0.62, (0.07 + simSkill01(attrs.FIN) * 0.20 + simSkill01(attrs.STR) * 0.11 + simSkill01(attrs.HAN) * 0.06) * finishM));
+  const ftRate = Math.max(0.07, Math.min(0.54, (0.07 + userProductionSkill01(attrs.FIN) * 0.20 + userProductionSkill01(attrs.STR) * 0.11 + userProductionSkill01(attrs.HAN) * 0.06) * dampenProductionSkill(finishM, 0.70)));
   const fta = Math.max(0, Math.min(18, Math.round(simGaussian(fga * ftRate, 1.2))));
   const freeThrowRating = (parseInt(attrs.CLU)||50) * 0.50 + (parseInt(attrs.MID)||50) * 0.25 + (parseInt(attrs.threePT)||50) * 0.25;
   const ftPct = clampWithHalfOverflow(calcShotPct('FT', freeThrowRating, 0, 0, gameForm * 0.45) * iceM * clutchShot, 0.50, 0.96, 0.99);
@@ -4815,12 +4855,12 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   const pts = threeM * 3 + midMade * 2 + finM * 2 + ftm;
 
   const rebBase = { PG:1.2, SG:1.4, SF:1.8, PF:2.5, C:3.0 };
-  const rebCeiling = { PG:7.0, SG:7.2, SF:9.0, PF:11.5, C:13.2 };
-  const reb36 = (rebBase[pos] + Math.pow(simSkill01(attrs.REB), 1.20) * rebCeiling[pos]) * boxM;
+  const rebCeiling = { PG:6.0, SG:6.2, SF:7.8, PF:10.2, C:11.5 };
+  const reb36 = Math.min(13.2, (rebBase[pos] + Math.pow(userProductionSkill01(attrs.REB), 1.20) * rebCeiling[pos]) * dampenProductionSkill(boxM, 0.58));
   const playmaking = (parseInt(attrs.PAS)||50) * 0.65 + (parseInt(attrs.HAN)||50) * 0.25 + (parseInt(attrs.CLU)||50) * 0.10;
   const astBase = { PG:0.8, SG:0.6, SF:0.6, PF:0.5, C:0.5 };
-  const astCeiling = { PG:12.0, SG:9.2, SF:8.8, PF:9.0, C:10.0 };
-  const ast36 = (astBase[pos] + Math.pow(simSkill01(playmaking), 1.32) * astCeiling[pos]) * tempoM;
+  const astCeiling = { PG:10.8, SG:8.0, SF:7.7, PF:7.9, C:8.7 };
+  const ast36 = Math.min(13.0, (astBase[pos] + Math.pow(userProductionSkill01(playmaking), 1.32) * astCeiling[pos]) * dampenProductionSkill(tempoM, 0.62));
   const pointDefense = (parseInt(attrs.PDEF)||50) * 0.70 + (parseInt(attrs.ATH)||50) * 0.20 + (parseInt(attrs.HAN)||50) * 0.10;
   const stl36 = (0.25 + Math.pow(simSkill01(pointDefense), 1.25) * 2.05) * lockM * stealM;
   const rimDefense = (parseInt(attrs.BLK)||50) * 0.72 + (parseInt(attrs.IDEF)||50) * 0.20 + (parseInt(attrs.ATH)||50) * 0.08;
@@ -4828,7 +4868,10 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   const blkCeiling = { PG:1.15, SG:1.35, SF:2.10, PF:3.30, C:4.20 };
   const blk36 = (blkBase[pos] + Math.pow(simSkill01(rimDefense), 1.35) * blkCeiling[pos]) * rimM * (1 + (dunkM - 1) * 0.25);
   const control = (parseInt(attrs.HAN)||50) * 0.58 + (parseInt(attrs.PAS)||50) * 0.27 + (parseInt(attrs.CLU)||50) * 0.15;
-  const tov36 = Math.max(0.45, Math.min(5.5, (0.65 + usage * 7.5 + ast36 * 0.14 - simSkill01(control) * 1.0 + defensePressure * 8) / (1 + (tempoM - 1) * 0.7) * (1 + (stealM - 1) * 0.25)));
+  const passControl = userProductionSkill01(playmaking);
+  const handleControl = userProductionSkill01(control);
+  const tempoTurnoverDivider = Math.max(0.68, 1 + (tempoM - 1) * 2.30);
+  const tov36 = Math.max(0.45, Math.min(4.8, (0.85 + usage * 6.2 + ast36 * 0.10 - handleControl * 1.45 - passControl * 0.65 + defensePressure * 7) / tempoTurnoverDivider * (1 + (stealM - 1) * 0.20)));
   const paceScale = pace / 99.4;
   const reb = samplePoisson(reb36 * mins / 36 * paceScale);
   const ast = samplePoisson(ast36 * mins / 36 * paceScale);
@@ -5066,6 +5109,7 @@ function showEndOfSeason() {
       <div class="eos-detail">${confName} 第 ${seed} 名</div>
       <div class="eos-actions">
         ${actionBtn}
+        <button class="btn btn-secondary btn-sm" onclick="showCurrentTeamRoster()" style="flex:1;">👥 查看阵容</button>
       </div>
     </div>
   `;
@@ -6348,7 +6392,10 @@ function renderPlayoffBracketUI() {
           <div class="bv-s-team bv-w bv-s-user bv-s-gold"><span class="bv-seed bv-seed-my">${getSeedOf(activeBracket.teams, STATE.careerTeam)}</span><span class="bv-s-name">${getTeamLogo(STATE.careerTeam, 16)} ${getTeamName(STATE.careerTeam)}</span><span class="bv-s-badge">你</span></div>
           <div class="bv-s-team bv-l"><span class="bv-seed">${getSeedOf(activeBracket.teams, opp)}</span><span class="bv-s-name">${getTeamLogo(opp, 16)} ${getTeamName(opp)}</span></div>
         </div>`;
-        h += `<button class="bv-s-btn" onclick="this.disabled=true;simPlayoffSeries(${r}, ${idx})">${r === 2 ? '🏆 开始分区决赛' : r === 3 ? '🏆 开始总决赛' : '▶ 开始系列赛'}</button>`;
+        h += `<div style="display:flex;gap:6px;margin-top:6px;">
+          <button class="bv-s-btn" style="flex:1;margin:0;" onclick="showPlayoffMatchupPreview('${STATE.careerTeam}', '${opp}')">👥 阵容评分</button>
+          <button class="bv-s-btn" style="flex:1;margin:0;" onclick="this.disabled=true;simPlayoffSeries(${r}, ${idx})">${r === 2 ? '🏆 开始分区决赛' : r === 3 ? '🏆 开始总决赛' : '▶ 开始系列赛'}</button>
+        </div>`;
       } else {
         h += `<div class="bv-s-matchup" style="cursor:default;">
           <div class="bv-s-team ${isComplete ? (topIsWinner ? 'bv-winner' : 'bv-loser') : ''}${topTeam === STATE.careerTeam ? ' bv-s-gold' : ''}"><span class="bv-seed ${isComplete ? (topIsWinner ? 'bv-seed-w' : '') : ''}">${topSeed}</span><span class="bv-s-name">${getTeamLogo(topTeam, 16)} ${getTeamName(topTeam)}</span>${isComplete ? `<span class="bv-s-score ${topIsWinner ? 'bv-sc-w' : ''}">${res ? (topIsWinner ? res.winnerWins : res.loserWins) : ''}</span>` : ''}</div>
@@ -7039,14 +7086,15 @@ function showSeriesResult(result) {
   
   // 每场比分（落幕弹窗内仅展示，不再打开单场详情）
   const gamesHtml = result.seriesGames.map((g, idx) =>
-    `<div class="sr-game-row" style="display:flex;align-items:center;gap:4px;padding:3px 0;border-bottom:1px solid var(--border-light);">
+    `<button class="sr-game-row" onclick="showPlayoffGamePopup(${result.round}, ${result.seriesIdx}, ${idx})" style="display:flex;align-items:center;gap:4px;padding:5px 2px;border:0;border-bottom:1px solid var(--border-light);background:transparent;width:100%;color:inherit;text-align:left;cursor:pointer;">
       <span style="width:22px;font-size:9px;color:var(--text-muted);">G${g.game}</span>
       <span style="flex:1;font-size:12px;font-weight:600;${g.won ? 'color:var(--green)' : 'color:var(--red)'}">
         ${isUserA ? g.myScore : g.oppScore}-${isUserA ? g.oppScore : g.myScore}
       </span>
       <span style="font-size:9px;color:var(--text-dim);">G${g.game} ${g.won ? '✅' : '❌'}</span>
       ${g.ot ? `<span style="font-size:8px;color:var(--accent);">${g.ot>1?g.ot+'OT':'OT'}</span>` : ''}
-    </div>`
+      <span style="font-size:13px;color:var(--text-muted);">›</span>
+    </button>`
   ).join('');
   
   // 季后赛场均数据
@@ -7077,7 +7125,7 @@ function showSeriesResult(result) {
             ${userWon ? '🎉 晋级下一轮！' : '您的球队本赛季遗憾止步' + exitRoundLabel}
           </div>
         </div>
-        <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">📋 系列赛比分</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">📋 系列赛比分 · 点击任一场查看双方球员数据</div>
         ${gamesHtml}
         ${poAvgHtml}
       </div>
@@ -7216,7 +7264,13 @@ function showPlayoffGamePopup(round, seriesIdx, gameIdx) {
       return h;
     }
     
-    boxHtml = '';
+    boxHtml = `<div style="padding:5px 12px 10px;border-top:1px solid var(--border);">
+      <div style="display:flex;gap:2px;font-size:8px;color:var(--text-muted);padding:2px 0;border-bottom:1px solid var(--border);">
+        <span style="width:14px;">位置</span><span style="flex:1;">球员</span><span style="width:18px;text-align:right;">分</span><span style="width:14px;text-align:right;">板</span><span style="width:14px;text-align:right;">助</span><span style="width:22px;text-align:right;">投篮</span>
+      </div>` +
+      renderBoxRows(topHome, getTeamName(myTeamTag) + ' · 得分前 5', true) +
+      renderBoxRows(topAway, getTeamName(oppTeamTag) + ' · 得分前 5', false) +
+    `</div>`;
   }
   
   // 关键事件
@@ -18015,6 +18069,7 @@ function repairLeagueAgesFromBundledData() {
   if (typeof NBA2K_DATA !== 'undefined' && typeof NBA2K_TEAMS !== 'undefined') {
     NBA2K_TEAMS.forEach(function(team) {
       (NBA2K_DATA[team] || []).forEach(function(player) {
+        if (player && player._eraRoster) return;
         var baseAge = _playerAges && _playerAges[player && player.name];
         if (!baseAge) return;
         var minimumAge = Number(baseAge) + minimumSeasonSteps;

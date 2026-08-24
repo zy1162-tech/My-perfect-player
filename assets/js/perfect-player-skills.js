@@ -108,7 +108,7 @@
     },
     {
       id: 'tempo_master', icon: '🎩', name: '节奏大师', group: '组织', max: 3,
-      desc: '提高助攻、降低失误，并略微加快回合。',
+      desc: '提高助攻、降低失误，并略微加快回合。高护球与高传球会进一步控失误；Lv.4 的控失误提升最明显。',
       reqs: [
         null,
         [{ key: 'PAS', min: 80 }, { key: 'HAN', min: 76 }],

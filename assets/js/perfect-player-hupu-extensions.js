@@ -254,6 +254,7 @@
     var effects = typeof getCareerProfileEffects === 'function' ? getCareerProfileEffects() : { teamStanding:0, publicStanding:0, legacyScoreContribution:0 };
     var values = [
       { group:'竞技状态', key:'pressure', label:'压力', value:typeof getMentalPressure === 'function' ? Math.round(getMentalPressure()) : 0, badHigh:true, raw:true, impact:'提高事件风险与负面状态触发' },
+      { group:'竞技状态', key:'staminaReserve', label:'耐力储备', value:typeof getStaminaAttr === 'function' ? getStaminaAttr() : Number(STATE.attrs && STATE.attrs.STA) || 0, goodHigh:true, raw:true, impact:'稳定上场时间，降低背靠背疲劳、普通伤病与重伤概率；最多按 12 点生效' },
       { group:'竞技状态', key:'staminaLoad', label:'体能负荷', value:mods.staminaLoad, badHigh:true, impact:'直接降低攻防；低负荷可减免老将衰退' },
       { group:'竞技状态', key:'moraleBonus', label:'士气', value:mods.moraleBonus, goodHigh:true, impact:'直接提升球队进攻与防守效率' },
       { group:'竞技状态', key:'formVariance', label:'状态波动', value:mods.formVariance, badHigh:true, impact:'改变每场比赛结果的波动幅度' },
@@ -315,7 +316,8 @@
     }).join('');
     return '<div class="player-state-strip" id="player-state-strip" aria-label="球员状态摘要与完整作用">' +
       '<div class="player-state-summary">' + summaryHtml + '</div>' +
-      '<details class="player-state-details"><summary>查看 18 项详细状态与作用</summary><div class="player-state-groups">' + groupsHtml + '</div></details></div>';
+      '<button class="btn btn-secondary btn-sm" style="width:100%;margin:7px 0 2px;" onclick="showCurrentTeamRoster()">👥 查看当前球队阵容、评分与合同</button>' +
+      '<details class="player-state-details"><summary>查看 19 项详细状态与作用</summary><div class="player-state-groups">' + groupsHtml + '</div></details></div>';
   };
 
   function draftPending() {

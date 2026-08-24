@@ -589,11 +589,41 @@
     };
   }
 
+  function inspectStaminaReserve() {
+    var value = 0;
+    try {
+      value = typeof getStaminaAttr === 'function'
+        ? Number(getStaminaAttr()) || 0
+        : Number(STATE && STATE.attrs && STATE.attrs.STA) || 0;
+    } catch (e) {}
+    var effective = Math.min(12, Math.max(0, Math.floor(value)));
+    return {
+      id: 'stamina_reserve',
+      icon: '🫁',
+      name: '耐力储备',
+      group: '体能',
+      desc: '由生涯剧情积累，不消耗球风点。每点降低约 3.5% 普通伤病、2.5% 重伤和 4.5% 背靠背疲劳，并略微稳定上场时间；最多按 12 点生效。',
+      max: 12,
+      purchased: effective,
+      level: effective,
+      effective: effective,
+      activated: effective > 0,
+      canUpgrade: false,
+      canBuy: false,
+      tokenSkill: false,
+      status: value > 12 ? ('当前 ' + value + '，生效 12') : ('当前 ' + value),
+      effect: effective > 0
+        ? '当前约降低 ' + Math.round(effective * 3.5) + '% 普通伤病、' + Math.round(effective * 2.5) + '% 重伤和 ' + Math.round(effective * 4.5) + '% 背靠背疲劳。'
+        : '当前尚未获得耐力；可通过生涯剧情选择逐步积累。',
+      conds: []
+    };
+  }
+
   function listSkills() {
     var style = (typeof PP_SKILLS !== 'undefined' && PP_SKILLS.listStyleSkills)
       ? PP_SKILLS.listStyleSkills()
       : [];
-    return style.concat([inspectVeteranMaintenance()]);
+    return style.concat([inspectStaminaReserve(), inspectVeteranMaintenance()]);
   }
 
   function skillPipsHtml(skill) {

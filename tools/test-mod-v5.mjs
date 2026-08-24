@@ -74,6 +74,6 @@ assert.equal(repairContext.NBA2K_DATA.GSW[1]._age, 20);
 assert.equal(repairContext.repairLeagueAgesFromBundledData(), 0, 'age repair must only run once per save');
 
 const boot = await readFile('assets/js/perfect-player-boot.js', 'utf8');
-assert.match(boot, /perfect-player-skills\.js\?v=20260824-season-points-v5/);
+assert.match(boot, /perfect-player-skills\.js\?v=20260824-(?:season-points-v5|turnovers-v6)/);
 
 console.log('V5 checks passed: local ages, Curry age 37, save repair, 30-50 season points, no duplicate scripts.');

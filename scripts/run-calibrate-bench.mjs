@@ -91,3 +91,18 @@ console.log('\n=== 汇总 (' + report.totalGames + ' 场, ' + elapsed + 's) ==='
 console.log('跳过  A/B:', report.skip.avgA.toFixed(1), report.skip.avgB.toFixed(1), '用户', report.skip.userPts.toFixed(1), '胜', report.skip.win.toFixed(3));
 console.log('局内  A/B:', report.live.avgA.toFixed(1), report.live.avgB.toFixed(1), '用户', report.live.userPts.toFixed(1), '胜', report.live.win.toFixed(3));
 console.log('差值  A/B:', report.delta.avgA.toFixed(2), report.delta.avgB.toFixed(2), '用户', report.delta.userPts.toFixed(2), '胜', report.delta.win.toFixed(3));
+
+if (typeof sandbox.samplePerfectPlayerStatProfile === 'function') {
+  const full = rating => ({ threePT:rating, MID:rating, FIN:rating, DNK:rating, HAN:rating, PAS:rating, PDEF:rating, IDEF:rating, BLK:rating, REB:rating, ATH:rating, STR:rating, CLU:rating });
+  const line = (label, position, attrs, mu) => {
+    sandbox.getStyleSkillRoll = () => mu;
+    const p = sandbox.samplePerfectPlayerStatProfile(attrs, 1200, { position }).average;
+    console.log(label.padEnd(18), [p.pts, p.reb, p.ast, p.tov].map(x => Number(x).toFixed(1)).join(' / '), '（分/板/助/误）');
+  };
+  console.log('\n=== 生涯数据尺度（1200 场抽样）===');
+  line('PG 92 无技能', 'PG', full(92), 1);
+  line('PG 105 无技能', 'PG', full(105), 1);
+  line('PG 105 四级技能', 'PG', full(105), 1.21);
+  line('C 105 四级技能', 'C', full(105), 1.21);
+  delete sandbox.getStyleSkillRoll;
+}

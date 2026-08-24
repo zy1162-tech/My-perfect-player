@@ -39,6 +39,19 @@
     if (typeof simSkill01 === 'function') return simSkill01(v);
     return Math.max(0, (effectiveAttr(v) - 25) / 74);
   }
+  function productionRating(v) {
+    if (typeof userProductionRating === 'function') return userProductionRating(v);
+    v = effectiveAttr(v);
+    return v <= 92 ? v : 92 + (v - 92) * 0.24;
+  }
+  function productionSkill01(v) {
+    if (typeof userProductionSkill01 === 'function') return userProductionSkill01(v);
+    return Math.max(0, (productionRating(v) - 25) / 74);
+  }
+  function productionSkillMul(mu, strength) {
+    if (typeof dampenProductionSkill === 'function') return dampenProductionSkill(mu, strength);
+    return 1 + ((Number(mu) || 1) - 1) * (strength == null ? 0.65 : strength);
+  }
   function gauss(mean, sd) {
     if (typeof simGaussian === 'function') return simGaussian(mean, sd);
     var u = Math.max(1e-6, rand()), v = Math.max(1e-6, rand());
@@ -232,51 +245,51 @@
     var boxM = st(styles, 'box_out');
     var iceM = st(styles, 'ice_ft');
     var creation = typeof calcPlayerCreationRating === 'function' ? calcPlayerCreationRating(attrs, pos) : 70;
-    var creation01 = skill01(creation);
+    var creation01 = productionSkill01(creation);
     var posUsage = { PG: 0.005, SG: 0.012, SF: 0.004, PF: -0.004, C: -0.002 };
-    var usage = clamp(0.10 + Math.pow(creation01, 1.24) * 0.27 + (posUsage[pos] || 0), 0.10, 0.39);
+    var usage = clamp(0.10 + Math.pow(creation01, 1.24) * 0.27 + (posUsage[pos] || 0), 0.10, 0.36);
     usage *= 1 - (offBallM - 1) * 0.35;
     usage *= 1 + (breakM - 1) * 0.18;
-    usage = clamp(usage, 0.10, 0.39);
+    usage = clamp(usage, 0.10, 0.36);
     var defensePressure = bp.defPressure;
     var teamFGA = pace * 0.896;
-    var scoringAverage = (attr(attrs, 'threePT') + attr(attrs, 'MID') + attr(attrs, 'FIN')) / 3;
-    var aggression = clamp(0.96 + (scoringAverage - 70) * 0.004, 0.78, 1.12);
+    var scoringAverage = productionRating((attr(attrs, 'threePT') + attr(attrs, 'MID') + attr(attrs, 'FIN')) / 3);
+    var aggression = clamp(0.96 + (scoringAverage - 70) * 0.004, 0.78, 1.08);
     var scoringScale = (typeof USER_PLAYER_SCORING_SCALE === 'number') ? USER_PLAYER_SCORING_SCALE : 0.85;
     var expectedFga = teamFGA * (mins / 48) * usage * aggression * (1 - defensePressure * 1.5) * 0.90 * scoringScale;
     var dist = (typeof SIM_CONFIG !== 'undefined' && SIM_CONFIG.SHOT_DIST[pos]) || { threePT: 0.32, MID: 0.22, FIN: 0.28 };
-    var threeW = dist.threePT * (0.45 + Math.pow(skill01(attr(attrs, 'threePT')), 1.15) * 1.25);
-    var midW = dist.MID * (0.45 + Math.pow(skill01(attr(attrs, 'MID')), 1.15) * 1.25);
+    var threeW = dist.threePT * (0.45 + Math.pow(productionSkill01(attr(attrs, 'threePT')), 1.15) * 1.25);
+    var midW = dist.MID * (0.45 + Math.pow(productionSkill01(attr(attrs, 'MID')), 1.15) * 1.25);
     var finRating = attr(attrs, 'FIN') * 0.72 + attr(attrs, 'DNK') * 0.28;
-    var finW = dist.FIN * (0.45 + Math.pow(skill01(finRating), 1.15) * 1.25);
+    var finW = dist.FIN * (0.45 + Math.pow(productionSkill01(finRating), 1.15) * 1.25);
     threeW *= 1 + (coldM - 1) * 0.55 - (postM - 1) * 0.35;
     midW *= 1 + (midM - 1) * 0.55;
     finW *= 1 + (dunkM - 1) * 0.50 + (postM - 1) * 0.60 + (breakM - 1) * 0.28;
     var distTotal = Math.max(0.001, threeW + midW + finW);
     var form = 0;
     var midPressure = defensePressure * (1 - (midM - 1) * 0.7);
-    var threePct = typeof calcShotPct === 'function' ? calcShotPct('threePT', attr(attrs, 'threePT'), 0, defensePressure, form) : 0.36;
-    var midPct = typeof calcShotPct === 'function' ? calcShotPct('MID', attr(attrs, 'MID'), 0, midPressure, form) : 0.42;
-    var finPct = typeof calcShotPct === 'function' ? calcShotPct('FIN', finRating, 0, defensePressure, form) : 0.58;
-    threePct = clampHalf(threePct * coldM * (1 + (offBallM - 1) * 0.45), 0.18, 0.52, 0.58);
-    midPct = clampHalf(midPct * midM * (1 + (offBallM - 1) * 0.35), 0.22, 0.58, 0.66);
-    finPct = clampHalf(finPct * (1 + (dunkM - 1) * 0.35), 0.32, 0.80, 0.88);
+    var threePct = typeof calcShotPct === 'function' ? calcShotPct('threePT', productionRating(attr(attrs, 'threePT')), 0, defensePressure, form) : 0.36;
+    var midPct = typeof calcShotPct === 'function' ? calcShotPct('MID', productionRating(attr(attrs, 'MID')), 0, midPressure, form) : 0.42;
+    var finPct = typeof calcShotPct === 'function' ? calcShotPct('FIN', productionRating(finRating), 0, defensePressure, form) : 0.58;
+    threePct = clampHalf(threePct * productionSkillMul(coldM, 0.62) * (1 + (offBallM - 1) * 0.30), 0.18, 0.52, 0.58);
+    midPct = clampHalf(midPct * productionSkillMul(midM, 0.62) * (1 + (offBallM - 1) * 0.24), 0.22, 0.58, 0.66);
+    finPct = clampHalf(finPct * (1 + (dunkM - 1) * 0.24), 0.32, 0.80, 0.88);
     var fga = expectedFga;
     var threeA = fga * (threeW / distTotal);
     var midA = fga * (midW / distTotal);
     var finA = Math.max(0, fga - threeA - midA);
-    var ftRate = clamp((0.07 + skill01(attr(attrs, 'FIN')) * 0.20 + skill01(attr(attrs, 'STR')) * 0.11 + skill01(attr(attrs, 'HAN')) * 0.06) * finishM, 0.07, 0.62);
+    var ftRate = clamp((0.07 + productionSkill01(attr(attrs, 'FIN')) * 0.20 + productionSkill01(attr(attrs, 'STR')) * 0.11 + productionSkill01(attr(attrs, 'HAN')) * 0.06) * productionSkillMul(finishM, 0.70), 0.07, 0.54);
     var freeThrowRating = attr(attrs, 'CLU') * 0.5 + attr(attrs, 'MID') * 0.25 + attr(attrs, 'threePT') * 0.25;
     var ftPct = typeof calcShotPct === 'function' ? calcShotPct('FT', freeThrowRating, 0, 0, 0) : 0.78;
     ftPct = clampHalf(ftPct * iceM, 0.50, 0.96, 0.99);
     var pts = threeA * threePct * 3 + midA * midPct * 2 + finA * finPct * 2 + fga * ftRate * ftPct;
     var rebBase = { PG: 1.2, SG: 1.4, SF: 1.8, PF: 2.5, C: 3.0 };
-    var rebCeil = { PG: 7.0, SG: 7.2, SF: 9.0, PF: 11.5, C: 13.2 };
+    var rebCeil = { PG: 6.0, SG: 6.2, SF: 7.8, PF: 10.2, C: 11.5 };
     var astBase = { PG: 0.8, SG: 0.6, SF: 0.6, PF: 0.5, C: 0.5 };
-    var astCeil = { PG: 12.0, SG: 9.2, SF: 8.8, PF: 9.0, C: 10.0 };
+    var astCeil = { PG: 10.8, SG: 8.0, SF: 7.7, PF: 7.9, C: 8.7 };
     var playmaking = attr(attrs, 'PAS') * 0.65 + attr(attrs, 'HAN') * 0.25 + attr(attrs, 'CLU') * 0.10;
-    var reb36 = ((rebBase[pos] || 1.8) + Math.pow(skill01(attr(attrs, 'REB')), 1.20) * (rebCeil[pos] || 9)) * boxM;
-    var ast36 = ((astBase[pos] || 0.6) + Math.pow(skill01(playmaking), 1.32) * (astCeil[pos] || 8.8)) * tempoM;
+    var reb36 = Math.min(13.2, ((rebBase[pos] || 1.8) + Math.pow(productionSkill01(attr(attrs, 'REB')), 1.20) * (rebCeil[pos] || 7.8)) * productionSkillMul(boxM, 0.58));
+    var ast36 = Math.min(13.0, ((astBase[pos] || 0.6) + Math.pow(productionSkill01(playmaking), 1.32) * (astCeil[pos] || 7.7)) * productionSkillMul(tempoM, 0.62));
     var pointDefense = attr(attrs, 'PDEF') * 0.70 + attr(attrs, 'ATH') * 0.20 + attr(attrs, 'HAN') * 0.10;
     var stl36 = (0.25 + Math.pow(skill01(pointDefense), 1.25) * 2.05) * lockM * stealM;
     var rimDefense = attr(attrs, 'BLK') * 0.72 + attr(attrs, 'IDEF') * 0.20 + attr(attrs, 'ATH') * 0.08;
@@ -284,7 +297,8 @@
       + Math.pow(skill01(rimDefense), 1.35) * ({ PG: 1.15, SG: 1.35, SF: 2.10, PF: 3.30, C: 4.20 }[pos] || 2.1))
       * rimM * (1 + (dunkM - 1) * 0.25);
     var control = attr(attrs, 'HAN') * 0.58 + attr(attrs, 'PAS') * 0.27 + attr(attrs, 'CLU') * 0.15;
-    var tov36 = clamp((0.65 + usage * 7.5 + ast36 * 0.14 - skill01(control) * 1.0) / (1 + (tempoM - 1) * 0.7) * (1 + (stealM - 1) * 0.25), 0.45, 5.5);
+    var tempoDivider = Math.max(0.68, 1 + (tempoM - 1) * 2.30);
+    var tov36 = clamp((0.85 + usage * 6.2 + ast36 * 0.10 - productionSkill01(control) * 1.45 - productionSkill01(playmaking) * 0.65) / tempoDivider * (1 + (stealM - 1) * 0.20), 0.45, 4.8);
     var paceScale = pace / 99.4;
     return {
       usage: usage,
@@ -320,6 +334,9 @@
     }
     var fatigueA = Number(options.fatigueA) || 0;
     var fatigueB = Number(options.fatigueB) || 0;
+    if (fatigueA && teamA === STATE.careerTeam && typeof getStaminaAttr === 'function') {
+      fatigueA *= Math.max(0.46, 1 - Math.min(12, getStaminaAttr()) * 0.045);
+    }
     if (fatigueA && teamA === STATE.careerTeam && typeof getStyleSkillMu === 'function') {
       var ironMu = getStyleSkillMu('iron_man');
       if (ironMu > 1) fatigueA *= Math.max(0.35, 1 - (ironMu - 1) * 3.5);
@@ -2095,6 +2112,16 @@
 
     if (!labReb && !labShotOnly && (fx.forceTov || fx.stl || chance(tovRate))) {
       var loser = pickShooter(ctx.offCourt, ctx.userOn, ctx.usage * 0.55, false) || ctx.offCourt[0];
+      if (loser && loser._isUser) {
+        var userControl = attr(loser, 'HAN') * 0.58 + attr(loser, 'PAS') * 0.27 + attr(loser, 'CLU') * 0.15;
+        var userPassing = attr(loser, 'PAS') * 0.65 + attr(loser, 'HAN') * 0.25 + attr(loser, 'CLU') * 0.10;
+        var protect = productionSkill01(userControl) * 0.24 + productionSkill01(userPassing) * 0.12 + Math.max(0, st(game.styles, 'tempo_master') - 1) * 1.15;
+        if (chance(Math.min(0.62, protect))) {
+          loser = pickWeighted(ctx.offCourt.filter(function(p) { return p && !p._isUser; }), function(p) {
+            return 0.35 + skill01(creationOf(p));
+          }) || loser;
+        }
+      }
       lineOf(game, loser).tov++;
       var userOnDef = ctx.defCourt.filter(function (p) { return p && p._isUser; })[0];
       var stealMul = 1;

@@ -6,11 +6,11 @@
 
   var GROUPS = {
     create: [
-      ['assets/js/perfect-player-hupu-extensions.js?v=20260824-local-player-pool-v3', '角色扩展']
+      ['assets/js/perfect-player-hupu-extensions.js?v=20260824-roster-stamina-v6', '角色扩展']
     ],
     career: [
-      ['assets/js/perfect-player-skills.js?v=20260824-season-points-v5', '球风技能'],
-      ['assets/js/perfect-player-enhancements.js?v=20260824-mod-v4', '成就特效']
+      ['assets/js/perfect-player-skills.js?v=20260824-turnovers-v6', '球风技能'],
+      ['assets/js/perfect-player-enhancements.js?v=20260824-stamina-v6', '成就特效']
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20260821-events-v3', '赛季事件'],
@@ -21,7 +21,7 @@
     ],
     live: [
       ['assets/js/perfect-player-live-court.js?v=20260823-court-v36', '俯瞰球场'],
-      ['assets/js/perfect-player-live-sim.js?v=20260824-live-sim-v64', '文字直播']
+      ['assets/js/perfect-player-live-sim.js?v=20260824-stat-balance-v6', '文字直播']
     ]
   };
 

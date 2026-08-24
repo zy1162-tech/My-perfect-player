@@ -240,6 +240,8 @@ function getSeasonInjuryEventRate() {
     var ironMu = getStyleSkillMu('iron_man');
     if (ironMu > 1) rate *= Math.max(0.55, 1 - (ironMu - 1) * 2.2);
   }
+  var stamina = typeof getStaminaAttr === 'function' ? Math.min(12, getStaminaAttr()) : 0;
+  if (stamina > 0) rate *= Math.max(0.58, 1 - stamina * 0.035);
   return rate;
 }
 
@@ -257,6 +259,8 @@ function getMajorInjuryEventRate() {
     var ironMu = getStyleSkillMu('iron_man');
     if (ironMu > 1) rate *= Math.max(0.55, 1 - (ironMu - 1) * 2.2);
   }
+  var stamina = typeof getStaminaAttr === 'function' ? Math.min(12, getStaminaAttr()) : 0;
+  if (stamina > 0) rate *= Math.max(0.70, 1 - stamina * 0.025);
   return rate;
 }
 
