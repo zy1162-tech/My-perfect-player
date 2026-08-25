@@ -2052,13 +2052,16 @@ function renderCareerSpin() {
 }
 
 function pullCareerHandle() {
+  if (STATE._careerSpinPending) return;
+  STATE._careerSpinPending = true;
   trackEvent({act:"click",blk:"BMC098",pos:"TC5",label:"随机球队-生涯"});
-  setTimeout(spinCareerSlot, 200);
+  document.querySelectorAll('.br-slot-actions button').forEach(function(btn) { btn.disabled = true; });
+  setTimeout(spinCareerSlot, 120);
 }
 
 function spinCareerSlot() {
   const reel = document.getElementById('career-slot-reel');
-  if (!reel) return;
+  if (!reel) { STATE._careerSpinPending = false; return; }
   
   var pool = STATE._teamsVisited.length > 0 ? STATE._teamsVisited : [...NBA2K_TEAMS].sort();
   var sorted = pool.slice().sort();
@@ -2093,7 +2096,10 @@ function spinCareerSlot() {
   reel.classList.add('spinning');
   reel.style.transform = `translateY(-${finalY}px)`;
   
-  setTimeout(() => {
+  var finished = false;
+  function finishCareerSpin() {
+    if (finished) return;
+    finished = true;
     reel.classList.remove('spinning');
     
     // ★ 精确回正
@@ -2107,13 +2113,28 @@ function spinCareerSlot() {
     var middleIdx = teamCount * 3 + snapIdx + 2;
     highlightSlotItem('career-slot-reel', middleIdx);
     
+    STATE._careerSpinPending = false;
     STATE._draftSelfPick = false;
-    selectCareerTeam(targetTeam);
-  }, 3300);
+    try {
+      selectCareerTeam(targetTeam);
+    } catch (error) {
+      console.error('生涯球队选择失败', error);
+      document.querySelectorAll('.br-slot-actions button').forEach(function(btn) { btn.disabled = false; });
+      if (typeof PP_FX !== 'undefined' && PP_FX.toast) PP_FX.toast('球队载入失败，请再点一次', { icon:'🏀' });
+    }
+  }
+  reel.addEventListener('transitionend', function onCareerSpinEnd(event) {
+    if (event.propertyName !== 'transform') return;
+    reel.removeEventListener('transitionend', onCareerSpinEnd);
+    finishCareerSpin();
+  });
+  setTimeout(finishCareerSpin, 3400);
 }
 
 function selectCareerTeam(team) {
   if (STATE.mode === 'legend' && typeof applyLegendEraLeague === 'function') applyLegendEraLeague();
+  if (!team || !NBA2K_DATA[team] || !NBA2K_DATA[team].length) throw new Error('球队名单不可用：' + team);
+  if (!STATE.season) STATE.season = { games:[], wins:0, losses:0, playerStats:{}, playoffStats:{}, awards:[], standings:{} };
   STATE.careerTeam = team;
   const teamPlayers = NBA2K_DATA[team];
   const cnName = getTeamName(team);
@@ -13992,6 +14013,29 @@ function calcTrainingPoints() {
   return getPlayoffTrainingLine() + getPersonalTrainingLine() + getAgeTrainingBonus(age) + getEventTrainingBank();
 }
 
+function openCareerSkillPanel(button) {
+  var originalText = button && button.textContent;
+  function restoreButton() {
+    if (!button) return;
+    button.disabled = false;
+    button.textContent = originalText || '技能';
+  }
+  function openLoadedPanel() {
+    restoreButton();
+    if (window.PP_FX && typeof window.PP_FX.openSkillPanel === 'function') {
+      window.PP_FX.openSkillPanel();
+      return true;
+    }
+    if (window.PP_FX && window.PP_FX.toast) window.PP_FX.toast('技能模块加载失败，请刷新页面', { icon:'⚡' });
+    return false;
+  }
+  if (window.PP_FX && typeof window.PP_FX.openSkillPanel === 'function') return openLoadedPanel();
+  if (button) { button.disabled = true; button.textContent = '加载中…'; }
+  if (typeof window.__PP_ensure === 'function') return window.__PP_ensure('career').then(openLoadedPanel, openLoadedPanel);
+  restoreButton();
+  return false;
+}
+
 function renderTrainingCamp() {
   showScreen('screen-training');
   var c = STATE.career;
@@ -14019,7 +14063,7 @@ function renderTrainingCamp() {
   html += '<div style="min-width:0;">';
   html += '<div style="font-size:12px;font-weight:800;color:#2d1f0e;">⚡ 球风点 <span style="color:#ff6b35;font-size:18px;">' + skillPts + '</span></div>';
   html += '</div>';
-  html += '<button type="button" class="btn btn-secondary btn-sm" onclick="if(window.PP_FX)PP_FX.openSkillPanel()">技能</button>';
+  html += '<button type="button" class="btn btn-secondary btn-sm" onclick="openCareerSkillPanel(this)">技能</button>';
   html += '</div></div>';
 
   html += '<div class="tp-age-info">⏳ <strong>' + c.currentAge + '岁</strong></div>';

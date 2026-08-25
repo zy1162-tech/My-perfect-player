@@ -10,7 +10,7 @@
     ],
     career: [
       ['assets/js/perfect-player-skills.js?v=20260824-balance-v7', '球风技能'],
-      ['assets/js/perfect-player-enhancements.js?v=20260824-legacy-v7', '成就特效']
+      ['assets/js/perfect-player-enhancements.js?v=20260824-career-click-fix-v7', '成就特效']
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20260821-events-v3', '赛季事件'],

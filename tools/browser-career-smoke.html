@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8"><title>career smoke</title>
+<pre id="result">RUNNING</pre>
+<iframe id="game" src="../nba-perfect-player.html" style="width:480px;height:800px"></iframe>
+<script>
+(async function () {
+  var result = document.getElementById('result');
+  var frame = document.getElementById('game');
+  function wait(ms) { return new Promise(function(resolve) { setTimeout(resolve, ms); }); }
+  try {
+    await new Promise(function(resolve) { frame.onload = resolve; });
+    var game = frame.contentWindow;
+    await wait(500);
+    await game.__PP_ensure(['create','career']);
+    game.eval("STATE.mode='legend';STATE.eraStart=2016;STATE.position='SG';STATE.finalOVR=92;STATE.attrs={};STATE._teamsVisited=['LAL'];renderCareerSpin();pullCareerHandle();");
+    await wait(4000);
+    var reveal = game.document.querySelector('#career-area .reveal-card');
+    if (!reveal) throw new Error('选队后没有进入球队揭晓页');
+    game.eval("renderTrainingCamp();");
+    var skillButton = Array.from(game.document.querySelectorAll('#training-content button')).find(function(button) { return button.textContent.trim() === '技能'; });
+    if (!skillButton) throw new Error('休赛期技能按钮不存在');
+    skillButton.click();
+    await wait(200);
+    var panel = game.document.getElementById('pp-skill-panel');
+    if (!panel) throw new Error('休赛期技能面板没有打开');
+    result.textContent = 'PASS: team selection + offseason skill panel';
+  } catch (error) {
+    result.textContent = 'FAIL: ' + (error && error.stack || error);
+  }
+})();
+</script>
