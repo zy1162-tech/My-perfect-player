@@ -4421,8 +4421,9 @@ function simulate82StyleMatchup(teamA, teamB, options) {
   var efficiencyB = 1.154 + edgeB * 0.0034 - depthEdge + homeB - fatigueB * 0.012 - seedPts / pace;
   efficiencyA = Math.max(0.91, Math.min(1.36, efficiencyA));
   efficiencyB = Math.max(0.91, Math.min(1.36, efficiencyB));
-  var varianceA = Math.max(4.6, Math.min(10, 6.4 + modA.variance));
-  var varianceB = Math.max(4.6, Math.min(10, 6.4 + modB.variance));
+  // 提高单场得分波动，避免分差过窄导致一分惜败和绝杀标签泛滥。
+  var varianceA = Math.max(6.5, Math.min(13, 9.5 + modA.variance));
+  var varianceB = Math.max(6.5, Math.min(13, 9.5 + modB.variance));
   var regulationA = Math.max(80, Math.min(155, Math.round(pace * efficiencyA + simGaussian(0, varianceA))));
   var regulationB = Math.max(80, Math.min(155, Math.round(pace * efficiencyB + simGaussian(0, varianceB))));
   var qScoresA = splitRegulationScore(regulationA);
@@ -4573,6 +4574,24 @@ function getSimPrimaryPosition(player) {
   return ['PG','SG','SF','PF','C'].indexOf(pos) >= 0 ? pos : 'SF';
 }
 
+// 与文字直播一致：中锋、锋线的终结和身体能力也应转化为出手权。
+function positionScoringRating(player, pos) {
+  var t = parseInt(player.threePT) || 50, m = parseInt(player.MID) || 50;
+  var f = parseInt(player.FIN) || 50, d = parseInt(player.DNK) || 50;
+  var s = parseInt(player.STR) || 50, h = parseInt(player.HAN) || 50;
+  var c = parseInt(player.CLU) || 50, p = parseInt(player.PAS) || 50;
+  if (pos === 'C') return f * 0.34 + d * 0.20 + m * 0.14 + s * 0.10 + t * 0.07 + h * 0.07 + c * 0.08;
+  if (pos === 'PF') return f * 0.28 + d * 0.14 + m * 0.16 + s * 0.08 + t * 0.14 + h * 0.10 + c * 0.10;
+  if (pos === 'SF') return f * 0.20 + d * 0.08 + m * 0.16 + t * 0.22 + h * 0.16 + c * 0.10 + p * 0.08;
+  if (pos === 'SG') return t * 0.24 + m * 0.16 + f * 0.18 + d * 0.06 + h * 0.18 + c * 0.10 + p * 0.08;
+  return t * 0.20 + m * 0.14 + f * 0.16 + h * 0.24 + p * 0.14 + c * 0.12;
+}
+
+function shotPriorityRating(player, pos) {
+  var creation = calcPlayerCreationRating(player, pos);
+  return positionScoringRating(player, pos) * 0.52 + creation * 0.48;
+}
+
 /** 生成两队全队数据：240分钟、球队总分与五项统计均受对应属性驱动。 */
 function generateBoxScore(teamA, teamB, totalA, totalB) {
   function getLineupStats(team, totalPts) {
@@ -4587,16 +4606,17 @@ function generateBoxScore(teamA, teamB, totalA, totalB) {
     const minuteWeights = minuteTargets.map(function(target, i) { return Math.max(0.1, target - minuteMinimums[i]); });
     const minutes = allocateIntegerTotal(240, minuteWeights, minuteMinimums);
     const profiles = players.map(function(player, i) {
+      var pos = getSimPrimaryPosition(player);
       var offense = (parseInt(player.threePT)||50) * 0.24 + (parseInt(player.MID)||50) * 0.18 +
         (parseInt(player.FIN)||50) * 0.28 + (parseInt(player.DNK)||50) * 0.08 +
         (parseInt(player.HAN)||50) * 0.14 + (parseInt(player.PAS)||50) * 0.08;
       var creation = offense * 0.58 + (parseInt(player.HAN)||50) * 0.27 + (parseInt(player.CLU)||50) * 0.15;
-      return { player:player, pos:getSimPrimaryPosition(player), mins:minutes[i], offense:offense, creation:creation };
+      return { player:player, pos:pos, mins:minutes[i], offense:offense, creation:creation, shotPriority:shotPriorityRating(player, pos) };
     });
 
     var hierarchy = profiles.slice().sort(function(a, b) {
-      var aScore = a.creation * 0.68 + a.offense * 0.22 + (parseInt(a.player.ovr) || 50) * 0.10;
-      var bScore = b.creation * 0.68 + b.offense * 0.22 + (parseInt(b.player.ovr) || 50) * 0.10;
+      var aScore = a.shotPriority * 0.80 + (parseInt(a.player.ovr) || 50) * 0.20;
+      var bScore = b.shotPriority * 0.80 + (parseInt(b.player.ovr) || 50) * 0.20;
       return bScore - aScore;
     });
     profiles.forEach(function(profile) {
@@ -4611,7 +4631,7 @@ function generateBoxScore(teamA, teamB, totalA, totalB) {
     var teamFga = Math.max(82, Math.min(105, Math.round(89 + (totalPts - 112) * 0.22 + simGaussian(0, 2.8))));
     var shotWeights = profiles.map(function(profile) {
       var role = [1.30, 1.18, 1.06, 0.96, 0.88][profile.hierarchyRank] || (profile.hierarchyRank < starters.length ? 0.82 : 0.70);
-      var skill = 0.30 + Math.pow(simSkill01(profile.creation), 1.85) * 1.75;
+      var skill = 0.30 + Math.pow(simSkill01(profile.shotPriority), 1.85) * 1.75;
       return profile.mins * skill * role * profile.gameForm;
     });
     var attemptMinimums = profiles.map(function(profile) { return profile.mins >= 28 ? 4 : (profile.mins >= 16 ? 2 : 1); });
@@ -18471,6 +18491,8 @@ function evolveLeague() {
   NBA2K_TEAMS.forEach(function(t) {
     var roster = NBA2K_DATA[t];
     if (!roster) return;
+    // 合同年使用当前首发快照：高评分球星长期替补时应有更强的离队意愿。
+    var lineup = calcTeamLineup(t);
     var newRoster = [];
     roster.forEach(function(p) {
       if (p.contract === undefined) p.contract = 4;
@@ -18493,6 +18515,8 @@ function evolveLeague() {
           else if (hist[0] - hist[1] > 0.02 && hist[1] - hist[2] > 0.02) trendFactor = 1.1;
         }
         var stayRate = Math.max(0.1, Math.min(0.95, 0.80 * teamFactor * starFactor * trendFactor));
+        var benchStar = p.ovr >= 82 && !Object.values(lineup.starters).some(function(s) { return s === p; });
+        if (benchStar) stayRate *= 0.38;
 
         if (rngNext() < stayRate) {
           // 留队续约
@@ -18506,7 +18530,7 @@ function evolveLeague() {
           p._origTeam = t;
           freeAgents.push(p);
           STATE._leagueChanges.freeAgents = STATE._leagueChanges.freeAgents || [];
-          STATE._leagueChanges.freeAgents.push({ name: p.cname || p.name, ovr: p.ovr, team: t, age: age });
+          STATE._leagueChanges.freeAgents.push({ name: p.cname || p.name, ovr: p.ovr, team: t, age: age, roleLeave: !!benchStar });
         }
       } else {
         newRoster.push(p);

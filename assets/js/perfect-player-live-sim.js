@@ -203,6 +203,33 @@
     return attr(p, 'HAN') * 0.28 + attr(p, 'PAS') * 0.18 + attr(p, 'FIN') * 0.18 + attr(p, 'threePT') * 0.18 + attr(p, 'CLU') * 0.18;
   }
 
+  // 将终结、背身和身体对内线的出手价值纳入权重，避免高评分中锋被错误当成蓝领。
+  function scoringThreatOf(p) {
+    var pos = posOf(p);
+    if (pos === 'C') {
+      return attr(p, 'FIN') * 0.34 + attr(p, 'DNK') * 0.20 + attr(p, 'MID') * 0.14 + attr(p, 'STR') * 0.10 +
+        attr(p, 'threePT') * 0.07 + attr(p, 'HAN') * 0.07 + attr(p, 'CLU') * 0.08;
+    }
+    if (pos === 'PF') {
+      return attr(p, 'FIN') * 0.28 + attr(p, 'DNK') * 0.14 + attr(p, 'MID') * 0.16 + attr(p, 'STR') * 0.08 +
+        attr(p, 'threePT') * 0.14 + attr(p, 'HAN') * 0.10 + attr(p, 'CLU') * 0.10;
+    }
+    if (pos === 'SF') {
+      return attr(p, 'FIN') * 0.20 + attr(p, 'DNK') * 0.08 + attr(p, 'MID') * 0.16 + attr(p, 'threePT') * 0.22 +
+        attr(p, 'HAN') * 0.16 + attr(p, 'CLU') * 0.10 + attr(p, 'PAS') * 0.08;
+    }
+    if (pos === 'SG') {
+      return attr(p, 'threePT') * 0.24 + attr(p, 'MID') * 0.16 + attr(p, 'FIN') * 0.18 + attr(p, 'DNK') * 0.06 +
+        attr(p, 'HAN') * 0.18 + attr(p, 'CLU') * 0.10 + attr(p, 'PAS') * 0.08;
+    }
+    return attr(p, 'threePT') * 0.20 + attr(p, 'MID') * 0.14 + attr(p, 'FIN') * 0.16 +
+      attr(p, 'HAN') * 0.24 + attr(p, 'PAS') * 0.14 + attr(p, 'CLU') * 0.12;
+  }
+
+  function shotPriorityOf(p) {
+    return scoringThreatOf(p) * 0.52 + creationOf(p) * 0.48;
+  }
+
   var STYLE_IDS = [
     'cold_arrow', 'mid_craftsman', 'off_ball', 'finisher', 'dunk_threat', 'post_bully',
     'tempo_master', 'pnr_maestro', 'fast_break', 'perimeter_lock', 'rim_protector',
@@ -383,8 +410,8 @@
         ? !!lineupA.isUserStarter
         : !!(lineupA.isUserStarter && !(STATE.career && STATE.career.flags && STATE.career.flags.startBench)),
       userMins: userMins, defPressure: defPressure,
-      varianceA: clamp(6.4 + (modA.variance || 0), 4.6, 10),
-      varianceB: clamp(6.4 + (modB.variance || 0), 4.6, 10),
+      varianceA: clamp(9.5 + (modA.variance || 0), 6.5, 13),
+      varianceB: clamp(9.5 + (modB.variance || 0), 6.5, 13),
       styles: rollStyles()
     };
     bp.tgtA = clamp(Math.round(bp.pace * bp.efficiencyA + gauss(0, bp.varianceA)), 80, 155);
@@ -752,15 +779,15 @@
     if (!pool.length) pool = court;
     if (clutch) {
       return pickWeighted(pool, function (p) {
-        var rank = pool.slice().sort(function(a, b) { return creationOf(b) - creationOf(a); }).indexOf(p);
+        var rank = pool.slice().sort(function(a, b) { return shotPriorityOf(b) - shotPriorityOf(a); }).indexOf(p);
         var role = [1.55, 1.22, 1.02, 0.88, 0.78][rank] || 0.72;
-        return Math.pow(skill01(creationOf(p)), 1.65) * (0.7 + skill01(attr(p, 'CLU')) * 0.8) * role * shotFormFor(game, p);
+        return Math.pow(skill01(shotPriorityOf(p)), 1.65) * (0.7 + skill01(attr(p, 'CLU')) * 0.8) * role * shotFormFor(game, p);
       });
     }
     return pickWeighted(pool, function (p) {
-      var rank = pool.slice().sort(function(a, b) { return (creationOf(b) + ovrOf(b) * 0.20) - (creationOf(a) + ovrOf(a) * 0.20); }).indexOf(p);
+      var rank = pool.slice().sort(function(a, b) { return (shotPriorityOf(b) + ovrOf(b) * 0.20) - (shotPriorityOf(a) + ovrOf(a) * 0.20); }).indexOf(p);
       var role = [1.52, 1.20, 1.00, 0.86, 0.76][rank] || 0.70;
-      return Math.pow(skill01(creationOf(p)), 1.95) * (0.28 + ovrOf(p) / 115) * role * shotFormFor(game, p);
+      return Math.pow(skill01(shotPriorityOf(p)), 1.95) * (0.28 + ovrOf(p) / 115) * role * shotFormFor(game, p);
     });
   }
 
@@ -1268,7 +1295,7 @@
     var tgt = side === 'A' ? game.tgtA : game.tgtB;
     var cur = side === 'A' ? game.scoreA : game.scoreB;
     var lo = 0.62, hi = 1.72;
-    if (ctx.q >= 4 && ctx.secLeft < 90) { lo = 0.25; hi = 2.35; }
+    if (ctx.q >= 4 && ctx.secLeft < 90) { lo = 0.60; hi = 1.65; }
     return clamp((tgt - cur) / remainingPossFor(game, ctx), lo, hi);
   }
 
@@ -2324,7 +2351,8 @@
       defP *= (1 - (st(game.styles, 'mid_craftsman') - 1) * 0.7);
     }
     var pct = shotPctFor(shooter, shot, defP, form, clutchMul, userBoost);
-    pct += (e - 1.154) * (e >= 1.154 ? 0.50 : 0.44);
+    // 降低逐回合目标回补，避免比分被强行拉成一分差。
+    pct += (e - 1.154) * 0.24;
     if (ctx.home) pct += 0.005;
     pct += rush;
     if (hasTag(game, 'transition') && shot === 'FIN') pct += 0.06;

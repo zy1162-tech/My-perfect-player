@@ -103,7 +103,7 @@
     var changes = STATE._leagueChanges || {};
     var left = [];
     (changes.retired || []).forEach(function(x) { if (x.team === STATE.careerTeam) left.push((x.name || '球员') + '（退役）'); });
-    (changes.freeAgents || []).forEach(function(x) { if (x.team === STATE.careerTeam) left.push((x.name || '球员') + '（离队）'); });
+    (changes.freeAgents || []).forEach(function(x) { if (x.team === STATE.careerTeam) left.push((x.name || '球员') + (x.roleLeave ? '（不满替补角色，离队）' : '（离队）')); });
     var core = snap.topFive.map(function(p) { return esc(p && p._isUser ? '我的球员' : (p.cname || p.name || '球员')) + ' ' + playerOvr(p); }).join(' · ');
     return '<div style="margin:2px 12px 8px;padding:9px 10px;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);font-size:10px;line-height:1.6;">' +
       '<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;"><strong>下赛季已确定核心</strong><strong style="color:var(--orange);">球队评分 ' + snap.powerRating + '</strong></div>' +

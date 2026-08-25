@@ -31,15 +31,23 @@ const fs = require('node:fs');
     NBA2K_DATA.PHX.splice(NBA2K_DATA.PHX.indexOf(amare), 1);
     repairLegendEraPositions(2003);
     const repairedAmare = NBA2K_TEAMS.flatMap(team => NBA2K_DATA[team] || []).find(player => player.name === "Amar'e Stoudemire");
+    const margins = [];
+    for (let i = 0; i < 500; i++) {
+      const game = simulate82StyleMatchup('GSW', 'LAL', { neutralState:true, includeBoxScore:false });
+      margins.push(Math.abs(game.scoreA - game.scoreB));
+    }
+    const onePointRate = margins.filter(margin => margin === 1).length / margins.length;
+    const closeGameRate = margins.filter(margin => margin <= 3).length / margins.length;
     return {
       fresh,
       repaired:{ amareAge:repairedAmare && repairedAmare._age, amareRestored:!!(repairedAmare && repairedAmare._prematureRetirementRestored), boozerAge:boozer._age },
+      scoreMargins:{ average:margins.reduce((sum, margin) => sum + margin, 0) / margins.length, onePointRate, closeGameRate },
       scripts:[...document.scripts].map(script => script.src).filter(src => /core|era-mode/.test(src))
     };
   });
   console.log(JSON.stringify({ result, errors }, null, 2));
   await browser.close();
-  if (errors.length || result.fresh.count !== 450 || result.fresh.minOvr !== 70 || result.fresh.amare.age !== 20 || result.fresh.boozer.age !== 21 || !result.repaired.amareRestored || result.repaired.amareAge !== 29 || result.repaired.boozerAge !== 30) process.exitCode = 1;
+  if (errors.length || result.fresh.count !== 450 || result.fresh.minOvr !== 70 || result.fresh.amare.age !== 20 || result.fresh.boozer.age !== 21 || !result.repaired.amareRestored || result.repaired.amareAge !== 29 || result.repaired.boozerAge !== 30 || result.scoreMargins.onePointRate >= 0.14 || result.scoreMargins.average <= 7) process.exitCode = 1;
 })().catch(error => {
   console.error(error);
   process.exit(1);

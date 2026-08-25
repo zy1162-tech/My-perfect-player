@@ -21,7 +21,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
     ],
     live: [
     ['assets/js/perfect-player-live-court.js?v=20260824-era-positions-v7', '俯瞰球场'],
-    ['assets/js/perfect-player-live-sim.js?v=20260824-shot-roster-ui-v7', '文字直播']
+    ['assets/js/perfect-player-live-sim.js?v=20260825-shot-dist-v13', '文字直播']
     ]
   };
 

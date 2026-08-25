@@ -3,9 +3,9 @@ import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 
 const core = await readFile(new URL('../assets/js/perfect-player-core.js', import.meta.url), 'utf8');
-const start = core.indexOf('function generateBoxScore(');
-const end = core.indexOf('/** 属性→效率系数', start);
-assert.ok(start >= 0 && end > start, 'box-score generator source should be present');
+const start = core.indexOf('function getSimPrimaryPosition(');
+const end = core.indexOf('function getPlayerRotationMinutes(', start);
+assert.ok(start >= 0 && end > start, 'box-score generator and shot-priority source should be present');
 
 function player(name, ovr, offense, pos) {
   return {
@@ -39,6 +39,11 @@ const ctx = {
     return mean + Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v) * sd;
   },
   simSkill01:value => Math.max(0, (Math.min(99, Number(value) || 25) - 25) / 74),
+  softCap99:value => {
+    const normalized = Number(value);
+    if (!Number.isFinite(normalized)) return 0;
+    return normalized <= 99 ? normalized : 99 + (normalized - 99) * 0.5;
+  },
   getSimPrimaryPosition:p => p.pos,
   sampleBinomial:(attempts, probability) => {
     let made = 0;
