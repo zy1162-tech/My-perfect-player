@@ -696,7 +696,8 @@
       { id:'rib_bruise', emoji:'🛡️', title:'肋骨挫伤', desc:'肋骨挫伤', body:'冲击篮筐时你被撞出底线，肋部重重磕在摄影席。呼吸疼痛迫使你休战。', min:2, max:5 },
       { id:'concussion_protocol', emoji:'🧠', title:'触发脑震荡保护程序', desc:'脑震荡观察', body:'防守回合中你与对手头部相撞。虽然意识清醒，联盟保护程序仍要求你通过全部检测。', min:3, max:7 },
       { id:'meniscus_major', emoji:'🏥', title:'半月板损伤', desc:'半月板损伤', body:'一次急停变向后，膝盖出现卡顿和肿胀。进一步检查确认半月板损伤，你将长期缺阵。', min:18, max:32, major:true },
-      { id:'achilles_major', emoji:'🚑', title:'跟腱重伤', desc:'跟腱损伤', body:'无对抗启动时，你突然回头看向身后，像是有人踢了你。检查结果让整个更衣室沉默。', min:35, max:55, major:true }
+      { id:'achilles_major', emoji:'🚑', title:'跟腱重伤', desc:'跟腱损伤', body:'无对抗启动时，你突然回头看向身后，像是有人踢了你。检查结果让整个更衣室沉默。', min:45, max:70, major:true },
+      { id:'acl_season_ending', emoji:'🏥', title:'前十字韧带重伤', desc:'赛季报销', body:'一次变向落地后，膝盖失去稳定。检查确认前十字韧带损伤，本赛季提前结束，漫长康复正式开始。', min:82, max:82, major:true, seasonEnding:true }
     ];
     expanded.forEach(function (def) {
       var id = 'injury_pp_' + def.id;
@@ -704,12 +705,12 @@
       EVENT_REGISTRY.push({
         id: id,
         name: def.title,
-        weight: def.major ? 2 : 5,
+        weight: def.seasonEnding ? 1 : (def.major ? 2 : 5),
         majorInjury: !!def.major,
         condition: function () { return true; },
         execute: function () {
           var games = def.min + Math.floor(Math.random() * (def.max - def.min + 1));
-          return { emoji:def.emoji, title:def.title, body:def.body, desc:def.desc, _consequence:'injury', _games:games, _majorInjury:!!def.major };
+          return { emoji:def.emoji, title:def.title, body:def.body, desc:def.desc, _consequence:'injury', _games:games, _majorInjury:!!def.major, _seasonEnding:!!def.seasonEnding };
         }
       });
     });

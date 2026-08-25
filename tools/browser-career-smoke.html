@@ -22,7 +22,18 @@
     await wait(200);
     var panel = game.document.getElementById('pp-skill-panel');
     if (!panel) throw new Error('休赛期技能面板没有打开');
-    result.textContent = 'PASS: team selection + offseason skill panel';
+    var requiredLv5 = ['clutch','rim_runner','floor_general','glass_cleaner','leader','prodigy'];
+    var perks = game.PP_FX && game.PP_FX.LEGACY_PERKS || [];
+    if (!requiredLv5.every(function(id) { return perks.some(function(perk) { return perk.id === id && perk.max === 5; }); })) {
+      throw new Error('传承祭坛新增路线没有全部开放到 5 级');
+    }
+    game.eval("STATE.career.seasonCount=2;STATE.career.profile=STATE.career.profile||{};STATE.finalOVR=92;");
+    if (!game.PP_MOD_V4.hasRosterAuthority()) throw new Error('球队老大没有获得名单话语权');
+    game.PP_MOD_V4.showRosterAuthority(function() {});
+    await wait(100);
+    if (!game.document.getElementById('roster-authority-modal')) throw new Error('名单话语权面板没有打开');
+    game.skipRosterCut();
+    result.textContent = 'PASS: team selection + skill panel + legacy Lv.5 + roster authority';
   } catch (error) {
     result.textContent = 'FAIL: ' + (error && error.stack || error);
   }

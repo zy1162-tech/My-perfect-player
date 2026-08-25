@@ -830,7 +830,7 @@
   // 每次开启新生涯(揭晓球员时)按已购强化，给初始属性/OVR 永久加成——即"重生奖励"。
   // 设计要点：LP 由成就稀有度决定，跨生涯保留；强化可叠加但有上限，避免破坏平衡。
   var LEGACY_KEY = 'pp_legacy_v1';
-  var LEGACY_SCHEMA_VERSION = 3;
+  var LEGACY_SCHEMA_VERSION = 4;
   var LP_BY_RARITY = { common: 1, rare: 2, epic: 4, legend: 8 };
   var LP_PER_ARCHIVE_RECORD = 5;
 
@@ -842,12 +842,12 @@
     { id: 'playmaker', icon: '🎩', name: '组织视野', desc: '每级 传球/控球 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['PAS', 'HAN'] },
     { id: 'defender',  icon: '🛡️', name: '防守本能', desc: '每级 外防/内防/盖帽 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['PDEF', 'IDEF', 'BLK'] },
     { id: 'athlete',   icon: '💪', name: '身体天赋', desc: '每级 运动/力量/篮板 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['ATH', 'STR', 'REB'] },
-    { id: 'clutch',    icon: '❄️', name: '大心脏',   desc: '每级 关键 +2', max: 4, costs: [4, 6, 8, 10], attrs: ['CLU'], step: 2 },
-    { id: 'rim_runner', icon: '🛫', name: '冲框达人', desc: '每级 扣篮 +2', max: 4, costs: [4, 6, 8, 11], attrs: ['DNK'], step: 2 },
-    { id: 'floor_general', icon: '🧠', name: '控场大师', desc: '每级 控球/传球 +1', max: 4, costs: [4, 6, 8, 11], attrs: ['HAN', 'PAS'] },
-    { id: 'glass_cleaner', icon: '🧹', name: '篮板嗅觉', desc: '每级 篮板 +2', max: 4, costs: [4, 6, 8, 11], attrs: ['REB'], step: 2 },
-    { id: 'leader', icon: '📣', name: '领袖气质', desc: '每级 队友攻防效率 +0.5（满级约 +2）', max: 4, costs: [5, 7, 9, 12], attrs: [], teamBoost: 0.5 },
-    { id: 'prodigy',   icon: '🌟', name: '天选之才', desc: '每级 全属性 +1（最贵）', max: 3, costs: [10, 14, 20],
+    { id: 'clutch',    icon: '❄️', name: '大心脏',   desc: '每级 关键 +2', max: 5, costs: [4, 6, 8, 10, 13], attrs: ['CLU'], step: 2 },
+    { id: 'rim_runner', icon: '🛫', name: '冲框达人', desc: '每级 扣篮 +2', max: 5, costs: [4, 6, 8, 11, 14], attrs: ['DNK'], step: 2 },
+    { id: 'floor_general', icon: '🧠', name: '控场大师', desc: '每级 控球/传球 +1', max: 5, costs: [4, 6, 8, 11, 14], attrs: ['HAN', 'PAS'] },
+    { id: 'glass_cleaner', icon: '🧹', name: '篮板嗅觉', desc: '每级 篮板 +2', max: 5, costs: [4, 6, 8, 11, 14], attrs: ['REB'], step: 2 },
+    { id: 'leader', icon: '📣', name: '领袖气质', desc: '每级 队友攻防效率 +0.5（满级约 +2.5）', max: 5, costs: [5, 7, 9, 12, 16], attrs: [], teamBoost: 0.5 },
+    { id: 'prodigy',   icon: '🌟', name: '天选之才', desc: '每级 全属性 +1（最贵）', max: 5, costs: [10, 14, 20, 26, 34],
       attrs: ['threePT', 'MID', 'FIN', 'DNK', 'HAN', 'PAS', 'PDEF', 'IDEF', 'BLK', 'REB', 'ATH', 'STR', 'CLU'] }
   ];
   PP_FX.LEGACY_PERKS = LEGACY_PERKS;

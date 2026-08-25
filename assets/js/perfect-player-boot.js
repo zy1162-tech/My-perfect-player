@@ -6,11 +6,11 @@
 
   var GROUPS = {
     create: [
-      ['assets/js/perfect-player-hupu-extensions.js?v=20260824-roster-stamina-v6', '角色扩展']
+      ['assets/js/perfect-player-hupu-extensions.js?v=20260825-season-ending-v8', '角色扩展']
     ],
     career: [
       ['assets/js/perfect-player-skills.js?v=20260824-balance-v7', '球风技能'],
-      ['assets/js/perfect-player-enhancements.js?v=20260824-career-click-fix-v7', '成就特效']
+      ['assets/js/perfect-player-enhancements.js?v=20260825-legacy-lv5-v8', '成就特效']
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20260821-events-v3', '赛季事件'],

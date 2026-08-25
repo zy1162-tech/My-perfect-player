@@ -357,6 +357,10 @@ function initGame() {
   delete STATE._draftSceneStep;
   delete STATE._draftResultDone;
   delete STATE._mobilityChoice;
+  delete STATE._legendLeagueApplied;
+  delete STATE._eraRookieSeq;
+  delete STATE.eraStart;
+  delete STATE.draftMode;
   clearLineupCache();
   
   try { attachOfficialPlayerHeadshots(); } catch(e) {}
@@ -18338,6 +18342,16 @@ function getLeagueRetirementChance(player, age) {
   return Math.max(0, Math.min(96, base + (80 - longevity) * 1.4));
 }
 
+function getEraPlayerGrowthBonus(player, age, randomValue) {
+  player = player || {};
+  var peakOvr = Number(player._peakOvr) || 0;
+  var currentOvr = Number(player.ovr) || 0;
+  if (!player._eraRoster || Number(age) > 26 || peakOvr <= currentOvr) return 0;
+  var peakGap = peakOvr - currentOvr;
+  return 0.65 + Math.min(1.6, peakGap * 0.09) + Math.max(0, Math.min(1, Number(randomValue) || 0)) * 0.35;
+}
+window.getEraPlayerGrowthBonus = getEraPlayerGrowthBonus;
+
 function evolveLeague() {
   STATE._leagueChanges = { retired: [], rookies: [], teamChanges: {}, trades: [] };
   var teams = typeof NBA2K_TEAMS !== 'undefined' ? NBA2K_TEAMS : [];
@@ -18360,8 +18374,12 @@ function evolveLeague() {
       var randFactor = (rngNext() - 0.5) * 1.5;
       var change = ageFactor * 0.5 + volFactor * 0.3 + randFactor * 0.2;
       if (isMvpStar(p) && age <= 26) change += 0.6 + rngNext() * 0.8; // 重点新秀成长加速
+      // 传奇年代青年球员按“当前值到生涯峰值”的差距成长，避免新秀詹姆斯等数季原地踏步。
+      var peakOvr = Number(p._peakOvr) || 0;
+      change += getEraPlayerGrowthBonus(p, age, rngNext());
       change = Math.round(change * 2) / 2;
       var newOvr = Math.max(55, Math.min(99, p.ovr + change));
+      if (peakOvr) newOvr = Math.min(peakOvr, newOvr);
       if (newOvr !== p.ovr) {
         var ratio = Math.round(newOvr) / p.ovr;
         SIM_CONFIG.ATTR_LIST.forEach(function(attrKey) {
@@ -18391,8 +18409,12 @@ function evolveLeague() {
       newRoster = newRoster.slice(0, 15);
     }
     while (newRoster.length < 15) { // 休赛期名单补齐到 15 人
-      var rk = generateRookie();
-      rk._enterYear = incomingSeasonStart;
+      var rk = (STATE.mode === 'legend' && window.PP_ERA_MODE && typeof window.PP_ERA_MODE.generateRookie === 'function')
+        ? window.PP_ERA_MODE.generateRookie(t, Number(STATE.eraStart) + Number(STATE.career && STATE.career.seasonCount || 0))
+        : generateRookie();
+      rk._enterYear = STATE.mode === 'legend'
+        ? Number(STATE.eraStart) + Number(STATE.career && STATE.career.seasonCount || 0)
+        : incomingSeasonStart;
       newRoster.push(rk);
       STATE._leagueChanges.rookies.push({ name: rk.cname || rk.name, team: t });
       if (t === STATE.careerTeam && STATE._leagueChanges.teamChanges[t]) {

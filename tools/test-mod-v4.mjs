@@ -59,12 +59,13 @@ assert.match(modSource, /showRecruitmentMarket\(function\(\)/);
 assert.ok(htmlSource.includes('perfect-player-mod-v4.js'), 'V4 module should load after core');
 const modProfile = { coachTrust: 0, leadership: 0, fame: 0 };
 const modContext = {
-  STATE: { career: { profile: modProfile }, finalOVR: 90, season: { awards: [] } },
+  STATE: { career: { profile: modProfile, seasonCount: 2 }, finalOVR: 90, season: { awards: [] } },
   getCareerProfile: () => modProfile
 };
 modContext.window = modContext;
 vm.createContext(modContext);
 vm.runInContext(modSource, modContext);
+assert.equal(modContext.PP_MOD_V4.hasRosterAuthority(), true, '90 OVR team leader should receive offseason roster authority');
 assert.equal(modContext.getVeteranMaintenanceLevel(30), 0);
 assert.equal(modContext.getVeteranMaintenanceLevel(31), 1);
 modProfile.coachTrust = 10;

@@ -35,9 +35,12 @@ assert.equal(context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James
 assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Stephen Curry')?.ovr, 69, 'NBA 2K10 rookie Curry rating');
 assert.equal(context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James')?.pos, 'SF/PF/PG/SG', 'LeBron should retain all historical lineup positions');
 assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Stephen Curry')?.pos, 'PG/SG', 'Curry should retain both guard positions');
+assert.equal(context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James')?._peakOvr, 99, 'young LeBron should have a historical peak growth target');
 assert.ok(context.NBA2K_DATA.OKC.some(player => player.name === 'James Harden'), '2010 mode should include Harden on OKC');
 assert.ok(Object.values(context.NBA2K_DATA).flat().every(player => player._eraRoster), 'legend league must not leak current roster players');
 assert.ok(Object.values(context.NBA2K_DATA).flat().every(player => !/EraRole|时代轮换/.test(player.name)), 'placeholder roster names are forbidden');
+assert.ok(Object.values(context.NBA2K_DATA).flat().filter(player => player.cname !== player.name).length >= 330, '2010 should localize most roster names');
+assert.ok(Object.values(context.NBA2K_DATA).flat().some(player => player._ratingBalanceAdjusted), 'calibrated low ratings should receive a role floor while official 2K values remain untouched');
 const savedLeBron = context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James');
 savedLeBron.pos = 'SG';
 assert.equal(context.repairLegendEraPositions(2010), 1, 'old legend saves should repair stale single-position data');
@@ -55,6 +58,12 @@ context.applyLegendEraLeague();
 assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Stephen Curry')?.ovr, 93, 'NBA 2K16 Curry anchor rating');
 assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Klay Thompson')?.ovr, 87, 'NBA 2K16 Klay anchor rating');
 teams.forEach(team => assert.equal(context.NBA2K_DATA[team].length, 15, team + ' 2016 roster should contain 15 real players'));
+assert.ok(Object.values(context.NBA2K_DATA).flat().filter(player => player.cname !== player.name).length >= 300, '2016 should localize most roster names');
+
+context.STATE.career.seasonCount = 20;
+context.processDraft();
+assert.ok(Object.values(context.NBA2K_DATA).flat().some(player => player._eraGenerated), 'years without a real draft class should use era-safe fictional rookies');
+assert.ok(Object.values(context.NBA2K_DATA).flat().every(player => player.photoSource !== 'generated-rookie-pool'), 'legend eras must not fall back to the current rookie pool');
 
 const core = await readFile(new URL('../assets/js/perfect-player-core.js', import.meta.url), 'utf8');
 const v4 = await readFile(new URL('../assets/js/perfect-player-mod-v4.js', import.meta.url), 'utf8');
@@ -71,6 +80,10 @@ assert.match(v4, /slice\(0, 15\)/);
 assert.match(core, /pp-game-box-head/);
 assert.match(core, /hierarchyRank/);
 assert.match(core, /repairLegendEraPositions\(STATE\.eraStart\)/);
+assert.match(core, /getEraPlayerGrowthBonus/);
+assert.match(core, /PP_ERA_MODE\.generateRookie/);
+assert.match(v4, /球队老大 · 名单话语权/);
+assert.match(v4, /showRosterAuthority\(function\(\)/);
 assert.ok(!/roster\.length\s*[<>]=?\s*18|newRoster\.length\s*<\s*18/.test(core), 'current-era roster logic should no longer target 18 players');
 assert.ok(!/roster\.length\s*>=\s*18/.test(eraMode + v4), 'signing and era roster logic should cap teams at 15 players');
 assert.ok(v4.indexOf('processTrades();') < v4.indexOf('showRecruitmentMarket(function()'), 'trades must finish before recruitment decision');

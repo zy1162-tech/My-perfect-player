@@ -149,6 +149,82 @@
     return (strong.length ? strong : pool).slice(0, 8);
   }
 
+  var rosterCutCandidates = [];
+  function hasRosterAuthority() {
+    var career = STATE.career || {};
+    var profile = career.profile || {};
+    return Number(career.seasonCount || 0) >= 2 &&
+      (Number(STATE.finalOVR || 0) >= 90 || Number(profile.leadership || 0) >= 12);
+  }
+
+  function completeRosterAuthorityFlow() {
+    var done = STATE._rosterAuthorityDone;
+    STATE._rosterAuthorityDone = null;
+    rosterCutCandidates = [];
+    if (typeof done === 'function') done();
+  }
+
+  function showRosterAuthority(done) {
+    var career = STATE.career;
+    if (!career || !hasRosterAuthority()) { done(); return; }
+    career.flags = career.flags || {};
+    var seasonKey = Number(career.seasonCount) || 0;
+    if (career.flags.rosterAuthoritySeason === seasonKey) { done(); return; }
+    var roster = NBA2K_DATA[STATE.careerTeam] || [];
+    rosterCutCandidates = roster.filter(function(player) { return player && !player._isUser; }).sort(function(a, b) {
+      return (Number(b.ovr) || 0) - (Number(a.ovr) || 0);
+    });
+    if (!rosterCutCandidates.length) { done(); return; }
+    career.flags.rosterAuthoritySeason = seasonKey;
+    STATE._rosterAuthorityDone = done;
+
+    var old = document.getElementById('roster-authority-modal');
+    if (old) old.remove();
+    var html = '<div class="team-picker-overlay" id="roster-authority-modal"><div class="team-picker-modal">';
+    html += '<div class="team-picker-header"><span>👑 球队老大 · 名单话语权</span></div>';
+    html += '<div style="padding:10px 12px 7px;font-size:12px;color:var(--text-dim);line-height:1.65;">你的总评达到 90，或领导力达到 12 后，管理层会在每个休赛期接受一次裁员建议。裁掉的球员会进入自由市场；也可以保留原阵容。</div>';
+    html += '<div style="padding:2px 12px 8px;max-height:58vh;overflow-y:auto;">';
+    rosterCutCandidates.forEach(function(player, idx) {
+      var name = player.cname || player.name || '队友';
+      html += '<button class="btn btn-secondary btn-sm" style="width:100%;margin-bottom:7px;padding:9px;text-align:left;justify-content:space-between;" onclick="chooseRosterCut(' + idx + ')">';
+      html += '<span><strong style="display:block;color:var(--text);font-size:13px;">' + name + '</strong><small style="color:var(--text-dim);">' + (player.pos || '—') + ' · 合同 ' + Math.max(0, Number(player.contract) || 0) + ' 年</small></span>';
+      html += '<span style="font-family:var(--font-display);color:var(--orange);">OVR ' + (player.ovr || '—') + '</span></button>';
+    });
+    html += '</div><div style="padding:8px 12px 14px;border-top:1px solid var(--border-light);"><button class="btn btn-secondary btn-sm" style="width:100%;" onclick="skipRosterCut()">保留当前全部队友</button></div>';
+    html += '</div></div>';
+    document.body.insertAdjacentHTML('beforeend', html);
+  }
+
+  global.skipRosterCut = function() {
+    var modal = document.getElementById('roster-authority-modal');
+    if (modal) modal.remove();
+    completeRosterAuthorityFlow();
+  };
+
+  global.chooseRosterCut = function(idx) {
+    var player = rosterCutCandidates[idx];
+    var roster = NBA2K_DATA[STATE.careerTeam] || [];
+    var rosterIdx = roster.indexOf(player);
+    if (!player || rosterIdx < 0) return;
+    roster.splice(rosterIdx, 1);
+    player._origTeam = STATE.careerTeam;
+    player._waivedByUser = true;
+    STATE._freeAgentPool = STATE._freeAgentPool || [];
+    STATE._freeAgentPool.push(player);
+    STATE._leagueChanges = STATE._leagueChanges || {};
+    STATE._leagueChanges.userWaives = STATE._leagueChanges.userWaives || [];
+    STATE._leagueChanges.userWaives.push({ name:player.cname || player.name, ovr:player.ovr, from:STATE.careerTeam });
+    STATE.career.offseasonHistory = STATE.career.offseasonHistory || [];
+    STATE.career.offseasonHistory.push({
+      seasonNum:STATE.career.seasonCount || 0, event:'球队老大名单建议', choice:'建议裁掉 ' + (player.cname || player.name),
+      result:'管理层接受建议，球员进入自由市场。'
+    });
+    if (typeof clearLineupCache === 'function') clearLineupCache();
+    var modal = document.getElementById('roster-authority-modal');
+    if (modal) modal.remove();
+    showOffseasonResultModal('名单话语权', '管理层接受了你的建议，<strong>' + (player.cname || player.name) + '</strong> 已离队并进入自由市场。球队会在后续招募与自由市场阶段补齐最多 15 人名单。', completeRosterAuthorityFlow);
+  };
+
   function showRecruitmentMarket(done) {
     var c = STATE.career;
     if (!c || c.contract <= 0) { done(); return; }
@@ -275,15 +351,19 @@
     processDraft();
     // 先完成所有可能让队友离开的交易，再让玩家依据最终核心阵容决定是否招募。
     processTrades();
-    showRecruitmentMarket(function() {
-      assignFreeAgents();
-      maybeMoveUserInOffseason(finishOffseasonPipeline);
+    showRosterAuthority(function() {
+      showRecruitmentMarket(function() {
+        assignFreeAgents();
+        maybeMoveUserInOffseason(finishOffseasonPipeline);
+      });
     });
   };
 
   global.PP_MOD_V4 = {
     getUserRecruitmentChance: recruitmentChance,
     getUserRecruitmentCandidates: availableCandidates,
-    showUserRecruitmentMarket: showRecruitmentMarket
+    showUserRecruitmentMarket: showRecruitmentMarket,
+    hasRosterAuthority: hasRosterAuthority,
+    showRosterAuthority: showRosterAuthority
   };
 })(window);
