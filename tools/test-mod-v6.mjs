@@ -32,7 +32,7 @@ context.applyLegendEraLeague();
 assert.equal(context.STATE._legendLeagueApplied, 2010);
 teams.forEach(team => assert.equal(context.NBA2K_DATA[team].length, 15, team + ' roster should contain 15 real players'));
 assert.equal(context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James')?.ovr, 96, 'NBA 2K10 anchor rating');
-assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Stephen Curry')?.ovr, 69, 'NBA 2K10 rookie Curry rating');
+assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Stephen Curry')?.ovr, 70, 'NBA 2K10 rookie Curry keeps his 69 source rating but uses the playable 70 floor');
 assert.equal(context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James')?.pos, 'SF/PF/PG/SG', 'LeBron should retain all historical lineup positions');
 assert.equal(context.NBA2K_DATA.GSW.find(player => player.name === 'Stephen Curry')?.pos, 'PG/SG', 'Curry should retain both guard positions');
 assert.equal(context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James')?._peakOvr, 99, 'young LeBron should have a historical peak growth target');
@@ -43,7 +43,7 @@ assert.ok(Object.values(context.NBA2K_DATA).flat().filter(player => player.cname
 assert.ok(Object.values(context.NBA2K_DATA).flat().some(player => player._ratingBalanceAdjusted), 'calibrated low ratings should receive a role floor while official 2K values remain untouched');
 const savedLeBron = context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James');
 savedLeBron.pos = 'SG';
-assert.equal(context.repairLegendEraPositions(2010), 1, 'old legend saves should repair stale single-position data');
+assert.ok(context.repairLegendEraPositions(2010) >= 1, 'old legend saves should repair stale position and age metadata');
 assert.equal(savedLeBron.pos, 'SF/PF/PG/SG');
 
 context.STATE.career.seasonCount = 1;

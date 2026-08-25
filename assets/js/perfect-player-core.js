@@ -17791,8 +17791,7 @@ function draftOvrByPick(pick) {
   if (pick <= 50) return 73;
   if (pick <= 60) return 71;
   if (pick <= 80) return 70;
-  if (pick <= 110) return 69;
-  return 68;
+  return 70;
 }
 
 function draftPosToCode(pos) {
@@ -17878,8 +17877,8 @@ function processDraft() {
     if (idx === 0) ovrRange = { min: 75, max: 82 };
     else if (idx === 1) ovrRange = { min: 73, max: 80 };
     else if (idx === 2) ovrRange = { min: 72, max: 78 };
-    else if (idx < 10) ovrRange = { min: 68, max: 75 };
-    else ovrRange = { min: 60, max: 70 };
+    else if (idx < 10) ovrRange = { min: 70, max: 75 };
+    else ovrRange = { min: 70, max: 72 };
 
     var rookie = generateRookie();
     var targetOvr = ovrRange.min + Math.floor(rngNext() * (ovrRange.max - ovrRange.min + 1));
@@ -18293,6 +18292,7 @@ var LEBRON_JAMES_SPECIAL_RULE = {
   initialAge: 41,
   maxRetirementAge: 42
 };
+var LEAGUE_PLAYABLE_OVR_FLOOR = 70;
 
 function normalizePlayerIdentityKey(value) {
   return String(value || '')
@@ -18335,11 +18335,14 @@ function getLeaguePlayerLongevityScore(player) {
 function getLeagueRetirementChance(player, age) {
   age = Number(age) || 22;
   if (age >= LEBRON_JAMES_SPECIAL_RULE.maxRetirementAge) return 100;
-  if (age < 34) return 0;
-  var baseByAge = { 34:2, 35:4, 36:8, 37:14, 38:23, 39:34, 40:48, 41:68 };
+  var earliestAge = Math.max(34, Number(player && player._retirementEarliestAge) || 34);
+  if (age < earliestAge) return 0;
+  var baseByAge = { 34:1, 35:2, 36:5, 37:10, 38:18, 39:29, 40:44, 41:65 };
   var base = baseByAge[age] == null ? 0 : baseByAge[age];
   var longevity = getLeaguePlayerLongevityScore(player);
-  return Math.max(0, Math.min(96, base + (80 - longevity) * 1.4));
+  var durabilityPenalty = Math.max(0, 78 - longevity) * 0.45;
+  var starProtection = Number(player && player.ovr) >= 88 ? 5 : (Number(player && player.ovr) >= 82 ? 2 : 0);
+  return Math.max(0, Math.min(96, base + durabilityPenalty - starProtection));
 }
 
 function getEraPlayerGrowthBonus(player, age, randomValue) {
@@ -18399,7 +18402,7 @@ function evolveLeague() {
       var peakOvr = Number(p._peakOvr) || 0;
       change += getEraPlayerGrowthBonus(p, age, rngNext());
       change = Math.round(change * 2) / 2;
-      var newOvr = Math.max(55, Math.min(99, p.ovr + change));
+      var newOvr = Math.max(LEAGUE_PLAYABLE_OVR_FLOOR, Math.min(99, p.ovr + change));
       if (peakOvr) newOvr = Math.min(peakOvr, newOvr);
       if (primeFloor) newOvr = Math.max(primeFloor, newOvr);
       if (newOvr !== p.ovr) {

@@ -4,6 +4,7 @@
 
   var POS = { 1:'PG', 2:'SG', 3:'SF', 4:'PF', 5:'C' };
   var ATTRS = ['threePT','MID','FIN','DNK','HAN','PAS','PDEF','IDEF','BLK','REB','ATH','STR','CLU'];
+  var ERA_PLAYABLE_OVR_FLOOR = 70;
   var HISTORICAL_PEAK_OVR = {
     'lebron james':99, 'dwyane wade':97, 'carmelo anthony':94, 'chris bosh':93,
     'kobe bryant':98, 'tim duncan':98, 'kevin garnett':97, 'dirk nowitzki':97,
@@ -37,7 +38,9 @@
     'shaquille o neal':{ peak:98, primeStart:22, primeEnd:31, primeFloor:94 },
     'allen iverson':{ peak:97, primeStart:22, primeEnd:30, primeFloor:92 },
     'jason kidd':{ peak:95, primeStart:23, primeEnd:32, primeFloor:90 },
-    'steve nash':{ peak:96, primeStart:29, primeEnd:35, primeFloor:92 }
+    'steve nash':{ peak:96, primeStart:29, primeEnd:35, primeFloor:92 },
+    'amare stoudemire':{ peak:92, primeStart:22, primeEnd:28, primeFloor:88 },
+    'carlos boozer':{ peak:86, primeStart:25, primeEnd:30, primeFloor:84 }
   };
   var HISTORICAL_CN_NAMES = {
     'mike james':'迈克-詹姆斯', 'jiri welsch':'伊里-韦尔施', 'eddie robinson':'埃迪-罗宾逊',
@@ -110,10 +113,10 @@
   }
   function adjustedEraOvr(row, requested) {
     var raw = Number(requested != null ? requested : row.ovr) || 50;
-    if (row.ratingOfficial) return raw;
+    if (row.ratingOfficial) return Math.max(ERA_PLAYABLE_OVR_FLOOR, raw);
     var mpg = Number(row.seasonLine && row.seasonLine.mpg) || 0;
     var roleFloor = mpg >= 26 ? 66 : (mpg >= 18 ? 62 : (mpg >= 10 ? 58 : 55));
-    return Math.max(raw, roleFloor);
+    return Math.max(ERA_PLAYABLE_OVR_FLOOR, raw, roleFloor);
   }
   function makePlayer(row, options) {
     options = options || {};
@@ -141,6 +144,7 @@
       contract: 1 + ((nameEn.length + ovr) % 4),
       _ratingSource: row.ratingSource || '时代数值校准',
       _ratingOfficial: !!row.ratingOfficial,
+      _sourceOvr: Number(requestedOvr) || 0,
       _ratingBalanceAdjusted: ovr > (Number(requestedOvr) || 0),
       _seasonLine: row.seasonLine || null
     };
@@ -150,7 +154,7 @@
     return p;
   }
   function nameKey(value) {
-    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+    return String(value || '').replace(/amar['’]e/ig, 'amare').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
   }
   function buildLocalizedNameMap() {
     var map = Object.assign({}, HISTORICAL_CN_NAMES);
@@ -218,7 +222,7 @@
     var row = LAKERS_2003_F4.find(function(item) { return nameKey(item.nameEn) === key; });
     if (!row) return false;
     var age = Math.max(row.age, Number(player._age) || row.age);
-    var seasonCap = Math.max(68, row.ovr - Math.max(0, age - row.age) * 1.5);
+    var seasonCap = Math.max(ERA_PLAYABLE_OVR_FLOOR, row.ovr - Math.max(0, age - row.age) * 1.5);
     if (Number(player.ovr) <= seasonCap) return false;
     var ratio = seasonCap / Math.max(1, Number(player.ovr) || 1);
     ATTRS.forEach(function(attr) {
@@ -234,15 +238,32 @@
     var base = completeRosters()[String(start)] || completeRosters()[start] || {};
     var localizedNames = buildLocalizedNameMap();
     var historicalRowsByName = {};
+    var historicalMetaByName = {};
     Object.keys(base).forEach(function(team) {
-      (base[team] || []).forEach(function(row) { historicalRowsByName[nameKey(row.nameEn)] = row; });
+      (base[team] || []).forEach(function(row) {
+        var key = nameKey(row.nameEn);
+        historicalRowsByName[key] = row;
+        historicalMetaByName[key] = { row:row, team:team, anchorYear:start, anchorAge:Number(row.age) || 27 };
+      });
     });
     Object.keys(data().draftClasses || {}).forEach(function(year) {
       (data().draftClasses[year] || []).forEach(function(row) {
-        if (!historicalRowsByName[nameKey(row.nameEn)]) historicalRowsByName[nameKey(row.nameEn)] = row;
+        var key = nameKey(row.nameEn);
+        if (!historicalRowsByName[key]) {
+          historicalRowsByName[key] = row;
+          historicalMetaByName[key] = {
+            row:row,
+            team:normalizeTeam(row.team),
+            anchorYear:Number(year),
+            anchorAge:Number(row.age) || (row.birth ? Number(year) - Number(row.birth) : 20)
+          };
+        }
       });
     });
     var repaired = 0;
+    var activeNames = {};
+    var elapsed = Number(STATE.career && STATE.career.seasonCount || 0);
+    var currentYear = start + elapsed;
     Object.keys(NBA2K_DATA || {}).forEach(function(team) {
       if (!Array.isArray(NBA2K_DATA[team])) return;
       var rowsByName = {};
@@ -250,7 +271,9 @@
       (NBA2K_DATA[team] || []).forEach(function(player) {
         if (!player || player._isUser) return;
         var key = nameKey(player.nameEN || player.name);
+        activeNames[key] = true;
         var row = rowsByName[key] || historicalRowsByName[key];
+        var meta = historicalMetaByName[key];
         var curve = row && careerCurveFor(row);
         var historical = row && normalizedPositions(row.pos);
         if (historical && player.pos !== historical) {
@@ -258,6 +281,24 @@
           repaired++;
         }
         if (row && !player._peakOvr) player._peakOvr = peakOvrFor(row, player.ovr, player._age);
+        if (meta) {
+          var expectedAge = Math.max(18, Math.min(49, Number(meta.anchorAge) + Math.max(0, currentYear - Number(meta.anchorYear))));
+          if (Number(player._age) !== expectedAge || player._eraAgeRepairVersion !== 10) {
+            player._age = expectedAge;
+            player._eraAgeRepairVersion = 10;
+            repaired++;
+          }
+        }
+        if (Number(player.ovr) < ERA_PLAYABLE_OVR_FLOOR) {
+          var floorRatio = ERA_PLAYABLE_OVR_FLOOR / Math.max(1, Number(player.ovr) || 1);
+          ATTRS.forEach(function(attr) {
+            if (player[attr] != null) player[attr] = clamp(Number(player[attr]) * floorRatio, 25, 99);
+          });
+          player._sourceOvr = Number(player._sourceOvr) || Number(player.ovr) || 0;
+          player.ovr = ERA_PLAYABLE_OVR_FLOOR;
+          player._ratingBalanceAdjusted = true;
+          repaired++;
+        }
         if (curve) {
           player._peakOvr = Math.max(Number(player._peakOvr) || 0, Number(curve.peak) || 0);
           player._primeStartAge = curve.primeStart;
@@ -281,6 +322,24 @@
         }
         repair2003LakersF4Rating(player);
       });
+    });
+    // 早期版本把旧存档中的历史年龄推算错后，可能已让小斯/布泽尔在巅峰期被误退役。
+    // 在他们真实 NBA 生涯结束年龄之前，仅做一次有针对性的补回；不会复活正常退役的老将。
+    ['amare stoudemire', 'carlos boozer'].forEach(function(key) {
+      var meta = historicalMetaByName[key];
+      if (!meta || activeNames[key]) return;
+      var expectedAge = Number(meta.anchorAge) + Math.max(0, currentYear - Number(meta.anchorYear));
+      if (expectedAge > 33 || !meta.team || NBA2K_TEAMS.indexOf(meta.team) < 0) return;
+      var curve = careerCurveFor(meta.row);
+      var sourceOvr = Math.max(ERA_PLAYABLE_OVR_FLOOR, Number(meta.row.ovr) || ERA_PLAYABLE_OVR_FLOOR);
+      var riseYears = Math.max(1, Number(curve && curve.primeStart) - Number(meta.anchorAge));
+      var progress = Math.min(1, Math.max(0, expectedAge - Number(meta.anchorAge)) / riseYears);
+      var projectedOvr = curve ? sourceOvr + (curve.peak - sourceOvr) * progress : sourceOvr;
+      if (curve && expectedAge > curve.primeEnd) projectedOvr -= (expectedAge - curve.primeEnd) * 1.25;
+      var restored = makePlayer(meta.row, { age:expectedAge, ovr:clamp(projectedOvr, ERA_PLAYABLE_OVR_FLOOR, curve && curve.peak || 96), draftYear:meta.anchorYear });
+      restored._prematureRetirementRestored = true;
+      restored._eraAgeRepairVersion = 10;
+      if (replaceWeakest(meta.team, restored)) repaired++;
     });
     if (repaired && typeof clearLineupCache === 'function') clearLineupCache();
     return repaired;
@@ -306,10 +365,10 @@
     var positions = ['PG','SG','SF','PF','C'];
     var seq = (Number(STATE._eraRookieSeq) || 0) + 1;
     var pos = positions[(seq + year) % positions.length];
-    var ovr = 62 + ((seq * 7 + year) % 15);
+    var ovr = ERA_PLAYABLE_OVR_FLOOR + ((seq * 7 + year) % 7);
     var player = makePlayer({
       nameEn:'Era Prospect ' + year + '-' + seq,
-      nameCn:'年代新秀', pos:pos, ovr:ovr, potential:5 + (seq % 8), ratingSource:'传奇年代虚构新秀'
+      nameCn:'年代新秀', pos:pos, ovr:ovr, potential:5 + (seq % 8), ratingSource:'传奇年代虚构新秀（联盟下限 70）'
     }, { age:19 + (seq % 3), ovr:ovr, draftYear:year });
     localizeEraGeneratedPlayer(player, year);
     player._enterYear = year;
@@ -325,7 +384,7 @@
       if (NBA2K_TEAMS.indexOf(team) < 0) team = NBA2K_TEAMS[idx % NBA2K_TEAMS.length];
       var years = Math.max(0, Number(elapsed) || 0);
       var growth = Math.min(Number(row.potential) || 6, years * 1.7);
-      var ovr = clamp((Number(row.rating) || 68) + growth, 58, 96);
+      var ovr = clamp((Number(row.rating) || ERA_PLAYABLE_OVR_FLOOR) + growth, ERA_PLAYABLE_OVR_FLOOR, 96);
       var age = row.birth ? year + years - Number(row.birth) : (Number(row.age) || 20) + years;
       var player = makePlayer(row, { ovr:ovr, age:age, draftYear:year });
       if (replaceWeakest(team, player)) {
