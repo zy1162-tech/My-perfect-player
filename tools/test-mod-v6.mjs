@@ -76,6 +76,14 @@ assert.equal(context.NBA2K_DATA.SAC.find(player => player.name === 'Chris Webber
 assert.equal(context.NBA2K_DATA.LAL.find(player => player.name === 'Gary Payton')?.ovr, 87, '2003 Lakers Payton should use his age-35 season rating, not his peak card');
 assert.equal(context.NBA2K_DATA.LAL.find(player => player.name === 'Karl Malone')?.ovr, 84, '2003 Lakers Malone should use his age-40 season rating, not his peak card');
 assert.equal(context.NBA2K_DATA.LAL.length, 15, 'adding the Lakers F4 must preserve the 15-player roster cap');
+let eraPaytons = Object.values(context.NBA2K_DATA).flat().filter(player => player.name === 'Gary Payton');
+assert.equal(eraPaytons.length, 1, '2003 opening roster must contain only the Lakers F4 Gary Payton');
+assert.ok(context.NBA2K_DATA.LAL.includes(eraPaytons[0]), 'the only 2003 Gary Payton must be on the Lakers');
+context.NBA2K_DATA.CLE.push({ ...eraPaytons[0], _eraF4SeasonAdjusted:false });
+context.repairLegendEraPositions(2003);
+eraPaytons = Object.values(context.NBA2K_DATA).flat().filter(player => player.name === 'Gary Payton');
+assert.equal(eraPaytons.length, 1, 'old saves with a duplicate Gary Payton should self-repair');
+assert.ok(context.NBA2K_DATA.LAL.includes(eraPaytons[0]), 'self-repair should preserve the canonical Lakers F4 Gary Payton');
 context.NBA2K_DATA.CLE.splice(context.NBA2K_DATA.CLE.indexOf(eraLeBron), 1);
 context.NBA2K_DATA.MIA.push(eraLeBron);
 eraLeBron._age = 30;

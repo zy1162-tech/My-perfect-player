@@ -217,6 +217,7 @@
     'David Robinson': null,
     'John Stockton': null,          // 退役
     'Karl Malone': null,            // 转投湖人（由 F4 补丁加入）
+    'Gary Payton': 'LAL',           // 雄鹿→湖人 F4；不能再额外生成第二个佩顿
     'Arvydas Sabonis': null,        // 退役
     // 注：CHA（夏洛特山猫）2004 年才成立，2003-04 赛季不存在；为保持 30 队结构，
     // 其占位名单（真实球员但年份不同）原样保留，不在此处理。
@@ -333,7 +334,8 @@
   // 转会球员"当季到位总评"：部分球员的基础名单总评低于其目标赛季的真实水平，
   // 到位时按此值修正，避免被 12 人裁人机制误裁（如 61 分的科沃尔被 62 分的阿西克挤掉）。
   var ERA_ARRIVAL_OVR = {
-    'Kyle Korver': 72   // 2010-11 公牛：真实轮换射手
+    'Kyle Korver': 72,  // 2010-11 公牛：真实轮换射手
+    'Gary Payton': 87   // 2003-04 湖人：F4 当季老将校准
   };
   /** 时代名单"前移一年"：全联盟 +1 岁，并按真实休赛期名单修正表移动/移除球员。 */
   function applyEraSeasonShift(patchTable) {
@@ -580,7 +582,16 @@
     LAKERS_2003_F4.forEach(function(row) {
       var roster = NBA2K_DATA.LAL || (NBA2K_DATA.LAL = []);
       var existing = roster.find(function(player) { return nameKey(player.nameEN || player.name) === nameKey(row.nameEn); });
-      if (existing) return;
+      if (existing) {
+        // 佩顿由雄鹿流转到湖人时，按 F4 当季数值重新校准，而不是保留 2K3 雄鹿峰值卡。
+        if (Number(existing.ovr) > Number(row.ovr)) {
+          var ratio = Number(row.ovr) / Math.max(1, Number(existing.ovr));
+          ATTRS.forEach(function(attr) { if (existing[attr] != null) existing[attr] = clamp(Number(existing[attr]) * ratio, 25, 99); });
+          existing.ovr = row.ovr;
+        }
+        existing._eraF4SeasonAdjusted = true;
+        return;
+      }
       var player = makePlayer(row, { age:row.age, ovr:row.ovr, draftYear:2003 });
       player._eraF4SeasonAdjusted = true;
       replaceWeakest('LAL', player);
@@ -601,6 +612,26 @@
     player.ovr = Math.round(seasonCap);
     player._eraF4SeasonAdjusted = true;
     return true;
+  }
+  // 旧存档可能已经保存了“湖人 F4 佩顿 + 基础雄鹿佩顿”两份同名球员；只保留 F4 的正确版本。
+  function repair2003GaryPaytonDuplicate() {
+    if (Number(STATE.eraStart) !== 2003) return 0;
+    var found = [];
+    Object.keys(NBA2K_DATA || {}).forEach(function(team) {
+      if (!Array.isArray(NBA2K_DATA[team])) return;
+      NBA2K_DATA[team].forEach(function(player, idx) {
+        if (player && nameKey(player.nameEN || player.name) === 'gary payton') found.push({ team:team, idx:idx, player:player });
+      });
+    });
+    if (found.length <= 1) return 0;
+    // 湖人是 2003-04 F4 佩顿的唯一正确开局归属；优先它，避免旧档的标记被错误复制时保错一份。
+    var keeper = found.find(function(item) { return item.team === 'LAL'; }) || found.find(function(item) { return item.player._eraF4SeasonAdjusted; }) || found[0];
+    var removed = 0;
+    found.filter(function(item) { return item !== keeper; }).sort(function(a, b) { return b.idx - a.idx; }).forEach(function(item) {
+      var roster = NBA2K_DATA[item.team] || [];
+      if (roster[item.idx] === item.player) { roster.splice(item.idx, 1); removed++; }
+    });
+    return removed;
   }
   function repairLegendEraPositions(start) {
     start = Number(start || STATE.eraStart);
@@ -712,6 +743,7 @@
       restored._eraAgeRepairVersion = 10;
       if (replaceWeakest(meta.team, restored)) repaired++;
     });
+    repaired += repair2003GaryPaytonDuplicate();
     if (repaired && typeof clearLineupCache === 'function') clearLineupCache();
     return repaired;
   }

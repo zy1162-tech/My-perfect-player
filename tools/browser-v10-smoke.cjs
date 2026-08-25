@@ -20,17 +20,25 @@ const fs = require('node:fs');
     const all = NBA2K_TEAMS.flatMap(team => NBA2K_DATA[team] || []);
     const amare = all.find(player => player.name === "Amar'e Stoudemire");
     const boozer = all.find(player => player.name === 'Carlos Boozer');
+    const lebron = NBA2K_DATA.CLE.find(player => player.name === 'LeBron James');
+    let paytons = all.filter(player => player.name === 'Gary Payton');
     const fresh = {
       count:all.length,
       minOvr:Math.min(...all.map(player => player.ovr)),
       amare:{ age:amare._age, ovr:amare.ovr, source:amare._sourceOvr },
-      boozer:{ age:boozer._age, ovr:boozer.ovr, source:boozer._sourceOvr }
+      boozer:{ age:boozer._age, ovr:boozer.ovr, source:boozer._sourceOvr },
+      lebron:{ inCle:!!lebron, age:lebron && lebron._age },
+      payton:{ count:paytons.length, inLal:NBA2K_DATA.LAL.includes(paytons[0]), ovr:paytons[0] && paytons[0].ovr }
     };
     STATE.career.seasonCount = 9;
     boozer._age = 38;
     NBA2K_DATA.PHX.splice(NBA2K_DATA.PHX.indexOf(amare), 1);
     repairLegendEraPositions(2003);
     const repairedAmare = NBA2K_TEAMS.flatMap(team => NBA2K_DATA[team] || []).find(player => player.name === "Amar'e Stoudemire");
+    const canonicalPayton = NBA2K_DATA.LAL.find(player => player.name === 'Gary Payton');
+    NBA2K_DATA.CLE.push({ ...canonicalPayton, _eraF4SeasonAdjusted:false });
+    repairLegendEraPositions(2003);
+    paytons = NBA2K_TEAMS.flatMap(team => NBA2K_DATA[team] || []).filter(player => player.name === 'Gary Payton');
     const margins = [];
     for (let i = 0; i < 500; i++) {
       const game = simulate82StyleMatchup('GSW', 'LAL', { neutralState:true, includeBoxScore:false });
@@ -46,7 +54,7 @@ const fs = require('node:fs');
     chooseTeamSystem('twin_towers');
     return {
       fresh,
-      repaired:{ amareAge:repairedAmare && repairedAmare._age, amareRestored:!!(repairedAmare && repairedAmare._prematureRetirementRestored), boozerAge:boozer._age },
+      repaired:{ amareAge:repairedAmare && repairedAmare._age, amareRestored:!!(repairedAmare && repairedAmare._prematureRetirementRestored), boozerAge:boozer._age, paytonCount:paytons.length, paytonInLal:NBA2K_DATA.LAL.includes(paytons[0]) },
       scoreMargins:{ average:margins.reduce((sum, margin) => sum + margin, 0) / margins.length, onePointRate, closeGameRate },
       management:{ intelOpened, chosenSystem:STATE.teamSystems.GSW, effects:getTeamSystemEffects('GSW') },
       scripts:[...document.scripts].map(script => script.src).filter(src => /core|era-mode/.test(src))
@@ -54,7 +62,7 @@ const fs = require('node:fs');
   });
   console.log(JSON.stringify({ result, errors }, null, 2));
   await browser.close();
-  if (errors.length || result.fresh.count < 360 || result.fresh.count > 450 || result.fresh.minOvr !== 70 || result.fresh.amare.age !== 21 || result.fresh.boozer.age !== 22 || !result.repaired.amareRestored || result.repaired.amareAge !== 30 || result.repaired.boozerAge !== 31 || result.scoreMargins.onePointRate >= 0.14 || result.scoreMargins.average <= 7 || !result.management.intelOpened || result.management.chosenSystem !== 'twin_towers' || result.management.effects.pace !== -3) process.exitCode = 1;
+  if (errors.length || result.fresh.count < 360 || result.fresh.count > 450 || result.fresh.minOvr !== 70 || result.fresh.amare.age !== 21 || result.fresh.boozer.age !== 22 || !result.fresh.lebron.inCle || result.fresh.lebron.age !== 19 || result.fresh.payton.count !== 1 || !result.fresh.payton.inLal || result.fresh.payton.ovr !== 87 || !result.repaired.amareRestored || result.repaired.amareAge !== 30 || result.repaired.boozerAge !== 31 || result.repaired.paytonCount !== 1 || !result.repaired.paytonInLal || result.scoreMargins.onePointRate >= 0.14 || result.scoreMargins.average <= 7 || !result.management.intelOpened || result.management.chosenSystem !== 'twin_towers' || result.management.effects.pace !== -3) process.exitCode = 1;
 })().catch(error => {
   console.error(error);
   process.exit(1);
