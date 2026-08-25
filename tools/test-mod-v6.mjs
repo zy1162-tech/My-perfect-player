@@ -65,6 +65,24 @@ context.processDraft();
 assert.ok(Object.values(context.NBA2K_DATA).flat().some(player => player._eraGenerated), 'years without a real draft class should use era-safe fictional rookies');
 assert.ok(Object.values(context.NBA2K_DATA).flat().every(player => player.photoSource !== 'generated-rookie-pool'), 'legend eras must not fall back to the current rookie pool');
 
+context.STATE.eraStart = 2003;
+context.STATE.career.seasonCount = 12;
+context.STATE._legendLeagueApplied = null;
+context.applyLegendEraLeague();
+const eraLeBron = context.NBA2K_DATA.CLE.find(player => player.name === 'LeBron James');
+assert.equal(eraLeBron._age, 18, '2003 LeBron age is correct and should not be changed');
+assert.equal(context.NBA2K_DATA.SAC.find(player => player.name === 'Chris Webber')?.ovr, 91, '2003 official 2K3 Webber remains 91');
+assert.equal(context.NBA2K_DATA.LAL.find(player => player.name === 'Gary Payton')?.ovr, 87, '2003 Lakers Payton should use his age-35 season rating, not his peak card');
+assert.equal(context.NBA2K_DATA.LAL.find(player => player.name === 'Karl Malone')?.ovr, 84, '2003 Lakers Malone should use his age-40 season rating, not his peak card');
+assert.equal(context.NBA2K_DATA.LAL.length, 15, 'adding the Lakers F4 must preserve the 15-player roster cap');
+context.NBA2K_DATA.CLE.splice(context.NBA2K_DATA.CLE.indexOf(eraLeBron), 1);
+context.NBA2K_DATA.MIA.push(eraLeBron);
+eraLeBron._age = 30;
+eraLeBron.ovr = 87;
+context.repairLegendEraPositions(2003);
+assert.equal(eraLeBron.ovr, 94, 'old saves should restore an abnormally declined prime-age LeBron even after a trade');
+assert.equal(eraLeBron._primeEndAge, 41, 'LeBron prime window should cover the 2025-26 historical season');
+
 const core = await readFile(new URL('../assets/js/perfect-player-core.js', import.meta.url), 'utf8');
 const v4 = await readFile(new URL('../assets/js/perfect-player-mod-v4.js', import.meta.url), 'utf8');
 const eraMode = await readFile(new URL('../assets/js/perfect-player-era-mode.js', import.meta.url), 'utf8');

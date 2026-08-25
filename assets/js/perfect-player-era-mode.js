@@ -1,4 +1,4 @@
-/* Perfect Player V8 — 独立传奇年代模式（2003 / 2010 / 2016） */
+/* Perfect Player V9 — 独立传奇年代模式（2003 / 2010 / 2016） */
 (function(global) {
   'use strict';
 
@@ -11,7 +11,33 @@
     'chris paul':96, 'dwight howard':95, 'kawhi leonard':96, 'paul george':94,
     'derrick rose':94, 'blake griffin':93, 'klay thompson':92, 'draymond green':90,
     'kyrie irving':94, 'damian lillard':94, 'giannis antetokounmpo':98,
-    'anthony davis':96, 'jimmy butler':93, 'nikola jokic':98
+    'anthony davis':96, 'jimmy butler':93, 'nikola jokic':98, 'chris webber':94,
+    'shaquille o neal':98, 'allen iverson':97, 'jason kidd':95, 'steve nash':96
+  };
+  // 历史巨星不能套用普通球员“29 岁统一下滑”的模板；primeFloor 只在真实巅峰窗口内生效。
+  var HISTORICAL_CAREER_CURVES = {
+    'lebron james':{ peak:99, primeStart:23, primeEnd:41, primeFloor:94 },
+    'chris webber':{ peak:94, primeStart:25, primeEnd:31, primeFloor:90 },
+    'kobe bryant':{ peak:98, primeStart:22, primeEnd:34, primeFloor:94 },
+    'tim duncan':{ peak:98, primeStart:22, primeEnd:35, primeFloor:93 },
+    'kevin garnett':{ peak:97, primeStart:22, primeEnd:33, primeFloor:93 },
+    'dirk nowitzki':{ peak:97, primeStart:23, primeEnd:34, primeFloor:92 },
+    'stephen curry':{ peak:98, primeStart:25, primeEnd:36, primeFloor:94 },
+    'kevin durant':{ peak:97, primeStart:22, primeEnd:35, primeFloor:94 },
+    'dwyane wade':{ peak:97, primeStart:23, primeEnd:31, primeFloor:93 },
+    'carmelo anthony':{ peak:94, primeStart:22, primeEnd:30, primeFloor:91 },
+    'chris bosh':{ peak:93, primeStart:22, primeEnd:30, primeFloor:90 },
+    'chris paul':{ peak:96, primeStart:22, primeEnd:34, primeFloor:92 },
+    'dwight howard':{ peak:95, primeStart:21, primeEnd:29, primeFloor:92 },
+    'james harden':{ peak:96, primeStart:23, primeEnd:32, primeFloor:92 },
+    'russell westbrook':{ peak:95, primeStart:22, primeEnd:31, primeFloor:92 },
+    'kawhi leonard':{ peak:96, primeStart:24, primeEnd:32, primeFloor:93 },
+    'giannis antetokounmpo':{ peak:98, primeStart:23, primeEnd:32, primeFloor:95 },
+    'nikola jokic':{ peak:98, primeStart:24, primeEnd:33, primeFloor:96 },
+    'shaquille o neal':{ peak:98, primeStart:22, primeEnd:31, primeFloor:94 },
+    'allen iverson':{ peak:97, primeStart:22, primeEnd:30, primeFloor:92 },
+    'jason kidd':{ peak:95, primeStart:23, primeEnd:32, primeFloor:90 },
+    'steve nash':{ peak:96, primeStart:29, primeEnd:35, primeFloor:92 }
   };
   var HISTORICAL_CN_NAMES = {
     'mike james':'迈克-詹姆斯', 'jiri welsch':'伊里-韦尔施', 'eddie robinson':'埃迪-罗宾逊',
@@ -28,6 +54,12 @@
   };
   var ERA_ROOKIE_FIRST = ['亚伦','布兰登','卡梅伦','德文','埃文','加文','杰伦','凯登','马库斯','诺兰','泰勒','韦斯利'];
   var ERA_ROOKIE_LAST = ['安德森','贝克','卡特','戴维斯','埃利斯','福斯特','格兰特','哈里斯','杰克逊','刘易斯','米勒','帕克','里德','斯科特','特纳','沃克','杨'];
+  var LAKERS_2003_F4 = [
+    { nameEn:'Gary Payton', nameCn:'加里-佩顿', pos:'PG/SG', age:35, ovr:87, ratingSource:'2003-04 湖人当季老将校准',
+      attrs:{threePT:78,MID:85,FIN:76,DNK:45,HAN:91,PAS:90,PDEF:88,IDEF:65,BLK:40,REB:60,ATH:77,STR:70,CLU:88} },
+    { nameEn:'Karl Malone', nameCn:'卡尔-马龙', pos:'PF/C', age:40, ovr:84, ratingSource:'2003-04 湖人当季老将校准',
+      attrs:{threePT:48,MID:86,FIN:88,DNK:70,HAN:73,PAS:79,PDEF:78,IDEF:84,BLK:68,REB:86,ATH:72,STR:94,CLU:88} }
+  ];
   var TEMPLATES = {
     PG:{threePT:76,MID:78,FIN:76,DNK:55,HAN:87,PAS:86,PDEF:73,IDEF:50,BLK:38,REB:49,ATH:80,STR:50,CLU:78},
     SG:{threePT:80,MID:80,FIN:80,DNK:69,HAN:81,PAS:70,PDEF:72,IDEF:54,BLK:43,REB:52,ATH:81,STR:56,CLU:78},
@@ -51,11 +83,16 @@
     return positions.length ? positions.join('/') : 'SF';
   }
   function peakOvrFor(row, currentOvr, age) {
-    var exact = HISTORICAL_PEAK_OVR[nameKey(row && (row.nameEn || row.nameEN || row.name))];
+    var key = nameKey(row && (row.nameEn || row.nameEN || row.name));
+    var curve = HISTORICAL_CAREER_CURVES[key];
+    var exact = (curve && curve.peak) || HISTORICAL_PEAK_OVR[key];
     if (exact) return Math.max(Number(currentOvr) || 0, exact);
     var potential = Math.max(0, Number(row && row.potential) || 0);
     var remainingGrowth = age <= 20 ? 10 : age <= 22 ? 8 : age <= 24 ? 5 : age <= 26 ? 3 : 0;
     return clamp((Number(currentOvr) || 65) + Math.max(potential, remainingGrowth), Number(currentOvr) || 50, 96);
+  }
+  function careerCurveFor(row) {
+    return HISTORICAL_CAREER_CURVES[nameKey(row && (row.nameEn || row.nameEN || row.name))] || null;
   }
   function normalizeTeam(team) {
     return ({ SEA:'OKC', NJN:'BKN', NOH:'NOP', NOK:'NOP', CHH:'CHA', VAN:'MEM' })[team] || team;
@@ -83,6 +120,7 @@
     var pos = normalizedPositions(row.pos);
     var requestedOvr = options.ovr != null ? options.ovr : row.ovr;
     var ovr = clamp(adjustedEraOvr(row, requestedOvr), 50, 99);
+    var curve = careerCurveFor(row);
     var attrs = row.attrs ? Object.assign({}, row.attrs) : generatedAttrs(mainPos(pos), ovr);
     var nameEn = row.nameEn || ('Era Player ' + Math.random());
     var p = {
@@ -97,6 +135,9 @@
       _draftYear: options.draftYear || row.draftYear || null,
       _potential: Number(row.potential) || 6,
       _peakOvr: peakOvrFor(row, ovr, Number(options.age != null ? options.age : row.age) || 22),
+      _primeStartAge: curve && curve.primeStart || null,
+      _primeEndAge: curve && curve.primeEnd || null,
+      _primeFloorOvr: curve && curve.primeFloor || null,
       contract: 1 + ((nameEn.length + ovr) % 4),
       _ratingSource: row.ratingSource || '时代数值校准',
       _ratingOfficial: !!row.ratingOfficial,
@@ -130,7 +171,9 @@
         }
       }
     }
-    Object.keys(global.NBA2K_DATA || {}).forEach(function(team) { (NBA2K_DATA[team] || []).forEach(harvest); });
+    Object.keys(global.NBA2K_DATA || {}).forEach(function(team) {
+      if (Array.isArray(NBA2K_DATA[team])) NBA2K_DATA[team].forEach(harvest);
+    });
     Object.keys(data().roster2003 || {}).forEach(function(team) { (data().roster2003[team] || []).forEach(harvest); });
     Object.keys(data().draftClasses || {}).forEach(function(year) { (data().draftClasses[year] || []).forEach(harvest); });
     map._tokens = tokens;
@@ -158,31 +201,85 @@
     roster.push(player);
     return true;
   }
+  function apply2003LakersF4() {
+    if (Number(STATE.eraStart) !== 2003) return;
+    LAKERS_2003_F4.forEach(function(row) {
+      var roster = NBA2K_DATA.LAL || (NBA2K_DATA.LAL = []);
+      var existing = roster.find(function(player) { return nameKey(player.nameEN || player.name) === nameKey(row.nameEn); });
+      if (existing) return;
+      var player = makePlayer(row, { age:row.age, ovr:row.ovr, draftYear:2003 });
+      player._eraF4SeasonAdjusted = true;
+      replaceWeakest('LAL', player);
+    });
+  }
+  function repair2003LakersF4Rating(player) {
+    if (Number(STATE.eraStart) !== 2003 || !player) return false;
+    var key = nameKey(player.nameEN || player.name);
+    var row = LAKERS_2003_F4.find(function(item) { return nameKey(item.nameEn) === key; });
+    if (!row) return false;
+    var age = Math.max(row.age, Number(player._age) || row.age);
+    var seasonCap = Math.max(68, row.ovr - Math.max(0, age - row.age) * 1.5);
+    if (Number(player.ovr) <= seasonCap) return false;
+    var ratio = seasonCap / Math.max(1, Number(player.ovr) || 1);
+    ATTRS.forEach(function(attr) {
+      if (player[attr] != null) player[attr] = clamp(Number(player[attr]) * ratio, 25, 99);
+    });
+    player.ovr = Math.round(seasonCap);
+    player._eraF4SeasonAdjusted = true;
+    return true;
+  }
   function repairLegendEraPositions(start) {
     start = Number(start || STATE.eraStart);
     if (STATE.mode !== 'legend' || !start) return 0;
     var base = completeRosters()[String(start)] || completeRosters()[start] || {};
     var localizedNames = buildLocalizedNameMap();
+    var historicalRowsByName = {};
+    Object.keys(base).forEach(function(team) {
+      (base[team] || []).forEach(function(row) { historicalRowsByName[nameKey(row.nameEn)] = row; });
+    });
+    Object.keys(data().draftClasses || {}).forEach(function(year) {
+      (data().draftClasses[year] || []).forEach(function(row) {
+        if (!historicalRowsByName[nameKey(row.nameEn)]) historicalRowsByName[nameKey(row.nameEn)] = row;
+      });
+    });
     var repaired = 0;
     Object.keys(NBA2K_DATA || {}).forEach(function(team) {
+      if (!Array.isArray(NBA2K_DATA[team])) return;
       var rowsByName = {};
       (base[team] || []).forEach(function(row) { rowsByName[nameKey(row.nameEn)] = row; });
       (NBA2K_DATA[team] || []).forEach(function(player) {
         if (!player || player._isUser) return;
         var key = nameKey(player.nameEN || player.name);
-        var row = rowsByName[key];
+        var row = rowsByName[key] || historicalRowsByName[key];
+        var curve = row && careerCurveFor(row);
         var historical = row && normalizedPositions(row.pos);
         if (historical && player.pos !== historical) {
           player.pos = historical;
           repaired++;
         }
         if (row && !player._peakOvr) player._peakOvr = peakOvrFor(row, player.ovr, player._age);
+        if (curve) {
+          player._peakOvr = Math.max(Number(player._peakOvr) || 0, Number(curve.peak) || 0);
+          player._primeStartAge = curve.primeStart;
+          player._primeEndAge = curve.primeEnd;
+          player._primeFloorOvr = curve.primeFloor;
+          var playerAge = Number(player._age) || 0;
+          if (playerAge >= curve.primeStart && playerAge <= curve.primeEnd && Number(player.ovr) < curve.primeFloor) {
+            var restoreRatio = curve.primeFloor / Math.max(1, Number(player.ovr) || 1);
+            ATTRS.forEach(function(attr) {
+              if (player[attr] != null) player[attr] = clamp(Number(player[attr]) * restoreRatio, 25, 99);
+            });
+            player.ovr = curve.primeFloor;
+            player._eraPrimeRatingRepaired = true;
+          }
+        }
         if (!player.cname || player.cname === player.name || player.cname === player.nameEN) {
           player.cname = localizedNames[key] || localizeFromTokens(player.nameEN || player.name, localizedNames._tokens || {}) || player.cname;
         }
         if (player.photoSource === 'generated-rookie-pool' || /^Rookie_/i.test(String(player.name || ''))) {
           localizeEraGeneratedPlayer(player, start + Number(STATE.career && STATE.career.seasonCount || 0));
         }
+        repair2003LakersF4Rating(player);
       });
     });
     if (repaired && typeof clearLineupCache === 'function') clearLineupCache();
@@ -261,6 +358,7 @@
       });
       NBA2K_DATA[team] = roster;
     });
+    apply2003LakersF4();
     STATE._legendLeagueApplied = start;
     STATE.draftMode = 'historical';
     if (STATE.career) {

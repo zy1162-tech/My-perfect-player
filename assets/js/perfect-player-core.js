@@ -18352,6 +18352,30 @@ function getEraPlayerGrowthBonus(player, age, randomValue) {
 }
 window.getEraPlayerGrowthBonus = getEraPlayerGrowthBonus;
 
+function getEraPlayerPrimeFloor(player, age) {
+  player = player || {};
+  var start = Number(player._primeStartAge);
+  var end = Number(player._primeEndAge);
+  var floor = Number(player._primeFloorOvr) || 0;
+  age = Number(age);
+  return player._eraRoster && floor > 0 && age >= start && age <= end ? floor : 0;
+}
+window.getEraPlayerPrimeFloor = getEraPlayerPrimeFloor;
+
+function getLeagueAgeDevelopmentFactor(player, age, randomValue) {
+  age = Number(age) || 22;
+  var random = Math.max(0, Math.min(1, Number(randomValue) || 0));
+  var primeFloor = getEraPlayerPrimeFloor(player, age);
+  if (primeFloor && Number(player && player.ovr) >= primeFloor) return (random - 0.5) * 0.35;
+  if (age <= 22) return 1 + random * 1.5;
+  if (age <= 25) return 0.25 + random * 0.75;
+  if (age <= 29) return (random - 0.5) * 0.5;
+  if (age <= 32) return -0.35 - random * 0.65;
+  if (age <= 35) return -0.8 - random * 1.2;
+  return -1.5 - random * 2;
+}
+window.getLeagueAgeDevelopmentFactor = getLeagueAgeDevelopmentFactor;
+
 function evolveLeague() {
   STATE._leagueChanges = { retired: [], rookies: [], teamChanges: {}, trades: [] };
   var teams = typeof NBA2K_TEAMS !== 'undefined' ? NBA2K_TEAMS : [];
@@ -18365,11 +18389,8 @@ function evolveLeague() {
       var age = getLeaguePlayerAge(p);
       var gene = getPlayerGene(p.name);
       var volatility = gene.v;
-      var ageFactor = 0;
-      if (age <= 22) ageFactor = 1 + rngNext() * 1.5;
-      else if (age <= 28) ageFactor = (rngNext() - 0.5) * 1.5;
-      else if (age <= 33) ageFactor = -1 - rngNext() * 1.5;
-      else ageFactor = -2 - rngNext() * 2;
+      var primeFloor = getEraPlayerPrimeFloor(p, age);
+      var ageFactor = getLeagueAgeDevelopmentFactor(p, age, rngNext());
       var volFactor = (rngNext() - 0.5) * volatility * 0.6;
       var randFactor = (rngNext() - 0.5) * 1.5;
       var change = ageFactor * 0.5 + volFactor * 0.3 + randFactor * 0.2;
@@ -18380,6 +18401,7 @@ function evolveLeague() {
       change = Math.round(change * 2) / 2;
       var newOvr = Math.max(55, Math.min(99, p.ovr + change));
       if (peakOvr) newOvr = Math.min(peakOvr, newOvr);
+      if (primeFloor) newOvr = Math.max(primeFloor, newOvr);
       if (newOvr !== p.ovr) {
         var ratio = Math.round(newOvr) / p.ovr;
         SIM_CONFIG.ATTR_LIST.forEach(function(attrKey) {

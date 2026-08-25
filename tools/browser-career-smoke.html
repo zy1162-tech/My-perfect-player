@@ -33,7 +33,16 @@
     await wait(100);
     if (!game.document.getElementById('roster-authority-modal')) throw new Error('名单话语权面板没有打开');
     game.skipRosterCut();
-    result.textContent = 'PASS: team selection + skill panel + legacy Lv.5 + roster authority';
+    game.eval("STATE.mode='legend';STATE.eraStart=2003;STATE._legendLeagueApplied=null;applyLegendEraLeague();");
+    var lebron = game.eval("NBA2K_DATA.CLE.find(function(player){return player.name==='LeBron James';})");
+    var payton = game.eval("NBA2K_DATA.LAL.find(function(player){return player.name==='Gary Payton';})");
+    var malone = game.eval("NBA2K_DATA.LAL.find(function(player){return player.name==='Karl Malone';})");
+    if (!lebron || lebron._age !== 18) throw new Error('2003 詹姆斯年龄不是 18');
+    if (!payton || payton.ovr !== 87 || !malone || malone.ovr !== 84) throw new Error('2003 湖人 F4 没有使用当季老将评分');
+    lebron._age = 27; lebron.ovr = 87;
+    game.repairLegendEraPositions(2003);
+    if (lebron.ovr !== 94) throw new Error('旧存档巅峰期詹姆斯异常掉评没有恢复');
+    result.textContent = 'PASS: V9 career UI + LeBron prime repair + Lakers F4 season ratings';
   } catch (error) {
     result.textContent = 'FAIL: ' + (error && error.stack || error);
   }

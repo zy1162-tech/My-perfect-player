@@ -27412,9 +27412,9 @@
           "teamId": 25,
           "pos": 4,
           "pos2": 0,
-          "rating": 82,
-          "age": 29,
-          "yearsLeague": 10,
+          "rating": 94,
+          "age": 27,
+          "yearsLeague": 8,
           "draftYear": 1993,
           "image": 151,
           "photoLocal": "assets/images/Player/historical-nba/chris-webber.png",
@@ -27423,16 +27423,16 @@
           "photoSource": "nba-cdn",
           "nbaId": 185,
           "attrs": {
-            "pass": 76,
-            "shotInt": 88,
-            "shotExt": 55,
-            "shotFree": 78,
-            "physique": 86,
-            "blk": 80,
-            "reb": 85,
-            "stl": 78,
-            "speed": 82,
-            "strength": 90
+            "pass": 88,
+            "shotInt": 95,
+            "shotExt": 70,
+            "shotFree": 82,
+            "physique": 94,
+            "blk": 84,
+            "reb": 94,
+            "stl": 82,
+            "speed": 88,
+            "strength": 95
           },
           "honors": {
             "rings": 0,
@@ -27456,8 +27456,8 @@
           "source": {
             "kind": "historical",
             "code": 14,
-            "year": 2003,
-            "label": "2003-04",
+            "year": 2001,
+            "label": "2000-01 历史巅峰校准",
             "file": "rosters14.csv",
             "franchiseCard": true,
             "positionCurated": true,
@@ -27471,9 +27471,9 @@
           ],
           "starScore": 63.8,
           "historicalTier": "hall-of-fame",
-          "peakSource": "highest rating for each player across rosters01.csv through rosters19.csv",
+          "peakSource": "2000-01 一阵赛季历史巅峰人工校准",
           "historicalPeak": true,
-          "peakRating": 82
+          "peakRating": 94
         },
         {
           "id": 443,

@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  var POOL = 'assets/data/perfect-player-pool.json?v=20260824-local-player-pool-v3';
+  var POOL = 'assets/data/perfect-player-pool.json?v=20260825-star-prime-v9';
 
   var GROUPS = {
     create: [
