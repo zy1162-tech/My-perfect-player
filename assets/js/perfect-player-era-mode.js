@@ -5,6 +5,8 @@
   var POS = { 1:'PG', 2:'SG', 3:'SF', 4:'PF', 5:'C' };
   var ATTRS = ['threePT','MID','FIN','DNK','HAN','PAS','PDEF','IDEF','BLK','REB','ATH','STR','CLU'];
   var ERA_PLAYABLE_OVR_FLOOR = 70;
+  // NBA 正式名单上限为 15 人；传奇年代也统一使用该上限，避免转会/选秀时无意裁掉真实轮换球员。
+  var ERA_ROSTER_CAP = 15;
   var HISTORICAL_PEAK_OVR = {
     'lebron james':99, 'dwyane wade':97, 'carmelo anthony':94, 'chris bosh':93,
     'kobe bryant':98, 'tim duncan':98, 'kevin garnett':97, 'dirk nowitzki':97,
@@ -53,7 +55,38 @@
     'tyson chandler':'泰森-钱德勒', 'paul millsap':'保罗-米尔萨普',
     'isaiah thomas':'以赛亚-托马斯', 'jae crowder':'杰-克劳德',
     'amir johnson':'阿米尔-约翰逊', 'deandre jordan':'德安德烈-乔丹',
-    'kent bazemore':'肯特-贝兹莫尔', 'gerald green':'杰拉德-格林'
+    'kent bazemore':'肯特-贝兹莫尔', 'gerald green':'杰拉德-格林',
+    // ---- 三个时代核心阵容的补充译名（保证传奇年代全中文，昵称优先）----
+    'lebron james':'勒布朗-詹姆斯', 'dwyane wade':'德维恩-韦德', 'carmelo anthony':'卡梅隆-安东尼',
+    'chris bosh':'克里斯-波什', 'kobe bryant':'科比-布莱恩特', 'tim duncan':'蒂姆-邓肯',
+    'kevin garnett':'凯文-加内特', 'dirk nowitzki':'德克-诺维茨基', 'steve nash':'史蒂夫-纳什',
+    'jason kidd':'杰森-基德', 'allen iverson':'阿伦-艾弗森', 'shaquille o neal':'沙奎尔-奥尼尔',
+    'yao ming':'姚明', 'tracy mcgrady':'特雷西-麦克格雷迪', 'vince carter':'文斯-卡特',
+    'ray allen':'雷-阿伦', 'paul pierce':'保罗-皮尔斯', 'gary payton':'加里-佩顿',
+    'karl malone':'卡尔-马龙', 'tony parker':'托尼-帕克', 'manu ginobili':'马努-吉诺比利',
+    'david robinson':'大卫-罗宾逊', 'pau gasol':'保罗-加索尔', 'latrell sprewell':'拉特里尔-斯普雷维尔',
+    'steve francis':'史蒂夫-弗朗西斯', 'gilbert arenas':'吉尔伯特-阿里纳斯', 'amare stoudemire':'阿马雷-斯塔德迈尔',
+    'carlos boozer':'卡洛斯-布泽尔', 'deron williams':'德隆-威廉姆斯', 'michael redd':'迈克尔-里德',
+    'jermaine oneal':'杰梅因-奥尼尔', 'rashard lewis':'拉沙德-刘易斯', 'andre iguodala':'安德烈-伊戈达拉',
+    'kevin love':'凯文-乐福', 'derrick rose':'德里克-罗斯', 'blake griffin':'布雷克-格里芬',
+    'stephen curry':'斯蒂芬-库里', 'kevin durant':'凯文-杜兰特', 'russell westbrook':'拉塞尔-威斯布鲁克',
+    'james harden':'詹姆斯-哈登', 'klay thompson':'克莱-汤普森', 'draymond green':'追梦格林',
+    'kyrie irving':'凯里-欧文', 'kawhi leonard':'科怀-伦纳德', 'paul george':'保罗-乔治',
+    'giannis antetokounmpo':'扬尼斯-阿德托昆博', 'anthony davis':'安东尼-戴维斯',
+    'jimmy butler':'吉米-巴特勒', 'damian lillard':'达米安-利拉德', 'dwight howard':'德怀特-霍华德',
+    'chris paul':'克里斯-保罗', 'demarcus cousins':'德马库斯-考辛斯', 'karl anthony towns':'卡尔-安东尼-唐斯',
+    'joel embiid':'乔尔-恩比德', 'kristaps porzingis':'克里斯塔普斯-波尔津吉斯',
+    'dangelo russell':'德安杰洛-拉塞尔', 'jahlil okafor':'贾利尔-奥卡福', 'ben simmons':'本-西蒙斯',
+    'brandon ingram':'布兰登-英格拉姆', 'jaylen brown':'杰伦-布朗', 'jamal murray':'贾马尔-默里',
+    'jayson tatum':'杰森-塔图姆', 'lonzo ball':'朗佐-鲍尔', 'markelle fultz':'马克尔-富尔茨',
+    'john wall':'约翰-沃尔', 'jrue holiday':'朱-霍勒迪', 'marc gasol':'马克-加索尔',
+    'zach randolph':'扎克-兰多夫', 'tony allen':'托尼-阿伦', 'mike conley':'迈克-康利',
+    'lamarcus aldridge':'拉马库斯-阿尔德里奇', 'goran dragic':'戈兰-德拉季奇', 'hassan whiteside':'哈桑-怀特塞德',
+    'kemba walker':'肯巴-沃克', 'nicola jokic':'尼古拉-约基奇',
+    // ---- 名单数据中的截断名/别名补全 ----
+    'metta world':'慈世平', 'metta world peace':'慈世平', 'ron artest':'罗恩-阿泰斯特',
+    'nick van':'尼克-范埃克塞尔', 'nick van exel':'尼克-范埃克塞尔',
+    'keith van':'基思-范霍恩', 'keith van horn':'基思-范霍恩'
   };
   var ERA_ROOKIE_FIRST = ['亚伦','布兰登','卡梅伦','德文','埃文','加文','杰伦','凯登','马库斯','诺兰','泰勒','韦斯利'];
   var ERA_ROOKIE_LAST = ['安德森','贝克','卡特','戴维斯','埃利斯','福斯特','格兰特','哈里斯','杰克逊','刘易斯','米勒','帕克','里德','斯科特','特纳','沃克','杨'];
@@ -63,6 +96,308 @@
     { nameEn:'Karl Malone', nameCn:'卡尔-马龙', pos:'PF/C', age:40, ovr:84, ratingSource:'2003-04 湖人当季老将校准',
       attrs:{threePT:48,MID:86,FIN:88,DNK:70,HAN:73,PAS:79,PDEF:78,IDEF:84,BLK:68,REB:86,ATH:72,STR:94,CLU:88} }
   ];
+  // 2016-17 赛季真实名单修正：2015-16（2K16）基础名单在开局前对齐 2016 年休赛期的人员变动。
+  // 值为 null 表示该球员在 2016 年夏天退役/离开联盟；值为球队代码表示转会去向。
+  var ERA_2017_ROSTER_PATCH = {
+    // —— 2016 年夏天退役/离开联盟 ——
+    'Kobe Bryant': null,
+    'Tim Duncan': null,
+    'Kevin Garnett': null,
+    'Mo Williams': null,
+    'Jimmer Fredette': null,      // 赴海外
+    'Amar\'e Stoudemire': null,   // 退役
+    // —— 2016 休赛期知名转会 ——
+    'Kevin Durant': 'GSW',
+    'Dwyane Wade': 'CHI',
+    'Derrick Rose': 'NYK',
+    'Joakim Noah': 'NYK',
+    'Rajon Rondo': 'CHI',
+    'Al Horford': 'BOS',
+    'Pau Gasol': 'SAS',
+    'Chandler Parsons': 'MEM',
+    'Harrison Barnes': 'DAL',
+    'Andrew Bogut': 'DAL',
+    'Zaza Pachulia': 'GSW',
+    'Serge Ibaka': 'ORL',
+    'Victor Oladipo': 'OKC',
+    'Ersan Ilyasova': 'PHI',      // 雷霆→76人（奥拉迪波交易后续）
+    'Domantas Sabonis': 'OKC',    // 选秀夜交易（由选秀夜修正处理）
+    'Evan Turner': 'POR',
+    'Jeff Teague': 'IND',
+    'Luol Deng': 'LAL',
+    'Timofey Mozgov': 'LAL',
+    'David West': 'GSW',
+    'Jeremy Lin': 'BKN',
+    'Jared Sullinger': 'TOR',
+    'Eric Gordon': 'HOU',
+    'Ryan Anderson': 'HOU',
+    'Festus Ezeli': 'POR',
+    'Marreese Speights': 'LAC',
+    'Courtney Lee': 'NYK',
+    'Robin Lopez': 'CHI',
+    'Bismack Biyombo': 'ORL',
+    'Terrence Jones': 'NOP',
+    'Raymond Felton': 'LAC',
+    // —— 2016 休赛期其他知名转会 ——
+    'Dwight Howard': 'ATL',
+    'Matthew Dellavedova': 'MIL',
+    'Gerald Green': 'BOS',
+    'Dion Waiters': 'MIA',
+    'Willie Reed': 'MIA',
+    'Luke Babbitt': 'MIA',
+    'Roy Hibbert': 'CHA',
+    'Ramon Sessions': 'CHA',
+    'Isaiah Canaan': 'CHI',
+    'Justin Holiday': 'NYK',
+    'Arron Afflalo': 'SAC',
+    'Langston Galloway': 'NOP',
+    'Derrick Williams': 'MIA',
+    'Kevin Séraphin': 'IND',
+    'José Calderón': 'CHI',
+    'Jerian Grant': 'CHI',
+    'Ty Lawson': 'SAC',
+    'George Hill': 'UTA',
+    'Ian Mahinmi': 'WAS',
+    'Al Jefferson': 'IND',
+    'Aaron Brooks': 'IND',
+    'Michael Beasley': 'MIL',
+    'Leandro Barbosa': 'PHX',
+    'Matt Barnes': 'SAC',
+    'Chris Andersen': 'CLE',
+    'James Ennis III': 'MEM',
+    'Jared Dudley': 'PHX',
+    'Cole Aldrich': 'MIN',
+    'Jordan Hill': 'MIN',
+    'Brandon Rush': 'MIN',
+    'Solomon Hill': 'NOP',
+    'E\'Twaun Moore': 'NOP',
+    'Dewayne Dedmon': 'SAS',
+    'David Lee': 'SAS',
+    'Boban Marjanović': 'DET',
+    'Jon Leuer': 'DET',
+    'Ish Smith': 'DET',
+    'Jeff Green': 'ORL',
+    'D.J. Augustin': 'ORL',
+    'Gerald Henderson': 'PHI',
+    'Sergio Rodríguez': 'PHI',
+    'Seth Curry': 'DAL',
+    'Nene Hilario': 'HOU',
+    'Jason Smith': 'WAS',
+    'Trevor Booker': 'BKN'
+  };
+  // 2016-17 缺失的真实球员补充。
+  var ERA_2017_ADDITIONS = [
+    { nameEn:'Wilson Chandler', nameCn:'威尔森-钱德勒', pos:'SF', team:'DEN', age:29, ovr:74 },
+    { nameEn:'Juancho Hernangómez', nameCn:'胡安乔-埃尔南戈麦斯', pos:'PF', team:'DEN', age:21, ovr:62 },
+    { nameEn:'Dario Šarić', nameCn:'达里奥-沙里奇', pos:'PF', team:'PHI', age:22, ovr:70 },
+    { nameEn:'Patrick McCaw', nameCn:'帕特里克-麦考', pos:'SG', team:'GSW', age:21, ovr:64 },
+    { nameEn:'Ivica Zubac', nameCn:'伊维察-祖巴茨', pos:'C', team:'LAL', age:19, ovr:60 },
+    { nameEn:'Willy Hernangomez', nameCn:'威利-埃尔南戈麦斯', pos:'C', team:'NYK', age:22, ovr:64 },
+    { nameEn:'Mindaugas Kuzminskas', nameCn:'明道加斯-库兹明斯卡斯', pos:'SF', team:'NYK', age:27, ovr:62 },
+    { nameEn:'Timothe Luwawu', nameCn:'蒂莫泰-卢瓦乌', pos:'SG', team:'PHI', age:21, ovr:63 }
+  ];
+  // 2016 届选秀夜交易修正。
+  var ERA_2017_DRAFT_NIGHT = {
+    'Marquese Chriss': 'PHX',
+    'Domantas Sabonis': 'OKC',
+    'Taurean Prince': 'ATL',
+    'Caris LeVert': 'BKN',
+    'Damian Jones': 'GSW',
+    'Malachi Richardson': 'SAC',
+    'Denzel Valentine': 'CHI',
+    'Deyonta Davis': 'MEM',
+    'Thon Maker': 'MIL'
+  };
+  // 2003-04 赛季真实名单修正：2K3（2002-03）基础名单在开局前对齐 2003 年休赛期的人员变动。
+  var ERA_2004_ROSTER_PATCH = {
+    // —— 2003 年夏天退役/离队 ——
+    'David Robinson': null,
+    'John Stockton': null,          // 退役
+    'Karl Malone': null,            // 转投湖人（由 F4 补丁加入）
+    'Arvydas Sabonis': null,        // 退役
+    // 注：CHA（夏洛特山猫）2004 年才成立，2003-04 赛季不存在；为保持 30 队结构，
+    // 其占位名单（真实球员但年份不同）原样保留，不在此处理。
+    // —— 2003 休赛期知名转会 ——
+    'Gilbert Arenas': 'WAS',
+    'Antawn Jamison': 'DAL',
+    'Nick Van': 'GSW',              // 范埃克塞尔随贾米森交易前往勇士
+    'Latrell Sprewell': 'MIN',      // 森林狼三头怪
+    'Sam Cassell': 'MIN',
+    'Kevin Ollie': 'CLE',
+    'Voshon Lenard': 'DEN',
+    'Mark Jackson': 'HOU',
+    'Hedo Türkoğlu': 'SAS',         // 国王→马刺（米勒三方交易）
+    'Scot Pollard': 'IND',
+    'Brad Miller': 'SAC',
+    'Keith Van': 'NYK',             // 基思-范霍恩 76人→尼克斯
+    'Jason Kapono': 'CLE',
+    'Keith Bogans': 'ORL',
+    'Matt Carroll': 'POR'
+  };
+  // 2003-04 缺失的真实球员补充（名单数据里没有、但当年真实存在的球员）。
+  var ERA_2004_ADDITIONS = [
+    { nameEn:'Darko Miličić', nameCn:'达科-米利西奇', pos:'C', team:'DET', age:18, ovr:65 },
+    { nameEn:'Kyle Korver', nameCn:'凯尔-科沃尔', pos:'SG', team:'PHI', age:22, ovr:72 },
+    { nameEn:'Udonis Haslem', nameCn:'乌杜尼斯-哈斯勒姆', pos:'PF', team:'MIA', age:23, ovr:68 },
+    { nameEn:'Zoran Planinić', nameCn:'佐兰-普拉尼尼奇', pos:'PG', team:'BKN', age:21, ovr:64 },
+    { nameEn:'Francisco Elson', nameCn:'弗朗西斯科-埃尔森', pos:'C', team:'DEN', age:27, ovr:66 },
+    { nameEn:'Ira Newble', nameCn:'艾拉-纽贝尔', pos:'SF', team:'CLE', age:28, ovr:67 }
+  ];
+  // 选秀夜交易修正：选秀班次按"选秀前球队"登记，开局前移回真实球队。
+  var ERA_2004_DRAFT_NIGHT = {
+    'Leandro Barbosa': 'PHX',   // 马刺选中→太阳
+    'Kendrick Perkins': 'BOS',  // 灰熊选中→凯尔特人
+    'Marcus Banks': 'BOS'       // 灰熊选中→凯尔特人
+  };
+  // 2010-11 赛季真实名单修正：2K10（2009-10）基础名单在开局前对齐 2010 年休赛期的人员变动。
+  var ERA_2011_ROSTER_PATCH = {
+    // —— 2010 年夏天（詹姆斯"决定"）——
+    'LeBron James': 'MIA',
+    'Chris Bosh': 'MIA',
+    'Zydrunas Ilgauskas': 'MIA',
+    'Shaquille O\'Neal': 'BOS',
+    'Jermaine O\'Neal': 'BOS',
+    'Carlos Boozer': 'CHI',
+    'Amare Stoudemire': 'NYK',
+    'David Lee': 'GSW',
+    'Al Jefferson': 'UTA',
+    'Raja Bell': 'UTA',
+    'Corey Maggette': 'MIL',
+    'Anthony Morrow': 'BKN',
+    'Tyson Chandler': 'DAL',
+    'Leandro Barbosa': 'TOR',
+    'Hedo Turkoglu': 'PHX',
+    'Marcus Camby': 'POR',
+    'Steve Blake': 'LAL',
+    'Matt Barnes': 'LAL',
+    // —— 2010 休赛期其他知名转会 ——
+    'Kirk Hinrich': 'WAS',
+    'John Salmons': 'MIL',
+    'Tony Allen': 'MEM',
+    'Travis Outlaw': 'BKN',
+    'Drew Gooden': 'MIL',
+    'Jordan Farmar': 'BKN',
+    'Keyon Dooling': 'MIL',
+    'Johan Petro': 'BKN',
+    'Tracy McGrady': 'DET',
+    'Erick Dampier': 'MIA',
+    'Linas Kleiza': 'TOR',
+    'Dan Gadzuric': 'GSW',
+    'Charlie Bell': 'GSW',
+    'Luke Ridnour': 'MIN',
+    'Dorell Wright': 'GSW',
+    'Courtney Lee': 'HOU',
+    'Darren Collison': 'IND',
+    'James Posey': 'IND',
+    'Roger Mason': 'NYK',
+    'Samuel Dalembert': 'SAC',
+    'Spencer Hawes': 'PHI',
+    'Andrés Nocioni': 'PHI',
+    'Wesley Matthews': 'POR',
+    'Kyle Korver': 'CHI',
+    'C.J. Watson': 'CHI',
+    'Ronnie Brewer': 'CHI',
+    'Randy Foye': 'LAC',
+    'Willie Green': 'NOP',
+    'Jason Smith': 'NOP',
+    'Hasheem Thabeet': 'HOU',
+    'Marco Belinelli': 'NOP',
+    'Luther Head': 'SAC',
+    // —— 2010-11 不在 NBA 的球员（赴海外）——
+    'Allen Iverson': null,
+    'Rafer Alston': null
+  };
+  // 2010-11 缺失的真实球员补充。
+  var ERA_2011_ADDITIONS = [
+    { nameEn:'Anthony Morrow', nameCn:'安东尼-莫罗', pos:'SG', team:'BKN', age:25, ovr:70 },
+    { nameEn:'Timofey Mozgov', nameCn:'季莫费-莫兹戈夫', pos:'C', team:'NYK', age:24, ovr:66 },
+    { nameEn:'Landry Fields', nameCn:'兰德里-菲尔兹', pos:'SG', team:'NYK', age:22, ovr:66 },
+    { nameEn:'Tiago Splitter', nameCn:'蒂亚戈-斯普利特', pos:'C', team:'SAS', age:26, ovr:68 },
+    { nameEn:'Ramon Sessions', nameCn:'拉蒙-塞申斯', pos:'PG', team:'CLE', age:24, ovr:70 },
+    { nameEn:'Ian Mahinmi', nameCn:'伊安-马辛米', pos:'C', team:'DAL', age:24, ovr:60 },
+    { nameEn:'Jeremy Lin', nameCn:'林书豪', pos:'PG', team:'GSW', age:22, ovr:62 },
+    { nameEn:'Omer Asik', nameCn:'欧米尔-阿西克', pos:'C', team:'CHI', age:24, ovr:62 }
+  ];
+  // 2010 届选秀夜交易修正。
+  var ERA_2011_DRAFT_NIGHT = {
+    'Jordan Crawford': 'WAS',
+    'Luke Babbitt': 'POR',
+    'Trevor Booker': 'WAS',
+    'Lazar Hayward': 'MIN',
+    'Damion James': 'BKN',
+    'Kevin Seraphin': 'WAS'
+  };
+  // 转会球员"当季到位总评"：部分球员的基础名单总评低于其目标赛季的真实水平，
+  // 到位时按此值修正，避免被 12 人裁人机制误裁（如 61 分的科沃尔被 62 分的阿西克挤掉）。
+  var ERA_ARRIVAL_OVR = {
+    'Kyle Korver': 72   // 2010-11 公牛：真实轮换射手
+  };
+  /** 时代名单"前移一年"：全联盟 +1 岁，并按真实休赛期名单修正表移动/移除球员。 */
+  function applyEraSeasonShift(patchTable) {
+    NBA2K_TEAMS.forEach(function(team) {
+      (NBA2K_DATA[team] || []).forEach(function(p) {
+        // F4 老将（佩顿/马龙）的年龄已按 2003-04 当季校准，不再 +1。
+        if (p && typeof p._age === 'number' && !p._eraF4SeasonAdjusted) p._age++;
+      });
+    });
+    Object.keys(patchTable || {}).forEach(function(patchKey) {
+      var target = patchTable[patchKey];
+      var normKey = nameKey(patchKey);
+      var fromTeam = null, player = null;
+      NBA2K_TEAMS.some(function(team) {
+        var roster = NBA2K_DATA[team] || [];
+        var idx = roster.findIndex(function(p) { return p && nameKey(p.nameEN || p.name) === normKey; });
+        if (idx >= 0) {
+          fromTeam = team;
+          // 修正表偶尔会包含“原队就是目标队”的校正项（例如 2010 的坎比仍在开拓者）。
+          // 此时不能先 splice，否则会把球员无声删掉。
+          if (target !== null && fromTeam === target) { player = roster[idx]; return true; }
+          player = roster.splice(idx, 1)[0];
+          return true;
+        }
+        return false;
+      });
+      if (!player) return;
+      if (target === null) {
+        // 退役：移出名单并记录（避免 40 岁的科比/邓肯继续出现在联盟）。
+        player._eraShiftRetired = true;
+        STATE._leagueChanges = STATE._leagueChanges || {};
+        STATE._leagueChanges.retired = STATE._leagueChanges.retired || [];
+        STATE._leagueChanges.retired.push({ name: player.cname || player.name, nameEN: player.name, ovr: player.ovr, team: fromTeam, age: player._age, eraShift: true });
+        return;
+      }
+      if (NBA2K_TEAMS.indexOf(target) < 0 || fromTeam === target) return;
+      player._eraShiftMoved = true;
+      if (ERA_ARRIVAL_OVR && ERA_ARRIVAL_OVR[patchKey] != null) {
+        player.ovr = Number(ERA_ARRIVAL_OVR[patchKey]) || player.ovr;
+      }
+      replaceWeakest(target, player);
+    });
+  }
+  /** 缺失真实球员补充：makePlayer 生成后入队（15 人上限自动替换最弱者）。 */
+  function applyEraAdditions(start, additions) {
+    (additions || []).forEach(function(row) {
+      var player = makePlayer(row, { age: row.age, ovr: row.ovr, draftYear: start });
+      player._eraAddition = true;
+      replaceWeakest(row.team, player);
+    });
+  }
+  /** 选秀夜交易修正：选秀班次按"选秀前球队"登记，开局前把新秀移到真实球队（须在 addDraftClass 之后）。 */
+  function applyEraDraftNight(table) {
+    Object.keys(table || {}).forEach(function(key) {
+      var target = table[key];
+      var normKey = nameKey(key);
+      var fromTeam = null, player = null;
+      NBA2K_TEAMS.some(function(team) {
+        var roster = NBA2K_DATA[team] || [];
+        var idx = roster.findIndex(function(p) { return p && nameKey(p.nameEN || p.name) === normKey; });
+        if (idx >= 0) { fromTeam = team; player = roster.splice(idx, 1)[0]; return true; }
+        return false;
+      });
+      if (!player || !target || NBA2K_TEAMS.indexOf(target) < 0 || fromTeam === target) return;
+      replaceWeakest(target, player);
+    });
+  }
   var TEMPLATES = {
     PG:{threePT:76,MID:78,FIN:76,DNK:55,HAN:87,PAS:86,PDEF:73,IDEF:50,BLK:38,REB:49,ATH:80,STR:50,CLU:78},
     SG:{threePT:80,MID:80,FIN:80,DNK:69,HAN:81,PAS:70,PDEF:72,IDEF:54,BLK:43,REB:52,ATH:81,STR:56,CLU:78},
@@ -74,6 +409,8 @@
   function data() { return global.__PP_ERA_MODE_DATA__ || { roster2003:{}, draftClasses:{} }; }
   function completeRosters() { return global.__PP_COMPLETE_ERA_ROSTERS__ || {}; }
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, Math.round(Number(v) || lo))); }
+  /** 2003/2010/2016 纪元均以次年赛季开局（纪元年 N = N 年夏天开始的 N-(N+1) 赛季）。 */
+  function eraAgeOffset(start) { return [2003, 2010, 2016].indexOf(Number(start)) >= 0 ? 1 : 0; }
   function mainPos(value) {
     var p = POS[value] || String(value || 'SF').split('/')[0].trim();
     return TEMPLATES[p] ? p : 'SF';
@@ -91,8 +428,9 @@
     var exact = (curve && curve.peak) || HISTORICAL_PEAK_OVR[key];
     if (exact) return Math.max(Number(currentOvr) || 0, exact);
     var potential = Math.max(0, Number(row && row.potential) || 0);
-    var remainingGrowth = age <= 20 ? 10 : age <= 22 ? 8 : age <= 24 ? 5 : age <= 26 ? 3 : 0;
-    return clamp((Number(currentOvr) || 65) + Math.max(potential, remainingGrowth), Number(currentOvr) || 50, 96);
+    // 未收录峰值的历史球员也按年龄留出成长空间：19 岁约 +11，22 岁约 +9，25 岁约 +7，27 岁约 +5，30 岁约 +3。
+    var ageRoom = Math.max(2, Math.min(12, 13 - Math.max(0, Number(age) - 18) * 0.85));
+    return clamp((Number(currentOvr) || 65) + Math.max(potential, ageRoom), Number(currentOvr) || 50, 96);
   }
   function careerCurveFor(row) {
     return HISTORICAL_CAREER_CURVES[nameKey(row && (row.nameEn || row.nameEN || row.name))] || null;
@@ -157,7 +495,7 @@
     return String(value || '').replace(/amar['’]e/ig, 'amare').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
   }
   function buildLocalizedNameMap() {
-    var map = Object.assign({}, HISTORICAL_CN_NAMES);
+    var map = {};
     var tokens = {};
     function harvest(player) {
       if (!player) return;
@@ -180,6 +518,8 @@
     });
     Object.keys(data().roster2003 || {}).forEach(function(team) { (data().roster2003[team] || []).forEach(harvest); });
     Object.keys(data().draftClasses || {}).forEach(function(year) { (data().draftClasses[year] || []).forEach(harvest); });
+    // 手动译名表最后覆盖，保证昵称（如 追梦格林）与时代球星译名优先于现役自动收割结果。
+    Object.keys(HISTORICAL_CN_NAMES).forEach(function(key) { map[key] = HISTORICAL_CN_NAMES[key]; });
     map._tokens = tokens;
     return map;
   }
@@ -195,9 +535,16 @@
     var roster = NBA2K_DATA[team] || (NBA2K_DATA[team] = []);
     var duplicate = roster.some(function(p) { return p && String(p.name).toLowerCase() === String(player.name).toLowerCase(); });
     if (duplicate) return false;
-    if (roster.length >= 15) {
+    // NBA 正式名单上限：超过 15 人才裁掉最弱的非玩家球员。
+    if (roster.length >= ERA_ROSTER_CAP) {
       var weakest = -1;
       roster.forEach(function(p, idx) {
+        // 已知会成长为巨星的年轻历史球员不能因为开局补人时的低初始评分被误裁（如 2010 库里）。
+        var protectedProspect = p && p._eraRoster && Number(p._peakOvr) >= 90;
+        if (p && !p._isUser && !protectedProspect && (weakest < 0 || Number(p.ovr) < Number(roster[weakest].ovr))) weakest = idx;
+      });
+      // 极端情况下全队都是受保护球员，仍需保持 15 人上限。
+      if (weakest < 0) roster.forEach(function(p, idx) {
         if (p && !p._isUser && (weakest < 0 || Number(p.ovr) < Number(roster[weakest].ovr))) weakest = idx;
       });
       if (weakest >= 0) roster.splice(weakest, 1);
@@ -282,7 +629,7 @@
         }
         if (row && !player._peakOvr) player._peakOvr = peakOvrFor(row, player.ovr, player._age);
         if (meta) {
-          var expectedAge = Math.max(18, Math.min(49, Number(meta.anchorAge) + Math.max(0, currentYear - Number(meta.anchorYear))));
+          var expectedAge = Math.max(18, Math.min(49, Number(meta.anchorAge) + eraAgeOffset(start) + Math.max(0, currentYear - Number(meta.anchorYear))));
           if (Number(player._age) !== expectedAge || player._eraAgeRepairVersion !== 10) {
             player._age = expectedAge;
             player._eraAgeRepairVersion = 10;
@@ -305,7 +652,8 @@
           player._primeEndAge = curve.primeEnd;
           player._primeFloorOvr = curve.primeFloor;
           var playerAge = Number(player._age) || 0;
-          if (playerAge >= curve.primeStart && playerAge <= curve.primeEnd && Number(player.ovr) < curve.primeFloor) {
+          // 巅峰保底只在 31 岁前硬生效；31 岁后允许自然衰退（与 evolveLeague 软地板一致）。
+          if (playerAge >= curve.primeStart && playerAge <= Math.min(curve.primeEnd, 31) && Number(player.ovr) < curve.primeFloor) {
             var restoreRatio = curve.primeFloor / Math.max(1, Number(player.ovr) || 1);
             ATTRS.forEach(function(attr) {
               if (player[attr] != null) player[attr] = clamp(Number(player[attr]) * restoreRatio, 25, 99);
@@ -328,7 +676,7 @@
     ['amare stoudemire', 'carlos boozer'].forEach(function(key) {
       var meta = historicalMetaByName[key];
       if (!meta || activeNames[key]) return;
-      var expectedAge = Number(meta.anchorAge) + Math.max(0, currentYear - Number(meta.anchorYear));
+      var expectedAge = Number(meta.anchorAge) + eraAgeOffset(start) + Math.max(0, currentYear - Number(meta.anchorYear));
       if (expectedAge > 33 || !meta.team || NBA2K_TEAMS.indexOf(meta.team) < 0) return;
       var curve = careerCurveFor(meta.row);
       var sourceOvr = Math.max(ERA_PLAYABLE_OVR_FLOOR, Number(meta.row.ovr) || ERA_PLAYABLE_OVR_FLOOR);
@@ -375,12 +723,23 @@
     player.type = '新秀';
     return player;
   }
-  function addDraftClass(year, elapsed, recordChanges) {
+  function addDraftClass(year, elapsed, recordChanges, draftNight) {
     var rows = data().draftClasses[String(year)] || [];
     if (!rows.length) return 0;
+    // 选秀夜交易修正：班次按"选秀前球队"登记，开局入队时直接落到真实球队，
+    // 避免先占位再移走导致误裁原队球员（如塞拉芬占公牛名额挤掉科沃尔）。
+    var dnNorm = null;
+    if (draftNight) {
+      dnNorm = {};
+      Object.keys(draftNight).forEach(function(k) { dnNorm[nameKey(k)] = draftNight[k]; });
+    }
     var added = 0;
     rows.forEach(function(row, idx) {
       var team = normalizeTeam(row.team) || NBA2K_TEAMS[idx % NBA2K_TEAMS.length];
+      if (dnNorm) {
+        var dest = dnNorm[nameKey(row.nameEn || row.name)];
+        if (dest) team = dest;
+      }
       if (NBA2K_TEAMS.indexOf(team) < 0) team = NBA2K_TEAMS[idx % NBA2K_TEAMS.length];
       var years = Math.max(0, Number(elapsed) || 0);
       var growth = Math.min(Number(row.potential) || 6, years * 1.7);
@@ -417,15 +776,49 @@
       });
       NBA2K_DATA[team] = roster;
     });
-    apply2003LakersF4();
+    // 2003 的马龙先会在休赛期流转表中移出原队，必须在流转后补入湖人，不能提前加入又被移除。
+    if (start !== 2003) apply2003LakersF4();
+    // 2003 纪元以 2003-04 赛季开局：名单整体 +1 岁、按真实 2003 休赛期人员变动修正、
+    // 缺失真实球员补充、2003 届新秀直接进入名单（含选秀夜交易修正）；之后的选秀从 2004 届开始。
+    if (start === 2003) {
+      applyEraSeasonShift(ERA_2004_ROSTER_PATCH);
+      apply2003LakersF4();
+      applyEraAdditions(2003, ERA_2004_ADDITIONS);
+      addDraftClass(2003, 0, false, ERA_2004_DRAFT_NIGHT);
+      applyEraDraftNight(ERA_2004_DRAFT_NIGHT);
+      STATE._eraFirstDraftYear = 2004;
+    }
+    // 2010 纪元以 2010-11 赛季开局：名单整体 +1 岁、按真实 2010 休赛期人员变动修正
+    // （詹姆斯/波什加盟热火等）、缺失球员补充、2010 届新秀（沃尔/考辛斯等）直接进入名单；
+    // 之后的选秀从 2011 届开始。
+    if (start === 2010) {
+      applyEraSeasonShift(ERA_2011_ROSTER_PATCH);
+      applyEraAdditions(2010, ERA_2011_ADDITIONS);
+      addDraftClass(2010, 0, false, ERA_2011_DRAFT_NIGHT);
+      applyEraDraftNight(ERA_2011_DRAFT_NIGHT);
+      STATE._eraFirstDraftYear = 2011;
+    }
+    // 2016 纪元以 2016-17 赛季开局：名单整体 +1 岁、按真实 2016 休赛期人员变动修正、
+    // 缺失球员补充、2016 届新秀直接进入名单（含选秀夜交易修正）；之后的选秀从 2017 届开始。
+    if (start === 2016) {
+      applyEraSeasonShift(ERA_2017_ROSTER_PATCH);
+      applyEraAdditions(2016, ERA_2017_ADDITIONS);
+      addDraftClass(2016, 0, false, ERA_2017_DRAFT_NIGHT);
+      applyEraDraftNight(ERA_2017_DRAFT_NIGHT);
+      STATE._eraFirstDraftYear = 2017;
+    }
     STATE._legendLeagueApplied = start;
     STATE.draftMode = 'historical';
     if (STATE.career) {
       STATE.career.flags = STATE.career.flags || {};
       STATE.career.flags.legendEraStart = start;
-      STATE.career.flags.legendEraLabel = ({ 2003:'2003 白金一代', 2010:'2010 吾皇登基纪元', 2016:'2016 三分之王纪元' })[start] || (start + ' 传奇年代');
+      STATE.career.flags.legendEraLabel = ({ 2003:'2003 白金一代', 2010:'2010 吾皇登基纪元', 2016:'2016-17 巨星合体纪元' })[start] || (start + ' 传奇年代');
     }
     if (typeof clearLineupCache === 'function') clearLineupCache();
+    // 时代名单是运行时生成的，补挂一次官方头像解析（现役/历史名字都能走 NBA CDN 或本地缓存）。
+    if (typeof attachOfficialPlayerHeadshots === 'function') {
+      try { attachOfficialPlayerHeadshots(); } catch (e) {}
+    }
   };
 
   global.showLegendEraPicker = function() {
@@ -438,9 +831,9 @@
       '<div class="team-picker-header"><span>🏆 选择传奇年代</span><button class="modal-close" id="legend-era-close">✕</button></div>' +
       '<div style="padding:10px 12px 4px;font-size:11px;line-height:1.6;color:var(--text-dim);">现役生涯会完整保留。传奇年代每队最多 15 人；有原始 2K 数值的球员采用对应版本评分，其余标注为当季数据校准。</div>' +
       '<div style="padding:7px 12px 14px;display:grid;gap:8px;">' +
-        '<button class="btn btn-secondary" data-era="2003" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2003 白金一代</strong><small>科比、邓肯、艾弗森等时代核心同场；詹姆斯、韦德、安东尼、波什从这一届开始。</small></button>' +
-        '<button class="btn btn-secondary" data-era="2010" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2010 吾皇登基纪元</strong><small>NBA 2K10 名单：詹姆斯冲击王座，科比卫冕，杜兰特崛起，库里开启新秀赛季。</small></button>' +
-        '<button class="btn btn-secondary" data-era="2016" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2016 三分之王纪元</strong><small>NBA 2K16 名单：库里与 73 胜勇士领衔，骑士、雷霆、马刺共同争冠。</small></button>' +
+        '<button class="btn btn-secondary" data-era="2003" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2003 白金一代</strong><small>2003-04 赛季：詹姆斯、韦德、安东尼、波什新秀赛季，科比、邓肯、艾弗森领衔时代核心。</small></button>' +
+        '<button class="btn btn-secondary" data-era="2010" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2010 吾皇登基纪元</strong><small>2010-11 赛季（NBA 2K11 名单）：詹姆斯、波什加盟热火三巨头，湖人冲击三连冠，罗斯崛起，2010 届新秀入联盟。</small></button>' +
+        '<button class="btn btn-secondary" data-era="2016" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2016-17 巨星合体纪元</strong><small>2016-17 赛季：杜兰特加盟勇士组成四巨头，骑士、马刺、火箭共同争冠，2016 届新秀入联盟。</small></button>' +
       '</div></div>';
     document.body.appendChild(overlay);
     document.getElementById('legend-era-close').onclick = function() { overlay.remove(); };
@@ -460,6 +853,8 @@
   global.processDraft = function() {
     if (STATE.mode !== 'legend' || !STATE.eraStart) return originalProcessDraft.apply(this, arguments);
     var year = Number(STATE.eraStart) + Number(STATE.career && STATE.career.seasonCount || 0);
+    var firstDraftYear = Number(STATE._eraFirstDraftYear || STATE.eraStart);
+    if (year < firstDraftYear) return; // 开局名单已包含该届新秀（2016 纪元已含 2016 届）
     if (!data().draftClasses[String(year)] || !data().draftClasses[String(year)].length) {
       var order = (global.NBA2K_TEAMS || []).slice();
       STATE._leagueChanges = STATE._leagueChanges || {};

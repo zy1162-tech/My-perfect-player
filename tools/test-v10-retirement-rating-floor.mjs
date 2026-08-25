@@ -26,7 +26,9 @@ for (const year of [2003, 2010, 2016]) {
   context.STATE._legendLeagueApplied = null;
   context.applyLegendEraLeague();
   const players = Object.values(context.NBA2K_DATA).flat();
-  assert.equal(players.length, 450, `${year} should keep 30 x 15 players`);
+  const sizes = Object.values(context.NBA2K_DATA).map(roster => roster.length);
+  assert.ok(players.length >= 360 && players.length <= 450, `${year} should retain an NBA-sized 12-15 player roster pool`);
+  assert.ok(sizes.every(size => size >= 12 && size <= 15), `${year} each team should stay within the 12-15 player roster range`);
   assert.ok(players.every(player => player.ovr >= 70), `${year} playable roster must not contain 60s ratings`);
   assert.ok(players.some(player => player._sourceOvr < 70 && player.ovr === 70), `${year} should preserve low source ratings behind the playable floor`);
 }
@@ -42,15 +44,15 @@ boozer._age = 38;
 amare.ovr = 66;
 boozer.ovr = 64;
 context.repairLegendEraPositions(2003);
-assert.equal(amare._age, 29, '2012 Amar\'e age should be repaired to 29');
-assert.equal(boozer._age, 30, '2012 Boozer age should be repaired to 30');
+assert.equal(amare._age, 30, '2012 Amar\'e age should be repaired to 30');
+assert.equal(boozer._age, 31, '2012 Boozer age should be repaired to 31');
 assert.ok(amare.ovr >= 70 && boozer.ovr >= 70, 'old-save ratings should be raised to the playable floor');
 
 context.NBA2K_DATA.PHX.splice(context.NBA2K_DATA.PHX.indexOf(amare), 1);
 context.repairLegendEraPositions(2003);
 amare = context.NBA2K_DATA.PHX.find(player => player.name === "Amar'e Stoudemire");
 assert.ok(amare && amare._prematureRetirementRestored, 'prematurely retired Amar\'e should be restored before age 34');
-assert.equal(amare._age, 29);
+assert.equal(amare._age, 30);
 
 const core = await readFile(new URL('../assets/js/perfect-player-core.js', import.meta.url), 'utf8');
 const averageFn = core.match(/function averageCareerAttributes\([\s\S]*?\n\}/)?.[0];

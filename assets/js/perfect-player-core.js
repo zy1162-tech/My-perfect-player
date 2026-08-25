@@ -4383,6 +4383,9 @@ function simulate82StyleMatchup(teamA, teamB, options) {
   options = options || {};
   var powerA = calcTeamPowerWithPlayer(teamA);
   var powerB = calcTeamPowerWithPlayer(teamB);
+  // 教练体系由扩展层提供；没有选择体系或非玩家球队时保持均衡，不影响旧存档。
+  var systemA = typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamA) : { offense:0, defense:0, pace:0, three:0 };
+  var systemB = typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamB) : { offense:0, defense:0, pace:0, three:0 };
   var baseline = getSimulationPowerBaseline();
   var modA = options.neutralState ? { offense:0, defense:0, variance:0 } : getCareerTeamGameModifiers(teamA);
   var modB = options.neutralState ? { offense:0, defense:0, variance:0 } : getCareerTeamGameModifiers(teamB);
@@ -4400,7 +4403,7 @@ function simulate82StyleMatchup(teamA, teamB, options) {
   var averageAthletic = ((Number(powerA.athletic) || 60) + (Number(powerB.athletic) || 60)) / 2;
   var averageDepth = ((Number(powerA.depth) || 60) + (Number(powerB.depth) || 60)) / 2;
   // 2025-26联盟基线：99.4回合、115.7进攻效率。
-  var pace = Math.max(90, Math.min(109, Math.round(99.4 + (averageAthletic - baseline.athletic) * 0.08 + (averageDepth - baseline.depth) * 0.02 + simGaussian(0, 2.8))));
+  var pace = Math.max(90, Math.min(109, Math.round(99.4 + (averageAthletic - baseline.athletic) * 0.08 + (averageDepth - baseline.depth) * 0.02 + ((Number(systemA.pace) || 0) + (Number(systemB.pace) || 0)) * 0.5 + simGaussian(0, 2.8))));
   if (!options.neutralState && (teamA === STATE.careerTeam || teamB === STATE.careerTeam) && typeof getStyleSkillMu === 'function') {
     var tempoMu = getStyleSkillMu('tempo_master');
     var breakMu = getStyleSkillMu('fast_break');
@@ -4411,14 +4414,14 @@ function simulate82StyleMatchup(teamA, teamB, options) {
     if (postMu > 1) paceAdj -= (postMu - 1) * 8;
     if (paceAdj) pace = Math.max(90, Math.min(109, Math.round(pace + paceAdj)));
   }
-  var edgeA = ((powerA.offense - baseline.offense) + modA.offense) - ((powerB.defense - baseline.defense) + modB.defense);
-  var edgeB = ((powerB.offense - baseline.offense) + modB.offense) - ((powerA.defense - baseline.defense) + modA.defense);
+  var edgeA = ((powerA.offense - baseline.offense) + modA.offense + (Number(systemA.offense) || 0)) - ((powerB.defense - baseline.defense) + modB.defense + (Number(systemB.defense) || 0));
+  var edgeB = ((powerB.offense - baseline.offense) + modB.offense + (Number(systemB.offense) || 0)) - ((powerA.defense - baseline.defense) + modA.defense + (Number(systemA.defense) || 0));
   var depthEdge = ((Number(powerA.depth) || 60) - (Number(powerB.depth) || 60)) * 0.00075;
   var seedPts = (Number(options.seedBonus) || 0) * 0.65;
   var injuryPts = options.probMultiplier == null ? 0 : (Number(options.probMultiplier) - 1) * 28;
   // 中立场基准1.154；计入每场一个主队的优势后，联盟均值约115.6分。
-  var efficiencyA = 1.154 + edgeA * 0.0034 + depthEdge + homeA - fatigueA * 0.012 + seedPts / pace + injuryPts / pace;
-  var efficiencyB = 1.154 + edgeB * 0.0034 - depthEdge + homeB - fatigueB * 0.012 - seedPts / pace;
+  var efficiencyA = 1.154 + edgeA * 0.0034 + depthEdge + homeA - fatigueA * 0.012 + seedPts / pace + injuryPts / pace + (Number(systemA.three) || 0);
+  var efficiencyB = 1.154 + edgeB * 0.0034 - depthEdge + homeB - fatigueB * 0.012 - seedPts / pace + (Number(systemB.three) || 0);
   efficiencyA = Math.max(0.91, Math.min(1.36, efficiencyA));
   efficiencyB = Math.max(0.91, Math.min(1.36, efficiencyB));
   // 提高单场得分波动，避免分差过窄导致一分惜败和绝杀标签泛滥。
@@ -4461,7 +4464,7 @@ function simulate82StyleMatchup(teamA, teamB, options) {
     qScoresA: qScoresA, qScoresB: qScoresB,
     highlight: ot > 0 || margin <= 3 || keyEvents.indexOf('💥 爆冷！') >= 0,
     keyEvents: keyEvents, ot: ot,
-    teamA: { power: powerA }, teamB: { power: powerB },
+    teamA: { power: powerA, system:systemA }, teamB: { power: powerB, system:systemB },
     pace: pace, possPerQ: Math.round(pace / 4), expectedWinProb: expectedWinProb,
     home: teamAHome,
     boxScore: options.includeBoxScore === false ? null : generateBoxScore(teamA, teamB, scoreA, scoreB)

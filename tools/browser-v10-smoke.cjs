@@ -38,16 +38,23 @@ const fs = require('node:fs');
     }
     const onePointRate = margins.filter(margin => margin === 1).length / margins.length;
     const closeGameRate = margins.filter(margin => margin <= 3).length / margins.length;
+    STATE.careerTeam = 'GSW';
+    STATE.teamSystems = { GSW:'seven_seconds' };
+    showLeagueIntel(function() {});
+    const intelOpened = !!document.getElementById('league-intel-modal');
+    closeLeagueIntel();
+    chooseTeamSystem('twin_towers');
     return {
       fresh,
       repaired:{ amareAge:repairedAmare && repairedAmare._age, amareRestored:!!(repairedAmare && repairedAmare._prematureRetirementRestored), boozerAge:boozer._age },
       scoreMargins:{ average:margins.reduce((sum, margin) => sum + margin, 0) / margins.length, onePointRate, closeGameRate },
+      management:{ intelOpened, chosenSystem:STATE.teamSystems.GSW, effects:getTeamSystemEffects('GSW') },
       scripts:[...document.scripts].map(script => script.src).filter(src => /core|era-mode/.test(src))
     };
   });
   console.log(JSON.stringify({ result, errors }, null, 2));
   await browser.close();
-  if (errors.length || result.fresh.count !== 450 || result.fresh.minOvr !== 70 || result.fresh.amare.age !== 20 || result.fresh.boozer.age !== 21 || !result.repaired.amareRestored || result.repaired.amareAge !== 29 || result.repaired.boozerAge !== 30 || result.scoreMargins.onePointRate >= 0.14 || result.scoreMargins.average <= 7) process.exitCode = 1;
+  if (errors.length || result.fresh.count < 360 || result.fresh.count > 450 || result.fresh.minOvr !== 70 || result.fresh.amare.age !== 21 || result.fresh.boozer.age !== 22 || !result.repaired.amareRestored || result.repaired.amareAge !== 30 || result.repaired.boozerAge !== 31 || result.scoreMargins.onePointRate >= 0.14 || result.scoreMargins.average <= 7 || !result.management.intelOpened || result.management.chosenSystem !== 'twin_towers' || result.management.effects.pace !== -3) process.exitCode = 1;
 })().catch(error => {
   console.error(error);
   process.exit(1);
