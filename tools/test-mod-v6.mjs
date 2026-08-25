@@ -108,11 +108,15 @@ assert.match(core, /pp-game-box-head/);
 assert.match(core, /hierarchyRank/);
 assert.match(core, /repairLegendEraPositions\(STATE\.eraStart\)/);
 assert.match(core, /getEraPlayerGrowthBonus/);
+assert.match(core, /getEraPostPrimeDecline/);
+assert.match(core, /ensureLeagueCareerProfile/);
+assert.match(core, /plannedRetirementAge && age >= plannedRetirementAge/);
 assert.match(core, /PP_ERA_MODE\.generateRookie/);
 assert.match(v4, /球队老大 · 名单话语权/);
 assert.match(v4, /showRosterAuthority\(function\(\)/);
 assert.ok(!/roster\.length\s*[<>]=?\s*18|newRoster\.length\s*<\s*18/.test(core), 'current-era roster logic should no longer target 18 players');
 assert.ok(!/roster\.length\s*>=\s*18/.test(eraMode + v4), 'signing and era roster logic should cap teams at 15 players');
+assert.match(eraMode, /shaquille o neal':\{ peak:98, primeStart:22, primeEnd:31, primeFloor:94, postPrimeDecay:0\.9, retireAfterAge:38 \}/);
 assert.ok(v4.indexOf('processTrades();') < v4.indexOf('showRecruitmentMarket(function()'), 'trades must finish before recruitment decision');
 
 console.log('V7 checks passed: complete 2010/2016 rosters, anchor ratings, real names, per-game panel, dual saves.');

@@ -18355,8 +18355,42 @@ function getLeaguePlayerLongevityScore(player) {
   return Math.max(25, Math.min(99, ovr * 0.55 + physical * 0.27 + skill * 0.18));
 }
 
+function careerProfileSeed(player) {
+  var text = String(player && (player.nameEN || player.name || player.cname) || 'player');
+  var hash = 0;
+  for (var i = 0; i < text.length; i++) hash = ((hash * 31) + text.charCodeAt(i)) >>> 0;
+  return (hash % 3) - 1;
+}
+
+// 每一名联盟球员都有稳定的生涯档案：开始衰退年龄、逐年衰退速度与最迟退役年龄。
+// 非历史球员不再依赖一次随机数决定是否莫名长期不退役。
+function ensureLeagueCareerProfile(player) {
+  if (!player) return player;
+  if (Number(player._declineStartAge) && Number(player._retirementAge)) return player;
+  var age = Number(player._age) || 22;
+  var ovr = Number(player._peakOvr) || Number(player.ovr) || 70;
+  var skill = averageCareerAttributes(player, ['threePT', 'MID', 'HAN', 'PAS', 'CLU'], ovr);
+  var seed = careerProfileSeed(player);
+  var starBonus = ovr >= 90 ? 2 : (ovr >= 82 ? 1 : 0);
+  var skillBonus = skill >= 84 ? 1 : 0;
+  var curveStart = Number(player._primeEndAge) || 0;
+  var declineStart = curveStart || Math.max(28, Math.min(34, 29 + starBonus + skillBonus + seed));
+  var historicalRetireAge = Number(player._historicalRetireAge) || 0;
+  var careerLength = ovr >= 90 ? 8 : (ovr >= 82 ? 7 : 6);
+  var plannedRetirement = historicalRetireAge || Math.max(34, Math.min(42, Math.max(age + 1, declineStart + careerLength + skillBonus + seed)));
+  player._declineStartAge = declineStart;
+  player._retirementAge = plannedRetirement;
+  return player;
+}
+window.ensureLeagueCareerProfile = ensureLeagueCareerProfile;
+
 function getLeagueRetirementChance(player, age) {
   age = Number(age) || 22;
+  ensureLeagueCareerProfile(player);
+  var plannedRetirementAge = Number(player && player._retirementAge) || 0;
+  if (plannedRetirementAge && age >= plannedRetirementAge) return 100;
+  // 计划退役年龄之前不再额外抛早退随机数，避免球星刚到三十多岁就被系统误删。
+  if (plannedRetirementAge) return 0;
   if (age >= LEBRON_JAMES_SPECIAL_RULE.maxRetirementAge) return 100;
   var earliestAge = Math.max(34, Number(player && player._retirementEarliestAge) || 34);
   if (age < earliestAge) return 0;
@@ -18388,11 +18422,28 @@ function getEraPlayerPrimeFloor(player, age) {
 }
 window.getEraPlayerPrimeFloor = getEraPlayerPrimeFloor;
 
+// 有史实生涯曲线的年代球员，在巅峰窗口结束后增加递进式衰退；避免所有传奇都像詹姆斯一样长期维持顶级评分。
+function getEraPostPrimeDecline(player, age) {
+  player = player || {};
+  var primeEnd = Number(player._primeEndAge) || 0;
+  if (!player._eraRoster || !primeEnd || Number(age) <= primeEnd) return 0;
+  var yearsPastPrime = Number(age) - primeEnd;
+  var base = Number(player._postPrimeDecay) || 0.35;
+  return -(base + Math.min(0.55, Math.max(0, yearsPastPrime - 1) * 0.13) + (Number(age) >= 36 ? 0.35 : 0));
+}
+window.getEraPostPrimeDecline = getEraPostPrimeDecline;
+
 function getLeagueAgeDevelopmentFactor(player, age, randomValue) {
   age = Number(age) || 22;
   var random = Math.max(0, Math.min(1, Number(randomValue) || 0));
   var primeFloor = getEraPlayerPrimeFloor(player, age);
   if (primeFloor && Number(player && player.ovr) >= primeFloor) return (random - 0.5) * 0.35;
+  ensureLeagueCareerProfile(player);
+  var declineStart = Number(player && player._declineStartAge) || 0;
+  if (declineStart && age >= declineStart) {
+    var yearsPastDecline = age - declineStart;
+    return -0.5 - Math.min(2.6, yearsPastDecline * 0.55) - random * 0.4;
+  }
   if (age <= 22) return 1 + random * 1.5;
   if (age <= 25) return 0.25 + random * 0.75;
   if (age <= 29) return (random - 0.5) * 0.5;
@@ -18424,6 +18475,7 @@ function evolveLeague() {
       // 传奇年代青年球员按“当前值到生涯峰值”的差距成长，避免新秀詹姆斯等数季原地踏步。
       var peakOvr = Number(p._peakOvr) || 0;
       change += getEraPlayerGrowthBonus(p, age, rngNext());
+      change += getEraPostPrimeDecline(p, age);
       change = Math.round(change * 2) / 2;
       var newOvr = Math.max(LEAGUE_PLAYABLE_OVR_FLOOR, Math.min(99, p.ovr + change));
       if (peakOvr) newOvr = Math.min(peakOvr, newOvr);

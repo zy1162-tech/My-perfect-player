@@ -57,31 +57,21 @@ assert.equal(amare._age, 30);
 const core = await readFile(new URL('../assets/js/perfect-player-core.js', import.meta.url), 'utf8');
 const averageFn = core.match(/function averageCareerAttributes\([\s\S]*?\n\}/)?.[0];
 const longevityFn = core.match(/function getLeaguePlayerLongevityScore\([\s\S]*?\n\}/)?.[0];
+const profileSeedFn = core.match(/function careerProfileSeed\([\s\S]*?\n\}/)?.[0];
+const profileFn = core.match(/function ensureLeagueCareerProfile\([\s\S]*?\n\}/)?.[0];
 const retirementFn = core.match(/function getLeagueRetirementChance\([\s\S]*?\n\}/)?.[0];
-assert.ok(averageFn && longevityFn && retirementFn, 'retirement functions should be independently testable');
+assert.ok(averageFn && longevityFn && profileSeedFn && profileFn && retirementFn, 'retirement functions should be independently testable');
 const retirementContext = {};
 vm.createContext(retirementContext);
-vm.runInContext(`var LEBRON_JAMES_SPECIAL_RULE={maxRetirementAge:42};${averageFn};${longevityFn};${retirementFn};this.chance=getLeagueRetirementChance;`, retirementContext);
+vm.runInContext(`var window=this;var LEBRON_JAMES_SPECIAL_RULE={maxRetirementAge:42};${averageFn};${longevityFn};${profileSeedFn};${profileFn};${retirementFn};this.chance=getLeagueRetirementChance;this.profile=ensureLeagueCareerProfile;`, retirementContext);
 assert.equal(retirementContext.chance({ ovr:70 }, 29), 0, 'age-29 players cannot randomly retire');
 assert.equal(retirementContext.chance({ ovr:84 }, 33), 0, 'age-33 rotation players remain protected');
-assert.ok(retirementContext.chance({ ovr:70 }, 34) < 8, 'age-34 retirement should begin gently');
 assert.equal(retirementContext.chance({ ovr:90 }, 42), 100, 'age 42 remains the hard retirement boundary');
+const profilePlayer = { name:'Stable Rotation Player', ovr:84, _age:26 };
+retirementContext.profile(profilePlayer);
+assert.ok(profilePlayer._declineStartAge >= 28 && profilePlayer._declineStartAge <= 34, 'every player should receive a bounded decline-start age');
+assert.ok(profilePlayer._retirementAge > profilePlayer._declineStartAge && profilePlayer._retirementAge <= 42, 'every player should receive a deterministic retirement age');
+assert.equal(retirementContext.chance(profilePlayer, profilePlayer._retirementAge - 1), 0, 'players should not retire before their own planned endpoint');
+assert.equal(retirementContext.chance(profilePlayer, profilePlayer._retirementAge), 100, 'players should retire at their own planned endpoint');
 
-let seed = 20260825;
-const random = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
-const retirementAges = [];
-for (let career = 0; career < 10000; career++) {
-  let retiredAt = 42;
-  for (let age = 18; age <= 42; age++) {
-    if (random() * 100 < retirementContext.chance({ ovr:84 }, age)) {
-      retiredAt = age;
-      break;
-    }
-  }
-  retirementAges.push(retiredAt);
-}
-assert.equal(Math.min(...retirementAges), 36, '84 OVR players should receive protection through age 35');
-const averageRetirementAge = retirementAges.reduce((sum, age) => sum + age, 0) / retirementAges.length;
-assert.ok(averageRetirementAge >= 39 && averageRetirementAge <= 41.5, `long-run retirement age should remain realistic, got ${averageRetirementAge}`);
-
-console.log(`V10 checks passed: all era rosters use OVR 70+, old ages are repaired, and protected-player average retirement age is ${averageRetirementAge.toFixed(1)}.`);
+console.log('V10 checks passed: all era rosters use OVR 70+, old ages are repaired, and every player receives a deterministic decline/retirement profile.');

@@ -10,13 +10,17 @@ const authoritySource = await readFile(new URL('../assets/js/perfect-player-mod-
 
 const growthFnSource = core.match(/function getEraPlayerGrowthBonus\([\s\S]*?\n\}/)?.[0];
 const primeFnSource = core.match(/function getEraPlayerPrimeFloor\([\s\S]*?\n\}/)?.[0];
+const averageFnSource = core.match(/function averageCareerAttributes\([\s\S]*?\n\}/)?.[0];
+const profileSeedFnSource = core.match(/function careerProfileSeed\([\s\S]*?\n\}/)?.[0];
+const profileFnSource = core.match(/function ensureLeagueCareerProfile\([\s\S]*?\n\}/)?.[0];
 const ageFactorFnSource = core.match(/function getLeagueAgeDevelopmentFactor\([\s\S]*?\n\}/)?.[0];
 assert.ok(growthFnSource, 'era growth function should be independently testable');
 assert.ok(primeFnSource, 'historical prime-window function should be independently testable');
+assert.ok(averageFnSource && profileSeedFnSource && profileFnSource, 'career-profile functions should be independently testable');
 assert.ok(ageFactorFnSource, 'general rookie-prime-decline lifecycle should be independently testable');
 const growthContext = { window:{} };
 vm.createContext(growthContext);
-vm.runInContext(`${growthFnSource};${primeFnSource};${ageFactorFnSource}; window.growth = getEraPlayerGrowthBonus; window.primeFloor = getEraPlayerPrimeFloor; window.ageFactor = getLeagueAgeDevelopmentFactor;`, growthContext);
+vm.runInContext(`${averageFnSource};${growthFnSource};${primeFnSource};${profileSeedFnSource};${profileFnSource};${ageFactorFnSource}; window.growth = getEraPlayerGrowthBonus; window.primeFloor = getEraPlayerPrimeFloor; window.ageFactor = getLeagueAgeDevelopmentFactor;`, growthContext);
 let lebronOvr = 80;
 for (let age = 19; age < 24; age++) {
   const player = { _eraRoster:true, _peakOvr:99, ovr:lebronOvr };

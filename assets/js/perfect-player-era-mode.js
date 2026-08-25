@@ -40,12 +40,21 @@
     'kawhi leonard':{ peak:96, primeStart:24, primeEnd:32, primeFloor:93 },
     'giannis antetokounmpo':{ peak:98, primeStart:23, primeEnd:32, primeFloor:95 },
     'nikola jokic':{ peak:98, primeStart:24, primeEnd:33, primeFloor:96 },
-    'shaquille o neal':{ peak:98, primeStart:22, primeEnd:31, primeFloor:94 },
+    // 奥尼尔是统治力极高、但衰退和退役都明显早于詹姆斯的典型；03-04 后应在 2011 年休赛期退出联盟。
+    'shaquille o neal':{ peak:98, primeStart:22, primeEnd:31, primeFloor:94, postPrimeDecay:0.9, retireAfterAge:38 },
     'allen iverson':{ peak:97, primeStart:22, primeEnd:30, primeFloor:92 },
     'jason kidd':{ peak:95, primeStart:23, primeEnd:32, primeFloor:90 },
     'steve nash':{ peak:96, primeStart:29, primeEnd:35, primeFloor:92 },
     'amare stoudemire':{ peak:92, primeStart:22, primeEnd:28, primeFloor:88 },
     'carlos boozer':{ peak:86, primeStart:25, primeEnd:30, primeFloor:84 }
+  };
+  // 已知历史球星按真实生涯末段设定强制退役节点；其余所有球员由核心的固定生涯档案生成节点。
+  var HISTORICAL_RETIREMENT_AGE = {
+    'lebron james':42, 'chris webber':34, 'kobe bryant':37, 'tim duncan':39, 'kevin garnett':39, 'dirk nowitzki':40,
+    'stephen curry':42, 'kevin durant':42, 'dwyane wade':36, 'carmelo anthony':38, 'chris bosh':32, 'chris paul':41,
+    'dwight howard':39, 'james harden':41, 'russell westbrook':40, 'kawhi leonard':39, 'giannis antetokounmpo':41,
+    'nikola jokic':41, 'shaquille o neal':38, 'allen iverson':35, 'jason kidd':39, 'steve nash':40,
+    'amare stoudemire':33, 'carlos boozer':34
   };
   var HISTORICAL_CN_NAMES = {
     'mike james':'迈克-詹姆斯', 'jiri welsch':'伊里-韦尔施', 'eddie robinson':'埃迪-罗宾逊',
@@ -504,6 +513,8 @@
       _primeStartAge: curve && curve.primeStart || null,
       _primeEndAge: curve && curve.primeEnd || null,
       _primeFloorOvr: curve && curve.primeFloor || null,
+      _postPrimeDecay: curve && curve.postPrimeDecay || null,
+      _historicalRetireAge: (curve && curve.retireAfterAge) || HISTORICAL_RETIREMENT_AGE[nameKey(nameEn)] || null,
       contract: 1 + ((nameEn.length + ovr) % 4),
       _ratingSource: row.ratingSource || '时代数值校准',
       _ratingOfficial: !!row.ratingOfficial,
@@ -662,6 +673,7 @@
       });
     });
     var repaired = 0;
+    var overdueHistoricalRetirees = [];
     var activeNames = {};
     var elapsed = Number(STATE.career && STATE.career.seasonCount || 0);
     var currentYear = start + elapsed;
@@ -705,6 +717,8 @@
           player._primeStartAge = curve.primeStart;
           player._primeEndAge = curve.primeEnd;
           player._primeFloorOvr = curve.primeFloor;
+          player._postPrimeDecay = curve.postPrimeDecay || null;
+          player._historicalRetireAge = curve.retireAfterAge || HISTORICAL_RETIREMENT_AGE[key] || null;
           var playerAge = Number(player._age) || 0;
           // 巅峰保底只在 31 岁前硬生效；31 岁后允许自然衰退（与 evolveLeague 软地板一致）。
           if (playerAge >= curve.primeStart && playerAge <= Math.min(curve.primeEnd, 31) && Number(player.ovr) < curve.primeFloor) {
@@ -715,6 +729,9 @@
             player.ovr = curve.primeFloor;
             player._eraPrimeRatingRepaired = true;
           }
+          // 只对有明确史实退役节点的球员生效；旧档读入时也会清掉不应继续存在的版本。
+          var retirementAge = Number(curve.retireAfterAge) || Number(HISTORICAL_RETIREMENT_AGE[key]) || 0;
+          if (retirementAge && playerAge > retirementAge) overdueHistoricalRetirees.push({ team:team, player:player });
         }
         if (!player.cname || player.cname === player.name || player.cname === player.nameEN) {
           player.cname = localizedNames[key] || localizeFromTokens(player.nameEN || player.name, localizedNames._tokens || {}) || player.cname;
@@ -724,6 +741,11 @@
         }
         repair2003LakersF4Rating(player);
       });
+    });
+    overdueHistoricalRetirees.forEach(function(item) {
+      var roster = NBA2K_DATA[item.team] || [];
+      var index = roster.indexOf(item.player);
+      if (index >= 0) { roster.splice(index, 1); repaired++; }
     });
     // 早期版本把旧存档中的历史年龄推算错后，可能已让小斯/布泽尔在巅峰期被误退役。
     // 在他们真实 NBA 生涯结束年龄之前，仅做一次有针对性的补回；不会复活正常退役的老将。

@@ -11,6 +11,26 @@ const fs = require('node:fs');
   page.on('pageerror', error => errors.push(String(error)));
   await page.goto(pathToFileURL(path.resolve(__dirname, '../nba-perfect-player.html')).href, { waitUntil:'load' });
   await page.waitForFunction(() => window.__PP_booted === true, { timeout:30000 });
+  const shaqRetirement = await page.evaluate(() => {
+    STATE.mode = 'legend';
+    STATE.eraStart = 2003;
+    STATE.career = { seasonCount:0, flags:{} };
+    delete STATE._legendLeagueApplied;
+    applyLegendEraLeague();
+    const timeline = [];
+    for (let season = 0; season <= 8; season++) {
+      STATE.career.seasonCount = season;
+      evolveLeague();
+      if (typeof assignFreeAgents === 'function') assignFreeAgents();
+      const shaq = NBA2K_TEAMS.flatMap(team => NBA2K_DATA[team] || []).find(player => player.name === "Shaquille O'Neal");
+      const retiredShaq = (STATE._leagueChanges.retired || []).find(player => player.nameEN === "Shaquille O'Neal");
+      timeline.push({ season:2003 + season, active:!!shaq, age:shaq && shaq._age, ovr:shaq && shaq.ovr, retiredAt:retiredShaq && retiredShaq.age });
+      if (!shaq) break;
+    }
+    return timeline;
+  });
+  await page.reload({ waitUntil:'load' });
+  await page.waitForFunction(() => window.__PP_booted === true, { timeout:30000 });
   const result = await page.evaluate(() => {
     STATE.mode = 'legend';
     STATE.eraStart = 2003;
@@ -60,9 +80,11 @@ const fs = require('node:fs');
       scripts:[...document.scripts].map(script => script.src).filter(src => /core|era-mode/.test(src))
     };
   });
-  console.log(JSON.stringify({ result, errors }, null, 2));
+  console.log(JSON.stringify({ result, shaqRetirement, errors }, null, 2));
   await browser.close();
-  if (errors.length || result.fresh.count < 360 || result.fresh.count > 450 || result.fresh.minOvr !== 70 || result.fresh.amare.age !== 21 || result.fresh.boozer.age !== 22 || !result.fresh.lebron.inCle || result.fresh.lebron.age !== 19 || result.fresh.payton.count !== 1 || !result.fresh.payton.inLal || result.fresh.payton.ovr !== 87 || !result.repaired.amareRestored || result.repaired.amareAge !== 30 || result.repaired.boozerAge !== 31 || result.repaired.paytonCount !== 1 || !result.repaired.paytonInLal || result.scoreMargins.onePointRate >= 0.14 || result.scoreMargins.average <= 7 || !result.management.intelOpened || result.management.chosenSystem !== 'twin_towers' || result.management.effects.pace !== -3) process.exitCode = 1;
+  const shaqStayedThrough2009 = shaqRetirement.some(entry => entry.season === 2009 && entry.active && entry.ovr <= 86);
+  const shaqRetiredBefore2011_12 = shaqRetirement.some(entry => entry.season === 2010 && !entry.active && entry.retiredAt === 38);
+  if (errors.length || !shaqStayedThrough2009 || !shaqRetiredBefore2011_12 || result.fresh.count < 360 || result.fresh.count > 450 || result.fresh.minOvr !== 70 || result.fresh.amare.age !== 21 || result.fresh.boozer.age !== 22 || !result.fresh.lebron.inCle || result.fresh.lebron.age !== 19 || result.fresh.payton.count !== 1 || !result.fresh.payton.inLal || result.fresh.payton.ovr !== 87 || !result.repaired.amareRestored || result.repaired.amareAge !== 30 || result.repaired.boozerAge !== 31 || result.repaired.paytonCount !== 1 || !result.repaired.paytonInLal || result.scoreMargins.onePointRate >= 0.14 || result.scoreMargins.average <= 7 || !result.management.intelOpened || result.management.chosenSystem !== 'twin_towers' || result.management.effects.pace !== -3) process.exitCode = 1;
 })().catch(error => {
   console.error(error);
   process.exit(1);
