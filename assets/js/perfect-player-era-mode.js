@@ -7,6 +7,9 @@
   var ERA_PLAYABLE_OVR_FLOOR = 70;
   // NBA 正式名单上限为 15 人；传奇年代也统一使用该上限，避免转会/选秀时无意裁掉真实轮换球员。
   var ERA_ROSTER_CAP = 15;
+  // 目标赛季相较基础 2K 名单已成长、但仍被保留为低新秀分的少数年轻核心。
+  // 采用点名校准，避免把所有潜力新秀都不合理地抬高。
+  var ERA_YOUNG_CORE_OPENING_OVR = { 'Stephen Curry':78, 'James Harden':78, 'Russell Westbrook':78 };
   var HISTORICAL_PEAK_OVR = {
     'lebron james':99, 'dwyane wade':97, 'carmelo anthony':94, 'chris bosh':93,
     'kobe bryant':98, 'tim duncan':98, 'kevin garnett':97, 'dirk nowitzki':97,
@@ -435,6 +438,26 @@
   function careerCurveFor(row) {
     return HISTORICAL_CAREER_CURVES[nameKey(row && (row.nameEn || row.nameEN || row.name))] || null;
   }
+  // 基础 2K 名单有时比目标赛季早一年，少数年轻核心会保留过低的新秀分数。
+  // 只校准名单中明确列出的球员，普通新秀与其他历史球员仍保留原始赛季数据。
+  function applyYoungStarOpeningFloor() {
+    NBA2K_TEAMS.forEach(function(team) {
+      (NBA2K_DATA[team] || []).forEach(function(player) {
+        var floor = ERA_YOUNG_CORE_OPENING_OVR[player && (player.nameEN || player.name)];
+        if (!player || !player._eraRoster || !floor || Number(player._age) > 22 || Number(player.ovr) >= floor) return;
+        var before = Math.max(1, Number(player.ovr) || 1);
+        var ratio = floor / before;
+        ATTRS.forEach(function(attr) {
+          if (player[attr] != null) player[attr] = clamp(Number(player[attr]) * ratio, 25, 99);
+        });
+        player._sourceOvr = Number(player._sourceOvr) || Number(player.ovr) || 0;
+        player.ovr = floor;
+        player._ratingBalanceAdjusted = true;
+        player._youngStarOpeningFloor = true;
+        player._ratingSource = (player._ratingSource || '时代数值校准') + ' · 年轻核心开局校准';
+      });
+    });
+  }
   function normalizeTeam(team) {
     return ({ SEA:'OKC', NJN:'BKN', NOH:'NOP', NOK:'NOP', CHH:'CHA', VAN:'MEM' })[team] || team;
   }
@@ -776,6 +799,7 @@
       });
       NBA2K_DATA[team] = roster;
     });
+    applyYoungStarOpeningFloor();
     // 2003 的马龙先会在休赛期流转表中移出原队，必须在流转后补入湖人，不能提前加入又被移除。
     if (start !== 2003) apply2003LakersF4();
     // 2003 纪元以 2003-04 赛季开局：名单整体 +1 岁、按真实 2003 休赛期人员变动修正、
