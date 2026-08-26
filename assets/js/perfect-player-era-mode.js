@@ -4,12 +4,9 @@
 
   var POS = { 1:'PG', 2:'SG', 3:'SF', 4:'PF', 5:'C' };
   var ATTRS = ['threePT','MID','FIN','DNK','HAN','PAS','PDEF','IDEF','BLK','REB','ATH','STR','CLU'];
-  var ERA_PLAYABLE_OVR_FLOOR = 70;
+  var ERA_MIN_OVR = 50;
   // NBA 正式名单上限为 15 人；传奇年代也统一使用该上限，避免转会/选秀时无意裁掉真实轮换球员。
   var ERA_ROSTER_CAP = 15;
-  // 目标赛季相较基础 2K 名单已成长、但仍被保留为低新秀分的少数年轻核心。
-  // 采用点名校准，避免把所有潜力新秀都不合理地抬高。
-  var ERA_YOUNG_CORE_OPENING_OVR = { 'Stephen Curry':78, 'James Harden':78, 'Russell Westbrook':78 };
   var HISTORICAL_PEAK_OVR = {
     'lebron james':99, 'dwyane wade':97, 'carmelo anthony':94, 'chris bosh':93,
     'kobe bryant':98, 'tim duncan':98, 'kevin garnett':97, 'dirk nowitzki':97,
@@ -98,7 +95,24 @@
     // ---- 名单数据中的截断名/别名补全 ----
     'metta world':'慈世平', 'metta world peace':'慈世平', 'ron artest':'罗恩-阿泰斯特',
     'nick van':'尼克-范埃克塞尔', 'nick van exel':'尼克-范埃克塞尔',
-    'keith van':'基思-范霍恩', 'keith van horn':'基思-范霍恩'
+    'keith van':'基思-范霍恩', 'keith van horn':'基思-范霍恩',
+    // 取消统一 70 分垫高后会保留更多真实轮换；为这些此前被名单裁切遮住的球员补齐显示名。
+    'j r bremer':'J.R.-布雷默', 'bimbo coles':'宾博-科尔斯', 'chris mihm':'克里斯-米姆',
+    'adrian griffin':'阿德里安-格里芬', 'vincent yarbrough':'文森特-亚伯勒', 'jeff trepagnier':'杰夫-特雷帕尼尔',
+    'zeljko rebraca':'泽利科-雷布拉察', 'samaki walker':'萨马基-沃克', 'laphonso ellis':'拉方索-埃利斯',
+    'rod strickland':'罗德-斯特里克兰', 'jacque vaughn':'雅克-沃恩', 'shawn kemp':'肖恩-坎普',
+    'qyntel woods':'昆特尔-伍兹', 'bryon russell':'布莱恩-拉塞尔',
+    'chris douglas roberts':'克里斯-道格拉斯-罗伯茨', 'oliver lafayette':'奥利弗-拉斐特',
+    'ronny turiaf':'罗尼-图里亚夫', 'aaron gray':'阿隆-格雷', 'earl barron':'厄尔-巴伦',
+    'r j hunter':'R.J.-亨特', 'dwight powell':'德怀特-鲍威尔', 'jakarr sampson':'贾卡尔-桑普森',
+    'joffrey lauvergne':'乔弗里-洛韦尔涅', 'axel toupane':'阿克塞尔-图潘', 'ish smith':'伊什-史密斯',
+    'p j hairston':'P.J.-海尔斯顿', 'nemanja bjelica':'内马尼亚-别利察', 'e twaun moore':'伊托万-摩尔',
+    'lance thomas':'兰斯-托马斯', 'jerami grant':'杰拉米-格兰特', 't j mcconnell':'T.J.-麦康奈尔',
+    'richaun holmes':'里乔恩-霍姆斯', 'mirza teletovic':'米尔扎-泰莱托维奇', 'allen crabbe':'阿伦-克拉布',
+    'quincy acy':'昆西-阿西', 'duje dukan':'杜耶-杜坎',
+    'tierre brown':'蒂尔-布朗', 'reggie slater':'雷吉-斯莱特', 'charles oakley':'查尔斯-奥克利',
+    'walter tavares':'沃尔特-塔瓦雷斯', 'spencer dinwiddie':'斯潘塞-丁威迪',
+    'k j mcdaniels':'K.J.-麦克丹尼尔斯', 'robert sacre':'罗伯特-萨克雷'
   };
   var ERA_ROOKIE_FIRST = ['亚伦','布兰登','卡梅伦','德文','埃文','加文','杰伦','凯登','马库斯','诺兰','泰勒','韦斯利'];
   var ERA_ROOKIE_LAST = ['安德森','贝克','卡特','戴维斯','埃利斯','福斯特','格兰特','哈里斯','杰克逊','刘易斯','米勒','帕克','里德','斯科特','特纳','沃克','杨'];
@@ -351,7 +365,7 @@
     NBA2K_TEAMS.forEach(function(team) {
       (NBA2K_DATA[team] || []).forEach(function(p) {
         // F4 老将（佩顿/马龙）的年龄已按 2003-04 当季校准，不再 +1。
-        if (p && typeof p._age === 'number' && !p._eraF4SeasonAdjusted) p._age++;
+        if (p && typeof p._age === 'number' && !p._eraF4SeasonAdjusted && !p._seasonAgeCalibrated) p._age++;
       });
     });
     Object.keys(patchTable || {}).forEach(function(patchKey) {
@@ -391,7 +405,8 @@
   /** 缺失真实球员补充：makePlayer 生成后入队（15 人上限自动替换最弱者）。 */
   function applyEraAdditions(start, additions) {
     (additions || []).forEach(function(row) {
-      var player = makePlayer(row, { age: row.age, ovr: row.ovr, draftYear: start });
+      var player = makePlayer(row, { age:row.age, targetAge:row.age, ovr:row.ovr, draftYear:start,
+        eraStart:start, ratingKind:'season', seasonAgeCalibrated:true });
       player._eraAddition = true;
       replaceWeakest(row.team, player);
     });
@@ -454,7 +469,8 @@
   function peakOvrFor(row, currentOvr, age) {
     var key = nameKey(row && (row.nameEn || row.nameEN || row.name));
     var curve = HISTORICAL_CAREER_CURVES[key];
-    var exact = (curve && curve.peak) || HISTORICAL_PEAK_OVR[key];
+    var centralizedPeak = global.PP_RATING_CALIBRATION && global.PP_RATING_CALIBRATION.peakFor(row && (row.nameEn || row.nameEN || row.name), null);
+    var exact = centralizedPeak || (curve && curve.peak) || HISTORICAL_PEAK_OVR[key];
     if (exact) return Math.max(Number(currentOvr) || 0, exact);
     var potential = Math.max(0, Number(row && row.potential) || 0);
     // 未收录峰值的历史球员也按年龄留出成长空间：19 岁约 +11，22 岁约 +9，25 岁约 +7，27 岁约 +5，30 岁约 +3。
@@ -463,26 +479,6 @@
   }
   function careerCurveFor(row) {
     return HISTORICAL_CAREER_CURVES[nameKey(row && (row.nameEn || row.nameEN || row.name))] || null;
-  }
-  // 基础 2K 名单有时比目标赛季早一年，少数年轻核心会保留过低的新秀分数。
-  // 只校准名单中明确列出的球员，普通新秀与其他历史球员仍保留原始赛季数据。
-  function applyYoungStarOpeningFloor() {
-    NBA2K_TEAMS.forEach(function(team) {
-      (NBA2K_DATA[team] || []).forEach(function(player) {
-        var floor = ERA_YOUNG_CORE_OPENING_OVR[player && (player.nameEN || player.name)];
-        if (!player || !player._eraRoster || !floor || Number(player._age) > 22 || Number(player.ovr) >= floor) return;
-        var before = Math.max(1, Number(player.ovr) || 1);
-        var ratio = floor / before;
-        ATTRS.forEach(function(attr) {
-          if (player[attr] != null) player[attr] = clamp(Number(player[attr]) * ratio, 25, 99);
-        });
-        player._sourceOvr = Number(player._sourceOvr) || Number(player.ovr) || 0;
-        player.ovr = floor;
-        player._ratingBalanceAdjusted = true;
-        player._youngStarOpeningFloor = true;
-        player._ratingSource = (player._ratingSource || '时代数值校准') + ' · 年轻核心开局校准';
-      });
-    });
   }
   function normalizeTeam(team) {
     return ({ SEA:'OKC', NJN:'BKN', NOH:'NOP', NOK:'NOP', CHH:'CHA', VAN:'MEM' })[team] || team;
@@ -498,18 +494,27 @@
     });
     return out;
   }
-  function adjustedEraOvr(row, requested) {
-    var raw = Number(requested != null ? requested : row.ovr) || 50;
-    if (row.ratingOfficial) return Math.max(ERA_PLAYABLE_OVR_FLOOR, raw);
-    var mpg = Number(row.seasonLine && row.seasonLine.mpg) || 0;
-    var roleFloor = mpg >= 26 ? 66 : (mpg >= 18 ? 62 : (mpg >= 10 ? 58 : 55));
-    return Math.max(ERA_PLAYABLE_OVR_FLOOR, raw, roleFloor);
+  function calibratedEraRating(row, requested, options) {
+    options = options || {};
+    var raw = Number(requested != null ? requested : (row.ovr != null ? row.ovr : row.rating)) || ERA_MIN_OVR;
+    if (options.skipCalibration || !global.PP_RATING_CALIBRATION) {
+      return { sourceOvr:raw, seasonOvr:raw, rookieOvr:options.ratingKind === 'rookie' ? raw : null, peakOvr:null,
+        targetAge:Number(options.targetAge != null ? options.targetAge : options.age != null ? options.age : row.age) || 22,
+        adjusted:false, reference:{ kind:options.ratingKind || 'legacy', basis:'legacy fallback' } };
+    }
+    return global.PP_RATING_CALIBRATION.calibrateEra(row, {
+      sourceOvr:raw,
+      eraStart:options.eraStart != null ? options.eraStart : Number(STATE.eraStart),
+      targetAge:options.targetAge != null ? options.targetAge : (options.age != null ? options.age : row.age),
+      kind:options.ratingKind || 'season'
+    });
   }
   function makePlayer(row, options) {
     options = options || {};
     var pos = normalizedPositions(row.pos);
     var requestedOvr = options.ovr != null ? options.ovr : row.ovr;
-    var ovr = clamp(adjustedEraOvr(row, requestedOvr), 50, 99);
+    var rating = calibratedEraRating(row, requestedOvr, options);
+    var ovr = clamp(rating.seasonOvr, ERA_MIN_OVR, 99);
     var curve = careerCurveFor(row);
     var attrs = row.attrs ? Object.assign({}, row.attrs) : generatedAttrs(mainPos(pos), ovr);
     var nameEn = row.nameEn || ('Era Player ' + Math.random());
@@ -521,11 +526,13 @@
       pos: pos,
       ovr: ovr,
       type: ovr >= 88 ? '历史球星' : (ovr >= 78 ? '时代主力' : '时代球员'),
-      _age: clamp(options.age != null ? options.age : row.age, 18, 41),
+      _age: clamp(rating.targetAge, 18, 49),
       _eraRoster: true,
       _draftYear: options.draftYear || row.draftYear || null,
       _potential: Number(row.potential) || 6,
-      _peakOvr: peakOvrFor(row, ovr, Number(options.age != null ? options.age : row.age) || 22),
+      _peakOvr: rating.peakOvr != null
+        ? Math.max(ovr, Number(rating.peakOvr) || ovr)
+        : peakOvrFor(row, ovr, Number(rating.targetAge) || 22),
       _primeStartAge: curve && curve.primeStart || null,
       _primeEndAge: curve && curve.primeEnd || null,
       _primeFloorOvr: curve && curve.primeFloor || null,
@@ -534,8 +541,14 @@
       contract: 1 + ((nameEn.length + ovr) % 4),
       _ratingSource: row.ratingSource || '时代数值校准',
       _ratingOfficial: !!row.ratingOfficial,
-      _sourceOvr: Number(requestedOvr) || 0,
-      _ratingBalanceAdjusted: ovr > (Number(requestedOvr) || 0),
+      _ratingReference: rating.reference || null,
+      _ratingCalibrationVersion: global.PP_RATING_CALIBRATION && global.PP_RATING_CALIBRATION.version || null,
+      _sourceOvr: Number(rating.sourceOvr) || 0,
+      _seasonOvr: options.ratingKind === 'rookie' ? null : ovr,
+      _rookieOvr: options.ratingKind === 'rookie' ? ovr : null,
+      _ratingKind: options.ratingKind || 'season',
+      _seasonAgeCalibrated: !!options.seasonAgeCalibrated,
+      _ratingBalanceAdjusted: !!rating.adjusted,
       _seasonLine: row.seasonLine || null,
       // 真实年代球员优先使用身份校验后的统一索引；避免空/错误旧路径遮住有效头像。
       photoLocal: presentation.p || '',
@@ -597,12 +610,15 @@
     var roster = NBA2K_DATA[team] || (NBA2K_DATA[team] = []);
     var duplicate = roster.some(function(p) { return p && String(p.name).toLowerCase() === String(player.name).toLowerCase(); });
     if (duplicate) return false;
+    var incomingDraftYear = Number(player && player._draftYear) || 0;
     // NBA 正式名单上限：超过 15 人才裁掉最弱的非玩家球员。
     if (roster.length >= ERA_ROSTER_CAP) {
       var weakest = -1;
       roster.forEach(function(p, idx) {
         // 已知会成长为巨星的年轻历史球员不能因为开局补人时的低初始评分被误裁（如 2010 库里）。
-        var protectedProspect = p && p._eraRoster && Number(p._peakOvr) >= 90;
+        // 同一届新秀也不能在该届后续签位入队时互相挤掉；这让 rookie OVR 保持真实，而不必再用统一 70 分垫高。
+        var protectedProspect = p && ((p._eraRoster && Number(p._peakOvr) >= 90) ||
+          (incomingDraftYear && Number(p._draftYear) === incomingDraftYear));
         if (p && !p._isUser && !protectedProspect && (weakest < 0 || Number(p.ovr) < Number(roster[weakest].ovr))) weakest = idx;
       });
       // 极端情况下全队都是受保护球员，仍需保持 15 人上限。
@@ -629,7 +645,8 @@
         existing._eraF4SeasonAdjusted = true;
         return;
       }
-      var player = makePlayer(row, { age:row.age, ovr:row.ovr, draftYear:2003 });
+      var player = makePlayer(row, { age:row.age, targetAge:row.age, ovr:row.ovr, draftYear:2003,
+        eraStart:2003, ratingKind:'season', seasonAgeCalibrated:true, skipCalibration:true });
       player._eraF4SeasonAdjusted = true;
       replaceWeakest('LAL', player);
     });
@@ -640,7 +657,7 @@
     var row = LAKERS_2003_F4.find(function(item) { return nameKey(item.nameEn) === key; });
     if (!row) return false;
     var age = Math.max(row.age, Number(player._age) || row.age);
-    var seasonCap = Math.max(ERA_PLAYABLE_OVR_FLOOR, row.ovr - Math.max(0, age - row.age) * 1.5);
+    var seasonCap = Math.max(ERA_MIN_OVR, row.ovr - Math.max(0, age - row.age) * 1.5);
     if (Number(player.ovr) <= seasonCap) return false;
     var ratio = seasonCap / Math.max(1, Number(player.ovr) || 1);
     ATTRS.forEach(function(attr) {
@@ -728,16 +745,6 @@
             repaired++;
           }
         }
-        if (Number(player.ovr) < ERA_PLAYABLE_OVR_FLOOR) {
-          var floorRatio = ERA_PLAYABLE_OVR_FLOOR / Math.max(1, Number(player.ovr) || 1);
-          ATTRS.forEach(function(attr) {
-            if (player[attr] != null) player[attr] = clamp(Number(player[attr]) * floorRatio, 25, 99);
-          });
-          player._sourceOvr = Number(player._sourceOvr) || Number(player.ovr) || 0;
-          player.ovr = ERA_PLAYABLE_OVR_FLOOR;
-          player._ratingBalanceAdjusted = true;
-          repaired++;
-        }
         if (curve) {
           player._peakOvr = Math.max(Number(player._peakOvr) || 0, Number(curve.peak) || 0);
           player._primeStartAge = curve.primeStart;
@@ -746,15 +753,7 @@
           player._postPrimeDecay = curve.postPrimeDecay || null;
           player._historicalRetireAge = curve.retireAfterAge || HISTORICAL_RETIREMENT_AGE[key] || null;
           var playerAge = Number(player._age) || 0;
-          // 巅峰保底只在 31 岁前硬生效；31 岁后允许自然衰退（与 evolveLeague 软地板一致）。
-          if (playerAge >= curve.primeStart && playerAge <= Math.min(curve.primeEnd, 31) && Number(player.ovr) < curve.primeFloor) {
-            var restoreRatio = curve.primeFloor / Math.max(1, Number(player.ovr) || 1);
-            ATTRS.forEach(function(attr) {
-              if (player[attr] != null) player[attr] = clamp(Number(player[attr]) * restoreRatio, 25, 99);
-            });
-            player.ovr = curve.primeFloor;
-            player._eraPrimeRatingRepaired = true;
-          }
+          // 读档修复只补曲线元数据；已有赛季的 OVR/属性属于存档事实，绝不按 primeFloor 重算。
           // 只对有明确史实退役节点的球员生效；旧档读入时也会清掉不应继续存在的版本。
           var retirementAge = Number(curve.retireAfterAge) || Number(HISTORICAL_RETIREMENT_AGE[key]) || 0;
           if (retirementAge && playerAge > retirementAge) overdueHistoricalRetirees.push({ team:team, player:player });
@@ -789,12 +788,14 @@
       var expectedAge = Number(meta.anchorAge) + eraAgeOffset(start) + Math.max(0, currentYear - Number(meta.anchorYear));
       if (expectedAge > 33 || !meta.team || NBA2K_TEAMS.indexOf(meta.team) < 0) return;
       var curve = careerCurveFor(meta.row);
-      var sourceOvr = Math.max(ERA_PLAYABLE_OVR_FLOOR, Number(meta.row.ovr) || ERA_PLAYABLE_OVR_FLOOR);
+      var sourceOvr = Math.max(ERA_MIN_OVR, Number(meta.row.ovr) || ERA_MIN_OVR);
       var riseYears = Math.max(1, Number(curve && curve.primeStart) - Number(meta.anchorAge));
       var progress = Math.min(1, Math.max(0, expectedAge - Number(meta.anchorAge)) / riseYears);
       var projectedOvr = curve ? sourceOvr + (curve.peak - sourceOvr) * progress : sourceOvr;
       if (curve && expectedAge > curve.primeEnd) projectedOvr -= (expectedAge - curve.primeEnd) * 1.25;
-      var restored = makePlayer(meta.row, { age:expectedAge, ovr:clamp(projectedOvr, ERA_PLAYABLE_OVR_FLOOR, curve && curve.peak || 96), draftYear:meta.anchorYear });
+      var restored = makePlayer(meta.row, { age:expectedAge, targetAge:expectedAge,
+        ovr:clamp(projectedOvr, ERA_MIN_OVR, curve && curve.peak || 96), draftYear:meta.anchorYear,
+        ratingKind:'restore', skipCalibration:true });
       restored._prematureRetirementRestored = true;
       restored._eraAgeRepairVersion = 10;
       if (replaceWeakest(meta.team, restored)) repaired++;
@@ -829,11 +830,12 @@
     var positions = ['PG','SG','SF','PF','C'];
     var seq = (Number(STATE._eraRookieSeq) || 0) + 1;
     var pos = positions[(seq + year) % positions.length];
-    var ovr = ERA_PLAYABLE_OVR_FLOOR + ((seq * 7 + year) % 7);
+    var ovr = 60 + ((seq * 7 + year) % 15);
     var player = makePlayer({
       nameEn:'Era Prospect ' + year + '-' + seq,
       nameCn:'年代新秀', pos:pos, ovr:ovr, potential:5 + (seq % 8), ratingSource:'传奇年代虚构新秀（联盟下限 70）'
-    }, { age:19 + (seq % 3), ovr:ovr, draftYear:year });
+    }, { age:19 + (seq % 3), targetAge:19 + (seq % 3), ovr:ovr, draftYear:year,
+      ratingKind:'generated', skipCalibration:true });
     localizeEraGeneratedPlayer(player, year);
     player._enterYear = year;
     player.type = '新秀';
@@ -859,9 +861,10 @@
       if (NBA2K_TEAMS.indexOf(team) < 0) team = NBA2K_TEAMS[idx % NBA2K_TEAMS.length];
       var years = Math.max(0, Number(elapsed) || 0);
       var growth = Math.min(Number(row.potential) || 6, years * 1.7);
-      var ovr = clamp((Number(row.rating) || ERA_PLAYABLE_OVR_FLOOR) + growth, ERA_PLAYABLE_OVR_FLOOR, 96);
+      var ovr = clamp((Number(row.rating) || ERA_MIN_OVR) + growth, ERA_MIN_OVR, 96);
       var age = row.birth ? year + years - Number(row.birth) : (Number(row.age) || 20) + years;
-      var player = makePlayer(row, { ovr:ovr, age:age, draftYear:year });
+      var player = makePlayer(row, { ovr:ovr, age:age, targetAge:age, draftYear:year,
+        eraStart:Number(STATE.eraStart), ratingKind:'rookie' });
       if (replaceWeakest(team, player)) {
         added++;
         if (recordChanges) {
@@ -914,11 +917,13 @@
         enriched.nameCn = (enriched.nameCn && /[\u3400-\u9fff]/.test(enriched.nameCn))
           ? enriched.nameCn
           : (presentation.c || localizedNames[nameKey(enriched.nameEn)] || localizeFromTokens(enriched.nameEn, localizedNames._tokens || {}) || enriched.nameEn);
-        return makePlayer(enriched, { age:Number(row.age) || 27, ovr:Number(row.ovr) || 65, draftYear:start });
+        var sourceAge = Number(row.age) || 27;
+        return makePlayer(enriched, { age:sourceAge, targetAge:sourceAge + eraAgeOffset(start),
+          ovr:Number(row.ovr) || 65, draftYear:start, eraStart:start,
+          ratingKind:'season', seasonAgeCalibrated:true });
       });
       NBA2K_DATA[team] = roster;
     });
-    applyYoungStarOpeningFloor();
     // 2003 的马龙先会在休赛期流转表中移出原队，必须在流转后补入湖人，不能提前加入又被移除。
     if (start !== 2003) apply2003LakersF4();
     // 2003 纪元以 2003-04 赛季开局：名单整体 +1 岁、按真实 2003 休赛期人员变动修正、
@@ -967,7 +972,7 @@
     overlay.id = 'legend-era-picker';
     overlay.innerHTML = '<div class="team-picker-modal legend-era-picker-modal">' +
       '<div class="team-picker-header"><span>🏆 选择传奇年代</span><button class="modal-close" id="legend-era-close">✕</button></div>' +
-      '<div class="legend-era-picker-intro">现役生涯会完整保留。传奇年代每队最多 15 人；有原始 2K 数值的球员采用对应版本评分，其余依当季数据校准。</div>' +
+      '<div class="legend-era-picker-intro">现役生涯会完整保留。传奇年代每队最多 15 人；开局评分按目标赛季表现与生涯阶段校准，原始 2K 数值仅作可追溯参考。</div>' +
       '<div class="legend-era-picker-grid">' +
         '<button class="legend-era-card" data-era="2003"><span class="legend-era-year">2003</span><span class="legend-era-copy"><strong>白金新章</strong><em>报纸 · 电台 · 早期论坛</em><small>从传统巨星林立的时代起步，面对一届新人涌入联盟后的全新秩序。</small></span></button>' +
         '<button class="legend-era-card" data-era="2010"><span class="legend-era-year">2010</span><span class="legend-era-copy"><strong>聚光灯时代</strong><em>电视辩论 · 社交媒体 · 球星联手</em><small>转会风暴重塑格局，每一次选择都会被放大成全国话题。</small></span></button>' +

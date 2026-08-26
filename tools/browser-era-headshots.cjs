@@ -73,6 +73,7 @@ const { chromium } = require('playwright');
     const indPool = getBuildPlayerPool('IND');
     const fixedNames = ['Reggie Miller','Fred Jones','Primož Brezec','Jamaal Tinsley','Jamison Brewer'];
     const fixed = fixedNames.map(name => indPool.find(player => (player.nameEN || player.name) === name));
+    if (fixed.some(player => !player)) throw new Error('2003 IND screenshot fixtures missing: ' + fixedNames.filter((name, index) => !fixed[index]).join(', ') + '; active=' + indPool.map(player => (player.nameEN || player.name) + ':' + player.ovr).join('|'));
     renderRosterPlayers('IND', fixed, indPool);
     const fixedRows = inspectRendered(fixed);
     allLocalPaths.push(...fixedRows.map(row => row.local));
@@ -128,7 +129,7 @@ const { chromium } = require('playwright');
   assert.equal(coverage.draft.initialsReasons.unresolvedOfficialId, 0, 'a reliable official ID must never be left unmaterialized');
   for (const era of [2003,2010,2016]) {
     const row = coverage.openings[era];
-    assert.equal(row.total, ({2003:438,2010:429,2016:421})[era]);
+    assert.equal(row.total, ({2003:438,2010:426,2016:420})[era]);
     assert.ok(row.hupu + row.official + row.otherLocal >= row.total * 0.74, `${era}: at least 74% of the opening league should have local real photos`);
     assert.equal(Object.values(row.initialsReasons).reduce((sum, value) => sum + value, 0), row.initials, `${era}: every fallback must have an auditable reason`);
     assert.equal(row.initialsReasons.unresolvedOfficialId, 0, `${era}: reliable official IDs must be materialized`);
@@ -155,7 +156,7 @@ const { chromium } = require('playwright');
   });
   draftInsertion.forEach(result => {
     assert.ok(result.added >= 26, `${result.year}: most of the real class must enter league rosters`);
-    assert.ok(result.rosterPlayers >= 26, `${result.year}: inserted players must remain addressable in NBA2K_DATA`);
+    assert.ok(result.rosterPlayers >= 26, `${result.year}: inserted players must remain addressable in NBA2K_DATA (added=${result.added}, remaining=${result.rosterPlayers})`);
     assert.deepEqual(result.broken, [], `${result.year}: inserted class avatars must render`);
   });
 

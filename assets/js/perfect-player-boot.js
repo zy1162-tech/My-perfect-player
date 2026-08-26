@@ -6,7 +6,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   var GROUPS = {
     create: [
-      ['assets/js/perfect-player-hupu-extensions.js?v=20260825-roster-cycle-v14', '角色扩展']
+      ['assets/js/perfect-player-hupu-extensions.js?v=20260826-rating-v16', '角色扩展']
     ],
     career: [
       ['assets/js/perfect-player-skills.js?v=20260824-balance-v7', '球风技能'],
@@ -324,7 +324,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20260826-performance-v4').catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20260826-rating-v6').catch(function () {});
   }
 
   function idleLoad() {

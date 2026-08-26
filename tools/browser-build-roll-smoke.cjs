@@ -70,7 +70,7 @@ const { chromium } = require('playwright');
 
   assert.deepEqual(pageErrors, [], `browser page errors are not allowed: ${pageErrors.join(' | ')}`);
   const eraScript = await page.evaluate(() => [...document.scripts].map(script => script.src).find(src => /perfect-player-era-mode/.test(src)) || '');
-  assert.match(eraScript, /perfect-player-era-mode\.js\?v=20260826-era-headshots-v29$/);
+  assert.match(eraScript, /perfect-player-era-mode\.js\?v=20260826-rating-v31$/);
   console.log(JSON.stringify({ passed:true, results, pageErrors }, null, 2));
   await browser.close();
 })().catch(error => {

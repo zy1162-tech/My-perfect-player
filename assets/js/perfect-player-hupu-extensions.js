@@ -150,22 +150,63 @@
     return Math.round(((Number(a) || 50) + (Number(b) || 50)) / 2);
   }
 
-  function convertPlayer(player) {
+  var runtimeCurrentByName = null;
+  var VERIFIED_CURRENT_ALIASES = {
+    'craig porter':'Craig Porter Jr.',
+    'a j green':'AJ Green',
+    'marvin bagley':'Marvin Bagley III',
+    'robert williams':'Robert Williams III'
+  };
+  function currentRatingNameKey(value) {
+    if (window.PP_RATING_CALIBRATION) return window.PP_RATING_CALIBRATION.nameKey(value);
+    return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+  function findRuntimeCurrentRating(teamAbbr, playerName) {
+    if (typeof NBA_CURRENT_RATINGS_2026 === 'undefined') return null;
+    var exact = NBA_CURRENT_RATINGS_2026[String(teamAbbr || '') + '|' + playerName];
+    if (exact) return exact;
+    var verifiedAlias = VERIFIED_CURRENT_ALIASES[currentRatingNameKey(playerName)];
+    if (verifiedAlias) {
+      exact = NBA_CURRENT_RATINGS_2026[String(teamAbbr || '') + '|' + verifiedAlias];
+      if (exact) return exact;
+    }
+    if (!runtimeCurrentByName) {
+      runtimeCurrentByName = {};
+      var ambiguous = {};
+      Object.keys(NBA_CURRENT_RATINGS_2026).forEach(function (key) {
+        var split = key.indexOf('|');
+        var name = currentRatingNameKey(split >= 0 ? key.slice(split + 1) : key);
+        if (runtimeCurrentByName[name]) ambiguous[name] = true;
+        else runtimeCurrentByName[name] = NBA_CURRENT_RATINGS_2026[key];
+      });
+      Object.keys(ambiguous).forEach(function (name) { delete runtimeCurrentByName[name]; });
+    }
+    return runtimeCurrentByName[currentRatingNameKey(verifiedAlias || playerName)] || null;
+  }
+
+  function convertPlayer(player, teamAbbr) {
     var attrs = player.attrs || {};
     var mainPos = POSITIONS[player.pos] || 'SF';
     var secondPos = POSITIONS[player.pos2];
     var pos = mainPos + (secondPos && secondPos !== mainPos ? ' / ' + secondPos : '');
     var historical = player.source && player.source.kind !== 'current';
+    var playerName = player.nameEn || player.altName || player.name;
+    var calibration = window.PP_RATING_CALIBRATION || null;
+    var sourceRating = clamp(player.rating, 50, 99);
+    var runtimeCurrent = null;
+    if (!historical) runtimeCurrent = findRuntimeCurrentRating(teamAbbr, playerName);
+    var calibratedPeak = historical && calibration ? calibration.peakFor(playerName, sourceRating) : sourceRating;
+    var finalRating = runtimeCurrent && runtimeCurrent.ovr != null ? clamp(runtimeCurrent.ovr, 50, 99) : clamp(calibratedPeak, 50, 99);
     var clutchBoost = Math.min(8, Math.round((Number(player.starScore) || 0) / 35));
-    return {
-      name: player.nameEn || player.altName || player.name,
+    var converted = {
+      name: playerName,
       cname: player.nameCn || player.name,
       pos: pos,
       height: POSITION_HEIGHT[mainPos],
       type: historical
         ? (player.historicalTier === 'hall-of-fame' ? '名人堂惊喜' : '近代全明星惊喜')
         : '现役球员',
-      ovr: clamp(player.rating, 50, 99),
+      ovr: finalRating,
       threePT: clamp(attrs.shotExt, 35, 99),
       MID: clamp(attrs.shotInt, 35, 99),
       FIN: clamp(average(attrs.shotInt, attrs.physique), 35, 99),
@@ -178,18 +219,39 @@
       REB: clamp(attrs.reb, 35, 99),
       ATH: clamp(average(attrs.speed, attrs.physique), 35, 99),
       STR: clamp(attrs.strength, 35, 99),
-      CLU: clamp((Number(player.rating) || 70) + clutchBoost, 35, 99),
+      CLU: clamp(finalRating + clutchBoost, 35, 99),
       _sourceKind: historical ? 'historical' : 'current',
       _sourceYear: player.source ? player.source.year : 2025,
       _sourceLabel: player.source ? player.source.label : '2025-26',
       _historicalTier: player.historicalTier || '',
       _historicalPeak: !!player.historicalPeak,
-      _peakRating: Number(player.peakRating || player.rating || 0),
+      _sourceOvr: sourceRating,
+      _seasonOvr: historical ? null : finalRating,
+      _rookieOvr: null,
+      _peakOvr: historical ? finalRating : null,
+      _peakRating: historical ? finalRating : Number(player.peakRating || player.rating || 0),
       _peakSource: player.peakSource || '',
+      _ratingReference: {
+        version:calibration && calibration.version || 'legacy',
+        kind:historical ? 'peak' : 'current',
+        basis:historical
+          ? (finalRating !== sourceRating ? 'central historical peak calibration override' : 'historical pool fallback')
+          : (runtimeCurrent ? 'NBA_CURRENT_RATINGS_2026 runtime source' : 'static build-pool fallback'),
+        sourceOvr:sourceRating,
+        team:teamAbbr || ''
+      },
       _photoLocal: player.photoLocal,
       _photoUrl: player.photoUrl || '',
       _poolUid: player.uid
     };
+    // Current build cards use exactly the same runtime attribute snapshot as
+    // NBA2K_DATA. The static pool remains a file://-safe fallback only.
+    if (runtimeCurrent) {
+      ['threePT','MID','FIN','DNK','HAN','PAS','PDEF','IDEF','BLK','REB','ATH','STR','CLU'].forEach(function (attr) {
+        if (runtimeCurrent[attr] != null) converted[attr] = clamp(runtimeCurrent[attr], 25, 99);
+      });
+    }
+    return converted;
   }
 
   window.PERFECT_PLAYER_PHOTO_BY_NAME = window.PERFECT_PLAYER_PHOTO_BY_NAME || {};
@@ -200,7 +262,7 @@
   // 部署到网站且未提供预载数据时仍保留 JSON fetch 作为兼容后备。
   var playerPoolSource = window.PERFECT_PLAYER_POOL_DATA
     ? Promise.resolve(window.PERFECT_PLAYER_POOL_DATA)
-    : fetch('assets/data/perfect-player-pool.json?v=20260824-local-player-pool-v3').then(function (response) {
+    : fetch('assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10').then(function (response) {
         if (!response.ok) throw new Error('球员库加载失败：' + response.status);
         return response.json();
       });
@@ -220,8 +282,8 @@
         var sourceTeam = payload.teams[teamId];
         var abbr = TEAM_TO_ABBR[sourceTeam.name];
         if (!abbr || typeof NBA2K_DATA === 'undefined' || !NBA2K_DATA[abbr]) return;
-        var converted = (sourceTeam.players || []).map(convertPlayer);
-        var historicalSurprises = (sourceTeam.historicalPlayers || []).map(convertPlayer);
+        var converted = (sourceTeam.players || []).map(function(player) { return convertPlayer(player, abbr); });
+        var historicalSurprises = (sourceTeam.historicalPlayers || []).map(function(player) { return convertPlayer(player, abbr); });
         converted.concat(historicalSurprises).forEach(function (player) {
           window.PERFECT_PLAYER_PHOTO_BY_NAME[player.name] = player._photoLocal || player._photoUrl || '';
           window.PERFECT_PLAYER_DISPLAY_BY_NAME[player.name] = player.cname || player.name;

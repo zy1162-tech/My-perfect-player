@@ -206,9 +206,9 @@ assert.match(core, /史诗 · 名人堂惊喜/);
 assert.match(core, /全明星惊喜/);
 assert.match(core, /historicalCard \?[^\n]+: ovrGrade/, 'normal cards should show their OVR grade');
 assert.match(html, /perfect-player-core\.js\?v=20260826-era-presentation-v30/);
-assert.match(html, /perfect-player-era-mode\.js\?v=20260826-era-headshots-v29/);
+assert.match(html, /perfect-player-era-mode\.js\?v=20260826-rating-v31/);
 assert.match(sw, /perfect-player-core\.js\?v=20260826-era-presentation-v30/);
-assert.match(sw, /perfect-player-era-mode\.js\?v=20260826-era-headshots-v29/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260826-era-headshots-v11'/);
+assert.match(sw, /perfect-player-era-mode\.js\?v=20260826-rating-v31/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260826-rating-v13'/);
 
 console.log(`✓ build roll: ${rounds} seeded rounds, special=${(specialRate * 100).toFixed(2)}%, mixed-fixture HOF=${(hofShare * 100).toFixed(2)}%, real-pool HOF=${(realHofShare * 100).toFixed(2)}%, normal cards=${(normalShare * 100).toFixed(2)}%`);

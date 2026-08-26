@@ -72,9 +72,9 @@ assert.match(eraMode, /photoLocal: presentation\.p \|\| ''/);
 assert.match(generator, /recordsByExactAlias\.get\(exactTextKey\(name\)\)/, 'generator should audit exact upstream alias records');
 assert.match(generator, /generationSuffix\(name\) !== generationSuffix\(record\.e\)/, 'exact alias recovery must preserve generational suffix identity');
 assert.ok(html.indexOf('era-headshot-index.js?v=20260826-era-headshots-v1') < html.indexOf('perfect-player-core.js?v='));
-assert.match(html, /perfect-player-era-mode\.js\?v=20260826-era-headshots-v29/);
+assert.match(html, /perfect-player-era-mode\.js\?v=20260826-rating-v31/);
 assert.match(html, /perfect-player\.css\?v=20260826-era-headshots-v2/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260826-era-headshots-v11'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260826-rating-v13'/);
 assert.doesNotMatch(sw, /['"]\.\/assets\/images\/Player\/(?:hupu-era|nba-official)\//, 'large on-demand image directories must not be install-shell entries');
 
 console.log(`✓ era headshot pack: hupu ${hupuFiles.length}/${index.upstreamAssetBytes} bytes; mapped identities ${index.mappedRealPlayers}; valid official ${index.validOfficialIds.length}; placeholders excluded ${index.excludedOfficialIds.length}`);

@@ -27,9 +27,9 @@ assert.doesNotMatch(archiveBlock[1], /navy|#09182a|#071321|color:\s*#fff|backgro
 assert.match(premium, /\.mode-local-nav \.mode-local-nav-btn \{[^}]*min-height:72px[^}]*border-radius:12px[^}]*background:linear-gradient/s);
 assert.match(premium, /\.feature-card\.mode-card-legend \{[^}]*#e5f5ed[^}]*#ead7b8/s, 'legend home card should use the mint-gold theme');
 assert.match(html, /perfect-player-premium\.css\?v=20260826-era-story-ui-v2/);
-assert.match(html, /perfect-player-era-mode\.js\?v=20260826-era-headshots-v29/);
+assert.match(html, /perfect-player-era-mode\.js\?v=20260826-rating-v31/);
 assert.match(html, /perfect-player-core\.js\?v=20260826-era-presentation-v30/);
-assert.match(html, /perfect-player-boot\.js\?v=20260826-performance-v4/);
+assert.match(html, /perfect-player-boot\.js\?v=20260826-rating-v6/);
 assert.match(core, /__PP_openCareerFeature\(\\'achievements\\'\)/);
 assert.match(core, /__PP_openCareerFeature\(\\'legacy\\'\)/);
 assert.doesNotMatch(core, /if\(window\.PP_FX\) PP_FX\.open(?:Legacy)?Panel/);
