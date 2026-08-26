@@ -241,7 +241,8 @@ function getSeasonInjuryEventRate() {
     if (ironMu > 1) rate *= Math.max(0.55, 1 - (ironMu - 1) * 2.2);
   }
   var stamina = typeof getStaminaAttr === 'function' ? Math.min(12, getStaminaAttr()) : 0;
-  if (stamina > 0) rate *= Math.max(0.58, 1 - stamina * 0.035);
+  // 续航高显著降低伤病：满续航可把伤病率压到约一半。
+  if (stamina > 0) rate *= Math.max(0.50, 1 - stamina * 0.045);
   return rate;
 }
 
@@ -260,7 +261,7 @@ function getMajorInjuryEventRate() {
     if (ironMu > 1) rate *= Math.max(0.55, 1 - (ironMu - 1) * 2.2);
   }
   var stamina = typeof getStaminaAttr === 'function' ? Math.min(12, getStaminaAttr()) : 0;
-  if (stamina > 0) rate *= Math.max(0.70, 1 - stamina * 0.025);
+  if (stamina > 0) rate *= Math.max(0.62, 1 - stamina * 0.033);
   return rate;
 }
 

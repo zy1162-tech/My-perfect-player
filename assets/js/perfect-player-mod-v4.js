@@ -44,7 +44,7 @@
   }
 
   function rosterRows(snapshot) {
-    return snapshot.roster.slice(0, 15).map(function(p, idx) {
+    return snapshot.roster.slice(0, 12).map(function(p, idx) {
       var isStarter = snapshot.starters.indexOf(p) >= 0;
       var age = p && p._isUser
         ? Number(STATE.career && STATE.career.currentAge) || 19
@@ -67,7 +67,7 @@
           '<div style="font-size:9px;color:var(--text-dim);margin-top:2px;">攻 ' + Math.round(Number(p.offense) || 0) + ' · 防 ' + Math.round(Number(p.defense) || 0) + ' · 深度 ' + Math.round(Number(p.depth) || 0) + '</div></div>' +
         '<div style="text-align:right;"><strong style="display:block;color:var(--orange);font-size:18px;line-height:1;">' + snapshot.powerRating + '</strong><small style="font-size:8px;color:var(--text-muted);">球队评分</small></div>' +
       '</div>' + rosterRows(snapshot) +
-      '<div style="font-size:9px;color:var(--text-muted);padding-top:6px;">轮换评分 ' + snapshot.rotationRating + ' · 展示最多 15 人大名单</div></section>';
+      '<div style="font-size:9px;color:var(--text-muted);padding-top:6px;">轮换评分 ' + snapshot.rotationRating + ' · 12 人大名单（真实轮换深度）</div></section>';
   }
 
   global.showTeamRosterModal = function(team, compareTeam, title) {
@@ -112,96 +112,6 @@
       '<div style="margin-top:5px;color:var(--text-muted);">你作出决定后只会补充自由球员，不会再随机交易或送走这里的现有队友。</div>' +
       '<button class="btn btn-secondary btn-sm" style="width:100%;margin-top:7px;" onclick="showCurrentTeamRoster()">👥 查看完整阵容与合同</button></div>';
   }
-
-  // 轻量教练体系：只改变现有模拟的回合、攻防效率与三分倾向，不额外引入薪资或复杂战术操作。
-  var TEAM_SYSTEMS = {
-    balanced:{ name:'均衡体系', icon:'⚖️', desc:'按阵容能力自然分配球权，攻守没有额外偏置。', offense:0, defense:0, pace:0, three:0 },
-    seven_seconds:{ name:'七秒进攻', icon:'⚡', desc:'更多转换和早攻：节奏更快、外线出手更多，防守稳定性略降。', offense:1.4, defense:-0.5, pace:4, three:0.010 },
-    five_out:{ name:'五外空间', icon:'🎯', desc:'拉开空间，优先三分与突破分球；对内线保护要求更高。', offense:1.1, defense:-0.3, pace:1, three:0.016 },
-    defense_transition:{ name:'防守反击', icon:'🛡️', desc:'优先防守、抢断与转换，比分更稳，节奏略快。', offense:0.4, defense:1.7, pace:2, three:0.004 },
-    twin_towers:{ name:'双塔阵地', icon:'🏰', desc:'保护篮板和禁区，降低节奏，外线比重下降。', offense:0.5, defense:1.8, pace:-3, three:-0.008 }
-  };
-
-  function currentSystemKey() {
-    var systems = STATE.teamSystems || {};
-    var key = systems[STATE.careerTeam] || 'balanced';
-    return TEAM_SYSTEMS[key] ? key : 'balanced';
-  }
-
-  global.getTeamSystemEffects = function(team) {
-    if (team !== STATE.careerTeam) return TEAM_SYSTEMS.balanced;
-    return TEAM_SYSTEMS[currentSystemKey()];
-  };
-
-  function departureRisk(player, snapshot) {
-    if (!player || player._isUser) return { label:'核心', color:'var(--green)' };
-    var starter = snapshot.starters.indexOf(player) >= 0;
-    var contract = Number(player.contract) || 0;
-    var ovr = playerOvr(player);
-    if (player.roleLeave || (!starter && ovr >= 82 && contract <= 1)) return { label:'高风险', color:'var(--red)' };
-    if (contract <= 1 && (!starter || ovr >= 78)) return { label:'需关注', color:'var(--orange)' };
-    return { label:starter ? '稳定首发' : '合同稳定', color:'var(--green)' };
-  }
-
-  global.showLeagueIntel = function(done) {
-    var old = document.getElementById('league-intel-modal');
-    if (old) old.remove();
-    var snapshot = teamSnapshot(STATE.careerTeam);
-    var freeAgents = availableCandidates();
-    var system = TEAM_SYSTEMS[currentSystemKey()];
-    var rows = snapshot.roster.slice(0, 15).map(function(player, idx) {
-      var risk = departureRisk(player, snapshot);
-      var starter = snapshot.starters.indexOf(player) >= 0;
-      var name = player._isUser ? '我的球员' : (player.cname || player.name || '球员');
-      var contract = player._isUser ? Number(STATE.career && STATE.career.contract) : Number(player.contract);
-      return '<div style="display:grid;grid-template-columns:34px minmax(0,1fr) 40px 54px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-light);font-size:11px;">' +
-        '<span style="font-size:9px;color:' + (starter ? 'var(--orange)' : 'var(--text-muted)') + ';font-weight:700;">' + (starter ? '首发' : (idx < 10 ? '轮换' : '替补')) + '</span>' +
-        '<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><strong>' + esc(name) + '</strong><small style="display:block;color:var(--text-dim);">' + esc(player.pos || '—') + ' · ' + Math.max(0, contract) + '年合同</small></span>' +
-        '<strong style="text-align:right;">' + playerOvr(player) + '</strong><span style="text-align:right;font-size:9px;color:' + risk.color + ';font-weight:700;">' + risk.label + '</span></div>';
-    }).join('');
-    var fa = freeAgents.length ? freeAgents.map(function(player) { return esc(player.cname || player.name) + ' ' + playerOvr(player); }).join(' · ') : '当前没有值得重点关注的自由球员';
-    var html = '<div class="team-picker-overlay" id="league-intel-modal"><div class="team-picker-modal" style="max-width:430px;">' +
-      '<div class="team-picker-header"><span>📋 联盟情报页</span></div>' +
-      '<div style="padding:9px 12px 4px;font-size:11px;color:var(--text-dim);line-height:1.55;">休赛期决策前的球队快照：先看合同、轮换与离队风险，再决定是否招募。当前体系：<strong style="color:var(--orange);">' + system.icon + ' ' + system.name + '</strong></div>' +
-      '<div style="margin:8px 12px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);"><strong>球队评分 ' + snapshot.powerRating + '</strong><span style="float:right;color:var(--text-dim);">攻 ' + Math.round(snapshot.power.offense || 0) + ' · 防 ' + Math.round(snapshot.power.defense || 0) + '</span><div style="margin-top:7px;max-height:42vh;overflow:auto;">' + rows + '</div></div>' +
-      '<div style="margin:8px 12px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;font-size:10px;line-height:1.55;"><strong>自由市场重点</strong><div style="color:var(--text-dim);margin-top:3px;">' + fa + '</div></div>' +
-      '<div style="padding:8px 12px 14px;"><button class="btn btn-primary btn-sm" style="width:100%;" onclick="closeLeagueIntel()">进入体系设置</button></div></div></div>';
-    document.body.insertAdjacentHTML('beforeend', html);
-    STATE._leagueIntelDone = done;
-  };
-
-  global.closeLeagueIntel = function() {
-    var modal = document.getElementById('league-intel-modal');
-    if (modal) modal.remove();
-    var done = STATE._leagueIntelDone;
-    STATE._leagueIntelDone = null;
-    if (typeof done === 'function') done();
-  };
-
-  function showTeamSystemChooser(done) {
-    var old = document.getElementById('team-system-modal');
-    if (old) old.remove();
-    var current = currentSystemKey();
-    var cards = Object.keys(TEAM_SYSTEMS).map(function(key) {
-      var item = TEAM_SYSTEMS[key];
-      var selected = key === current;
-      return '<button class="btn btn-secondary btn-sm" style="width:100%;margin-bottom:7px;padding:9px;text-align:left;border-color:' + (selected ? 'var(--orange)' : 'var(--border)') + ';" onclick="chooseTeamSystem(\'' + key + '\')"><strong>' + item.icon + ' ' + item.name + (selected ? ' · 当前' : '') + '</strong><small style="display:block;color:var(--text-dim);margin-top:3px;line-height:1.45;">' + item.desc + '</small></button>';
-    }).join('');
-    document.body.insertAdjacentHTML('beforeend', '<div class="team-picker-overlay" id="team-system-modal"><div class="team-picker-modal" style="max-width:410px;"><div class="team-picker-header"><span>🧠 教练与体系</span></div><div style="padding:9px 12px 5px;font-size:11px;color:var(--text-dim);line-height:1.55;">每个休赛期可重新确定一次球队打法。体系只改变模拟倾向，不会强行改写球员位置或名单。</div><div style="padding:4px 12px 10px;max-height:59vh;overflow:auto;">' + cards + '</div></div></div>');
-    STATE._teamSystemDone = done;
-  }
-
-  global.chooseTeamSystem = function(key) {
-    if (!TEAM_SYSTEMS[key]) key = 'balanced';
-    STATE.teamSystems = STATE.teamSystems || {};
-    STATE.teamSystems[STATE.careerTeam] = key;
-    if (typeof clearLineupCache === 'function') clearLineupCache();
-    var modal = document.getElementById('team-system-modal');
-    if (modal) modal.remove();
-    var done = STATE._teamSystemDone;
-    STATE._teamSystemDone = null;
-    if (typeof done === 'function') done();
-  };
 
   global.getVeteranMaintenanceLevel = function(age) {
     if ((Number(age) || 0) < 31 || !STATE.career) return 0;
@@ -259,7 +169,8 @@
     if (!career || !hasRosterAuthority()) { done(); return; }
     career.flags = career.flags || {};
     var seasonKey = Number(career.seasonCount) || 0;
-    if (career.flags.rosterAuthoritySeason === seasonKey) { done(); return; }
+    var lastAuthority = Number(career.flags.rosterAuthoritySeason) || 0;
+    if (lastAuthority && seasonKey - lastAuthority < 3) { done(); return; } // 每三年一次名单话语权
     var roster = NBA2K_DATA[STATE.careerTeam] || [];
     rosterCutCandidates = roster.filter(function(player) { return player && !player._isUser; }).sort(function(a, b) {
       return (Number(b.ovr) || 0) - (Number(a.ovr) || 0);
@@ -272,7 +183,7 @@
     if (old) old.remove();
     var html = '<div class="team-picker-overlay" id="roster-authority-modal"><div class="team-picker-modal">';
     html += '<div class="team-picker-header"><span>👑 球队老大 · 名单话语权</span></div>';
-    html += '<div style="padding:10px 12px 7px;font-size:12px;color:var(--text-dim);line-height:1.65;">你的总评达到 90，或领导力达到 12 后，管理层会在每个休赛期接受一次裁员建议。裁掉的球员会进入自由市场；也可以保留原阵容。</div>';
+    html += '<div style="padding:10px 12px 7px;font-size:12px;color:var(--text-dim);line-height:1.65;">你的总评达到 90，或领导力达到 12 后，管理层每三年接受一次裁员建议（与主动招募同一周期）。裁掉的球员会进入自由市场；也可以保留原阵容。</div>';
     html += '<div style="padding:2px 12px 8px;max-height:58vh;overflow-y:auto;">';
     rosterCutCandidates.forEach(function(player, idx) {
       var name = player.cname || player.name || '队友';
@@ -312,7 +223,7 @@
     if (typeof clearLineupCache === 'function') clearLineupCache();
     var modal = document.getElementById('roster-authority-modal');
     if (modal) modal.remove();
-    showOffseasonResultModal('名单话语权', '管理层接受了你的建议，<strong>' + (player.cname || player.name) + '</strong> 已离队并进入自由市场。球队会在后续招募与自由市场阶段补齐最多 15 人名单。', completeRosterAuthorityFlow);
+    showOffseasonResultModal('名单话语权', '管理层接受了你的建议，<strong>' + (player.cname || player.name) + '</strong> 已离队并进入自由市场。球队会在后续招募与自由市场阶段补齐最多 12 人名单。', completeRosterAuthorityFlow);
   };
 
   function showRecruitmentMarket(done) {
@@ -320,7 +231,8 @@
     if (!c || c.contract <= 0) { done(); return; }
     c.flags = c.flags || {};
     var seasonKey = c.seasonCount || 0;
-    if (c.flags.userRecruitmentSeason === seasonKey) { done(); return; }
+    var lastRecruit = Number(c.flags.userRecruitmentSeason) || 0;
+    if (lastRecruit && seasonKey - lastRecruit < 3) { done(); return; } // 每三年一次主动招募
     recruitmentCandidates = availableCandidates();
     if (!recruitmentCandidates.length) { done(); return; }
     c.flags.userRecruitmentSeason = seasonKey;
@@ -332,7 +244,7 @@
     var html = '<div class="team-picker-overlay" id="user-recruitment-modal">';
     html += '<div class="team-picker-modal">';
     html += '<div class="team-picker-header"><span>⭐ 主动招募</span></div>';
-    html += '<div style="padding:10px 12px 6px;font-size:12px;color:var(--text-dim);line-height:1.6;">你可以代表 ' + teamName + ' 游说一名自由球员。每个休赛期只有一次机会，成功率取决于你的实力、领导力、球队关系与上赛季成绩。</div>';
+    html += '<div style="padding:10px 12px 6px;font-size:12px;color:var(--text-dim);line-height:1.6;">你可以代表 ' + teamName + ' 游说一名自由球员。每三年一次机会（与名单话语权同一周期），成功率取决于你的实力、领导力、球队关系与上赛季成绩。</div>';
     html += recruitmentRosterSummary();
     html += '<div style="padding:2px 12px 8px;max-height:58vh;overflow-y:auto;">';
     recruitmentCandidates.forEach(function(p, idx) {
@@ -348,7 +260,7 @@
       html += '<span style="font-family:var(--font-display);color:var(--orange);font-size:12px;white-space:nowrap;">' + chance + '%</span></button>';
     });
     html += '</div><div style="padding:8px 12px 14px;border-top:1px solid var(--border-light);">';
-    html += '<button class="btn btn-secondary btn-sm" style="width:100%;" onclick="skipUserRecruitment()">本年不招募</button>';
+    html += '<button class="btn btn-secondary btn-sm" style="width:100%;" onclick="skipUserRecruitment()">本轮不招募（等三年后）</button>';
     html += '</div></div></div>';
     document.body.insertAdjacentHTML('beforeend', html);
   }
@@ -366,7 +278,7 @@
     if (poolIdx >= 0) pool.splice(poolIdx, 1);
     var roster = NBA2K_DATA[STATE.careerTeam] || (NBA2K_DATA[STATE.careerTeam] = []);
     var released = null;
-    if (roster.length >= 15) {
+    if (roster.length >= 12) {
       var weakestIdx = -1;
       for (var i = 0; i < roster.length; i++) {
         var member = roster[i];
@@ -436,18 +348,18 @@
 
   global.continueCareerAfterTraining = function() {
     if (STATE.career && STATE.career.retired) return;
+    if (typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.captureOffseasonRosterSnapshot) PP_SEASON_REPORT.captureOffseasonRosterSnapshot();
     evolveLeague();
     saveStandings();
     processDraft();
     // 先完成所有可能让队友离开的交易，再让玩家依据最终核心阵容决定是否招募。
     processTrades();
-    global.showLeagueIntel(function() {
-      showTeamSystemChooser(function() {
-        showRosterAuthority(function() {
-          showRecruitmentMarket(function() {
-            assignFreeAgents();
-            maybeMoveUserInOffseason(finishOffseasonPipeline);
-          });
+    showRosterAuthority(function() {
+      showRecruitmentMarket(function() {
+        assignFreeAgents();
+        maybeMoveUserInOffseason(function() {
+          if (typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.finalizeOffseasonRosterReport) PP_SEASON_REPORT.finalizeOffseasonRosterReport();
+          finishOffseasonPipeline();
         });
       });
     });
@@ -457,8 +369,6 @@
     getUserRecruitmentChance: recruitmentChance,
     getUserRecruitmentCandidates: availableCandidates,
     showUserRecruitmentMarket: showRecruitmentMarket,
-    showLeagueIntel: global.showLeagueIntel,
-    getTeamSystemEffects: global.getTeamSystemEffects,
     hasRosterAuthority: hasRosterAuthority,
     showRosterAuthority: showRosterAuthority
   };

@@ -926,9 +926,9 @@
     body: '他们等的不是技巧，是你真的出现。',
     requires: function () { return getBranchNode('hometown') === 'hometown_saved'; },
     choices: [
-      { label: '加练到天黑', hint: '耐力提升，负荷和球迷支持上升', apply: function () {
+      { label: '加练到天黑', hint: '续航提升，负荷和球迷支持上升', apply: function () {
         setBranchNode('hometown', 'hometown_clinic', { length: 'long' });
-        return applyStoryFx({ attrs: { STA: 1 }, profile: { fanSupport: 2 }, mods: { staminaLoad: 1 }, result: '雨停的时候，最后一个小孩才把球交给你。你的鞋沉得像打完加时。<br><br>效果：耐力+1；球迷支持+2；体能负荷+1。' });
+        return applyStoryFx({ attrs: { STA: 1 }, profile: { fanSupport: 2 }, mods: { staminaLoad: 1 }, result: '雨停的时候，最后一个小孩才把球交给你。你的鞋沉得像打完加时。<br><br>效果：续航+1；球迷支持+2；体能负荷+1。' });
       }},
       { label: '按一小时结束', hint: '负荷下降，仍有球迷支持', apply: function () {
         setBranchNode('hometown', 'hometown_clinic', { length: 'short' });
@@ -1432,6 +1432,10 @@
       { label: '保留少量硬仗日', hint: '关键球提升，风险折中，训练点+1', apply: function () {
         setBranchNode('load', 'load_habit', { habit: 'flex' });
         return applyStoryFx({ attrs: { CLU: 1 }, mods: { injuryRiskBonus: 1 }, tp: 1, result: '你允许自己在少数窗口打满。队医皱眉，更衣室却更买账。<br><br>效果：关键球+1；伤病风险+1。' });
+      }},
+      { label: '每天加一组折返跑', hint: '续航提升，代价是训练点少一点', apply: function () {
+        setBranchNode('load', 'load_habit', { habit: 'conditioning' });
+        return applyStoryFx({ attrs: { STA: 1 }, mods: { formVariance: -1 }, result: '体能组把折返跑排进早餐前。第一个月你吐过一次，第二个月你能在最后一段加速。<br><br>效果：续航+1；状态更稳。' });
       }}
     ]
   });
@@ -1649,7 +1653,7 @@
       scene: '客场大巴外，一个孩子举着自制海报，保安已经劝过两次。',
       body: '下车、隔窗挥手，或把比赛用球送出去，都是你和球迷之间的一次私人合同。',
       choices: [
-        { label: '下车签名合影', hint: '耐力与球迷支持提升，负荷上升', attrs: { STA: 1 }, profile: { fanSupport: 2 }, mods: { staminaLoad: 1 }, result: '司机看了两次表。孩子跑开时，你才感觉到小腿在抖。<br><br>效果：耐力+1；球迷支持+2；体能负荷+1。' },
+        { label: '下车签名合影', hint: '续航与球迷支持提升，负荷上升', attrs: { STA: 1 }, profile: { fanSupport: 2 }, mods: { staminaLoad: 1 }, result: '司机看了两次表。孩子跑开时，你才感觉到小腿在抖。<br><br>效果：续航+1；球迷支持+2；体能负荷+1。' },
         { label: '隔窗挥手', hint: '优先恢复', mods: { staminaLoad: -1 }, result: '你把灯打开，挥了挥手。大巴开走时，海报还举着。<br><br>效果：体能负荷-1。' },
         { label: '把比赛用球送出', hint: '传奇声望和球迷支持提升', profile: { legacyBonus: 1, fanSupport: 2 }, result: '装备经理瞪你，孩子把球抱在胸口。那只球以后不会再出现在统计里。<br><br>效果：传奇声望+1；球迷支持+2。' }
       ]
@@ -1732,7 +1736,7 @@
         return fame >= 5 || playerOvr() >= 85 || seasonCount() >= 2;
       },
       choices: [
-        { label: '要求打满', hint: '耐力与球迷支持提升，伤病和教练关系变差', attrs: { STA: 1 }, profile: { coachTrust: -1, fanSupport: 1 }, mods: { injuryRiskBonus: 1 }, result: '你走进教练办公室：我能打。名单上你的名字没有被划掉。<br><br>效果：耐力+1；球迷支持+1；教练信任-1；伤病风险+1。' },
+        { label: '要求打满', hint: '续航与球迷支持提升，伤病和教练关系变差', attrs: { STA: 1 }, profile: { coachTrust: -1, fanSupport: 1 }, mods: { injuryRiskBonus: 1 }, result: '你走进教练办公室：我能打。名单上你的名字没有被划掉。<br><br>效果：续航+1；球迷支持+1；教练信任-1；伤病风险+1。' },
         { label: '接受轮休', hint: '伤病和负荷下降，球迷支持下降', profile: { fanSupport: -1 }, mods: { injuryRiskBonus: -2, staminaLoad: -2 }, result: '你坐在西装里看完一场。膝盖感谢你，主场不感谢。<br><br>效果：伤病风险-2；体能负荷-2；球迷支持-1。' },
         { label: '公开澄清是误报', hint: '媒体信任和教练信任提升', profile: { mediaTrust: 2, coachTrust: 1 }, result: '你把训练照片发上去。名记删了帖，教练拍了拍你的肩。<br><br>效果：媒体信任+2；教练信任+1。' }
       ]

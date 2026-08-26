@@ -422,6 +422,21 @@
 
   function data() { return global.__PP_ERA_MODE_DATA__ || { roster2003:{}, draftClasses:{} }; }
   function completeRosters() { return global.__PP_COMPLETE_ERA_ROSTERS__ || {}; }
+  function presentationPlayers() {
+    return global.__PP_ERA_PRESENTATION__ && global.__PP_ERA_PRESENTATION__.players || {};
+  }
+  // 展示资源必须保留 Jr./Sr./II/III/IV；球队/生涯身份匹配仍继续使用旧 nameKey。
+  function presentationKey(value) {
+    return String(value || '').replace(/amar['’]e/ig, 'amare').normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, '');
+  }
+  function presentationFor(name) {
+    var key = presentationKey(name);
+    var source = presentationPlayers()[key] || {};
+    var verifiedLocal = typeof global.resolveVerifiedLocalPlayerHeadshot === 'function' ? global.resolveVerifiedLocalPlayerHeadshot(name) : '';
+    var cnFixes = global.__PP_ERA_PRESENTATION_CN_FIXES__ || {};
+    return { c:cnFixes[key] || source.c || '', p:verifiedLocal || source.p || '', u:source.u || '', i:source.i || 0 };
+  }
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, Math.round(Number(v) || lo))); }
   /** 2003/2010/2016 纪元均以次年赛季开局（纪元年 N = N 年夏天开始的 N-(N+1) 赛季）。 */
   function eraAgeOffset(start) { return [2003, 2010, 2016].indexOf(Number(start)) >= 0 ? 1 : 0; }
@@ -498,10 +513,11 @@
     var curve = careerCurveFor(row);
     var attrs = row.attrs ? Object.assign({}, row.attrs) : generatedAttrs(mainPos(pos), ovr);
     var nameEn = row.nameEn || ('Era Player ' + Math.random());
+    var presentation = presentationFor(nameEn);
     var p = {
       name: nameEn,
       nameEN: nameEn,
-      cname: row.nameCn || nameEn,
+      cname: (row.nameCn && /[\u3400-\u9fff]/.test(row.nameCn)) ? row.nameCn : (presentation.c || row.nameCn || nameEn),
       pos: pos,
       ovr: ovr,
       type: ovr >= 88 ? '历史球星' : (ovr >= 78 ? '时代主力' : '时代球员'),
@@ -520,7 +536,13 @@
       _ratingOfficial: !!row.ratingOfficial,
       _sourceOvr: Number(requestedOvr) || 0,
       _ratingBalanceAdjusted: ovr > (Number(requestedOvr) || 0),
-      _seasonLine: row.seasonLine || null
+      _seasonLine: row.seasonLine || null,
+      // 真实年代球员优先使用身份校验后的统一索引；避免空/错误旧路径遮住有效头像。
+      photoLocal: presentation.p || '',
+      photoUrl: row.photoUrl || presentation.u || '',
+      nbaId: Number(row.nbaId || row.nbaID || presentation.i) || 0,
+      photoSource: row.photoSource || (presentation.p ? 'selected-era-headshot' : (presentation.u ? 'era-headshot-remote' : '')),
+      photoStatus: row.photoStatus || (presentation.p ? 'cached' : '')
     };
     ATTRS.forEach(function(key) { p[key] = clamp(attrs[key], 25, 99); });
     if (row.threePT != null) p.threePT = clamp(row.threePT, 25, 99);
@@ -554,6 +576,10 @@
     });
     Object.keys(data().roster2003 || {}).forEach(function(team) { (data().roster2003[team] || []).forEach(harvest); });
     Object.keys(data().draftClasses || {}).forEach(function(year) { (data().draftClasses[year] || []).forEach(harvest); });
+    Object.keys(presentationPlayers()).forEach(function(key) {
+      var display = presentationFor(key).c;
+      if (display && /[\u3400-\u9fff]/.test(display)) map[key] = display;
+    });
     // 手动译名表最后覆盖，保证昵称（如 追梦格林）与时代球星译名优先于现役自动收割结果。
     Object.keys(HISTORICAL_CN_NAMES).forEach(function(key) { map[key] = HISTORICAL_CN_NAMES[key]; });
     map._tokens = tokens;
@@ -733,8 +759,16 @@
           var retirementAge = Number(curve.retireAfterAge) || Number(HISTORICAL_RETIREMENT_AGE[key]) || 0;
           if (retirementAge && playerAge > retirementAge) overdueHistoricalRetirees.push({ team:team, player:player });
         }
-        if (!player.cname || player.cname === player.name || player.cname === player.nameEN) {
-          player.cname = localizedNames[key] || localizeFromTokens(player.nameEN || player.name, localizedNames._tokens || {}) || player.cname;
+        var presentation = presentationFor(player.nameEN || player.name);
+        if (!player.cname || player.cname === player.name || player.cname === player.nameEN || !/[\u3400-\u9fff]/.test(player.cname)) {
+          player.cname = presentation.c || localizedNames[key] || localizeFromTokens(player.nameEN || player.name, localizedNames._tokens || {}) || player.cname;
+        }
+        if (!player._eraGenerated) {
+          if (!player.photoLocal && presentation.p) player.photoLocal = presentation.p;
+          if (!player.photoUrl && presentation.u) player.photoUrl = presentation.u;
+          if (!player.nbaId && presentation.i) player.nbaId = presentation.i;
+          if (presentation.p && !player.photoSource) player.photoSource = 'selected-era-headshot';
+          if (presentation.p && !player.photoStatus) player.photoStatus = 'cached';
         }
         if (player.photoSource === 'generated-rookie-pool' || /^Rookie_/i.test(String(player.name || ''))) {
           localizeEraGeneratedPlayer(player, start + Number(STATE.career && STATE.career.seasonCount || 0));
@@ -783,6 +817,11 @@
     player._draftYear = Number(year) || null;
     player._peakOvr = player._peakOvr || clamp((Number(player.ovr) || 68) + 5 + (seq % 7), 68, 92);
     player.photoSource = 'era-generated-rookie';
+    // 虚构新秀只使用稳定姓名缩写，旧档即使误带真人字段也在修复时清除。
+    player.photoLocal = '';
+    player.photoUrl = '';
+    player.nbaId = 0;
+    player.photoStatus = 'generated-initials';
     return player;
   }
   function generateEraRookie(team, year) {
@@ -835,10 +874,33 @@
     return added;
   }
 
+  function syncLegendEraState(start) {
+    STATE.draftMode = 'historical';
+    if (STATE.career) {
+      STATE.career.flags = STATE.career.flags || {};
+      STATE.career.flags.legendEraStart = start;
+      STATE.career.flags.legendEraLabel = ({ 2003:'2003 白金一代', 2010:'2010 吾皇登基纪元', 2016:'2016-17 巨星合体纪元' })[start] || (start + ' 传奇年代');
+    }
+  }
+
+  function isHistoricalActive() {
+    var start = Number(STATE.eraStart);
+    return STATE.mode === 'legend' && [2003, 2010, 2016].indexOf(start) >= 0 && Number(STATE._legendLeagueApplied) === start;
+  }
+
+  function getSpinTeams() {
+    // NBA2K_TEAMS 由基础数据脚本以顶层 const 暴露，不会成为 window 属性。
+    var teams = typeof NBA2K_TEAMS !== 'undefined' && Array.isArray(NBA2K_TEAMS) ? NBA2K_TEAMS : [];
+    return teams.filter(function(team) {
+      return Array.isArray(NBA2K_DATA[team]) && NBA2K_DATA[team].length > 0;
+    });
+  }
+
   global.applyLegendEraLeague = function() {
     if (STATE.mode !== 'legend' || !STATE.eraStart) return;
     var start = Number(STATE.eraStart);
     if (STATE._legendLeagueApplied === start) {
+      syncLegendEraState(start);
       repairLegendEraPositions(start);
       return;
     }
@@ -848,7 +910,10 @@
       var rows = base[team] || [];
       var roster = rows.map(function(row) {
         var enriched = Object.assign({}, row);
-        enriched.nameCn = enriched.nameCn || localizedNames[nameKey(enriched.nameEn)] || localizeFromTokens(enriched.nameEn, localizedNames._tokens || {}) || enriched.nameEn;
+        var presentation = presentationFor(enriched.nameEn);
+        enriched.nameCn = (enriched.nameCn && /[\u3400-\u9fff]/.test(enriched.nameCn))
+          ? enriched.nameCn
+          : (presentation.c || localizedNames[nameKey(enriched.nameEn)] || localizeFromTokens(enriched.nameEn, localizedNames._tokens || {}) || enriched.nameEn);
         return makePlayer(enriched, { age:Number(row.age) || 27, ovr:Number(row.ovr) || 65, draftYear:start });
       });
       NBA2K_DATA[team] = roster;
@@ -886,12 +951,7 @@
       STATE._eraFirstDraftYear = 2017;
     }
     STATE._legendLeagueApplied = start;
-    STATE.draftMode = 'historical';
-    if (STATE.career) {
-      STATE.career.flags = STATE.career.flags || {};
-      STATE.career.flags.legendEraStart = start;
-      STATE.career.flags.legendEraLabel = ({ 2003:'2003 白金一代', 2010:'2010 吾皇登基纪元', 2016:'2016-17 巨星合体纪元' })[start] || (start + ' 传奇年代');
-    }
+    syncLegendEraState(start);
     if (typeof clearLineupCache === 'function') clearLineupCache();
     // 时代名单是运行时生成的，补挂一次官方头像解析（现役/历史名字都能走 NBA CDN 或本地缓存）。
     if (typeof attachOfficialPlayerHeadshots === 'function') {
@@ -903,15 +963,15 @@
     var old = document.getElementById('legend-era-picker');
     if (old) old.remove();
     var overlay = document.createElement('div');
-    overlay.className = 'team-picker-overlay';
+    overlay.className = 'team-picker-overlay legend-era-picker-overlay';
     overlay.id = 'legend-era-picker';
-    overlay.innerHTML = '<div class="team-picker-modal" style="max-width:390px;">' +
+    overlay.innerHTML = '<div class="team-picker-modal legend-era-picker-modal">' +
       '<div class="team-picker-header"><span>🏆 选择传奇年代</span><button class="modal-close" id="legend-era-close">✕</button></div>' +
-      '<div style="padding:10px 12px 4px;font-size:11px;line-height:1.6;color:var(--text-dim);">现役生涯会完整保留。传奇年代每队最多 15 人；有原始 2K 数值的球员采用对应版本评分，其余标注为当季数据校准。</div>' +
-      '<div style="padding:7px 12px 14px;display:grid;gap:8px;">' +
-        '<button class="btn btn-secondary" data-era="2003" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2003 白金一代</strong><small>2003-04 赛季：詹姆斯、韦德、安东尼、波什新秀赛季，科比、邓肯、艾弗森领衔时代核心。</small></button>' +
-        '<button class="btn btn-secondary" data-era="2010" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2010 吾皇登基纪元</strong><small>2010-11 赛季（NBA 2K11 名单）：詹姆斯、波什加盟热火三巨头，湖人冲击三连冠，罗斯崛起，2010 届新秀入联盟。</small></button>' +
-        '<button class="btn btn-secondary" data-era="2016" style="text-align:left;padding:12px;"><strong style="display:block;color:var(--orange);">2016-17 巨星合体纪元</strong><small>2016-17 赛季：杜兰特加盟勇士组成四巨头，骑士、马刺、火箭共同争冠，2016 届新秀入联盟。</small></button>' +
+      '<div class="legend-era-picker-intro">现役生涯会完整保留。传奇年代每队最多 15 人；有原始 2K 数值的球员采用对应版本评分，其余依当季数据校准。</div>' +
+      '<div class="legend-era-picker-grid">' +
+        '<button class="legend-era-card" data-era="2003"><span class="legend-era-year">2003</span><span class="legend-era-copy"><strong>白金新章</strong><em>报纸 · 电台 · 早期论坛</em><small>从传统巨星林立的时代起步，面对一届新人涌入联盟后的全新秩序。</small></span></button>' +
+        '<button class="legend-era-card" data-era="2010"><span class="legend-era-year">2010</span><span class="legend-era-copy"><strong>聚光灯时代</strong><em>电视辩论 · 社交媒体 · 球星联手</em><small>转会风暴重塑格局，每一次选择都会被放大成全国话题。</small></span></button>' +
+        '<button class="legend-era-card" data-era="2016"><span class="legend-era-year">2016</span><span class="legend-era-copy"><strong>空间革命</strong><em>移动舆论 · 三分潮 · 无限换防</em><small>节奏与空间改变球场，短视频和数据也在改变球员的声望。</small></span></button>' +
       '</div></div>';
     document.body.appendChild(overlay);
     document.getElementById('legend-era-close').onclick = function() { overlay.remove(); };
@@ -948,5 +1008,12 @@
     if (typeof clearLineupCache === 'function') clearLineupCache();
   };
 
-  global.PP_ERA_MODE = { apply:global.applyLegendEraLeague, addDraftClass:addDraftClass, generateRookie:generateEraRookie, peakOvrFor:peakOvrFor };
+  global.PP_ERA_MODE = {
+    apply:global.applyLegendEraLeague,
+    isHistoricalActive:isHistoricalActive,
+    getSpinTeams:getSpinTeams,
+    addDraftClass:addDraftClass,
+    generateRookie:generateEraRookie,
+    peakOvrFor:peakOvrFor
+  };
 })(window);

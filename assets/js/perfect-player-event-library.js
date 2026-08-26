@@ -31,6 +31,9 @@
     ['switch_refusal','队友拒绝换防','连败期间又连续失分，搭档仍拒绝执行教练安排的无限换防。','暂停时公开说清','先替他补位再沟通','team','slump'],
     ['buzzer_review','压哨球归属','你的压哨补篮被算给队友，技术台询问是否需要正式更正。','要求更正数据','把得分留给队友','team'],
 
+    ['stair_sprint','楼梯冲刺','客场酒店的无氧训练时间被压缩，体能师建议用消防楼梯做冲刺训练，但楼上住户已经投诉过一次噪音。','凌晨爬二十层','改做核心与呼吸训练','stamina'],
+    ['tank_check','油箱见底','连续主场作战后，队医报告你的恢复数据连续三天低于基线，建议本周减量。','坚持完成全部训练','接受减量两天','stamina'],
+
     ['blood_test_delay','赛前血检延误','联盟抽检迟迟没有结束，你可能错过正常热身时间。','配合完成全部流程','让球队申请延后','risk'],
     ['new_orthotics','新鞋垫适配','医疗组送来定制鞋垫，测试数据更好，但脚底已经出现轻微摩擦。','比赛中启用新品','继续使用旧鞋垫','risk'],
     ['ice_bath_fault','冰疗设备故障','客场冰疗池温控失灵，只剩热水浴和手动冰袋可选。','使用分区冰袋','改做主动恢复','recovery'],
@@ -259,6 +262,10 @@
       { profile:{ coachTrust:1 }, mods:{ staminaLoad:-2 } },
       { profile:{ leadership:1 }, mods:{ formVariance:-1 } }
     ],
+    stamina: [
+      { attrs:{ STA:1 }, mods:{ staminaLoad:1 } },
+      { profile:{ coachTrust:1 }, mods:{ staminaLoad:-1 } }
+    ],
     media: [
       { profile:{ mediaTrust:2 }, mods:{ mediaPressure:1 } },
       { profile:{ fame:1 }, mods:{ mediaPressure:-1 } }
@@ -297,12 +304,16 @@
   function choiceForecast(effect) {
     var gains = [];
     var costs = [];
-    ['profile', 'mods'].forEach(function (group) {
+    ['profile', 'mods', 'attrs'].forEach(function (group) {
       Object.keys(effect[group] || {}).forEach(function (key) {
         var value = Number(effect[group][key]) || 0;
         if (!value) return;
+        var label = key === 'STA' ? '续航' : (effectLabels[key] || key);
         var beneficial = badWhenRaised[key] ? value < 0 : value > 0;
-        (beneficial ? gains : costs).push(naturalEffect(key, value));
+        var strong = Math.abs(value) >= 2 ? '明显' : '';
+        var text = label + strong + (beneficial ? '提升' : '下降');
+        if (key === 'STA') text = '续航+' + value;
+        (beneficial ? gains : costs).push(text);
       });
     });
     if (effect.tp) gains.push('训练点+' + effect.tp);
@@ -318,6 +329,7 @@
       team:['队友感觉到你愿意一起扛，关系起了变化。','你坚持了自己的判断，更衣室里也留下余波。'],
       risk:['医疗组重新评估了负荷，身体这边更谨慎了。','你选择硬扛，后面身体状态会跟着起伏。'],
       recovery:['恢复计划按新方案重排，疲劳总算压住一点。','你按老习惯来，接下来还得盯着身体反应。'],
+      stamina:['体能组把今天的安排改成续航课，汗出透，人也轻了。','你留了力，后面几场的腿会更听话。'],
       media:['完整说法慢慢盖过猜测，外界开始听懂你的意思。','热度下去了，但大家各自留下了自己的版本。'],
       business:['团队把合同和风险重新算了一遍，生意账更清楚。','你没追眼前那笔钱，长期信誉反而更稳。'],
       loyalty:['对方记住了你关键时刻怎么选，关系更牢一点。','你把边界划清了，也没答应自己做不到的事。']
@@ -351,8 +363,8 @@
     };
   });
 
-  if (definitions.length !== 214) {
-    throw new Error('独立赛季事件数量错误：期望 214，实际 ' + definitions.length);
+  if (definitions.length !== 216) {
+    throw new Error('独立赛季事件数量错误：期望 216，实际 ' + definitions.length);
   }
 
   window.PERFECT_PLAYER_EXTRA_SEASON_EVENT_DEFINITIONS = definitions;

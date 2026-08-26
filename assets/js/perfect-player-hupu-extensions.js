@@ -254,7 +254,7 @@
     var effects = typeof getCareerProfileEffects === 'function' ? getCareerProfileEffects() : { teamStanding:0, publicStanding:0, legacyScoreContribution:0 };
     var values = [
       { group:'竞技状态', key:'pressure', label:'压力', value:typeof getMentalPressure === 'function' ? Math.round(getMentalPressure()) : 0, badHigh:true, raw:true, impact:'提高事件风险与负面状态触发' },
-      { group:'竞技状态', key:'staminaReserve', label:'耐力储备', value:typeof getStaminaAttr === 'function' ? getStaminaAttr() : Number(STATE.attrs && STATE.attrs.STA) || 0, goodHigh:true, raw:true, impact:'稳定上场时间，降低背靠背疲劳、普通伤病与重伤概率；最多按 12 点生效' },
+      { group:'竞技状态', key:'staminaReserve', label:'🔋 续航储备', value:typeof getStaminaAttr === 'function' ? getStaminaAttr() : Number(STATE.attrs && STATE.attrs.STA) || 0, goodHigh:true, raw:true, impact:'满续航：背靠背损耗减半、末节不掉链、伤病大幅降低、轮换时间 +2 分钟；赛季末体能负荷过高会磨损续航，管理得当则回充' },
       { group:'竞技状态', key:'staminaLoad', label:'体能负荷', value:mods.staminaLoad, badHigh:true, impact:'直接降低攻防；低负荷可减免老将衰退' },
       { group:'竞技状态', key:'moraleBonus', label:'士气', value:mods.moraleBonus, goodHigh:true, impact:'直接提升球队进攻与防守效率' },
       { group:'竞技状态', key:'formVariance', label:'状态波动', value:mods.formVariance, badHigh:true, impact:'改变每场比赛结果的波动幅度' },
@@ -721,6 +721,14 @@
     Object.keys(choice.profile || {}).forEach(function (key) {
       addProfileDelta(key, choice.profile[key]);
     });
+    Object.keys(choice.attrs || {}).forEach(function (key) {
+      if (typeof addAttrDelta === 'function') {
+        addAttrDelta(key, choice.attrs[key]);
+        if (typeof STATE !== 'undefined' && STATE.attrs && typeof calcOVR === 'function') {
+          STATE.finalOVR = calcOVR(STATE.attrs);
+        }
+      }
+    });
     var modBounds = {
       injuryRiskBonus:[-4, 8], formVariance:[-10, 10], teamChemistry:[-10, 10],
       moraleBonus:[-10, 10], mediaPressure:[-10, 10], staminaLoad:[-10, 10]
@@ -745,6 +753,7 @@
       ]},
       { id:'empty_gym', title:'赛季日常：空馆加练', scene:'赛后球馆已经熄掉一半灯，你的最后一次投篮偏得很远。助教问你：还练，还是明天再说？', body:'一次普通的失准，也可能改变你接下来一周的节奏。', choices:[
         { label:'再投一百球', hint:'用重复找回手感，训练点+1', profile:{coachTrust:1}, mods:{staminaLoad:1,formVariance:-1}, tp:1, result:'最后二十球，你只丢了两个。离开时保安已经在等你关灯。<br><br>效果：教练信任+1；状态更稳；体能负荷+1。' },
+        { label:'加练变速折返跑', hint:'续航提升，但今晚会更累', attrs:{STA:1}, mods:{staminaLoad:1}, result:'你让助教计时，跑了八组折返。最后一个冲刺撞线时，你听见自己的心跳盖过空调声。<br><br>效果：续航+1；体能负荷+1。' },
         { label:'收拾东西回家', hint:'接受一场普通的失准', mods:{staminaLoad:-1,moraleBonus:1}, result:'你没有惩罚自己，回家吃饭睡觉。第二天第一球空心入网。<br><br>效果：体能负荷-1；士气+1。' }
       ]},
       { id:'film_detail', title:'赛季日常：录像里的一帧', scene:'录像师停在第三节的一帧：弱侧队友已经空了，而你还盯着篮筐。房间里所有人都在等你解释。', body:'这不是一次失误复盘，而是球队在判断你愿不愿意改变。', choices:[
@@ -753,6 +762,7 @@
       ]},
       { id:'road_sleep', title:'赛季日常：凌晨客场', scene:'球队凌晨三点抵达酒店，第二天上午还有投篮训练。几名队友准备在大堂吃点东西再睡。', body:'漫长赛季里，作息也是比赛的一部分。', choices:[
         { label:'直接回房睡觉', hint:'优先恢复', mods:{staminaLoad:-2,formVariance:-1}, result:'你拉上窗帘，把手机调成勿扰。早上的腿依然沉，但脑子很清醒。<br><br>效果：体能负荷-2；状态波动-1。' },
+        { label:'清晨五点半起来跑步', hint:'续航提升，睡眠更少', attrs:{STA:1}, mods:{staminaLoad:1}, result:'你只睡了四小时，却在日出前穿上跑鞋。回程的飞机上，你睡得像完成了什么大事。<br><br>效果：续航+1；体能负荷+1。' },
         { label:'陪队友吃宵夜', hint:'增加更衣室交流', profile:{lockerRoomTrust:2}, mods:{staminaLoad:1,teamChemistry:1}, result:'一顿宵夜聊出了很多训练场上不会说的话。第二天你很困，但和队友更熟了。<br><br>效果：更衣室信任+2；球队默契+1；体能负荷+1。' }
       ]},
       { id:'autograph_line', title:'赛季日常：球员通道签名', scene:'主场比赛结束后，球员通道还站着几十个孩子。球队大巴已经在等，工作人员提醒你必须尽快离开。', body:'球迷只会记住这一次见面，你却还要打完整个赛季。', choices:[

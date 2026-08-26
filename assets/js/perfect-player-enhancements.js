@@ -599,10 +599,10 @@
     var effective = Math.min(12, Math.max(0, Math.floor(value)));
     return {
       id: 'stamina_reserve',
-      icon: '🫁',
-      name: '耐力储备',
+      icon: '🔋',
+      name: '续航储备',
       group: '体能',
-      desc: '由生涯剧情积累，不消耗球风点。每点降低约 3.5% 普通伤病、2.5% 重伤和 4.5% 背靠背疲劳，并略微稳定上场时间；最多按 12 点生效。',
+      desc: '由生涯剧情积累，不消耗球风点。每点降低约 4.5% 普通伤病、3.3% 重伤和 5% 背靠背疲劳；满续航还能减轻第四节与压哨时刻的体能惩罚、增加约 2 分钟轮换时间；赛季末体能负荷过高会磨损续航，管理得当则回充，上限 12 点。',
       max: 12,
       purchased: effective,
       level: effective,
@@ -613,8 +613,8 @@
       tokenSkill: false,
       status: value > 12 ? ('当前 ' + value + '，生效 12') : ('当前 ' + value),
       effect: effective > 0
-        ? '当前约降低 ' + Math.round(effective * 3.5) + '% 普通伤病、' + Math.round(effective * 2.5) + '% 重伤和 ' + Math.round(effective * 4.5) + '% 背靠背疲劳。'
-        : '当前尚未获得耐力；可通过生涯剧情选择逐步积累。',
+        ? '当前约降低 ' + Math.round(effective * 4.5) + '% 普通伤病、' + Math.round(effective * 3.3) + '% 重伤和 ' + Math.round(effective * 5) + '% 背靠背疲劳。'
+        : '当前尚未获得续航；可通过生涯剧情选择逐步积累。',
       conds: []
     };
   }
@@ -830,7 +830,7 @@
   // 每次开启新生涯(揭晓球员时)按已购强化，给初始属性/OVR 永久加成——即"重生奖励"。
   // 设计要点：LP 由成就稀有度决定，跨生涯保留；强化可叠加但有上限，避免破坏平衡。
   var LEGACY_KEY = 'pp_legacy_v1';
-  var LEGACY_SCHEMA_VERSION = 4;
+  var LEGACY_SCHEMA_VERSION = 5;
   var LP_BY_RARITY = { common: 1, rare: 2, epic: 4, legend: 8 };
   var LP_PER_ARCHIVE_RECORD = 5;
 
@@ -844,8 +844,8 @@
     { id: 'athlete',   icon: '💪', name: '身体天赋', desc: '每级 运动/力量/篮板 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['ATH', 'STR', 'REB'] },
     { id: 'clutch',    icon: '❄️', name: '大心脏',   desc: '每级 关键 +2', max: 5, costs: [4, 6, 8, 10, 13], attrs: ['CLU'], step: 2 },
     { id: 'rim_runner', icon: '🛫', name: '冲框达人', desc: '每级 扣篮 +2', max: 5, costs: [4, 6, 8, 11, 14], attrs: ['DNK'], step: 2 },
-    { id: 'floor_general', icon: '🧠', name: '控场大师', desc: '每级 控球/传球 +1', max: 5, costs: [4, 6, 8, 11, 14], attrs: ['HAN', 'PAS'] },
-    { id: 'glass_cleaner', icon: '🧹', name: '篮板嗅觉', desc: '每级 篮板 +2', max: 5, costs: [4, 6, 8, 11, 14], attrs: ['REB'], step: 2 },
+    { id: 'floor_general', icon: '🧠', name: '控场大师', desc: '每级 助攻争取 +3%、个人失误风险 -2%（满级 +15% / -10%）', max: 5, costs: [4, 6, 8, 11, 14], attrs: [], assistWeight: 0.03, turnoverRisk: -0.02 },
+    { id: 'glass_cleaner', icon: '🧹', name: '篮板嗅觉', desc: '每级 篮板争抢权重 +5%（满级 +25%）', max: 5, costs: [4, 6, 8, 11, 14], attrs: [], reboundWeight: 0.05 },
     { id: 'leader', icon: '📣', name: '领袖气质', desc: '每级 队友攻防效率 +0.5（满级约 +2.5）', max: 5, costs: [5, 7, 9, 12, 16], attrs: [], teamBoost: 0.5 },
     { id: 'prodigy',   icon: '🌟', name: '天选之才', desc: '每级 全属性 +1（最贵）', max: 5, costs: [10, 14, 20, 26, 34],
       attrs: ['threePT', 'MID', 'FIN', 'DNK', 'HAN', 'PAS', 'PDEF', 'IDEF', 'BLK', 'REB', 'ATH', 'STR', 'CLU'] }
@@ -882,7 +882,7 @@
       var o = JSON.parse(localStorage.getItem(LEGACY_KEY) || '{}');
       if (!o || typeof o !== 'object') o = {};
       if (Number(o.version) !== LEGACY_SCHEMA_VERSION) {
-        // V7 开局点数足够升满整棵树，因此旧版已购买等级可直接保留。
+        // 语义升级只替换模拟效果，旧版已购买等级与 perk id 原样保留。
         o = { version: LEGACY_SCHEMA_VERSION, levels: o.levels || {}, spent: 0, rebalanceNoticePending: false };
         saveLegacy(o);
       }
@@ -954,6 +954,19 @@
     if (typeof STATE === 'undefined' || !STATE || team !== STATE.careerTeam) return 0;
     var perk = PERK_MAP.leader;
     return (Number(legacy.levels.leader) || 0) * (Number(perk && perk.teamBoost) || 0);
+  };
+  // 模拟特效与初始属性分离：保留旧 perk id / 等级，但不会再把控场大师或
+  // 篮板嗅觉重复写入 HAN、PAS、REB。跳过与观看模拟都读取同一组倍率。
+  PP_FX.getLegacySimulationEffects = function(player) {
+    var isUser = !player || !!player._isUser;
+    if (!isUser) return { assistWeight:1, turnoverRisk:1, reboundWeight:1 };
+    var floorLevel = Math.max(0, Math.min(5, Number(legacy.levels.floor_general) || 0));
+    var glassLevel = Math.max(0, Math.min(5, Number(legacy.levels.glass_cleaner) || 0));
+    return {
+      assistWeight: 1 + floorLevel * 0.03,
+      turnoverRisk: 1 - floorLevel * 0.02,
+      reboundWeight: 1 + glassLevel * 0.05
+    };
   };
 
   // 购买一级强化

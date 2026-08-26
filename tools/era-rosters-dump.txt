@@ -1,0 +1,1497 @@
+纪元名单完整导出（修正后开局名单）
+生成时间: 2026-08-26T12:12:22.387Z
+
+============================================================
+2003-04 赛季（2003 纪元）
+============================================================
+
+[ATL] 共 15 人
+  Shareef Abdur-Rahim | PF | 27岁 | OVR 84
+  Glenn Robinson | SF | 31岁 | OVR 83
+  Jason Terry | PG | 26岁 | OVR 79
+  Theo Ratliff | C | 30岁 | OVR 73
+  Boris Diaw | 4 | 21岁 | OVR 73
+  Dion Glover | SG | 25岁 | OVR 68
+  Ira Newble | SF | 29岁 | OVR 68
+  Dan Dickau | PG | 25岁 | OVR 67
+  Emanual Davis | SG | 35岁 | OVR 66
+  Chris Crawford | PF | 28岁 | OVR 66
+  Nazr Mohammed | C | 26岁 | OVR 66
+  Alan Henderson | C | 31岁 | OVR 64
+  Corey Benjamin | SG | 25岁 | OVR 59
+  Matt Maloney | PG | 32岁 | OVR 57
+  Amal McCaskill | C | 30岁 | OVR 57
+
+[BKN] 共 15 人
+  Jason Kidd | PG | 30岁 | OVR 94
+  Dikembe Mutombo | C | 37岁 | OVR 82
+  Kerry Kittles | SG | 29岁 | OVR 78
+  Kenyon Martin | PF | 26岁 | OVR 78
+  Richard Jefferson | SF | 23岁 | OVR 73
+  Rodney Rogers | PF | 32岁 | OVR 72
+  Lucious Harris | SG | 33岁 | OVR 70
+  Aaron Williams | C | 32岁 | OVR 65
+  Zoran Planinić | PG | 21岁 | OVR 64
+  Anthony Johnson | PG | 29岁 | OVR 63
+  Brandon Armstrong | SG | 23岁 | OVR 62
+  Jason Collins | C | 25岁 | OVR 62
+  Brian Scalabrine | PF | 25岁 | OVR 60
+  Chris Childs | PG | 36岁 | OVR 57
+  Tamar Slay | SG | 23岁 | OVR 56
+
+[BOS] 共 15 人
+  Paul Pierce | SF/SG | 26岁 | OVR 93
+  Antoine Walker | PF | 27岁 | OVR 86
+  Vin Baker | C | 32岁 | OVR 74
+  Eric Williams | SF | 31岁 | OVR 70
+  Marcus Banks | 1 | 22岁 | OVR 70
+  Kendrick Perkins | 5 | 19岁 | OVR 70
+  Troy Bell | 1 | 23岁 | OVR 70
+  Dahntay Jones | 2 | 23岁 | OVR 70
+  J.R. Bremer | PG | 23岁 | OVR 67
+  Tony Delk | PG | 30岁 | OVR 66
+  Bimbo Coles | PG | 35岁 | OVR 65
+  Mark Blount | C | 28岁 | OVR 63
+  Tony Battie | C | 27岁 | OVR 62
+  Kedrick Brown | SF | 22岁 | OVR 61
+  Walter McCarty | SF | 29岁 | OVR 59
+
+[CHA] 共 12 人  ← 人数偏少，可能有缺失
+  Emeka Okafor | PF | 23岁 | OVR 73
+  Jason Hart | PG | 27岁 | OVR 72
+  Raymond Felton | PG | 19岁 | OVR 71
+  Walter Herrmann | PF | 24岁 | OVR 69
+  Sean May | PF | 19岁 | OVR 67
+  Adam Morrison | PF | 19岁 | OVR 64
+  Alan Anderson | SF | 21岁 | OVR 62
+  Bernard Robinson | SG | 25岁 | OVR 61
+  Cory Alexander | SG | 32岁 | OVR 60
+  Theron Smith | SF | 25岁 | OVR 57
+  Ryan Hollins | C | 19岁 | OVR 57
+  Kevin Burleson | PG | 24岁 | OVR 56
+
+[CHI] 共 15 人
+  Jalen Rose | SF/SG/PG | 31岁 | OVR 82
+  Jay Williams | PG | 22岁 | OVR 80
+  Donyell Marshall | PF | 30岁 | OVR 79
+  Marcus Fizer | PF | 25岁 | OVR 73
+  Kirk Hinrich | 1 | 23岁 | OVR 72
+  Eddie Robinson | SF | 27岁 | OVR 71
+  Roger Mason | SF | 23岁 | OVR 71
+  Tyson Chandler | C | 21岁 | OVR 68
+  Trenton Hassell | SG | 24岁 | OVR 66
+  Eddy Curry | C | 21岁 | OVR 65
+  Jamal Crawford | PG | 23岁 | OVR 61
+  Fred Hoiberg | SG | 31岁 | OVR 61
+  Lonny Baxter | C | 25岁 | OVR 61
+  Corie Blount | C | 35岁 | OVR 59
+  Rick Brunson | PG | 31岁 | OVR 58
+
+[CLE] 共 15 人
+  LeBron James | 3 | 19岁 | OVR 81
+  LeBron James | SF/PF/PG/SG | 19岁 | OVR 80
+  Dajuan Wagner | SG | 20岁 | OVR 76
+  Ricky Davis | SG | 24岁 | OVR 76
+  Darius Miles | SF | 22岁 | OVR 75
+  Lamond Murray | SF | 30岁 | OVR 75
+  Jumaine Jones | SF | 24岁 | OVR 71
+  Zydrunas Ilgauskas | C | 28岁 | OVR 70
+  Chris Mihm | C | 24岁 | OVR 67
+  Ira Newble | SF | 28岁 | OVR 67
+  Tierre Brown | PG | 24岁 | OVR 66
+  Kevin Ollie | PG | 31岁 | OVR 66
+  Jason Kapono | SF | 24岁 | OVR 65
+  Carlos Boozer | PF | 22岁 | OVR 64
+  Smush Parker | PG | 22岁 | OVR 63
+
+[DAL] 共 15 人
+  Dirk Nowitzki | PF/C | 25岁 | OVR 91
+  Michael Finley | SF | 30岁 | OVR 86
+  Steve Nash | PG | 29岁 | OVR 83
+  Antawn Jamison | SF | 27岁 | OVR 82
+  Raef LaFrentz | C | 27岁 | OVR 78
+  Josh Howard | 3 | 23岁 | OVR 73
+  Adrian Griffin | SG | 29岁 | OVR 69
+  Eduardo Nájera | SF | 27岁 | OVR 68
+  Walt Williams | SF | 33岁 | OVR 67
+  Tariq Abdul-Wahad | SG | 29岁 | OVR 66
+  Avery Johnson | PG | 38岁 | OVR 65
+  Raja Bell | SG | 27岁 | OVR 62
+  Shawn Bradley | C | 31岁 | OVR 60
+  Evan Eschmeyer | C | 28岁 | OVR 60
+  Popeye Jones | PF | 33岁 | OVR 56
+
+[DEN] 共 15 人
+  Juwan Howard | PF | 30岁 | OVR 77
+  Marcus Camby | C | 29岁 | OVR 77
+  Carmelo Anthony | 3 | 19岁 | OVR 76
+  Nene Hilario | C | 21岁 | OVR 73
+  Nikoloz Tskitishvili | SF | 20岁 | OVR 72
+  Voshon Lenard | SG | 30岁 | OVR 72
+  Vincent Yarbrough | SG | 22岁 | OVR 69
+  Jeff Trepagnier | SG | 24岁 | OVR 69
+  Shammond Williams | PG | 28岁 | OVR 66
+  Donnell Harvey | SF | 23岁 | OVR 66
+  Francisco Elson | C | 27岁 | OVR 66
+  Ryan Bowen | SG | 28岁 | OVR 65
+  Chris Andersen | C | 25岁 | OVR 65
+  Rodney White | SG | 23岁 | OVR 64
+  Adam Harrington | SG | 23岁 | OVR 60
+
+[DET] 共 15 人
+  Ben Wallace | C/PF | 29岁 | OVR 85
+  Richard Hamilton | SG | 25岁 | OVR 78
+  Chauncey Billups | PG/SG | 27岁 | OVR 77
+  Clifford Robinson | PF | 37岁 | OVR 77
+  Corliss Williamson | SF | 30岁 | OVR 74
+  Jon Barry | SG | 34岁 | OVR 71
+  Michael Curry | SF | 35岁 | OVR 70
+  Željko Rebrača | C | 31岁 | OVR 70
+  Carlos Delfino | 2 | 21岁 | OVR 70
+  Chucky Atkins | PG | 29岁 | OVR 69
+  Danny Manning | PF | 37岁 | OVR 69
+  Mehmet Okur | PF | 24岁 | OVR 68
+  Tayshaun Prince | SF | 23岁 | OVR 67
+  Darko Miličić | C | 18岁 | OVR 65
+  Pepe Sánchez | PG | 26岁 | OVR 63
+
+[GSW] 共 15 人
+  Jason Richardson | SG | 23岁 | OVR 79
+  Mike Dunleavy | SF | 23岁 | OVR 76
+  Danny Fortson | PF | 27岁 | OVR 73
+  Nick Van | SG | 32岁 | OVR 73
+  Jiří Welsch | SF | 24岁 | OVR 71
+  Chris Mills | PF | 34岁 | OVR 70
+  Bob Sura | SG | 30岁 | OVR 70
+  Earl Boykins | PG | 27岁 | OVR 70
+  Mickael Pietrus | 2 | 21岁 | OVR 70
+  Troy Murphy | PF | 23岁 | OVR 68
+  Erick Dampier | C | 28岁 | OVR 66
+  Adonal Foyle | C | 28岁 | OVR 64
+  Oscar Torres | SG | 27岁 | OVR 63
+  Dean Oliver | PG | 25岁 | OVR 60
+  A.J. Guyton | PG | 25岁 | OVR 50
+
+[HOU] 共 15 人
+  Steve Francis | PG | 26岁 | OVR 86
+  Cuttino Mobley | SG | 28岁 | OVR 84
+  Yao Ming | C | 23岁 | OVR 77
+  Eddie Griffin | PF | 21岁 | OVR 73
+  Boštjan Nachbar | SF | 23岁 | OVR 70
+  James Posey | SF | 27岁 | OVR 70
+  Maurice Taylor | PF | 27岁 | OVR 69
+  Glen Rice | SF | 36岁 | OVR 68
+  Kelvin Cato | C | 29岁 | OVR 67
+  Moochie Norris | PG | 30岁 | OVR 66
+  Terence Morris | SF | 25岁 | OVR 63
+  Mark Jackson | PG | 38岁 | OVR 63
+  Jason Collier | C | 26岁 | OVR 61
+  Torraye Braggs | PF | 27岁 | OVR 61
+  Tito Maddox | SG | 22岁 | OVR 60
+
+[IND] 共 14 人
+  Jermaine O'Neal | PF | 25岁 | OVR 86
+  Reggie Miller | SG | 38岁 | OVR 81
+  Metta World | SF | 24岁 | OVR 78
+  Jamaal Tinsley | PG | 25岁 | OVR 74
+  Al Harrington | SF | 23岁 | OVR 74
+  Jonathan Bender | SF | 23岁 | OVR 71
+  Austin Croshere | PF | 28岁 | OVR 70
+  Ron Mercer | SG | 27岁 | OVR 70
+  Fred Jones | SG | 24岁 | OVR 69
+  Tim Hardaway | PG | 37岁 | OVR 67
+  Erick Strickland | SG | 30岁 | OVR 67
+  Scot Pollard | C | 28岁 | OVR 67
+  Jeff Foster | C | 27岁 | OVR 64
+  Jamison Brewer | PG | 23岁 | OVR 62
+
+[LAC] 共 15 人
+  Elton Brand | PF/C | 24岁 | OVR 89
+  Andre Miller | PG | 27岁 | OVR 87
+  Lamar Odom | PF/SF/PG | 24岁 | OVR 80
+  Quentin Richardson | SG | 23岁 | OVR 76
+  Corey Maggette | SG | 24岁 | OVR 74
+  Chris Kaman | 5 | 21岁 | OVR 74
+  Michael Olowokandi | C | 28岁 | OVR 73
+  Eric Piatkowski | SG | 33岁 | OVR 71
+  Chris Wilcox | PF | 21岁 | OVR 70
+  Marko Jaric | SF | 25岁 | OVR 69
+  Cherokee Parks | PF | 31岁 | OVR 67
+  Tremaine Fowlkes | SF | 27岁 | OVR 65
+  Keyon Dooling | SG | 23岁 | OVR 62
+  Melvin Ely | C | 25岁 | OVR 62
+  Wang Zhizhi | C | 26岁 | OVR 60
+
+[LAL] 共 15 人
+  Shaquille O'Neal | C | 31岁 | OVR 98
+  Kobe Bryant | SG/SF | 25岁 | OVR 96
+  Gary Payton | PG | 35岁 | OVR 87
+  Robert Horry | PF | 33岁 | OVR 75
+  Rick Fox | SF | 34岁 | OVR 74
+  Derek Fisher | PG | 29岁 | OVR 71
+  Devean George | SF | 26岁 | OVR 71
+  Kareem Rush | PG | 23岁 | OVR 70
+  Brian Cook | 4 | 23岁 | OVR 70
+  Samaki Walker | C | 27岁 | OVR 69
+  Tracy Murray | SF | 32岁 | OVR 68
+  Brian Shaw | PG | 37岁 | OVR 64
+  Luke Walton | PF | 23岁 | OVR 64
+  Mark Madsen | PF | 28岁 | OVR 61
+  Soumaila Samake | C | 25岁 | OVR 61
+
+[MEM] 共 15 人
+  Pau Gasol | PF/C | 23岁 | OVR 81
+  Jason Williams | PG | 28岁 | OVR 78
+  Shane Battier | SF | 25岁 | OVR 77
+  Michael Dickerson | SG | 28岁 | OVR 76
+  Lorenzen Wright | C | 28岁 | OVR 75
+  Wesley Person | SG | 32岁 | OVR 74
+  Mike Miller | SF | 23岁 | OVR 71
+  Brevin Knight | PG | 28岁 | OVR 71
+  Stromile Swift | PF | 24岁 | OVR 71
+  Ryan Humphrey | PF | 24岁 | OVR 68
+  Mike Batiste | PF | 26岁 | OVR 64
+  Chris Owens | SF | 24岁 | OVR 63
+  Earl Watson | PG | 24岁 | OVR 62
+  Cezary Trybański | C | 24岁 | OVR 61
+  Robert Archibald | PF | 23岁 | OVR 57
+
+[MIA] 共 15 人
+  Eddie Jones | SG | 32岁 | OVR 84
+  Dwyane Wade | 2 | 22岁 | OVR 78
+  Alonzo Mourning | C | 33岁 | OVR 77
+  Caron Butler | SF | 23岁 | OVR 73
+  Brian Grant | C | 31岁 | OVR 71
+  LaPhonso Ellis | PF | 33岁 | OVR 70
+  Eddie House | SG | 25岁 | OVR 69
+  Udonis Haslem | PF | 23岁 | OVR 68
+  Rasual Butler | SG | 24岁 | OVR 67
+  Mike James | PG | 28岁 | OVR 67
+  Travis Best | PG | 31岁 | OVR 66
+  Anthony Carter | PG | 28岁 | OVR 65
+  Malik Allen | PF | 25岁 | OVR 65
+  Sean Lampley | SF | 24岁 | OVR 63
+  Vladimir Stepania | C | 27岁 | OVR 60
+
+[MIL] 共 13 人
+  Tim Thomas | SF | 26岁 | OVR 80
+  Anthony Mason | C | 37岁 | OVR 77
+  Toni Kukoč | PF | 35岁 | OVR 75
+  Desmond Mason | SF | 26岁 | OVR 75
+  T.J. Ford | 1 | 20岁 | OVR 73
+  Michael Redd | SG | 24岁 | OVR 72
+  Marcus Haislip | PF | 23岁 | OVR 66
+  Jason Caffey | PF | 30岁 | OVR 66
+  Ervin Johnson | C | 36岁 | OVR 62
+  Dan Gadzuric | C | 25岁 | OVR 62
+  Joel Przybilla | C | 24岁 | OVR 59
+  Jamal Sampson | PF | 20岁 | OVR 58
+  Ronald Murray | SG | 24岁 | OVR 56
+
+[MIN] 共 15 人
+  Kevin Garnett | PF/C | 27岁 | OVR 94
+  Latrell Sprewell | SF | 33岁 | OVR 85
+  Sam Cassell | PG | 34岁 | OVR 84
+  Wally Szczerbiak | SF | 26岁 | OVR 79
+  Terrell Brandon | PG | 33岁 | OVR 77
+  Joe Smith | SF | 28岁 | OVR 74
+  Troy Hudson | PG | 27岁 | OVR 72
+  Ndudi Ebi | 4 | 19岁 | OVR 70
+  Anthony Peeler | SG | 34岁 | OVR 68
+  Rod Strickland | PG | 37岁 | OVR 67
+  Reggie Slater | PF | 33岁 | OVR 66
+  Rasho Nesterović | C | 27岁 | OVR 65
+  Gary Trent | SF | 29岁 | OVR 63
+  Marc Jackson | C | 29岁 | OVR 62
+  Kendall Gill | SG | 35岁 | OVR 61
+
+[NOP] 共 15 人
+  Baron Davis | PG | 24岁 | OVR 93
+  Jamal Mashburn | SF | 31岁 | OVR 84
+  Courtney Alexander | PG | 26岁 | OVR 74
+  P.J. Brown | PF | 34岁 | OVR 73
+  David West | 4 | 23岁 | OVR 72
+  David Wesley | SG | 33岁 | OVR 71
+  Kenny Anderson | PG | 33岁 | OVR 70
+  George Lynch | SG | 33岁 | OVR 70
+  Jamaal Magloire | C | 25岁 | OVR 69
+  Stacey Augmon | SG | 35岁 | OVR 67
+  Robert Pack | PG | 34岁 | OVR 64
+  Randy Livingston | PG | 28岁 | OVR 63
+  Robert Traylor | C | 26岁 | OVR 62
+  Bryce Drew | PG | 29岁 | OVR 60
+  Kirk Haston | SF | 24岁 | OVR 53
+
+[NYK] 共 15 人
+  Allan Houston | SG | 32岁 | OVR 79
+  Kurt Thomas | C | 31岁 | OVR 77
+  Keith Van | PF | 28岁 | OVR 75
+  Clarence Weatherspoon | PF | 33岁 | OVR 71
+  Frank Williams | PG | 23岁 | OVR 70
+  Michael Sweetney | 3 | 21岁 | OVR 70
+  Othella Harrington | PF | 30岁 | OVR 69
+  Antonio McDyess | PF | 29岁 | OVR 68
+  Charlie Ward | PG | 33岁 | OVR 67
+  Mike Sweetney | PF | 21岁 | OVR 67
+  Shandon Anderson | SF | 30岁 | OVR 64
+  Lee Nailon | SF | 28岁 | OVR 63
+  Howard Eisley | PG | 31岁 | OVR 60
+  Lavor Postell | SG | 25岁 | OVR 56
+  Michael Doleac | C | 26岁 | OVR 54
+
+[OKC] 共 15 人
+  Ray Allen | SG/SF | 28岁 | OVR 91
+  Rashard Lewis | SF | 24岁 | OVR 84
+  Brent Barry | SG | 32岁 | OVR 82
+  Elden Campbell | C | 35岁 | OVR 78
+  Vladimir Radmanović | PF | 23岁 | OVR 73
+  Predrag Drobnjak | C | 28岁 | OVR 70
+  Nick Collison | 4 | 23岁 | OVR 70
+  Luke Ridnour | 1 | 22岁 | OVR 70
+  Richie Frahm | SF | 26岁 | OVR 67
+  Jerome James | C | 28岁 | OVR 65
+  Luke Ridnour | PG | 22岁 | OVR 65
+  Reggie Evans | PF | 23岁 | OVR 63
+  Joseph Forte | SG | 22岁 | OVR 60
+  Vitaly Potapenko | C | 28岁 | OVR 59
+  Antonio Harvey | PF | 33岁 | OVR 59
+
+[ORL] 共 15 人
+  Tracy McGrady | SG/SF | 24岁 | OVR 96
+  Grant Hill | SF/PG | 31岁 | OVR 83
+  Darrell Armstrong | PG | 35岁 | OVR 78
+  Drew Gooden | PF | 22岁 | OVR 74
+  Horace Grant | PF | 38岁 | OVR 73
+  Gordan Giriček | SF | 26岁 | OVR 73
+  Pat Garrity | PF | 27岁 | OVR 70
+  Reece Gaines | 2 | 23岁 | OVR 70
+  Keith Bogans | SG | 25岁 | OVR 65
+  Jacque Vaughn | PG | 28岁 | OVR 64
+  Shawn Kemp | C | 34岁 | OVR 64
+  Jeryl Sasser | SG | 24岁 | OVR 62
+  Steven Hunter | C | 22岁 | OVR 61
+  Andrew DeClercq | C | 30岁 | OVR 60
+  Chris Whitney | PG | 32岁 | OVR 58
+
+[PHI] 共 15 人
+  Allen Iverson | SG/PG | 28岁 | OVR 90
+  Aaron McKie | SF | 31岁 | OVR 78
+  Derrick Coleman | C | 36岁 | OVR 78
+  Eric Snow | PG | 30岁 | OVR 74
+  Kenny Thomas | PF | 26岁 | OVR 73
+  Todd MacCulloch | C | 28岁 | OVR 72
+  Kyle Korver | SG | 22岁 | OVR 72
+  Monty Williams | SF | 32岁 | OVR 70
+  Greg Buckner | SG | 27岁 | OVR 67
+  John Salmons | PG | 24岁 | OVR 67
+  Tyrone Hill | PF | 35岁 | OVR 67
+  Efthimi Rentzias | C | 28岁 | OVR 59
+  Brian Skinner | PF | 27岁 | OVR 55
+  Art Long | SF | 31岁 | OVR 55
+  Kenny Satterfield | PG | 22岁 | OVR 51
+
+[PHX] 共 15 人
+  Shawn Marion | SF/PF | 25岁 | OVR 90
+  Stephon Marbury | PG | 26岁 | OVR 86
+  Anfernee Hardaway | SG | 32岁 | OVR 77
+  Joe Johnson | SG/SF/PG | 22岁 | OVR 70
+  Leandro Barbosa | 1 | 21岁 | OVR 70
+  Amar'e Stoudemire | PF | 21岁 | OVR 69
+  Casey Jacobsen | SF | 22岁 | OVR 68
+  Tom Gugliotta | PF | 34岁 | OVR 68
+  Bo Outlaw | C | 32岁 | OVR 67
+  Leandro Barbosa | PG | 21岁 | OVR 67
+  Jake Tsakalidis | C | 24岁 | OVR 64
+  Scott Williams | C | 35岁 | OVR 62
+  Jake Voskuhl | C | 26岁 | OVR 59
+  Dan Langhi | SF | 26岁 | OVR 59
+  Randy Brown | PG | 35岁 | OVR 58
+
+[POR] 共 15 人
+  Rasheed Wallace | PF/C | 29岁 | OVR 87
+  Bonzi Wells | SG | 27岁 | OVR 83
+  Scottie Pippen | SF | 38岁 | OVR 81
+  Damon Stoudamire | PG | 30岁 | OVR 79
+  Derek Anderson | PG | 29岁 | OVR 77
+  Antonio Daniels | SG | 28岁 | OVR 77
+  Ruben Patterson | SF | 28岁 | OVR 75
+  Jeff McInnis | PG | 29岁 | OVR 74
+  Dale Davis | C | 34岁 | OVR 72
+  Ruben Boumtje-Boumtje | C | 25岁 | OVR 72
+  Travis Outlaw | 3 | 19岁 | OVR 70
+  Qyntel Woods | PF | 22岁 | OVR 67
+  Matt Carroll | SG | 25岁 | OVR 66
+  Zach Randolph | PF | 22岁 | OVR 64
+  Charles Smith | SG | 28岁 | OVR 53
+
+[SAC] 共 14 人
+  Chris Webber | PF/C | 30岁 | OVR 91
+  Peja Stojaković | SF | 26岁 | OVR 85
+  Mike Bibby | PG | 25岁 | OVR 84
+  Doug Christie | SG | 33岁 | OVR 78
+  Keon Clark | C | 28岁 | OVR 76
+  Brad Miller | C | 27岁 | OVR 76
+  Bobby Jackson | PG | 30岁 | OVR 75
+  Vlade Divac | C | 35岁 | OVR 75
+  Jim Jackson | SF | 33岁 | OVR 67
+  Darius Songaila | PF | 25岁 | OVR 66
+  Mateen Cleaves | PG | 26岁 | OVR 64
+  Damon Jones | PG | 27岁 | OVR 64
+  Gerald Wallace | SF | 21岁 | OVR 63
+  Lawrence Funderburke | PF | 33岁 | OVR 60
+
+[SAS] 共 15 人
+  Tim Duncan | PF/C | 27岁 | OVR 96
+  Hedo Türkoğlu | SF | 24岁 | OVR 77
+  Manu Ginóbili | SG/PG/SF | 26岁 | OVR 76
+  Steve Smith | SG | 34岁 | OVR 73
+  Bruce Bowen | SF | 32岁 | OVR 73
+  Malik Rose | PF | 29岁 | OVR 71
+  Tony Parker | PG | 21岁 | OVR 70
+  Danny Ferry | SF | 37岁 | OVR 69
+  Terry Porter | PG | 40岁 | OVR 68
+  Steve Kerr | PG | 38岁 | OVR 66
+  Kevin Willis | C | 41岁 | OVR 66
+  Stephen Jackson | SG | 25岁 | OVR 65
+  Speedy Claxton | PG | 25岁 | OVR 64
+  Anthony Goldwire | PG | 32岁 | OVR 52
+  Mengke Bateer | C | 28岁 | OVR 50
+
+[TOR] 共 15 人
+  Vince Carter | SG/SF | 27岁 | OVR 90
+  Antonio Davis | C | 35岁 | OVR 79
+  Morris Peterson | SF | 26岁 | OVR 76
+  Chris Bosh | 4 | 19岁 | OVR 74
+  Alvin Williams | PG | 29岁 | OVR 72
+  Jerome Williams | PF | 30岁 | OVR 70
+  Lindsey Hunter | PG | 33岁 | OVR 69
+  Rafer Alston | PG | 27岁 | OVR 68
+  Jelani McCoy | C | 26岁 | OVR 64
+  Jermaine Jackson | SG | 27岁 | OVR 58
+  Chris Jefferies | SF | 23岁 | OVR 57
+  Michael Bradley | PF | 24岁 | OVR 56
+  Greg Foster | C | 35岁 | OVR 56
+  Damone Brown | PF | 24岁 | OVR 55
+  Mamadou N'Diaye | C | 28岁 | OVR 52
+
+[UTA] 共 12 人  ← 人数偏少，可能有缺失
+  Matt Harpring | SF | 27岁 | OVR 76
+  Andrei Kirilenko | SF/PF | 22岁 | OVR 75
+  Scott Padgett | PF | 27岁 | OVR 68
+  Calbert Cheaney | SG | 32岁 | OVR 67
+  Raul Lopez | PG | 23岁 | OVR 65
+  DeShawn Stevenson | SG | 22岁 | OVR 64
+  Jarron Collins | C | 25岁 | OVR 62
+  Carlos Arroyo | PG | 24岁 | OVR 62
+  Greg Ostertag | C | 30岁 | OVR 61
+  Sasha Pavlovic | SF | 20岁 | OVR 61
+  Tony Massenburg | C | 36岁 | OVR 60
+  John Amaechi | C | 33岁 | OVR 53
+
+[WAS] 共 15 人
+  Michael Jordan | SF | 40岁 | OVR 88
+  Jerry Stackhouse | SG | 29岁 | OVR 80
+  Gilbert Arenas | PG/SG | 22岁 | OVR 76
+  Larry Hughes | PG | 25岁 | OVR 73
+  Juan Dixon | PG | 25岁 | OVR 71
+  Bryon Russell | SF | 33岁 | OVR 70
+  Christian Laettner | PF | 34岁 | OVR 70
+  Charles Oakley | C | 40岁 | OVR 70
+  Jarvis Hayes | 3 | 22岁 | OVR 70
+  Jared Jeffries | SF | 22岁 | OVR 69
+  Brendan Haywood | C | 24岁 | OVR 69
+  Tyronn Lue | PG | 26岁 | OVR 66
+  Jahidi White | C | 27岁 | OVR 66
+  Bobby Simmons | SG | 23岁 | OVR 63
+  Kwame Brown | C | 21岁 | OVR 62
+============================================================
+2010-11 赛季（2010 纪元）
+============================================================
+
+[ATL] 共 15 人
+  Joe Johnson | SG/SF/PG | 29岁 | OVR 83
+  Mike Bibby | PG | 32岁 | OVR 78
+  Josh Smith | PF | 25岁 | OVR 77
+  Al Horford | C/PF | 24岁 | OVR 76
+  Jamal Crawford | SG | 30岁 | OVR 75
+  Marvin Williams | SF | 24岁 | OVR 69
+  Zaza Pachulia | C | 26岁 | OVR 67
+  Maurice Evans | SF | 32岁 | OVR 66
+  Jeff Teague | PG | 22岁 | OVR 66
+  Joe Smith | PF | 35岁 | OVR 64
+  Mario West | SG | 26岁 | OVR 60
+  Jordan Crawford | SG | 22岁 | OVR 57
+  Othello Hunter | SF | 24岁 | OVR 54
+  Jason Collins | C | 32岁 | OVR 52
+  Randolph Morris | PF | 25岁 | OVR 50
+
+[BKN] 共 15 人
+  Devin Harris | PG | 27岁 | OVR 86
+  Brook Lopez | C | 22岁 | OVR 77
+  Terrence Williams | SF | 23岁 | OVR 71
+  Anthony Morrow | SG | 25岁 | OVR 70
+  Derrick Favors | 5 | 19岁 | OVR 70
+  Damion James | 3 | 23岁 | OVR 70
+  Travis Outlaw | SF | 26岁 | OVR 69
+  Jordan Farmar | PG | 24岁 | OVR 67
+  Bobby Simmons | PF | 30岁 | OVR 64
+  Jarvis Hayes | SF | 29岁 | OVR 63
+  Chris Douglas-Roberts | SF | 24岁 | OVR 62
+  Trenton Hassell | SF | 31岁 | OVR 62
+  Johan Petro | C | 25岁 | OVR 62
+  Yi Jianlian | PF | 23岁 | OVR 59
+  Kris Humphries | PF | 25岁 | OVR 59
+
+[BOS] 共 15 人
+  Kevin Garnett | PF/C | 34岁 | OVR 90
+  Rajon Rondo | PG | 24岁 | OVR 87
+  Paul Pierce | SF/SG | 33岁 | OVR 84
+  Shaquille O'Neal | C | 38岁 | OVR 81
+  Ray Allen | SG/SF | 35岁 | OVR 80
+  Nate Robinson | PG | 26岁 | OVR 78
+  Rasheed Wallace | PF/C | 36岁 | OVR 75
+  Jermaine O'Neal | C | 32岁 | OVR 75
+  Kendrick Perkins | C | 26岁 | OVR 72
+  Avery Bradley | 2 | 20岁 | OVR 70
+  Michael Finley | SF | 37岁 | OVR 67
+  Oliver Lafayette | SG | 26岁 | OVR 66
+  Glen Davis | PF | 25岁 | OVR 65
+  Marquis Daniels | SF | 30岁 | OVR 65
+  Shelden Williams | PF | 27岁 | OVR 61
+
+[CHA] 共 14 人
+  Stephen Jackson | SG | 32岁 | OVR 81
+  Gerald Wallace | SF | 28岁 | OVR 78
+  Raymond Felton | PG | 26岁 | OVR 74
+  Larry Hughes | SG | 32岁 | OVR 73
+  Boris Diaw | PF/C/SF | 28岁 | OVR 73
+  D.J. Augustin | PG | 23岁 | OVR 70
+  Tyrus Thomas | C | 24岁 | OVR 69
+  Derrick Brown | SF | 23岁 | OVR 68
+  Gerald Henderson | SG | 23岁 | OVR 67
+  Theo Ratliff | C | 37岁 | OVR 66
+  Nazr Mohammed | C | 33岁 | OVR 62
+  Stephen Graham | SG | 28岁 | OVR 61
+  DeSagana Diop | C | 29岁 | OVR 59
+  Alexis Ajinca | C | 22岁 | OVR 53
+
+[CHI] 共 15 人
+  Carlos Boozer | PF | 29岁 | OVR 84
+  Derrick Rose | PG/SG | 22岁 | OVR 80
+  Luol Deng | SF | 25岁 | OVR 73
+  Kyle Korver | SG | 29岁 | OVR 72
+  Ronnie Brewer | SG | 25岁 | OVR 70
+  C.J. Watson | PG | 26岁 | OVR 68
+  Joakim Noah | C/PF | 25岁 | OVR 67
+  Ronald Murray | SG | 31岁 | OVR 67
+  Brad Miller | C | 34岁 | OVR 66
+  Hakim Warrick | PF | 28岁 | OVR 65
+  Acie Law | PG | 26岁 | OVR 65
+  Jannero Pargo | PG | 31岁 | OVR 64
+  James Johnson | PF | 23岁 | OVR 62
+  Omer Asik | C | 24岁 | OVR 62
+  Chris Richard | PF | 26岁 | OVR 59
+
+[CLE] 共 13 人
+  Mo Williams | PG | 28岁 | OVR 77
+  Antawn Jamison | PF | 34岁 | OVR 76
+  Delonte West | SG | 27岁 | OVR 75
+  Ramon Sessions | PG | 24岁 | OVR 70
+  Anthony Parker | SG | 35岁 | OVR 68
+  Anderson Varejão | PF | 28岁 | OVR 68
+  Sebastian Telfair | PG | 25岁 | OVR 67
+  J.J. Hickson | PF | 22岁 | OVR 67
+  Jamario Moon | SF | 30岁 | OVR 66
+  Leon Powe | SF | 27岁 | OVR 66
+  Daniel Gibson | PG | 24岁 | OVR 66
+  Danny Green | SG | 23岁 | OVR 64
+  Jawad Williams | PG | 27岁 | OVR 60
+
+[DAL] 共 15 人
+  Caron Butler | SG | 30岁 | OVR 84
+  Dirk Nowitzki | PF/C | 32岁 | OVR 83
+  Jason Kidd | PG | 37岁 | OVR 81
+  Jason Terry | SG | 33岁 | OVR 78
+  Shawn Marion | SF/PF | 32岁 | OVR 76
+  Rodrigue Beaubois | PG | 22岁 | OVR 71
+  Tyson Chandler | C | 28岁 | OVR 70
+  J.J. Barea | PG | 26岁 | OVR 69
+  DeShawn Stevenson | SG | 29岁 | OVR 68
+  Eduardo Nájera | PF | 34岁 | OVR 63
+  Tim Thomas | SF | 33岁 | OVR 60
+  Brendan Haywood | C | 31岁 | OVR 60
+  Gerald Green | SG | 25岁 | OVR 60
+  Ian Mahinmi | C | 24岁 | OVR 60
+  Shawne Williams | SF | 24岁 | OVR 57
+
+[DEN] 共 13 人
+  Carmelo Anthony | SF/PF | 26岁 | OVR 88
+  Chauncey Billups | PG/SG | 34岁 | OVR 85
+  Nene Hilario | C | 28岁 | OVR 79
+  Ty Lawson | PG | 23岁 | OVR 74
+  Kenyon Martin | PF | 33岁 | OVR 74
+  J.R. Smith | SG | 25岁 | OVR 72
+  Renaldo Balkman | SF | 26岁 | OVR 68
+  Chris Andersen | PF | 32岁 | OVR 68
+  Joey Graham | SF | 28岁 | OVR 68
+  Arron Afflalo | SG | 25岁 | OVR 63
+  Gary Forbes | SF | 25岁 | OVR 63
+  Anthony Carter | PG | 35岁 | OVR 61
+  Malik Allen | PF | 32岁 | OVR 59
+
+[DET] 共 15 人
+  Ben Gordon | SG | 27岁 | OVR 78
+  Richard Hamilton | SG | 32岁 | OVR 78
+  Tayshaun Prince | SF | 30岁 | OVR 77
+  Tracy McGrady | SG/SF | 31岁 | OVR 77
+  Greg Monroe | C | 20岁 | OVR 74
+  Rodney Stuckey | PG | 24岁 | OVR 73
+  Ben Wallace | C/PF | 36岁 | OVR 73
+  Charlie Villanueva | PF | 26岁 | OVR 72
+  Jason Maxiell | C | 27岁 | OVR 70
+  Jonas Jerebko | PF | 23岁 | OVR 70
+  Greg Monroe | 5 | 20岁 | OVR 70
+  Will Bynum | PG | 28岁 | OVR 68
+  Chris Wilcox | PF | 28岁 | OVR 63
+  Austin Daye | SF | 22岁 | OVR 60
+  Chucky Atkins | PG | 36岁 | OVR 59
+
+[GSW] 共 15 人
+  David Lee | C | 27岁 | OVR 77
+  Monta Ellis | SG/PG | 25岁 | OVR 75
+  Andris Biedriņš | C | 24岁 | OVR 74
+  Reggie Williams | SF | 24岁 | OVR 74
+  Anthony Tolliver | PF | 25岁 | OVR 72
+  Kelenna Azubuike | SF | 27岁 | OVR 71
+  Ekpe Udoh | 5 | 23岁 | OVR 70
+  Stephen Curry | PG/SG | 22岁 | OVR 69
+  Anthony Randolph | C | 21岁 | OVR 68
+  Ronny Turiaf | C | 28岁 | OVR 68
+  Mikki Moore | C | 35岁 | OVR 64
+  Chris Hunter | C | 26岁 | OVR 63
+  Charlie Bell | SG | 31岁 | OVR 63
+  Dorell Wright | SF | 25岁 | OVR 63
+  Jeremy Lin | PG | 22岁 | OVR 62
+
+[HOU] 共 15 人
+  Kevin Martin | SG | 27岁 | OVR 77
+  Trevor Ariza | SF | 25岁 | OVR 73
+  Luis Scola | PF | 30岁 | OVR 73
+  Shane Battier | SG | 32岁 | OVR 72
+  Aaron Brooks | PG | 26岁 | OVR 71
+  Patrick Patterson | 4 | 21岁 | OVR 70
+  Kyle Lowry | PG | 24岁 | OVR 69
+  Courtney Lee | SG | 25岁 | OVR 68
+  Chase Budinger | SF | 22岁 | OVR 65
+  Chuck Hayes | C | 27岁 | OVR 64
+  Pops Mensah-Bonsu | PF | 27岁 | OVR 64
+  Jared Jeffries | SF | 29岁 | OVR 63
+  David Andersen | C | 30岁 | OVR 63
+  Jermaine Taylor | SG | 24岁 | OVR 62
+  Jordan Hill | PF | 23岁 | OVR 62
+
+[IND] 共 15 人
+  Danny Granger | SF | 27岁 | OVR 84
+  Troy Murphy | PF | 30岁 | OVR 74
+  T.J. Ford | PG | 27岁 | OVR 74
+  James Posey | SF | 34岁 | OVR 73
+  Paul George | 3 | 20岁 | OVR 73
+  Tyler Hansbrough | PF | 25岁 | OVR 68
+  Paul George | SF/SG/PF | 20岁 | OVR 68
+  Jeff Foster | C | 34岁 | OVR 67
+  Dahntay Jones | SF | 30岁 | OVR 66
+  A.J. Price | PG | 24岁 | OVR 66
+  Brandon Rush | SG | 25岁 | OVR 65
+  Mike Dunleavy | SF | 30岁 | OVR 65
+  Darren Collison | PG | 23岁 | OVR 65
+  Earl Watson | PG | 31岁 | OVR 64
+  Roy Hibbert | C | 24岁 | OVR 64
+
+[LAC] 共 15 人
+  Baron Davis | PG | 31岁 | OVR 82
+  Blake Griffin | PF/C | 21岁 | OVR 76
+  Eric Bledsoe | 2 | 21岁 | OVR 74
+  Eric Gordon | SG | 22岁 | OVR 72
+  Chris Kaman | C | 28岁 | OVR 72
+  Randy Foye | PG | 27岁 | OVR 71
+  Al-Farouq Aminu | 3 | 20岁 | OVR 70
+  Craig Smith | PF | 27岁 | OVR 62
+  Rasual Butler | SF | 31岁 | OVR 61
+  Ricky Davis | SF | 31岁 | OVR 60
+  Bobby Brown | PG | 26岁 | OVR 57
+  Steve Novak | SF | 27岁 | OVR 57
+  Mardy Collins | SG | 26岁 | OVR 56
+  DeAndre Jordan | C | 22岁 | OVR 56
+  Brian Skinner | PF | 34岁 | OVR 54
+
+[LAL] 共 14 人
+  Kobe Bryant | SG/SF | 32岁 | OVR 97
+  Pau Gasol | PF/C | 30岁 | OVR 83
+  Lamar Odom | PF/SF/PG | 31岁 | OVR 77
+  Andrew Bynum | C | 23岁 | OVR 74
+  Metta World | SF | 31岁 | OVR 72
+  Steve Blake | PG | 30岁 | OVR 72
+  Derek Fisher | PG | 36岁 | OVR 70
+  Sasha Vujačić | SG | 26岁 | OVR 69
+  Shannon Brown | SG | 25岁 | OVR 67
+  Luke Walton | SF | 30岁 | OVR 67
+  Matt Barnes | SF | 30岁 | OVR 67
+  Devin Ebanks | SG | 21岁 | OVR 65
+  Josh Powell | PF | 28岁 | OVR 64
+  Didier Ilunga-Mbenga | C | 30岁 | OVR 61
+
+[MEM] 共 15 人
+  O.J. Mayo | SG | 23岁 | OVR 78
+  Rudy Gay | SF | 24岁 | OVR 78
+  Trey Gilder | SF | 26岁 | OVR 78
+  Zach Randolph | PF | 29岁 | OVR 76
+  Mike Conley | PG | 23岁 | OVR 74
+  Marc Gasol | C | 26岁 | OVR 71
+  Xavier Henry | 3 | 19岁 | OVR 70
+  Dominique Jones | 2 | 22岁 | OVR 70
+  Greivis Vásquez | 1 | 24岁 | OVR 70
+  Jamaal Tinsley | PG | 32岁 | OVR 68
+  Sam Young | SF | 25岁 | OVR 67
+  Tony Allen | SG | 29岁 | OVR 66
+  Darrell Arthur | PF | 22岁 | OVR 65
+  Marcus Williams | PG | 25岁 | OVR 62
+  DeMarre Carroll | SF | 24岁 | OVR 60
+
+[MIA] 共 13 人
+  Dwyane Wade | SG/PG | 29岁 | OVR 96
+  LeBron James | SF/PF/PG/SG | 26岁 | OVR 96
+  Chris Bosh | PF/C | 26岁 | OVR 84
+  Mario Chalmers | PG | 24岁 | OVR 74
+  Michael Beasley | PF | 22岁 | OVR 72
+  Udonis Haslem | PF | 30岁 | OVR 70
+  Carlos Arroyo | PG | 31岁 | OVR 66
+  Zydrunas Ilgauskas | C | 35岁 | OVR 65
+  Quentin Richardson | SF | 30岁 | OVR 62
+  James Jones | SF | 30岁 | OVR 62
+  Daequan Cook | SG | 23岁 | OVR 61
+  Jamaal Magloire | C | 32岁 | OVR 61
+  Erick Dampier | C | 35岁 | OVR 61
+
+[MIL] 共 13 人
+  Michael Redd | SG | 31岁 | OVR 76
+  Corey Maggette | PF | 31岁 | OVR 75
+  John Salmons | SG | 31岁 | OVR 72
+  Larry Sanders | 5 | 22岁 | OVR 72
+  Andrew Bogut | C | 26岁 | OVR 71
+  Kurt Thomas | C | 38岁 | OVR 71
+  Keyon Dooling | PG | 30岁 | OVR 71
+  Luc Mbah | PF | 24岁 | OVR 68
+  Jerry Stackhouse | SG | 36岁 | OVR 67
+  Drew Gooden | PF | 29岁 | OVR 67
+  Brandon Jennings | PG | 21岁 | OVR 64
+  Carlos Delfino | SF | 28岁 | OVR 63
+  Roko Ukic | PG | 26岁 | OVR 60
+
+[MIN] 共 15 人
+  Jonny Flynn | PG | 21岁 | OVR 74
+  Ramon Sessions | PG | 24岁 | OVR 73
+  Kevin Love | PF/C | 22岁 | OVR 73
+  Wesley Johnson | 3 | 23岁 | OVR 71
+  Lazar Hayward | 3 | 24岁 | OVR 70
+  Corey Brewer | SG | 24岁 | OVR 68
+  Ryan Gomes | SF | 28岁 | OVR 66
+  Wesley Johnson | SG | 23岁 | OVR 66
+  Luke Ridnour | PG | 29岁 | OVR 66
+  Wayne Ellington | SG | 23岁 | OVR 62
+  Damien Wilkins | SF | 31岁 | OVR 61
+  Nathan Jawai | C | 24岁 | OVR 61
+  Darko Miličić | C | 25岁 | OVR 59
+  Brian Cardinal | PF | 33岁 | OVR 58
+  Sasha Pavlović | SF | 27岁 | OVR 56
+
+[NOP] 共 15 人
+  Chris Paul | PG | 25岁 | OVR 94
+  Emeka Okafor | C | 28岁 | OVR 79
+  David West | PF | 30岁 | OVR 78
+  Aaron Gray | C | 26岁 | OVR 70
+  Willie Green | SG | 29岁 | OVR 68
+  Julian Wright | SF | 23岁 | OVR 66
+  Marco Belinelli | SG | 24岁 | OVR 66
+  Darius Songaila | C | 32岁 | OVR 65
+  Peja Stojaković | SF | 33岁 | OVR 63
+  Jason Smith | PF | 24岁 | OVR 62
+  Sean Marks | C | 35岁 | OVR 60
+  Quincy Pondexter | SF | 22岁 | OVR 60
+  Morris Peterson | SG | 33岁 | OVR 59
+  Hilton Armstrong | PF | 26岁 | OVR 59
+  Marcus Thornton | SG | 23岁 | OVR 58
+
+[NYK] 共 15 人
+  Amar'e Stoudemire | PF | 28岁 | OVR 82
+  Al Harrington | PF | 30岁 | OVR 75
+  Wilson Chandler | SG | 23岁 | OVR 73
+  Chris Duhon | PG | 28岁 | OVR 72
+  Roger Mason | SG | 30岁 | OVR 71
+  Earl Barron | C | 29岁 | OVR 70
+  Timofey Mozgov | C | 24岁 | OVR 66
+  Landry Fields | SG | 22岁 | OVR 66
+  Toney Douglas | PG | 24岁 | OVR 65
+  Eddy Curry | C | 28岁 | OVR 65
+  Sergio Rodríguez | PG | 24岁 | OVR 62
+  Jonathan Bender | SF | 30岁 | OVR 61
+  Eddie House | SG | 32岁 | OVR 59
+  Henry Walker | SG | 23岁 | OVR 59
+  J.R. Giddens | SF | 25岁 | OVR 57
+
+[OKC] 共 15 人
+  Kevin Durant | SF/PF | 22岁 | OVR 82
+  Russell Westbrook | PG/SG | 22岁 | OVR 77
+  James Harden | SG/PG | 21岁 | OVR 76
+  Jeff Green | PF | 24岁 | OVR 74
+  Cole Aldrich | 5 | 22岁 | OVR 70
+  Craig Brackins | 5 | 23岁 | OVR 70
+  Quincy Pondexter | 3 | 22岁 | OVR 70
+  Serge Ibaka | PF | 21岁 | OVR 67
+  Eric Maynor | PG | 23岁 | OVR 66
+  Thabo Sefolosha | SG | 26岁 | OVR 64
+  Nick Collison | C | 30岁 | OVR 64
+  D.J. White | PF | 24岁 | OVR 63
+  Etan Thomas | C | 32岁 | OVR 62
+  Kyle Weaver | SG | 24岁 | OVR 60
+  Nenad Krstić | C | 27岁 | OVR 60
+
+[ORL] 共 15 人
+  Dwight Howard | C | 25岁 | OVR 89
+  Vince Carter | SG/SF | 34岁 | OVR 81
+  Jameer Nelson | PG | 28岁 | OVR 79
+  Rashard Lewis | PF | 31岁 | OVR 75
+  J.J. Redick | SG | 26岁 | OVR 71
+  Mickaël Piétrus | SF | 28岁 | OVR 70
+  Daniel Orton | 5 | 20岁 | OVR 70
+  Brandon Bass | PF | 25岁 | OVR 68
+  Marcin Gortat | C | 26岁 | OVR 67
+  Jason Williams | PG | 35岁 | OVR 65
+  Anthony Johnson | PG | 36岁 | OVR 61
+  Ryan Anderson | PF | 22岁 | OVR 59
+  Tyronn Lue | PG | 33岁 | OVR 59
+  Brian Cook | PF | 30岁 | OVR 57
+  Jeremy Richardson | SF | 26岁 | OVR 52
+
+[PHI] 共 13 人
+  Andre Iguodala | SF/SG/PG | 27岁 | OVR 84
+  Elton Brand | PF/C | 31岁 | OVR 77
+  Thaddeus Young | PF | 22岁 | OVR 75
+  Evan Turner | 3 | 22岁 | OVR 72
+  Andrés Nocioni | SF | 31岁 | OVR 71
+  Lou Williams | PG | 24岁 | OVR 70
+  Jrue Holiday | PG/SG | 20岁 | OVR 67
+  Marreese Speights | C | 23岁 | OVR 67
+  Evan Turner | SG | 22岁 | OVR 66
+  Rodney Carney | SG | 26岁 | OVR 64
+  Spencer Hawes | C | 22岁 | OVR 64
+  Francisco Elson | C | 34岁 | OVR 62
+  Jason Kapono | SF | 29岁 | OVR 61
+
+[PHX] 共 14 人
+  Steve Nash | PG | 36岁 | OVR 80
+  Hedo Türkoğlu | SF | 31岁 | OVR 76
+  Jason Richardson | SG | 30岁 | OVR 72
+  Grant Hill | SF/PG | 38岁 | OVR 72
+  Lou Amundson | PF | 28岁 | OVR 66
+  Earl Clark | PF | 23岁 | OVR 64
+  Jared Dudley | SF | 25岁 | OVR 63
+  Goran Dragić | PG | 24岁 | OVR 62
+  Taylor Griffin | SF | 24岁 | OVR 62
+  Alando Tucker | SF | 26岁 | OVR 62
+  Channing Frye | C | 27岁 | OVR 60
+  Robin Lopez | C | 22岁 | OVR 60
+  Jarron Collins | C | 32岁 | OVR 55
+  Dwayne Jones | PF | 27岁 | OVR 51
+
+[POR] 共 15 人
+  Brandon Roy | SG/PG | 26岁 | OVR 87
+  Andre Miller | PG | 34岁 | OVR 78
+  LaMarcus Aldridge | PF | 25岁 | OVR 78
+  Marcus Camby | C | 36岁 | OVR 75
+  Marcus Camby | C | 36岁 | OVR 75
+  Greg Oden | C | 23岁 | OVR 74
+  Luke Babbitt | 3 | 21岁 | OVR 70
+  Elliot Williams | 2 | 21岁 | OVR 70
+  Rudy Fernández | SG | 25岁 | OVR 68
+  Wesley Matthews | SG | 24岁 | OVR 68
+  Joel Przybilla | C | 31岁 | OVR 67
+  Jerryd Bayless | SG | 22岁 | OVR 65
+  Nicolas Batum | SF | 22岁 | OVR 64
+  Juwan Howard | C | 37岁 | OVR 64
+  Dante Cunningham | PF | 23岁 | OVR 64
+
+[SAC] 共 15 人
+  DeMarcus Cousins | 5 | 20岁 | OVR 76
+  Tyreke Evans | SG/PG/SF | 21岁 | OVR 71
+  Samuel Dalembert | C | 29岁 | OVR 71
+  Francisco García | SG | 29岁 | OVR 68
+  Carl Landry | PF | 27岁 | OVR 68
+  Jason Thompson | C | 24岁 | OVR 66
+  Dominic McGuire | SF | 25岁 | OVR 65
+  Beno Udrih | PG | 28岁 | OVR 64
+  Jon Brockman | PF | 23岁 | OVR 64
+  Luther Head | SG | 28岁 | OVR 64
+  Ime Udoka | SG | 33岁 | OVR 61
+  Kenny Thomas | PF | 33岁 | OVR 59
+  Sean May | C | 26岁 | OVR 57
+  Desmond Mason | SF | 33岁 | OVR 57
+  Donté Greene | SF | 22岁 | OVR 55
+
+[SAS] 共 15 人
+  Tim Duncan | PF/C | 34岁 | OVR 88
+  Tony Parker | PG | 28岁 | OVR 84
+  Manu Ginóbili | SG/PG/SF | 33岁 | OVR 83
+  Richard Jefferson | SF | 30岁 | OVR 76
+  James Anderson | 3 | 21岁 | OVR 70
+  Antonio McDyess | PF | 36岁 | OVR 68
+  Gary Neal | SG | 26岁 | OVR 68
+  Tiago Splitter | C | 26岁 | OVR 68
+  Keith Bogans | SF | 30岁 | OVR 64
+  Garrett Temple | SG | 24岁 | OVR 64
+  George Hill | PG | 24岁 | OVR 61
+  DeJuan Blair | PF | 21岁 | OVR 60
+  Marcus Haislip | SF | 30岁 | OVR 59
+  Matt Bonner | PF | 30岁 | OVR 58
+  Malik Hairston | SG | 23岁 | OVR 57
+
+[TOR] 共 15 人
+  José Calderón | PG | 29岁 | OVR 75
+  Leandro Barbosa | PG | 28岁 | OVR 75
+  Jarrett Jack | PG | 27岁 | OVR 71
+  Ed Davis | PF | 21岁 | OVR 70
+  Ed Davis | 4 | 21岁 | OVR 70
+  Andrea Bargnani | PF | 25岁 | OVR 69
+  Linas Kleiza | SF | 26岁 | OVR 68
+  Sonny Weems | SG | 24岁 | OVR 66
+  DeMar DeRozan | SG/SF | 21岁 | OVR 64
+  Amir Johnson | PF | 23岁 | OVR 64
+  Marcus Banks | PG | 29岁 | OVR 63
+  Rasho Nesterović | C | 34岁 | OVR 61
+  Antoine Wright | SF | 26岁 | OVR 60
+  Reggie Evans | PF | 30岁 | OVR 60
+  Patrick O'Bryant | C | 24岁 | OVR 58
+
+[UTA] 共 14 人
+  Deron Williams | PG | 26岁 | OVR 89
+  Al Jefferson | C | 26岁 | OVR 84
+  Paul Millsap | PF | 25岁 | OVR 74
+  Mehmet Okur | C | 31岁 | OVR 72
+  Andrei Kirilenko | SF/PF | 29岁 | OVR 71
+  Raja Bell | SG | 34岁 | OVR 71
+  Gordon Hayward | 3 | 20岁 | OVR 70
+  Sundiata Gaines | PG | 24岁 | OVR 66
+  Ronnie Price | PG | 27岁 | OVR 65
+  Gordon Hayward | SF/SG | 20岁 | OVR 63
+  Brevin Knight | PG | 35岁 | OVR 61
+  Kosta Koufos | C | 21岁 | OVR 60
+  Othyus Jeffers | SG | 25岁 | OVR 59
+  C.J. Miles | SF | 23岁 | OVR 57
+
+[WAS] 共 15 人
+  Gilbert Arenas | PG/SG | 29岁 | OVR 84
+  Josh Howard | SF | 30岁 | OVR 77
+  Kirk Hinrich | SG | 30岁 | OVR 77
+  John Wall | 1 | 20岁 | OVR 74
+  Mike Miller | SG | 30岁 | OVR 70
+  Jordan Crawford | 2 | 22岁 | OVR 70
+  Trevor Booker | 4 | 23岁 | OVR 70
+  Alonzo Gee | SG | 23岁 | OVR 68
+  Al Thornton | SF | 27岁 | OVR 67
+  Nick Young | SG | 25岁 | OVR 66
+  James Singleton | PF | 29岁 | OVR 66
+  Earl Boykins | PG | 34岁 | OVR 64
+  Quinton Ross | SG | 29岁 | OVR 63
+  Andray Blatche | PF | 24岁 | OVR 62
+  Fabricio Oberto | C | 35岁 | OVR 62
+============================================================
+2016-17 赛季（2016 纪元）
+============================================================
+
+[ATL] 共 15 人
+  Dwight Howard | C | 31岁 | OVR 85
+  Paul Millsap | PF | 31岁 | OVR 83
+  Kyle Korver | SG | 35岁 | OVR 79
+  Dennis Schröder | PG | 23岁 | OVR 76
+  Tiago Splitter | C | 32岁 | OVR 76
+  Thabo Sefolosha | SF | 32岁 | OVR 74
+  Tim Hardaway Jr. | SG | 24岁 | OVR 73
+  Kent Bazemore | SF | 27岁 | OVR 72
+  Mike Scott | PF | 28岁 | OVR 72
+  Mike Muscala | C | 25岁 | OVR 72
+  Taurean Prince | 4 | 22岁 | OVR 70
+  DeAndre' Bembry | 3 | 22岁 | OVR 70
+  Walter Tavares | C | 24岁 | OVR 63
+  Pero Antic | C | 34岁 | OVR 63
+  Malcolm Delaney | PG | 27岁 | OVR 59
+
+[BKN] 共 15 人
+  Brook Lopez | C | 28岁 | OVR 83
+  Thaddeus Young | PF | 28岁 | OVR 75
+  Jeremy Lin | SG | 28岁 | OVR 75
+  Jarrett Jack | PG | 33岁 | OVR 74
+  Trevor Booker | PF | 29岁 | OVR 74
+  Donald Sloan | PG | 29岁 | OVR 73
+  Thomas Robinson | PF | 25岁 | OVR 73
+  Henry Sims | C | 26岁 | OVR 72
+  Rondae Hollis-Jefferson | SF | 22岁 | OVR 72
+  Bojan Bogdanović | SF | 27岁 | OVR 71
+  Sean Kilpatrick | SG | 27岁 | OVR 71
+  Wayne Ellington | SG | 29岁 | OVR 70
+  Shane Larkin | PG | 24岁 | OVR 70
+  Sergey Karasev | SF | 23岁 | OVR 70
+  Caris LeVert | 2 | 22岁 | OVR 70
+
+[BOS] 共 15 人
+  Al Horford | C/PF | 30岁 | OVR 83
+  Isaiah Thomas | PG | 27岁 | OVR 81
+  Avery Bradley | SG | 26岁 | OVR 77
+  Jae Crowder | SF | 26岁 | OVR 76
+  Tyler Zeller | C | 27岁 | OVR 76
+  Gerald Green | SG | 31岁 | OVR 76
+  Amir Johnson | PF | 29岁 | OVR 75
+  Kelly Olynyk | C | 25岁 | OVR 74
+  Marcus Smart | PG | 22岁 | OVR 73
+  Jonas Jerebko | PF | 29岁 | OVR 72
+  Jaylen Brown | 2 | 20岁 | OVR 72
+  Guerschon Yabusele | 4 | 21岁 | OVR 70
+  Terry Rozier | PG | 22岁 | OVR 69
+  R.J. Hunter | SG | 23岁 | OVR 67
+  Coty Clarke | SF | 24岁 | OVR 64
+
+[CHA] 共 14 人
+  Kemba Walker | PG | 26岁 | OVR 81
+  Michael Kidd-Gilchrist | SF | 23岁 | OVR 78
+  Nicolas Batum | SF | 28岁 | OVR 77
+  Roy Hibbert | C | 30岁 | OVR 77
+  Jeremy Lamb | SG | 24岁 | OVR 74
+  Cody Zeller | C | 24岁 | OVR 74
+  Frank Kaminsky | C | 23岁 | OVR 73
+  Tyler Hansbrough | PF | 31岁 | OVR 73
+  Ramon Sessions | PG | 30岁 | OVR 72
+  Marvin Williams | PF | 30岁 | OVR 71
+  Spencer Hawes | PF | 28岁 | OVR 66
+  Troy Daniels | SG | 25岁 | OVR 66
+  Jorge Gutierrez | PG | 28岁 | OVR 65
+  Aaron Harrison | SG | 22岁 | OVR 54
+
+[CHI] 共 14 人
+  Jimmy Butler | SG/SF | 27岁 | OVR 86
+  Dwyane Wade | SG/PG | 35岁 | OVR 86
+  Rajon Rondo | PG | 30岁 | OVR 77
+  Nikola Mirotić | PF | 25岁 | OVR 76
+  Taj Gibson | PF | 31岁 | OVR 76
+  Robin Lopez | C | 28岁 | OVR 75
+  Mike Dunleavy | SF | 36岁 | OVR 73
+  Tony Snell | SF | 25岁 | OVR 73
+  Isaiah Canaan | SG | 25岁 | OVR 72
+  Bobby Portis | PF | 21岁 | OVR 71
+  José Calderón | PG | 35岁 | OVR 71
+  Denzel Valentine | 2 | 23岁 | OVR 70
+  Doug McDermott | SF | 25岁 | OVR 68
+  Cristiano Felício | C | 24岁 | OVR 68
+
+[CLE] 共 13 人
+  LeBron James | SF/PF/PG/SG | 32岁 | OVR 94
+  Kyrie Irving | PG/SG | 24岁 | OVR 87
+  Kevin Love | PF/C | 28岁 | OVR 83
+  Tristan Thompson | C/PF | 25岁 | OVR 77
+  J.R. Smith | SG | 31岁 | OVR 76
+  Iman Shumpert | SG | 26岁 | OVR 75
+  Chris Andersen | C | 38岁 | OVR 73
+  Richard Jefferson | SF | 36岁 | OVR 72
+  Channing Frye | C | 33岁 | OVR 71
+  James Jones | SF | 36岁 | OVR 63
+  Jordan McRae | PG | 25岁 | OVR 62
+  Sasha Kaun | C | 31岁 | OVR 62
+  Jared Cunningham | SG | 25岁 | OVR 57
+
+[DAL] 共 13 人
+  Dirk Nowitzki | PF/C | 38岁 | OVR 84
+  Wesley Matthews | SF | 30岁 | OVR 79
+  Deron Williams | PG | 32岁 | OVR 78
+  Harrison Barnes | SF | 24岁 | OVR 77
+  Andrew Bogut | C | 32岁 | OVR 77
+  Devin Harris | PG | 33岁 | OVR 74
+  J.J. Barea | PG | 32岁 | OVR 74
+  Charlie Villanueva | PF | 32岁 | OVR 72
+  JaVale McGee | C | 29岁 | OVR 72
+  Justin Anderson | SF | 23岁 | OVR 71
+  Dwight Powell | PF | 25岁 | OVR 69
+  Salah Mejri | C | 30岁 | OVR 68
+  Seth Curry | PG | 26岁 | OVR 67
+
+[DEN] 共 15 人
+  Kenneth Faried | PF | 27岁 | OVR 79
+  Danilo Gallinari | SF | 28岁 | OVR 76
+  Emmanuel Mudiay | PG | 20岁 | OVR 75
+  Jusuf Nurkić | C | 22岁 | OVR 74
+  Wilson Chandler | SF | 29岁 | OVR 74
+  Will Barton | SG | 26岁 | OVR 73
+  Jameer Nelson | PG | 34岁 | OVR 72
+  Jamal Murray | 2 | 19岁 | OVR 72
+  Darrell Arthur | PF | 28岁 | OVR 71
+  Gary Harris | SG | 22岁 | OVR 71
+  JaKarr Sampson | SF | 23岁 | OVR 70
+  Malik Beasley | 2 | 20岁 | OVR 70
+  Joffrey Lauvergne | C | 25岁 | OVR 69
+  Nikola Jokić | C | 21岁 | OVR 68
+  Juancho Hernangómez | PF | 21岁 | OVR 62
+
+[DET] 共 15 人
+  Andre Drummond | C | 23岁 | OVR 83
+  Tobias Harris | PF | 24岁 | OVR 79
+  Reggie Jackson | PG | 26岁 | OVR 78
+  Jodie Meeks | SG | 29岁 | OVR 74
+  Kentavious Caldwell-Pope | SG | 23岁 | OVR 73
+  Marcus Morris | SF | 27岁 | OVR 73
+  Stanley Johnson | SF | 20岁 | OVR 73
+  Aron Baynes | C | 30岁 | OVR 72
+  Jon Leuer | PF | 27岁 | OVR 72
+  Anthony Tolliver | PF | 31岁 | OVR 70
+  Ish Smith | PG | 28岁 | OVR 70
+  Henry Ellenson | 4 | 20岁 | OVR 70
+  Boban Marjanović | C | 28岁 | OVR 69
+  Steve Blake | PG | 36岁 | OVR 68
+  Spencer Dinwiddie | PG | 23岁 | OVR 68
+
+[GSW] 共 14 人
+  Stephen Curry | PG/SG | 28岁 | OVR 93
+  Kevin Durant | SF/PF | 28岁 | OVR 91
+  Klay Thompson | SG/SF | 26岁 | OVR 87
+  Draymond Green | PF/SF/C | 26岁 | OVR 82
+  Andre Iguodala | SF/SG/PG | 33岁 | OVR 77
+  David West | PF | 36岁 | OVR 77
+  Anderson Varejão | C | 34岁 | OVR 76
+  Shaun Livingston | PG/SG | 31岁 | OVR 73
+  Zaza Pachulia | C | 32岁 | OVR 73
+  Damian Jones | 5 | 21岁 | OVR 70
+  Kevon Looney | PF | 20岁 | OVR 69
+  Ian Clark | SG | 25岁 | OVR 66
+  James Michael | PF | 24岁 | OVR 65
+  Patrick McCaw | SG | 21岁 | OVR 64
+
+[HOU] 共 13 人
+  James Harden | SG/PG | 27岁 | OVR 92
+  Eric Gordon | SG | 28岁 | OVR 78
+  Trevor Ariza | SF | 31岁 | OVR 77
+  Patrick Beverley | PG | 28岁 | OVR 76
+  Corey Brewer | SF | 30岁 | OVR 76
+  Ryan Anderson | PF | 28岁 | OVR 76
+  Donatas Motiejūnas | PF | 26岁 | OVR 75
+  Josh Smith | PF | 31岁 | OVR 75
+  Jason Terry | SG | 39岁 | OVR 71
+  Nene Hilario | PF | 34岁 | OVR 71
+  K.J. McDaniels | SF | 23岁 | OVR 70
+  Sam Dekker | SF | 22岁 | OVR 70
+  Clint Capela | C | 22岁 | OVR 70
+
+[IND] 共 12 人  ← 人数偏少，可能有缺失
+  Paul George | SF/SG/PF | 26岁 | OVR 86
+  Jeff Teague | PG | 28岁 | OVR 83
+  Al Jefferson | C | 32岁 | OVR 83
+  Monta Ellis | SG/PG | 31岁 | OVR 81
+  Rodney Stuckey | PG | 30岁 | OVR 76
+  Aaron Brooks | PG | 32岁 | OVR 75
+  C.J. Miles | SF | 29岁 | OVR 73
+  Myles Turner | C | 20岁 | OVR 73
+  Lavoy Allen | PF | 27岁 | OVR 72
+  Kevin Séraphin | C | 27岁 | OVR 72
+  Joe Young | PG | 24岁 | OVR 68
+  Shayne Whittington | PF | 25岁 | OVR 67
+
+[LAC] 共 14 人
+  Chris Paul | PG | 31岁 | OVR 90
+  Blake Griffin | PF/C | 27岁 | OVR 88
+  DeAndre Jordan | C | 28岁 | OVR 84
+  Jamal Crawford | SG | 36岁 | OVR 79
+  Paul Pierce | SF/SG | 39岁 | OVR 78
+  J.J. Redick | SG | 32岁 | OVR 76
+  Marreese Speights | C | 29岁 | OVR 76
+  Wesley Johnson | SF | 29岁 | OVR 72
+  Pablo Prigioni | PG | 39岁 | OVR 71
+  Austin Rivers | SG | 24岁 | OVR 70
+  Jeff Ayres | C | 29岁 | OVR 70
+  Brice Johnson | 4 | 22岁 | OVR 70
+  Raymond Felton | PG | 32岁 | OVR 68
+  C.J. Wilcox | SG | 26岁 | OVR 63
+
+[LAL] 共 15 人
+  Lou Williams | SG | 30岁 | OVR 80
+  Luol Deng | PF | 31岁 | OVR 78
+  D'Angelo Russell | PG | 20岁 | OVR 77
+  Timofey Mozgov | C | 30岁 | OVR 77
+  Jordan Clarkson | SG | 24岁 | OVR 75
+  Brandon Bass | PF | 31岁 | OVR 74
+  Julius Randle | PF | 22岁 | OVR 74
+  Nick Young | SG | 31岁 | OVR 73
+  Brandon Ingram | 3 | 19岁 | OVR 73
+  Marcelo Huertas | PG | 33岁 | OVR 72
+  Robert Sacre | C | 27岁 | OVR 69
+  Larry Nance | PF | 24岁 | OVR 66
+  Tarik Black | C | 25岁 | OVR 62
+  Metta World | SF | 37岁 | OVR 61
+  Ivica Zubac | C | 19岁 | OVR 60
+
+[MEM] 共 15 人
+  Marc Gasol | C | 32岁 | OVR 87
+  Mike Conley | PG | 29岁 | OVR 85
+  Zach Randolph | PF | 35岁 | OVR 84
+  Chandler Parsons | SF | 28岁 | OVR 79
+  Tony Allen | SG | 35岁 | OVR 78
+  Brandan Wright | PF | 29岁 | OVR 75
+  Lance Stephenson | SG/SF/PG | 26岁 | OVR 74
+  Mario Chalmers | PG | 30岁 | OVR 74
+  Vince Carter | SG/SF | 40岁 | OVR 72
+  Bryce Cotton | PG | 24岁 | OVR 72
+  Ray McCallum | PG | 25岁 | OVR 71
+  James Ennis III | SF | 26岁 | OVR 70
+  Wade Baldwin | 1 | 20岁 | OVR 70
+  Jordan Adams | SG | 22岁 | OVR 69
+  P.J. Hairston | SF | 24岁 | OVR 69
+
+[MIA] 共 15 人
+  Chris Bosh | PF/C | 32岁 | OVR 84
+  Goran Dragić | PG | 30岁 | OVR 81
+  Hassan Whiteside | C | 27岁 | OVR 81
+  Joe Johnson | SG/SF/PG | 35岁 | OVR 79
+  Justise Winslow | SF | 20岁 | OVR 74
+  Dion Waiters | SG | 25岁 | OVR 73
+  Dorell Wright | SF | 31岁 | OVR 72
+  Derrick Williams | SF | 25岁 | OVR 72
+  Tyler Johnson | SG | 24岁 | OVR 71
+  Josh McRoberts | PF | 29岁 | OVR 71
+  Luke Babbitt | SF | 27岁 | OVR 70
+  Willie Reed | C | 26岁 | OVR 68
+  Josh Richardson | SG | 23岁 | OVR 67
+  Beno Udrih | PG | 34岁 | OVR 60
+  Udonis Haslem | PF | 36岁 | OVR 58
+
+[MIL] 共 15 人
+  Greg Monroe | C | 26岁 | OVR 82
+  Giannis Antetokounmpo | SF/PF/PG | 22岁 | OVR 79
+  Khris Middleton | SF/SG | 25岁 | OVR 78
+  Jabari Parker | PF | 21岁 | OVR 77
+  Michael Carter-Williams | PG | 25岁 | OVR 77
+  O.J. Mayo | SG | 29岁 | OVR 75
+  John Henson | C | 26岁 | OVR 72
+  Matthew Dellavedova | PG | 26岁 | OVR 70
+  Thon Maker | 4 | 19岁 | OVR 70
+  Jerryd Bayless | SG | 28岁 | OVR 69
+  Miles Plumlee | C | 28岁 | OVR 67
+  Michael Beasley | PF | 28岁 | OVR 67
+  Tyler Ennis | PG | 22岁 | OVR 61
+  Greivis Vasquez | PG | 30岁 | OVR 59
+  Johnny O'Bryant | PF | 23岁 | OVR 57
+
+[MIN] 共 15 人
+  Andrew Wiggins | SF | 21岁 | OVR 80
+  Karl-Anthony Towns | C | 21岁 | OVR 78
+  Ricky Rubio | PG | 26岁 | OVR 77
+  Nikola Peković | C | 31岁 | OVR 77
+  Shabazz Muhammad | SF | 24岁 | OVR 75
+  Jordan Hill | C | 29岁 | OVR 75
+  Gorgui Dieng | C | 27岁 | OVR 74
+  Tayshaun Prince | SF | 36岁 | OVR 73
+  Kris Dunn | 1 | 22岁 | OVR 73
+  Cole Aldrich | C | 28岁 | OVR 72
+  Nemanja Bjelica | PF | 28岁 | OVR 70
+  Zach LaVine | SG | 21岁 | OVR 70
+  Tyus Jones | PG | 20岁 | OVR 69
+  Kris Dunn | PG | 22岁 | OVR 61
+  Greg Smith | PF | 26岁 | OVR 59
+
+[NOP] 共 15 人
+  Anthony Davis | PF/C | 23岁 | OVR 92
+  Tyreke Evans | SG/PG/SF | 27岁 | OVR 80
+  Jrue Holiday | PG/SG | 26岁 | OVR 79
+  Tim Frazier | PG | 26岁 | OVR 76
+  Terrence Jones | PF | 25岁 | OVR 75
+  Alexis Ajinça | C | 28岁 | OVR 74
+  Solomon Hill | SF | 25岁 | OVR 73
+  Norris Cole | PG | 28岁 | OVR 72
+  Kendrick Perkins | C | 32岁 | OVR 72
+  Langston Galloway | PG | 25岁 | OVR 72
+  Alonzo Gee | SF | 29岁 | OVR 70
+  Toney Douglas | PG | 30岁 | OVR 70
+  E'Twaun Moore | SG | 27岁 | OVR 70
+  Buddy Hield | 2 | 24岁 | OVR 70
+  Dante Cunningham | SF | 29岁 | OVR 65
+
+[NYK] 共 12 人  ← 人数偏少，可能有缺失
+  Carmelo Anthony | SF/PF | 32岁 | OVR 88
+  Joakim Noah | C/PF | 31岁 | OVR 79
+  Courtney Lee | SG | 31岁 | OVR 75
+  Kristaps Porziņģis | PF | 21岁 | OVR 74
+  Kyle O'Quinn | PF | 26岁 | OVR 72
+  Lou Amundson | PF | 34岁 | OVR 71
+  Thanasis Antetokounmpo | SF | 24岁 | OVR 71
+  Derrick Rose | PG/SG | 28岁 | OVR 71
+  Lance Thomas | PF | 28岁 | OVR 70
+  Justin Holiday | SG | 27岁 | OVR 66
+  Willy Hernangomez | C | 22岁 | OVR 64
+  Mindaugas Kuzminskas | SF | 27岁 | OVR 62
+
+[OKC] 共 14 人
+  Russell Westbrook | PG/SG | 28岁 | OVR 89
+  Enes Kanter | C | 24岁 | OVR 80
+  Victor Oladipo | SG | 24岁 | OVR 80
+  Anthony Morrow | SG | 31岁 | OVR 74
+  Steven Adams | C | 23岁 | OVR 74
+  Nick Collison | PF | 36岁 | OVR 73
+  Mitch McGary | PF | 24岁 | OVR 73
+  Randy Foye | SG | 33岁 | OVR 72
+  Cameron Payne | PG | 22岁 | OVR 72
+  Andre Roberson | SG | 25岁 | OVR 72
+  Domantas Sabonis | 4 | 20岁 | OVR 70
+  Steve Novak | PF | 33岁 | OVR 64
+  Kyle Singler | SF | 28岁 | OVR 60
+  Josh Huestis | PF | 25岁 | OVR 56
+
+[ORL] 共 14 人
+  Nikola Vučević | C | 26岁 | OVR 83
+  Brandon Jennings | PG | 27岁 | OVR 80
+  Serge Ibaka | PF | 27岁 | OVR 80
+  Jeff Green | SF | 30岁 | OVR 77
+  Elfrid Payton | PG | 22岁 | OVR 76
+  C.J. Watson | PG | 32岁 | OVR 74
+  Aaron Gordon | PF | 21岁 | OVR 74
+  Mario Hezonja | SF | 21岁 | OVR 73
+  D.J. Augustin | PG | 29岁 | OVR 73
+  Evan Fournier | SF | 24岁 | OVR 72
+  Bismack Biyombo | C | 24岁 | OVR 72
+  Andrew Nicholson | PF | 27岁 | OVR 65
+  Shabazz Napier | PG | 25岁 | OVR 60
+  Devyn Marble | SG | 24岁 | OVR 56
+
+[PHI] 共 15 人
+  Jahlil Okafor | C | 21岁 | OVR 77
+  Nerlens Noel | C | 22岁 | OVR 77
+  Joel Embiid | C | 22岁 | OVR 76
+  Tony Wroten | PG | 23岁 | OVR 75
+  Carl Landry | PF | 33岁 | OVR 74
+  Ersan İlyasova | PF | 29岁 | OVR 74
+  Gerald Henderson | SG | 29岁 | OVR 74
+  Robert Covington | SF | 26岁 | OVR 73
+  Ben Simmons | 3 | 20岁 | OVR 72
+  Hollis Thompson | SG | 25岁 | OVR 71
+  Elton Brand | PF/C | 37岁 | OVR 70
+  Dario Šarić | PF | 22岁 | OVR 70
+  Furkan Korkmaz | 2 | 19岁 | OVR 70
+  Nik Stauskas | SG | 23岁 | OVR 69
+  Jerami Grant | SF | 22岁 | OVR 69
+
+[PHX] 共 15 人
+  Eric Bledsoe | PG | 27岁 | OVR 82
+  Brandon Knight | SG | 25岁 | OVR 81
+  Tyson Chandler | C | 34岁 | OVR 79
+  P.J. Tucker | SF | 31岁 | OVR 75
+  Jared Dudley | PF | 31岁 | OVR 75
+  Alex Len | C | 23岁 | OVR 74
+  Leandro Barbosa | SG | 34岁 | OVR 74
+  Devin Booker | SG | 20岁 | OVR 72
+  Chase Budinger | SF | 28岁 | OVR 71
+  T.J. Warren | SF | 23岁 | OVR 71
+  Alan Williams | PF | 24岁 | OVR 70
+  Dragan Bender | 4 | 19岁 | OVR 70
+  Marquese Chriss | 4 | 19岁 | OVR 70
+  Mirza Teletović | PF | 31岁 | OVR 69
+  Ronnie Price | PG | 33岁 | OVR 69
+
+[POR] 共 14 人
+  Damian Lillard | PG | 26岁 | OVR 86
+  C.J. McCollum | SG | 25岁 | OVR 78
+  Mason Plumlee | C | 26岁 | OVR 76
+  Ed Davis | PF | 27岁 | OVR 76
+  Chris Kaman | C | 34岁 | OVR 76
+  Evan Turner | SG | 28岁 | OVR 74
+  Al-Farouq Aminu | SF | 26岁 | OVR 73
+  Meyers Leonard | PF | 24岁 | OVR 72
+  Brian Roberts | PG | 31岁 | OVR 72
+  Noah Vonleh | PF | 21岁 | OVR 72
+  Festus Ezeli | C | 27岁 | OVR 72
+  Maurice Harkless | SF | 23岁 | OVR 68
+  Allen Crabbe | SG | 24岁 | OVR 67
+  Cliff Alexander | PF | 21岁 | OVR 58
+
+[SAC] 共 15 人
+  DeMarcus Cousins | C/PF | 26岁 | OVR 87
+  Rudy Gay | SF | 30岁 | OVR 83
+  Ty Lawson | PG | 29岁 | OVR 81
+  Darren Collison | PG | 29岁 | OVR 79
+  Arron Afflalo | SG | 31岁 | OVR 75
+  Willie Cauley-Stein | C | 23岁 | OVR 74
+  Marco Belinelli | SG | 30岁 | OVR 73
+  Omri Casspi | SF | 28岁 | OVR 73
+  Matt Barnes | SF | 36岁 | OVR 73
+  Caron Butler | SF | 36岁 | OVR 72
+  Ben McLemore | SG | 23岁 | OVR 72
+  Kosta Koufos | C | 27岁 | OVR 72
+  James Anderson | SG | 27岁 | OVR 70
+  Georgios Papagiannis | 5 | 19岁 | OVR 70
+  Malachi Richardson | 2 | 21岁 | OVR 70
+
+[SAS] 共 15 人
+  LaMarcus Aldridge | PF | 31岁 | OVR 88
+  Kawhi Leonard | SF/SG/PF | 25岁 | OVR 87
+  Pau Gasol | PF/C | 36岁 | OVR 86
+  Tony Parker | PG | 34岁 | OVR 83
+  Kevin Martin | SG | 33岁 | OVR 79
+  Manu Ginóbili | SG/PG/SF | 39岁 | OVR 78
+  Danny Green | SG | 29岁 | OVR 76
+  David Lee | PF | 33岁 | OVR 76
+  Patty Mills | PG | 28岁 | OVR 74
+  Boris Diaw | PF/C/SF | 34岁 | OVR 74
+  Andre Miller | PG | 40岁 | OVR 73
+  Kyle Anderson | SF/PF/PG | 23岁 | OVR 71
+  Dewayne Dedmon | C | 27岁 | OVR 71
+  Matt Bonner | C | 36岁 | OVR 70
+  Dejounte Murray | 1 | 20岁 | OVR 70
+
+[TOR] 共 15 人
+  Kyle Lowry | PG | 30岁 | OVR 83
+  DeMar DeRozan | SG/SF | 27岁 | OVR 83
+  DeMarre Carroll | SF | 30岁 | OVR 79
+  Jonas Valančiūnas | C | 24岁 | OVR 78
+  Jared Sullinger | PF | 24岁 | OVR 77
+  James Johnson | PF | 29岁 | OVR 75
+  Luis Scola | PF | 36岁 | OVR 75
+  Patrick Patterson | PF | 27岁 | OVR 74
+  Cory Joseph | SG | 25岁 | OVR 74
+  Pascal Siakam | 4 | 22岁 | OVR 74
+  Terrence Ross | SF | 25岁 | OVR 73
+  Delon Wright | PG | 24岁 | OVR 70
+  Jakob Poeltl | 5 | 21岁 | OVR 70
+  Jason Thompson | C | 30岁 | OVR 68
+  Lucas Nogueira | C | 24岁 | OVR 68
+
+[UTA] 共 14 人
+  Gordon Hayward | SF/SG | 26岁 | OVR 83
+  Derrick Favors | PF | 25岁 | OVR 82
+  Rudy Gobert | C | 24岁 | OVR 79
+  George Hill | PG | 30岁 | OVR 78
+  Alec Burks | SG | 25岁 | OVR 76
+  Trey Burke | PG | 24岁 | OVR 73
+  Shelvin Mack | PG | 26岁 | OVR 72
+  Trey Lyles | PF | 21岁 | OVR 72
+  Rodney Hood | SG | 24岁 | OVR 70
+  Joe Ingles | SF | 29岁 | OVR 70
+  Raul Neto | PG | 24岁 | OVR 70
+  Jeff Withey | C | 26岁 | OVR 70
+  Chris Johnson | SF | 26岁 | OVR 61
+  Elijah Millsap | SG | 29岁 | OVR 58
+
+[WAS] 共 14 人
+  John Wall | PG | 26岁 | OVR 87
+  Bradley Beal | SG | 23岁 | OVR 80
+  Markieff Morris | PF | 27岁 | OVR 78
+  Marcin Gortat | C | 32岁 | OVR 78
+  J.J. Hickson | C | 28岁 | OVR 73
+  Ian Mahinmi | C | 30岁 | OVR 73
+  Marcus Thornton | SG | 29岁 | OVR 72
+  Otto Porter Jr. | SF | 23岁 | OVR 72
+  Jason Smith | C | 30岁 | OVR 72
+  Garrett Temple | SF | 30岁 | OVR 71
+  Kelly Oubre Jr. | SF | 21岁 | OVR 71
+  Gary Neal | SG | 32岁 | OVR 67
+  Kris Humphries | PF | 31岁 | OVR 64
+  Drew Gooden | PF | 35岁 | OVR 58

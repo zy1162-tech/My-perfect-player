@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>Perfect Player SW browser smoke</title>
+<body><pre id="result">RUNNING</pre><iframe id="game" src="../../nba-perfect-player.html" hidden></iframe>
+<script>
+  (async function () {
+    var out = document.getElementById('result');
+    try {
+      await new Promise(function (resolve) {
+        var frame = document.getElementById('game');
+        frame.addEventListener('load', resolve, { once:true });
+      });
+      var deadline = Date.now() + 15000;
+      var key = '';
+      while (!key && Date.now() < deadline) {
+        var keys = await caches.keys();
+        key = keys.filter(function (item) { return item.indexOf('perfect-player-shell-') === 0; }).sort().pop() || '';
+        if (!key) await new Promise(function (resolve) { setTimeout(resolve, 100); });
+      }
+      if (!key) throw new Error('offline cache missing');
+      var cache = await caches.open(key);
+      var requests = await cache.keys();
+      while (requests.length < 35 && Date.now() < deadline) {
+        await new Promise(function (resolve) { setTimeout(resolve, 100); });
+        requests = await cache.keys();
+      }
+      if (requests.length < 35) throw new Error('incomplete shell: ' + requests.length);
+      out.textContent = 'PASS ' + key + ' resources=' + requests.length;
+    } catch (error) {
+      out.textContent = 'FAIL ' + (error && error.message || error);
+    }
+  })();
+</script>
+</body>
+</html>

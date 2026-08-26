@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Perfect Player · 完美球员</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%80%3C/text%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="assets/css/fonts.css?v=20260826-performance-v1">
   <style id="pp-boot-css">
 html.pp-booting,html.pp-booting body{background:#faf5eb}
 html.pp-booting #app{visibility:hidden}
@@ -41,14 +38,17 @@ html.pp-booting #app{visibility:hidden}
 <script src="assets/data/player-ages-local.js?v=20260824-age-local-v5"></script>
 <script src="assets/data/era-mode-data.js?v=20260825-era-v11"></script>
 <script src="assets/data/era-complete-rosters.js?v=20260825-era-v11"></script>
+<script src="assets/data/era-presentation.js?v=20260826-era-presentation-v2"></script>
+<script src="assets/data/era-headshot-index.js?v=20260826-era-headshots-v1"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20260825-retirement-floor-v10" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20260825-retirement-floor-v10"></script>
-  <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260823-allstar-draft-ui">
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20260826-performance-v4" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20260826-performance-v4"></script>
+  <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260826-era-headshots-v2">
+  <link rel="stylesheet" href="assets/css/perfect-player-season-report.css?v=20260826-season-report-v1">
 
 
-<link href="assets/css/perfect-player-premium.css?v=20260824-shot-roster-ui-v7" rel="stylesheet">
+<link href="assets/css/perfect-player-premium.css?v=20260826-era-story-ui-v2" rel="stylesheet">
 </head>
 <body>
 
@@ -380,35 +380,7 @@ html.pp-booting #app{visibility:hidden}
 
 <script src="assets/js/hupu/script-00-2678-58zyeprc-upload-1783508428855-12.js"></script>
 <script>
-// ── 头像模式切换 ──
-// sprite → 使用 sprite 贴图（默认）
-// nba    → 使用 NBA CDN 直链
-/** 获取球员头像样式（仅 NBA CDN） */
-function getPlayerHeadshotStyle(playerName, displaySize) {
-  if (!playerName) return '';
-  displaySize = displaySize || 30;
-  if (window.PERFECT_PLAYER_PHOTO_BY_NAME && window.PERFECT_PLAYER_PHOTO_BY_NAME[playerName]) {
-    var localPhoto = window.PERFECT_PLAYER_PHOTO_BY_NAME[playerName];
-    return 'background-image:url(' + localPhoto + ');background-size:cover;background-position:center top;background-repeat:no-repeat;width:' + displaySize + 'px;height:' + displaySize + 'px;';
-  }
-  if (typeof NBA_PLAYER_IMAGES !== 'undefined') {
-    var fixedName = (typeof HEADSHOT_NAME_FIX !== 'undefined' && HEADSHOT_NAME_FIX[playerName]) || playerName;
-    var pid = NBA_PLAYER_IMAGES[fixedName];
-    if (!pid) {
-      for (var key in NBA_PLAYER_IMAGES) {
-        if (key.indexOf(playerName) >= 0 || playerName.indexOf(key) >= 0 ||
-            (fixedName !== playerName && (key.indexOf(fixedName) >= 0 || fixedName.indexOf(key) >= 0))) {
-          pid = NBA_PLAYER_IMAGES[key]; break;
-        }
-      }
-    }
-    if (pid) {
-      var url = 'https://cdn.nba.com/headshots/nba/latest/260x190/' + pid + '.png';
-      return 'background-image:url(' + url + ');background-size:cover;background-position:center;background-repeat:no-repeat;width:' + displaySize + 'px;height:' + displaySize + 'px;';
-    }
-  }
-  return '';
-}
+// 所有头像来源与 CSS URL 序列化统一由下方 resolver 处理。
 </script>
 <script>
 /** 名字修正映射（ASCII名 → CDN带重音名） */
@@ -539,6 +511,67 @@ function _hsOfficialRemotePath(playerId) {
   return (playerId && PERFECT_PLAYER_HEADSHOT_URL_FIX[playerId])
     || (playerId ? 'https://cdn.nba.com/headshots/nba/latest/260x190/' + playerId + '.png' : '');
 }
+var _hsValidOfficialIdSet = null;
+var _hsExcludedOfficialIdSet = null;
+function _hsGetValidOfficialIdSet() {
+  if (_hsValidOfficialIdSet) return _hsValidOfficialIdSet;
+  _hsValidOfficialIdSet = {};
+  var list = window.__PP_ERA_HEADSHOT_INDEX__ && window.__PP_ERA_HEADSHOT_INDEX__.validOfficialIds || [];
+  list.forEach(function(id) { _hsValidOfficialIdSet[String(id)] = true; });
+  return _hsValidOfficialIdSet;
+}
+function _hsHasLocalOfficialId(playerId) {
+  return !!(playerId && _hsGetValidOfficialIdSet()[String(playerId)]);
+}
+function _hsIsExcludedOfficialId(playerId) {
+  if (!_hsExcludedOfficialIdSet) {
+    _hsExcludedOfficialIdSet = {};
+    var list = window.__PP_ERA_HEADSHOT_INDEX__ && window.__PP_ERA_HEADSHOT_INDEX__.excludedOfficialIds || [];
+    list.forEach(function(id) { _hsExcludedOfficialIdSet[String(id)] = true; });
+  }
+  return !!(playerId && _hsExcludedOfficialIdSet[String(playerId)]);
+}
+function _hsPresentationKey(value) {
+  var text = String(value || '').trim().replace(/amar['’\- ]e/ig, 'amare');
+  if (text.normalize) text = text.normalize('NFKD');
+  return text.replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, '');
+}
+window.resolveVerifiedLocalPlayerHeadshot = function(player) {
+  var index = window.__PP_ERA_HEADSHOT_INDEX__ && window.__PP_ERA_HEADSHOT_INDEX__.players || {};
+  var names = player && typeof player === 'object'
+    ? [player.nameEN, player.nameEn, player.name]
+    : [player];
+  for (var i = 0; i < names.length; i++) {
+    var record = index[_hsPresentationKey(names[i])];
+    if (record && record.p) return record.p;
+  }
+  return '';
+};
+function _hsIsReliableRecordLocal(localPath, playerRecord, indexedLocal, playerId) {
+  localPath = String(localPath || '');
+  if (!localPath) return false;
+  if (localPath === indexedLocal) return true;
+  if (/^assets\/images\/Player\/nba-official\//i.test(localPath)) return _hsHasLocalOfficialId(playerId);
+  if (/^assets\/images\/Player\/hupu-era\//i.test(localPath) || /^assets\/data\/historical\/headshots\//i.test(localPath) || /^assets\/images\/Player\/historical-nba\//i.test(localPath)) return false;
+  // 现役 hupu-current、抽卡池和虚构新秀使用各自已有的本地清单，不受年代索引限制。
+  return true;
+}
+function _hsOfficialIdFromRemoteUrl(remoteUrl) {
+  var match = String(remoteUrl || '').match(/^https?:\/\/(?:[^/]+\.)?nba\.com\/(?:[^?#]*\/)?headshots\/(?:nba\/)?(?:latest\/)?(?:\d+x\d+\/)?(\d+)\.(?:png|webp|jpe?g)(?:[?#].*)?$/i);
+  return match ? Number(match[1]) : 0;
+}
+function _hsIsReliableRecordRemote(remoteUrl, playerId) {
+  remoteUrl = String(remoteUrl || '');
+  if (!remoteUrl) return false;
+  var urlPlayerId = _hsOfficialIdFromRemoteUrl(remoteUrl);
+  // 旧存档可能保存了后来确认是通用占位图的 NBA CDN 地址。
+  // 只过滤 NBA 官方头像；ESPN 或用户自定义地址保持原样。
+  if (urlPlayerId && (_hsIsExcludedOfficialId(urlPlayerId) || _hsIsExcludedOfficialId(playerId))) return false;
+  return true;
+}
+function _hsCssBgUrl(url) {
+  return "url('" + String(url || '').replace(/\\/g, '%5C').replace(/'/g, '%27').replace(/[\r\n\f]/g, '') + "')";
+}
 function attachOfficialPlayerHeadshots() {
   if (typeof NBA2K_TEAMS === 'undefined' || typeof NBA2K_DATA === 'undefined') return;
   NBA2K_TEAMS.forEach(function(team) {
@@ -546,15 +579,15 @@ function attachOfficialPlayerHeadshots() {
       var pid = getOfficialPlayerHeadshotId(player);
       if (!pid) return;
       player.nbaId = pid;
-      player.photoUrl = _hsOfficialRemotePath(pid);
-      player.photoLocal = player.photoLocal || _hsOfficialLocalPath(pid);
+      player.photoUrl = _hsIsExcludedOfficialId(pid) ? '' : _hsOfficialRemotePath(pid);
+      if (_hsHasLocalOfficialId(pid)) player.photoLocal = player.photoLocal || _hsOfficialLocalPath(pid);
       player.photoSource = player.photoSource || (PERFECT_PLAYER_HEADSHOT_URL_FIX[pid] ? 'espn-official-player-headshot' : 'nba-official-headshot');
-      player.photoStatus = 'cached';
+      player.photoStatus = _hsHasLocalOfficialId(pid) ? 'cached' : (_hsIsExcludedOfficialId(pid) ? 'placeholder-excluded' : 'remote');
     });
   });
 }
 /** 无照片球员的兜底头像：用姓名首字母生成彩色 SVG，比灰圈更体面。 */
-function _hsInitialsAvatar(name, displaySize) {
+function _hsInitialsAvatarUrl(name) {
   var parts = String(name || '?').trim().split(/[\s\-]+/).filter(Boolean);
   var initials = parts.length >= 2
     ? (parts[0].charAt(0) + parts[parts.length - 1].charAt(0))
@@ -569,15 +602,17 @@ function _hsInitialsAvatar(name, displaySize) {
     '<rect width="64" height="64" fill="url(#g)"/>' +
     '<text x="32" y="33" font-family="Fredoka,Arial,sans-serif" font-size="26" font-weight="700" ' +
     'fill="#fff" text-anchor="middle" dominant-baseline="central">' + initials + '</text></svg>';
-  var uri = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-  return 'background-image:url("' + uri + '");background-size:cover;background-position:center;background-repeat:no-repeat;width:' + displaySize + 'px;height:' + displaySize + 'px;';
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
-/** 获取球员头像样式（本地缓存 → NBA CDN → 归一化匹配 → 首字母兜底） */
-function getPlayerHeadshotStyle(playerName, displaySize) {
+function _hsInitialsAvatar(name, displaySize) {
+  var uri = _hsInitialsAvatarUrl(name);
+  return 'background-image:' + _hsCssBgUrl(uri) + ';background-size:cover;background-position:center;background-repeat:no-repeat;width:' + displaySize + 'px;height:' + displaySize + 'px;';
+}
+/** 统一头像来源：验证过的本地身份索引 → 现役/存档可靠本地路径 → 官方远程 → 缩写。 */
+function getPlayerHeadshotSources(playerName) {
   if (!playerName) return '';
   var playerRecord = playerName && typeof playerName === 'object' ? playerName : null;
   var lookupName = _hsPlayerLookupName(playerName);
-  displaySize = displaySize || 30;
   if (!playerRecord && typeof NBA2K_TEAMS !== 'undefined' && typeof NBA2K_DATA !== 'undefined') {
     for (var teamIndex = 0; teamIndex < NBA2K_TEAMS.length && !playerRecord; teamIndex++) {
       var roster = NBA2K_DATA[NBA2K_TEAMS[teamIndex]] || [];
@@ -594,21 +629,42 @@ function getPlayerHeadshotStyle(playerName, displaySize) {
   if (window.PERFECT_PLAYER_PHOTO_BY_NAME) {
     namedPhoto = window.PERFECT_PLAYER_PHOTO_BY_NAME[lookupName] || (playerRecord && window.PERFECT_PLAYER_PHOTO_BY_NAME[playerRecord.cname]) || '';
   }
+  var indexedLocal = resolveVerifiedLocalPlayerHeadshot(playerRecord || lookupName);
   var localPhoto = (playerRecord && (playerRecord.photoLocal || playerRecord._photoLocal)) || '';
   var pid = getOfficialPlayerHeadshotId(playerRecord || lookupName);
-  var remote = pid ? _hsOfficialRemotePath(pid) : '';
-  var urls = [];
-  function pushUrl(u) {
-    if (u && urls.indexOf(u) < 0) urls.push(u);
+  var local = [];
+  var remote = [];
+  function push(list, value) {
+    value = String(value || '');
+    if (value && list.indexOf(value) < 0) list.push(value);
   }
-  pushUrl(namedPhoto);
-  pushUrl(localPhoto);
-  if (pid) pushUrl(_hsOfficialLocalPath(pid));
-  pushUrl(remote);
+  function pushClassified(value) {
+    if (/^https?:\/\//i.test(String(value || ''))) push(remote, String(value).replace(/^http:\/\//i, 'https://'));
+    else push(local, value);
+  }
+  push(local, indexedLocal);
+  pushClassified(namedPhoto);
+  if (_hsIsReliableRecordLocal(localPhoto, playerRecord, indexedLocal, pid)) push(local, localPhoto);
+  if (pid && _hsHasLocalOfficialId(pid)) push(local, _hsOfficialLocalPath(pid));
+  if (playerRecord && (playerRecord.photoUrl || playerRecord._photoUrl)) {
+    var recordRemote = playerRecord.photoUrl || playerRecord._photoUrl;
+    if (_hsIsReliableRecordRemote(recordRemote, pid)) pushClassified(recordRemote);
+  }
+  if (pid && !_hsIsExcludedOfficialId(pid)) push(remote, _hsOfficialRemotePath(pid));
+  return { lookupName:lookupName, local:local, remote:remote, fallback:_hsInitialsAvatarUrl(lookupName), player:playerRecord };
+}
+/** 获取球员头像样式；CSS URL 使用单引号，嵌入双引号 style 属性时不会被截断。 */
+function getPlayerHeadshotStyle(playerName, displaySize) {
+  if (!playerName) return '';
+  displaySize = displaySize || 30;
+  var sources = getPlayerHeadshotSources(playerName);
+  var urls = sources.local.concat(sources.remote);
   if (urls.length) {
-    return 'background-image:url(' + urls.join('),url(') + ');background-size:cover;background-position:center top;background-repeat:no-repeat;width:' + displaySize + 'px;height:' + displaySize + 'px;';
+    // 缓存路径或远程地址失效时，最底层始终还有稳定缩写头像，不再露出空白。
+    urls.push(sources.fallback);
+    return 'background-image:' + urls.map(_hsCssBgUrl).join(',') + ';background-size:cover;background-position:center top;background-repeat:no-repeat;width:' + displaySize + 'px;height:' + displaySize + 'px;';
   }
-  return _hsInitialsAvatar(lookupName, displaySize);
+  return _hsInitialsAvatar(sources.lookupName, displaySize);
 }
 </script>
 <script src="assets/js/hupu/script-01-2678-5hu3djrc-upload-1783494754597-12.js"></script>
@@ -618,17 +674,19 @@ function getPlayerHeadshotStyle(playerName, displaySize) {
 <script src="assets/js/hupu/script-04-2678-mdo4zerc-upload-1783494754597-21.js"></script>
 <script src="assets/js/hupu/script-05-2678-qlg35lrc-upload-1783494754597-24.js"></script>
 <script>
-// ── 中文名修正 ──
-(function fixPlayerCN() {
-  var fixMap = { 'Tamar Bates': '塔马尔贝茨', 'Trey Lyles': '特雷-莱尔斯' };
+// ── 中文名修正：可在旧存档覆盖联盟名单后安全重复调用 ──
+window.applyCurrentPlayerChineseDisplayFixes = function() {
+  var fixMap = { 'Tamar Bates': '塔马尔-贝茨', 'Trey Lyles': '特雷-莱尔斯', 'Adam Flagler': '亚当-弗拉格勒', 'Mo Bamba': '穆罕默德-班巴' };
   if (typeof NBA2K_TEAMS !== 'undefined' && typeof NBA2K_DATA !== 'undefined') {
     NBA2K_TEAMS.forEach(function(t) {
       (NBA2K_DATA[t] || []).forEach(function(p) {
-        if (fixMap[p.name]) p.cname = fixMap[p.name];
+        var english = p && (p.nameEN || p.name);
+        if (fixMap[english]) p.cname = fixMap[english];
       });
     });
   }
-})();
+};
+window.applyCurrentPlayerChineseDisplayFixes();
 </script>
 <script>
 var DEFAULT_HUPU_AVATAR = 'assets/images/Player/ai-avatars/avatar-asia-01.png';
@@ -820,9 +878,10 @@ var Storage = {
   }
 };
 </script>
-<script src="assets/js/perfect-player-core.js?v=20260825-management-v21"></script>
-<script src="assets/js/perfect-player-mod-v4.js?v=20260825-management-v20"></script>
-<script src="assets/js/perfect-player-era-mode.js?v=20260825-era-v23"></script>
+<script src="assets/js/perfect-player-core.js?v=20260826-era-presentation-v30"></script>
+<script src="assets/js/perfect-player-season-report.js?v=20260826-season-report-v2"></script>
+<script src="assets/js/perfect-player-mod-v4.js?v=20260826-season-report-v16"></script>
+<script src="assets/js/perfect-player-era-mode.js?v=20260826-era-headshots-v29"></script>
 
 <!-- ====== 随机事件系统 — EVENT REGISTRY ====== -->
 <script src="assets/js/perfect-player-event-runtime.js?v=20260825-stamina-v7"></script>

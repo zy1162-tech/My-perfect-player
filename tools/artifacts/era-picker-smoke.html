@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>Legend era picker visual smoke</title>
+<style>
+  html,body{margin:0;background:#26364a;overflow:hidden}
+  iframe{display:block;width:320px;height:700px;margin:0 auto;border:0;overflow:hidden}
+</style>
+<iframe id="game" src="../../nba-perfect-player.html"></iframe>
+<script>
+  game.addEventListener('load', function () {
+    setTimeout(function () { game.contentWindow.showLegendEraPicker(); }, 1200);
+  });
+</script>
+</html>

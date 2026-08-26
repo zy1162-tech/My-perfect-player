@@ -203,9 +203,18 @@
     return attr(p, 'HAN') * 0.28 + attr(p, 'PAS') * 0.18 + attr(p, 'FIN') * 0.18 + attr(p, 'threePT') * 0.18 + attr(p, 'CLU') * 0.18;
   }
 
-  // 将终结、背身和身体对内线的出手价值纳入权重，避免高评分中锋被错误当成蓝领。
+  function legacyFxOf(p) {
+    if (typeof getLegacySimulationEffects === 'function') return getLegacySimulationEffects(p);
+    if (typeof PP_FX !== 'undefined' && PP_FX && typeof PP_FX.getLegacySimulationEffects === 'function') {
+      return PP_FX.getLegacySimulationEffects(p);
+    }
+    return { assistWeight:1, turnoverRisk:1, reboundWeight:1 };
+  }
+
+  /** 位置加权得分威胁：把终结/低位能力纳入出手分配，避免高评级强力中锋蓝领化。 */
   function scoringThreatOf(p) {
     var pos = posOf(p);
+    if (typeof positionScoringRating === 'function') return positionScoringRating(p, pos);
     if (pos === 'C') {
       return attr(p, 'FIN') * 0.34 + attr(p, 'DNK') * 0.20 + attr(p, 'MID') * 0.14 + attr(p, 'STR') * 0.10 +
         attr(p, 'threePT') * 0.07 + attr(p, 'HAN') * 0.07 + attr(p, 'CLU') * 0.08;
@@ -226,8 +235,11 @@
       attr(p, 'HAN') * 0.24 + attr(p, 'PAS') * 0.14 + attr(p, 'CLU') * 0.12;
   }
 
+  /** 出手优先级 = 得分威胁与持球创造加权（与跳过模拟 generateBoxScore 同源）。 */
   function shotPriorityOf(p) {
-    return scoringThreatOf(p) * 0.52 + creationOf(p) * 0.48;
+    var pos = posOf(p);
+    if (typeof shotPriorityRating === 'function') return shotPriorityRating(p, pos);
+    return scoringThreatOf(p) * 0.72 + creationOf(p) * 0.18 + ovrOf(p) * 0.10;
   }
 
   var STYLE_IDS = [
@@ -315,8 +327,10 @@
     var astBase = { PG: 0.8, SG: 0.6, SF: 0.6, PF: 0.5, C: 0.5 };
     var astCeil = { PG: 10.8, SG: 8.0, SF: 7.7, PF: 7.9, C: 8.7 };
     var playmaking = attr(attrs, 'PAS') * 0.65 + attr(attrs, 'HAN') * 0.25 + attr(attrs, 'CLU') * 0.10;
-    var reb36 = Math.min(13.2, ((rebBase[pos] || 1.8) + Math.pow(productionSkill01(attr(attrs, 'REB')), 1.20) * (rebCeil[pos] || 7.8)) * productionSkillMul(boxM, 0.58));
-    var ast36 = Math.min(13.0, ((astBase[pos] || 0.6) + Math.pow(productionSkill01(playmaking), 1.32) * (astCeil[pos] || 7.7)) * productionSkillMul(tempoM, 0.62));
+    var legacyFx = legacyFxOf({ _isUser:true });
+    var reb36 = Math.min(15.0, ((rebBase[pos] || 1.8) + Math.pow(productionSkill01(attr(attrs, 'REB')), 1.20) * (rebCeil[pos] || 7.8)) * productionSkillMul(boxM, 0.58) * legacyFx.reboundWeight);
+    var ast36BeforeLegacy = Math.min(13.0, ((astBase[pos] || 0.6) + Math.pow(productionSkill01(playmaking), 1.32) * (astCeil[pos] || 7.7)) * productionSkillMul(tempoM, 0.62));
+    var ast36 = Math.min(14.0, ast36BeforeLegacy * legacyFx.assistWeight);
     var pointDefense = attr(attrs, 'PDEF') * 0.70 + attr(attrs, 'ATH') * 0.20 + attr(attrs, 'HAN') * 0.10;
     var stl36 = (0.25 + Math.pow(skill01(pointDefense), 1.25) * 2.05) * lockM * stealM;
     var rimDefense = attr(attrs, 'BLK') * 0.72 + attr(attrs, 'IDEF') * 0.20 + attr(attrs, 'ATH') * 0.08;
@@ -325,7 +339,8 @@
       * rimM * (1 + (dunkM - 1) * 0.25);
     var control = attr(attrs, 'HAN') * 0.58 + attr(attrs, 'PAS') * 0.27 + attr(attrs, 'CLU') * 0.15;
     var tempoDivider = Math.max(0.68, 1 + (tempoM - 1) * 2.30);
-    var tov36 = clamp((0.85 + usage * 6.2 + ast36 * 0.10 - productionSkill01(control) * 1.45 - productionSkill01(playmaking) * 0.65) / tempoDivider * (1 + (stealM - 1) * 0.20), 0.45, 4.8);
+    var tov36 = clamp((0.85 + usage * 6.2 + ast36BeforeLegacy * 0.10 - productionSkill01(control) * 1.45 - productionSkill01(playmaking) * 0.65) /
+      tempoDivider * (1 + (stealM - 1) * 0.20) * legacyFx.turnoverRisk, 0.45, 4.8);
     var paceScale = pace / 99.4;
     return {
       usage: usage,
@@ -362,7 +377,7 @@
     var fatigueA = Number(options.fatigueA) || 0;
     var fatigueB = Number(options.fatigueB) || 0;
     if (fatigueA && teamA === STATE.careerTeam && typeof getStaminaAttr === 'function') {
-      fatigueA *= Math.max(0.46, 1 - Math.min(12, getStaminaAttr()) * 0.045);
+      fatigueA *= Math.max(0.42, 1 - Math.min(12, getStaminaAttr()) * 0.05);
     }
     if (fatigueA && teamA === STATE.careerTeam && typeof getStyleSkillMu === 'function') {
       var ironMu = getStyleSkillMu('iron_man');
@@ -383,13 +398,15 @@
     }
     var edgeA = ((powerA.offense - baseline.offense) + modA.offense) - ((powerB.defense - baseline.defense) + modB.defense);
     var edgeB = ((powerB.offense - baseline.offense) + modB.offense) - ((powerA.defense - baseline.defense) + modA.defense);
-    var depthEdge = ((Number(powerA.depth) || 60) - (Number(powerB.depth) || 60)) * 0.00075;
+    var playoffFactor = options.isPlayoff ? 1.20 : 1;
+    var depthEdge = ((Number(powerA.depth) || 60) - (Number(powerB.depth) || 60)) * (options.isPlayoff ? 0.00115 : 0.00075);
     var seedPts = (Number(options.seedBonus) || 0) * 0.65;
     var injuryPts = options.probMultiplier == null ? 0 : (Number(options.probMultiplier) - 1) * 28;
-    var efficiencyA = clamp(1.154 + edgeA * 0.0034 + depthEdge + homeA - fatigueA * 0.012 + seedPts / pace + injuryPts / pace, 0.91, 1.36);
-    var efficiencyB = clamp(1.154 + edgeB * 0.0034 - depthEdge + homeB - fatigueB * 0.012 - seedPts / pace, 0.91, 1.36);
+    var efficiencyA = clamp(1.154 + edgeA * 0.0034 * playoffFactor + depthEdge + homeA - fatigueA * 0.012 + seedPts / pace + injuryPts / pace, 0.91, 1.36);
+    var efficiencyB = clamp(1.154 + edgeB * 0.0034 * playoffFactor - depthEdge + homeB - fatigueB * 0.012 - seedPts / pace, 0.91, 1.36);
     var lineupA = options.customLineupA || (typeof calcTeamLineup === 'function' ? calcTeamLineup(teamA) : { starters: {}, bench: [], isUserStarter: false });
     var lineupB = options.customLineupB || (typeof calcTeamLineup === 'function' ? calcTeamLineup(teamB) : { starters: {}, bench: [], isUserStarter: false });
+    // 12 人大名单，但实际轮换控制为 10 人（5 首发 + 5 替补），避免得分均摊。
     var rosterSize = Math.max(10, Math.min(12, Number(options.rosterSize) || 10));
     var userMins = 28;
     if (options.allStarExhibition) {
@@ -410,8 +427,8 @@
         ? !!lineupA.isUserStarter
         : !!(lineupA.isUserStarter && !(STATE.career && STATE.career.flags && STATE.career.flags.startBench)),
       userMins: userMins, defPressure: defPressure,
-      varianceA: clamp(9.5 + (modA.variance || 0), 6.5, 13),
-      varianceB: clamp(9.5 + (modB.variance || 0), 6.5, 13),
+      varianceA: clamp((options.isPlayoff ? 8.3 : 9.5) + (modA.variance || 0), 6.5, 13),
+      varianceB: clamp((options.isPlayoff ? 8.3 : 9.5) + (modB.variance || 0), 6.5, 13),
       styles: rollStyles()
     };
     bp.tgtA = clamp(Math.round(bp.pace * bp.efficiencyA + gauss(0, bp.varianceA)), 80, 155);
@@ -736,6 +753,7 @@
     }
     pct *= clutchMul || 1;
     if (userBoost) pct *= userBoost;
+    if (type !== 'FT') pct *= 0.97;
     if (type === 'threePT') return clampHalf(pct, 0.18, 0.48, 0.56);
     if (type === 'MID') return clampHalf(pct, 0.22, 0.56, 0.64);
     if (type === 'FIN') return clampHalf(pct, 0.32, 0.78, 0.88);
@@ -780,14 +798,14 @@
     if (clutch) {
       return pickWeighted(pool, function (p) {
         var rank = pool.slice().sort(function(a, b) { return shotPriorityOf(b) - shotPriorityOf(a); }).indexOf(p);
-        var role = [1.55, 1.22, 1.02, 0.88, 0.78][rank] || 0.72;
-        return Math.pow(skill01(shotPriorityOf(p)), 1.65) * (0.7 + skill01(attr(p, 'CLU')) * 0.8) * role * shotFormFor(game, p);
+        var role = [1.52, 1.28, 1.08, 0.94, 0.84][rank] || 0.76;
+        return (0.24 + Math.pow(skill01(shotPriorityOf(p)), 1.65) * 1.45) * (0.7 + skill01(attr(p, 'CLU')) * 0.8) * role * shotFormFor(game, p);
       });
     }
     return pickWeighted(pool, function (p) {
-      var rank = pool.slice().sort(function(a, b) { return (shotPriorityOf(b) + ovrOf(b) * 0.20) - (shotPriorityOf(a) + ovrOf(a) * 0.20); }).indexOf(p);
-      var role = [1.52, 1.20, 1.00, 0.86, 0.76][rank] || 0.70;
-      return Math.pow(skill01(shotPriorityOf(p)), 1.95) * (0.28 + ovrOf(p) / 115) * role * shotFormFor(game, p);
+      var rank = pool.slice().sort(function(a, b) { return shotPriorityOf(b) - shotPriorityOf(a); }).indexOf(p);
+      var role = [1.42, 1.28, 1.12, 0.98, 0.86][rank] || 0.74;
+      return (0.28 + Math.pow(skill01(shotPriorityOf(p)), 1.85) * 1.55) * (0.72 + ovrOf(p) / 220) * role * shotFormFor(game, p);
     });
   }
 
@@ -1343,6 +1361,7 @@
       var big = (pos === 'C' || pos === 'PF') ? 1.35 : 0.82;
       var w = 0.12 + skill01(attr(p, 'REB')) * big;
       if (p && p._isUser) w *= st(styles, 'box_out');
+      w *= legacyFxOf(p).reboundWeight;
       return w;
     });
   }
@@ -1986,6 +2005,18 @@
     return clamp(bp.user.usage * 0.92 * (1 + gap * 0.025), 0.06, 0.34);
   }
 
+  /** 续航对末节/压哨的修正：续航满 12 时压哨惩罚减半以上、第四节体能惩罚消失；续航低则末节更累。 */
+  function liveStaminaAdjust(ctx, shooter) {
+    if (!shooter || !shooter._isUser) return 0;
+    var stam = (typeof getStaminaAttr === 'function') ? Math.min(12, getStaminaAttr() || 0) : 0;
+    var adj = 0;
+    if (ctx.secLeft <= 6) adj += stam * 0.005; // 压哨：rush(-0.10) 最多被抵消到 -0.04
+    if (ctx.q === 4 && !ctx.isOT && ctx.secLeft < 300) {
+      adj -= Math.max(0, 0.030 - stam * 0.0025); // 第四节末段：续航 12 无惩罚，续航 0 约 -3%
+    }
+    return adj;
+  }
+
   var FLAVOR_ACTION_POOL = [
     { id: 'logo', shot: 'threePT', action: 'logo', contest: 'close' },
     { id: 'logo_contest', shot: 'threePT', action: 'logo', contest: 'contest' },
@@ -2127,6 +2158,14 @@
       tovRate = clamp(tovRate / (1 + (st(game.styles, 'tempo_master') - 1) * 0.7) * (1 + (st(game.styles, 'steal_instinct') - 1) * 0.25), 0.09, 0.18);
     }
     if (labShotOnly) tovRate = 0;
+    // 你的防守压迫：你在场且防守时，对位人持球失误率上升（防守能力 + 抢断风格）。
+    if (ctx.userOnFloor && !ctx.userOn) {
+      var udefP = ctx.defCourt.filter(function (p) { return p && p._isUser; })[0];
+      if (udefP) {
+        var udSkill = skill01(attr(udefP, 'PDEF') * 0.6 + attr(udefP, 'HAN') * 0.2 + attr(udefP, 'ATH') * 0.2);
+        tovRate = clamp(tovRate * (1 + udSkill * 0.45 * st(game.styles, 'steal_instinct')), 0.09, 0.22);
+      }
+    }
     var orbRate = clamp(0.265 + offEdge * 0.003 + (fx.orb || 0), 0.16, 0.38);
     var clock = possessionClock(ctx, ev, game);
     var form = (side === 'A' ? game.formA : game.formB) + gauss(0, 0.008);
@@ -2160,7 +2199,9 @@
       if (loser && loser._isUser) {
         var userControl = attr(loser, 'HAN') * 0.58 + attr(loser, 'PAS') * 0.27 + attr(loser, 'CLU') * 0.15;
         var userPassing = attr(loser, 'PAS') * 0.65 + attr(loser, 'HAN') * 0.25 + attr(loser, 'CLU') * 0.10;
-        var protect = productionSkill01(userControl) * 0.24 + productionSkill01(userPassing) * 0.12 + Math.max(0, st(game.styles, 'tempo_master') - 1) * 1.15;
+        var legacyTurnoverProtection = Math.max(0, 1 - legacyFxOf(loser).turnoverRisk);
+        var protect = productionSkill01(userControl) * 0.24 + productionSkill01(userPassing) * 0.12 +
+          Math.max(0, st(game.styles, 'tempo_master') - 1) * 1.15 + legacyTurnoverProtection;
         if (chance(Math.min(0.62, protect))) {
           loser = pickWeighted(ctx.offCourt.filter(function(p) { return p && !p._isUser; }), function(p) {
             return 0.35 + skill01(creationOf(p));
@@ -2233,7 +2274,7 @@
       passer = pickWeighted(ctx.offCourt.filter(function (p) { return p && pid(p) !== pid(shooter); }), function (p) {
         var w = 0.2 + skill01(attr(p, 'PAS')) * 1.6;
         if (p._isUser) w *= 1.75 * st(game.styles, 'tempo_master');
-        return w;
+        return w * legacyFxOf(p).assistWeight;
       });
     }
 
@@ -2347,12 +2388,26 @@
       if (ctx.clutch) userBoost *= (1 + (st(game.styles, 'clutch_heart') - 1) * 0.45);
     }
     var defP = bp.defPressure + (side === 'B' ? -bp.defPressure * 0.25 : 0) + defAdj * 0.04;
+    // 对位攻防（差值制）：对位人的防守 vs 进攻球员的进攻。
+    // 防守明显强于对方进攻 → 压制对方命中；防守弱于对方进攻 → 对方获得加成（加成上限更小，影响有限）。
+    if (matchup) {
+      var off01 = skill01(shot === 'FIN'
+        ? (attr(shooter, 'FIN') * 0.72 + attr(shooter, 'DNK') * 0.28)
+        : (shot === 'MID' ? attr(shooter, 'MID') : attr(shooter, 'threePT')));
+      var def01 = skill01(attr(matchup, shot === 'FIN' ? 'IDEF' : 'PDEF'));
+      if (matchup._isUser) {
+        def01 = Math.min(1, def01 * (shot === 'FIN' ? st(game.styles, 'rim_protector') : st(game.styles, 'perimeter_lock')));
+      }
+      var delta01 = def01 - off01;
+      defP += delta01 > 0 ? Math.min(0.12, delta01 * 0.14) : Math.max(-0.05, delta01 * 0.07);
+    }
     if (shooter && shooter._isUser && shot === 'MID') {
       defP *= (1 - (st(game.styles, 'mid_craftsman') - 1) * 0.7);
     }
     var pct = shotPctFor(shooter, shot, defP, form, clutchMul, userBoost);
-    // 降低逐回合目标回补，避免比分被强行拉成一分差。
+    // 逐回合目标回补：增益大幅调低（旧 0.50/0.44 让比分被硬拽向目标，制造大量 1 分差与剧本式绝杀）。
     pct += (e - 1.154) * 0.24;
+    pct += liveStaminaAdjust(ctx, shooter);
     if (ctx.home) pct += 0.005;
     pct += rush;
     if (hasTag(game, 'transition') && shot === 'FIN') pct += 0.06;
@@ -2534,6 +2589,10 @@
     return '混合轮换';
   }
 
+  function isOffenseHome(teamAHome, side) {
+    return side === 'A' ? teamAHome !== false : teamAHome === false;
+  }
+
   function buildCtx(sess) {
     var game = sess.game;
     var bp = game.bp;
@@ -2559,7 +2618,7 @@
       q: q, qIdx: qIdx, secLeft: clock, isOT: isOT, ot: game.ot,
       side: side, defSide: side === 'A' ? 'B' : 'A',
       margin: side === 'A' ? margin : -margin,
-      home: bp.teamAHome && side === 'A',
+      home: isOffenseHome(bp.teamAHome, side),
       b2b: !!bp._b2b && side === 'A',
       national: !!bp._national,
       playoff: !!bp.isPlayoff,

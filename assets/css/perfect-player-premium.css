@@ -2,11 +2,8 @@
    Perfect Player — "Hardwood Broadcast" 高级篮球质感层
    Loaded AFTER the inline <style> so equal-specificity rules win.
    设计取向：枫木球场底色 + 深海军蓝转播框架 + 篮球皮革橙。
-   关键：Oswald 无中文字形，故用 'Oswald','Noto Sans SC' 字栈——
-        拉丁数字走 Oswald(转播/球衣号码感)，中文回退 Noto，不会缺字。
+   拉丁字形使用本地 Fredoka，中文回退系统 Noto Sans SC。
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap');
-
 :root {
   /* 全局比赛日配色：木地板、球衣海军蓝、篮球皮革橙。 */
   --bg: #eee0c8;
@@ -32,7 +29,7 @@
   --court-ink: rgba(75,50,28,.18);
   --foil-1: #f3c65d;
   --foil-2: #c98218;
-  --font-athletic: 'Oswald','Noto Sans SC',sans-serif;
+  --font-athletic: 'Fredoka','Arial Narrow','Noto Sans SC',sans-serif;
   --shadow: 0 2px 12px rgba(31,35,43,.1);
   --shadow-lg: 0 6px 26px rgba(31,35,43,.16);
   --shadow-court: 0 1px 2px rgba(32,27,20,.08), 0 5px 14px rgba(50,38,25,.11), 0 14px 32px rgba(37,33,28,.07);
@@ -243,18 +240,36 @@ body {
   .legacy-rank-row.is-player.landed { animation: none; }
 }
 
-/* ---------- 主页专属：历代角色生涯档案馆 ---------- */
+/* ---------- 主页三个本地功能入口 ---------- */
 .career-archive-home-btn {
   margin-top: 0;
-  border-color: #09182a !important;
-  background: linear-gradient(180deg,var(--navy-light),var(--navy)) !important;
-  box-shadow: 0 4px 0 #071321,0 7px 14px rgba(16,34,58,.2) !important;
-  color: #fff !important;
 }
-.career-archive-home-btn b { display: inline-flex; min-width: 20px; height: 20px; margin-left: 4px; align-items: center; justify-content: center; border-radius: 10px; background: rgba(255,255,255,.2); color:#fff; font-size: 10px; }
+.career-archive-home-btn b { display: inline-flex; min-width: 20px; height: 20px; margin-left: 4px; align-items: center; justify-content: center; border-radius: 10px; background: var(--orange-dim); color:var(--orange); font-size: 10px; }
 .mode-local-nav { align-items:stretch; }
-.mode-local-nav .mode-local-nav-btn { width:100%; min-height:72px; margin:0 !important; padding:10px 5px; display:flex; flex-direction:column; gap:5px; line-height:1.15; }
+.mode-local-nav .mode-local-nav-btn { width:100%; min-height:72px; margin:0 !important; padding:10px 5px; display:flex; flex-direction:column; gap:5px; line-height:1.15; border:1px solid var(--border); border-radius:12px; background:linear-gradient(180deg,#fffaf0,#f7ead5); color:var(--text); box-shadow:0 3px 0 #d5b98d,0 6px 12px rgba(75,50,28,.1); }
+.mode-local-nav .mode-local-nav-btn:hover { border-color:var(--orange); background:#fff4e2; transform:translateY(-1px); }
 .mode-local-nav-icon { display:block; font-size:16px; line-height:1; }
+
+/* ---------- 传奇年代选择：仅影响该弹窗 ---------- */
+.legend-era-picker-overlay { padding:14px; overflow-y:auto; background:rgba(16,34,58,.68); }
+.legend-era-picker-modal { width:min(430px,100%); max-height:calc(100vh - 28px); max-height:min(700px,calc(100dvh - 28px)); overflow:hidden; border:2px solid #d7b784; border-radius:18px; background:#fff7e8; box-shadow:0 18px 45px rgba(9,24,42,.28); }
+.legend-era-picker-modal .team-picker-header { color:#fff; background:linear-gradient(110deg,var(--navy),var(--navy-light)); }
+.legend-era-picker-intro { padding:12px 14px 6px; color:var(--text-dim); font-size:11px; line-height:1.6; }
+.legend-era-picker-grid { display:grid; gap:10px; padding:9px 14px 16px; overflow-y:auto; max-height:calc(100vh - 150px); max-height:calc(100dvh - 150px); }
+.legend-era-card { width:100%; min-height:98px; display:grid; grid-template-columns:76px minmax(0,1fr); gap:12px; align-items:center; padding:12px; text-align:left; border:1px solid #d8bd93; border-radius:14px; background:linear-gradient(145deg,#fffdf7,#f3dfbd); color:var(--text); box-shadow:0 3px 0 #d5b98d,0 7px 16px rgba(75,50,28,.11); cursor:pointer; }
+.legend-era-card:hover,.legend-era-card:focus-visible { border-color:var(--orange); outline:none; transform:translateY(-1px); box-shadow:0 3px 0 #c96d38,0 8px 18px rgba(75,50,28,.15); }
+.legend-era-year { display:flex; align-items:center; justify-content:center; align-self:stretch; border-radius:10px; background:var(--navy); color:#fff; font:700 22px/1 var(--font-athletic); letter-spacing:.5px; }
+.legend-era-copy { min-width:0; }
+.legend-era-copy strong { display:block; margin-bottom:4px; color:var(--orange); font:700 16px/1.25 var(--font-athletic); }
+.legend-era-copy em { display:block; margin-bottom:5px; color:var(--navy); font-size:11px; font-style:normal; font-weight:800; }
+.legend-era-copy small { display:block; color:var(--text-dim); font-size:10px; line-height:1.45; }
+@media (max-width:360px) {
+  .legend-era-picker-overlay { padding:8px; align-items:flex-start; }
+  .legend-era-picker-modal { max-height:calc(100vh - 16px); max-height:calc(100dvh - 16px); }
+  .legend-era-picker-grid { max-height:calc(100vh - 132px); max-height:calc(100dvh - 132px); padding:7px 10px 14px; }
+  .legend-era-card { grid-template-columns:62px minmax(0,1fr); gap:9px; padding:9px; }
+  .legend-era-year { font-size:18px; }
+}
 .feature-card { display:flex; flex-direction:column; }
 .feature-card .fc-sub { min-height:42px; }
 .feature-card > .fc-btn:first-of-type { margin-top:auto; }
@@ -410,6 +425,27 @@ body {
   background:
     radial-gradient(circle at 104% 50%, transparent 0 55px, rgba(216,88,34,.105) 56px 58px, transparent 59px),
     linear-gradient(135deg,#fffdf7,var(--bg-card));
+}
+.feature-card.mode-card-legend {
+  border-color: rgba(24,134,112,.42);
+  background:
+    radial-gradient(circle at 104% 50%, transparent 0 55px, rgba(24,134,112,.13) 56px 59px, transparent 60px),
+    linear-gradient(145deg,#e5f5ed 0%,#f2ecd9 62%,#ead7b8 100%);
+  box-shadow: 0 4px 0 rgba(126,167,146,.42),0 10px 24px rgba(38,87,72,.12);
+}
+.feature-card.mode-card-legend::before {
+  background: linear-gradient(90deg,#168b73,#56b49a);
+  opacity: 1;
+}
+.feature-card.mode-card-legend .fc-tag.new {
+  background: rgba(22,139,115,.14);
+  color: #08735f;
+}
+.feature-card.mode-card-legend.selected {
+  border-color: #168b73;
+  background:
+    radial-gradient(circle at 104% 50%, transparent 0 55px, rgba(24,134,112,.17) 56px 59px, transparent 60px),
+    linear-gradient(145deg,#d9f1e7 0%,#eee4ca 100%);
 }
 .feature-card::after {
   content: '';
