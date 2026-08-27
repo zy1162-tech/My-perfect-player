@@ -2,7 +2,7 @@
 'use strict';
 
 var CACHE_PREFIX = 'perfect-player-shell-';
-var CACHE_NAME = CACHE_PREFIX + '20260826-rating-v13';
+var CACHE_NAME = CACHE_PREFIX + '20260827-new-career-system-reset-v16';
 var SHELL = [
   './',
   './nba-perfect-player.html',
@@ -22,17 +22,17 @@ var SHELL = [
   './assets/data/era-headshot-index.js?v=20260826-era-headshots-v1',
   './assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4',
   './assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10',
-  './assets/js/perfect-player-boot.js?v=20260826-rating-v6',
+  './assets/js/perfect-player-boot.js?v=20260827-systems-prologue-headshots-v8',
   './assets/js/current-player-ratings-2026.js?v=20260826-rating-v1',
-  './assets/js/hupu/script-00-2678-58zyeprc-upload-1783508428855-12.js',
+  './assets/js/hupu/script-00-2678-58zyeprc-upload-1783508428855-12.js?v=20260827-verified-names-v1',
   './assets/js/hupu/script-01-2678-5hu3djrc-upload-1783494754597-12.js',
   './assets/js/hupu/script-02-2678-gd4jvxrc-upload-1783494754597-15.js',
   './assets/js/hupu/script-03-2678-456sfprc-upload-1783494754597-18.js',
   './assets/js/hupu/script-04-2678-mdo4zerc-upload-1783494754597-21.js',
   './assets/js/hupu/script-05-2678-qlg35lrc-upload-1783494754597-24.js',
-  './assets/js/perfect-player-core.js?v=20260826-era-presentation-v30',
+  './assets/js/perfect-player-core.js?v=20260827-new-career-system-reset-v32',
   './assets/js/perfect-player-season-report.js?v=20260826-season-report-v2',
-  './assets/js/perfect-player-mod-v4.js?v=20260826-season-report-v16',
+  './assets/js/perfect-player-mod-v4.js?v=20260827-systems-prologue-v17',
   './assets/js/perfect-player-era-mode.js?v=20260826-rating-v31',
   './assets/js/perfect-player-event-runtime.js?v=20260825-stamina-v7',
   './assets/js/perfect-player-poster.js?v=20260821-phase-a',
@@ -42,7 +42,7 @@ var SHELL = [
   './assets/js/perfect-player-enhancements.js?v=20260826-legacy-sim-v15',
   './assets/js/perfect-player-event-library.js?v=20260825-stamina-v14',
   './assets/js/perfect-player-story-events.js?v=20260825-stamina-v14',
-  './assets/js/perfect-player-era-story.js?v=20260826-era-story-v2',
+  './assets/js/perfect-player-era-story.js?v=20260827-prologue-v3',
   './assets/js/perfect-player-legend-challenge.js?v=20260824-legend-v12',
   './assets/js/perfect-player-allstar.js?v=20260824-double-points-mod-v1',
   './assets/js/perfect-player-live-court.js?v=20260824-era-positions-v7',

@@ -90,12 +90,12 @@ const eraModeTag = 'assets/js/perfect-player-era-mode.js?v=20260826-rating-v31';
 assert.ok(html.indexOf(presentationTag) >= 0 && html.indexOf(presentationTag) < html.indexOf(eraModeTag), 'presentation data must load before era runtime');
 assert.ok(sw.includes(`'./${presentationTag}'`), 'service-worker shell must cache the exact presentation URL');
 assert.ok(sw.includes(`'./${eraModeTag}'`), 'service-worker shell must cache the exact era runtime URL');
-assert.ok(html.includes('assets/js/perfect-player-core.js?v=20260826-era-presentation-v30'));
-assert.ok(sw.includes("'./assets/js/perfect-player-core.js?v=20260826-era-presentation-v30'"));
+assert.ok(html.includes('assets/js/perfect-player-core.js?v=20260827-new-career-system-reset-v32'));
+assert.ok(sw.includes("'./assets/js/perfect-player-core.js?v=20260827-new-career-system-reset-v32'"));
 assert.ok(html.includes('assets/data/era-headshot-index.js?v=20260826-era-headshots-v1'));
 assert.ok(sw.includes("'./assets/data/era-headshot-index.js?v=20260826-era-headshots-v1'"));
 assert.doesNotMatch(sw, /['"]\.\/assets\/images\/Player\/hupu-era\//, '934 large images must remain runtime cache-first, not install-shell assets');
-assert.match(sw, /CACHE_PREFIX = 'perfect-player-shell-'[\s\S]*CACHE_NAME = CACHE_PREFIX \+ '20260826-rating-v13'/);
+assert.match(sw, /CACHE_PREFIX = 'perfect-player-shell-'[\s\S]*CACHE_NAME = CACHE_PREFIX \+ '20260827-new-career-system-reset-v16'/);
 assert.match(html, /urls\.push\(sources\.fallback\)/, 'real-player URLs must always end with a stable initials fallback');
 assert.match(html, /function _hsCssBgUrl\(url\)[\s\S]*return "url\('\"/, 'CSS URLs must use quotes that are safe inside double-quoted style attributes');
 

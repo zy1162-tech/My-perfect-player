@@ -8,6 +8,11 @@
   var MAX_PER_SEASON = 2;
   var SUPPORTED_ERAS = [2003, 2010, 2016];
   var CAREER_PROFILE_KEYS = ['fame','businessValue','mediaTrust','controversy','chinaPopularity','loyalty','leadership','coachTrust','lockerRoomTrust','fanSupport','legacyBonus'];
+  var PROLOGUES = {
+    2003:{ title:'📜 2003 · 传奇序章', scenes:['报纸仍在清晨定义一座城市的英雄，体育电台把每一次失误送进夜班大巴，早期论坛则开始逐帧讨论球员。'], body:'你进入的不是某位现实巨星已经写好的剧本。这个年代会从第 8 场起，用报纸、电台与早期论坛记录属于你的选择。' },
+    2010:{ title:'📺 2010 · 传奇序章', scenes:['全国电视辩论、刚刚加速的社交媒体与球星联手浪潮，让每个角色决定都变成公开话题。'], body:'聚光灯会放大忠诚、野心与队友关系。第 8 场起，属于这个年代的主线将与赛季事件共用同一剧情入口。' },
+    2016:{ title:'📱 2016 · 传奇序章', scenes:['移动舆论、三分革命与无限换防同时改变比赛。一次训练片段，也可能在比赛结束前传遍联盟。'], body:'你可以顺应空间潮流，也可以建立自己的赢球方式。第 8 场起，年代主线会按冷却节奏逐步出现。' }
+  };
 
   function gameState() {
     if (typeof STATE !== 'undefined') return STATE;
@@ -36,8 +41,68 @@
     old.season.count = Math.max(0, Number(old.season.count) || 0);
     old.season.lastGame = Number.isFinite(Number(old.season.lastGame)) ? Number(old.season.lastGame) : -999;
     old.season.scheduledIds = Array.isArray(old.season.scheduledIds) ? old.season.scheduledIds : [];
+    old.prologueSeen = old.prologueSeen === true;
+    old.prologueCompleted = old.prologueCompleted === true;
+    old.prologueLegacySkipped = old.prologueLegacySkipped === true;
     career.eraStory = old;
     return old;
+  }
+
+  function hasCareerProgress(career, root) {
+    return Number(career && career.seasonCount) > 0 ||
+      !!(career && Array.isArray(career.seasons) && career.seasons.length) ||
+      !!(root && root.season && Array.isArray(root.season.games) && root.season.games.length);
+  }
+
+  function prologueEvent(era, state) {
+    var copy = PROLOGUES[era];
+    return {
+      id:'era_prologue_' + era,
+      branch:'era_story_' + era,
+      phase:'season',
+      title:copy.title,
+      scenes:copy.scenes.slice(),
+      body:copy.body,
+      _eraStoryPrologue:true,
+      choices:[{
+        id:'enter_era',
+        label:'踏入这个年代',
+        hint:'序章只自动出现一次；第 8 场后进入正式年代剧情。',
+        prediction:'序章只自动出现一次；第 8 场后进入正式年代剧情。',
+        apply:function() {
+          state.prologueCompleted = true;
+          return '你的传奇档已经写下序章。常规赛第 8 场后，年代主线将按至少 8 场冷却逐步出现。';
+        }
+      }]
+    };
+  }
+
+  function showPrologueIfDue(context) {
+    context = context || {};
+    var root = gameState() || {};
+    if (root.mode !== 'legend') return false;
+    var era = Number(context.era || root.eraStart);
+    if (!PROLOGUES[era]) return false;
+    var career = context.career || root.career;
+    var state = ensureState(career, era);
+    if (!state || state.prologueSeen) return false;
+    // 旧档只做兼容标记，不在读档后突然插入开场剧情。
+    if (context.existingSave || hasCareerProgress(career, root)) {
+      state.prologueSeen = true;
+      state.prologueLegacySkipped = true;
+      return false;
+    }
+    if (typeof global.showSeasonBranchEvent !== 'function') return false;
+    state.prologueSeen = true;
+    global.showSeasonBranchEvent(prologueEvent(era, state));
+    return true;
+  }
+
+  function getPrologueStatus(career) {
+    var root = gameState() || {};
+    var state = ensureState(career || root.career, root.eraStart);
+    if (!state) return null;
+    return { era:state.era, seen:state.prologueSeen, completed:state.prologueCompleted, legacySkipped:state.prologueLegacySkipped };
   }
 
   function seasonKey(career) {
@@ -294,6 +359,8 @@
     config:{ minFirstGame:MIN_FIRST_GAME, cooldownGames:COOLDOWN_GAMES, maxPerSeason:MAX_PER_SEASON },
     events:EVENTS.slice(),
     ensureState:ensureState,
+    showPrologueIfDue:showPrologueIfDue,
+    getPrologueStatus:getPrologueStatus,
     findDueEvent:findDueEvent,
     getSummary:getSummary
   };

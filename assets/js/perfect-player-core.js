@@ -338,6 +338,8 @@ function initGame() {
     selectedPlayer: null, _locking: false,
     finalOVR: 0, finalPosition: null, finalArchetype: null,
     careerTeam: null,
+    // 新建角色必须从均衡体系开始；读档路径会用 snap.state 原样恢复旧档选择。
+    teamSystems: {},
     gameId: generateGameId(),
     career: createFreshCareer(),
     season: { games: [], wins: 0, losses: 0, playerStats: {}, playoffStats: { pts:0, reb:0, ast:0, stl:0, blk:0, tov:0, fgm:0, fga:0, ftm:0, fta:0, threeM:0, threeA:0, mins:0, games:0 }, awards: [], playoffResult: null, playoffEliminated: false, standings: {}, isPlayoffs: false, playoffBracket: null, otherBracket: null, leagueFinale:null, leagueChampion:null, finalsMvp:null, finalsSeriesSummary:'', _viewConf: null },
@@ -2091,8 +2093,9 @@ function renderCareerTeamReveal(team, cnName, role, rosterHtml) {
         <div style="font-size:13px;color:var(--text-dim);">${getCurrentSeasonLabel()} · 我的生涯球队${draftLine}</div>
         <div style="font-size:24px;font-weight:800;margin:6px 0;font-family:var(--font-display);letter-spacing:2px;">${cnName}</div>
         <div style="font-size:12px;color:var(--text-dim);">我担任的角色为${finalRole}${SIM_CONFIG.POSITIONS[STATE.position]}</div>
-        <div style="margin-top:12px;">
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:7px;">
           <button class="btn btn-primary" onclick="trackEvent({act:'click',blk:'BMC098',pos:'TC7',label:'开始赛季'});startSeason()">🏀 开始赛季</button>
+          ${STATE.mode === 'legend' ? '<button class="btn btn-secondary btn-sm" id="era-prologue-entry" onclick="openLegendEraPrologue(true)">📜 传奇主线 · 序章与触发说明</button>' : ''}
         </div>
       </div>
       <div style="margin-top:8px;background:var(--bg-card);border:2px solid var(--border);border-radius:var(--radius-sm);padding:8px 4px;">
@@ -2100,6 +2103,24 @@ function renderCareerTeamReveal(team, cnName, role, rosterHtml) {
       </div>
     </div>
   `;
+  if (STATE.mode === 'legend') setTimeout(function() { openLegendEraPrologue(false); }, 80);
+}
+
+function openLegendEraPrologue(manual) {
+  if (STATE.mode !== 'legend') return Promise.resolve(false);
+  function run() {
+    if (typeof PP_ERA_STORY === 'undefined' || !PP_ERA_STORY || typeof PP_ERA_STORY.showPrologueIfDue !== 'function') return false;
+    var shown = PP_ERA_STORY.showPrologueIfDue({ career:STATE.career, era:STATE.eraStart });
+    if (manual && !shown) {
+      var status = typeof PP_ERA_STORY.getPrologueStatus === 'function' ? PP_ERA_STORY.getPrologueStatus(STATE.career) : null;
+      var message = status && status.legacySkipped ? '旧档已安全接入年代主线；后续剧情按赛季进度触发。' : '传奇序章已读；首个年代主线将在第 8 场后出现。';
+      if (typeof PP_FX !== 'undefined' && PP_FX.toast) PP_FX.toast(message, { icon:'📜', duration:3200 });
+    }
+    return shown;
+  }
+  if (typeof PP_ERA_STORY !== 'undefined') return Promise.resolve(run());
+  if (window.__PP_ensure) return window.__PP_ensure('story').then(run, function() { return false; });
+  return Promise.resolve(false);
 }
 
 // ==================== 5. 生涯球队分配 ====================
@@ -4486,6 +4507,9 @@ function simulate82StyleMatchup(teamA, teamB, options) {
   options = options || {};
   var powerA = calcTeamPowerWithPlayer(teamA);
   var powerB = calcTeamPowerWithPlayer(teamB);
+  // 教练体系由 V4 扩展层提供；旧档或扩展未加载时严格回退均衡值。
+  var systemA = typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamA) : { offense:0, defense:0, pace:0, three:0 };
+  var systemB = typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamB) : { offense:0, defense:0, pace:0, three:0 };
   var baseline = getSimulationPowerBaseline();
   var modA = options.neutralState ? { offense:0, defense:0, variance:0 } : getCareerTeamGameModifiers(teamA);
   var modB = options.neutralState ? { offense:0, defense:0, variance:0 } : getCareerTeamGameModifiers(teamB);
@@ -4503,7 +4527,7 @@ function simulate82StyleMatchup(teamA, teamB, options) {
   var averageAthletic = ((Number(powerA.athletic) || 60) + (Number(powerB.athletic) || 60)) / 2;
   var averageDepth = ((Number(powerA.depth) || 60) + (Number(powerB.depth) || 60)) / 2;
   // 2025-26联盟基线：99.4回合、115.7进攻效率。
-  var pace = Math.max(90, Math.min(109, Math.round(99.4 + (averageAthletic - baseline.athletic) * 0.08 + (averageDepth - baseline.depth) * 0.02 + simGaussian(0, 2.8))));
+  var pace = Math.max(90, Math.min(109, Math.round(99.4 + (averageAthletic - baseline.athletic) * 0.08 + (averageDepth - baseline.depth) * 0.02 + ((Number(systemA.pace) || 0) + (Number(systemB.pace) || 0)) * 0.5 + simGaussian(0, 2.8))));
   if (!options.neutralState && (teamA === STATE.careerTeam || teamB === STATE.careerTeam) && typeof getStyleSkillMu === 'function') {
     var tempoMu = getStyleSkillMu('tempo_master');
     var breakMu = getStyleSkillMu('fast_break');
@@ -4514,8 +4538,8 @@ function simulate82StyleMatchup(teamA, teamB, options) {
     if (postMu > 1) paceAdj -= (postMu - 1) * 8;
     if (paceAdj) pace = Math.max(90, Math.min(109, Math.round(pace + paceAdj)));
   }
-  var edgeA = ((powerA.offense - baseline.offense) + modA.offense) - ((powerB.defense - baseline.defense) + modB.defense);
-  var edgeB = ((powerB.offense - baseline.offense) + modB.offense) - ((powerA.defense - baseline.defense) + modA.defense);
+  var edgeA = ((powerA.offense - baseline.offense) + modA.offense + (Number(systemA.offense) || 0)) - ((powerB.defense - baseline.defense) + modB.defense + (Number(systemB.defense) || 0));
+  var edgeB = ((powerB.offense - baseline.offense) + modB.offense + (Number(systemB.offense) || 0)) - ((powerA.defense - baseline.defense) + modA.defense + (Number(systemA.defense) || 0));
   // 季后赛缩短轮换后，核心实力差更稳定地转化为攻防效率；仍由逐场比分
   // 决定胜负，不做球队名、轮次或总决赛特判。
   var playoffFactor = options.isPlayoff ? 1.20 : 1;
@@ -4523,8 +4547,8 @@ function simulate82StyleMatchup(teamA, teamB, options) {
   var seedPts = (Number(options.seedBonus) || 0) * 0.65;
   var injuryPts = options.probMultiplier == null ? 0 : (Number(options.probMultiplier) - 1) * 28;
   // 中立场基准1.154；计入每场一个主队的优势后，联盟均值约115.6分。
-  var efficiencyA = 1.154 + edgeA * 0.0034 * playoffFactor + depthEdge + homeA - fatigueA * 0.012 + seedPts / pace + injuryPts / pace;
-  var efficiencyB = 1.154 + edgeB * 0.0034 * playoffFactor - depthEdge + homeB - fatigueB * 0.012 - seedPts / pace;
+  var efficiencyA = 1.154 + edgeA * 0.0034 * playoffFactor + depthEdge + homeA - fatigueA * 0.012 + seedPts / pace + injuryPts / pace + (Number(systemA.three) || 0);
+  var efficiencyB = 1.154 + edgeB * 0.0034 * playoffFactor - depthEdge + homeB - fatigueB * 0.012 - seedPts / pace + (Number(systemB.three) || 0);
   efficiencyA = Math.max(0.91, Math.min(1.36, efficiencyA));
   efficiencyB = Math.max(0.91, Math.min(1.36, efficiencyB));
   // 每场得分波动：σ≈9.5（旧版 6.4 导致分差过窄、1 分惜败与"绝杀"标签泛滥）。

@@ -98,12 +98,13 @@ const { chromium } = require('playwright');
       if (sources.remote.length) return 'remote';
       return 'initials';
     }
-    function emptyCounter(total) { return { total, hupu:0, official:0, otherLocal:0, remote:0, initials:0, initialsReasons:{ excludedOfficialPlaceholder:0, noReliableOfficialId:0, unresolvedOfficialId:0 } }; }
+    function emptyCounter(total) { return { total, hupu:0, official:0, otherLocal:0, remote:0, initials:0, initialsNames:[], initialsReasons:{ excludedOfficialPlaceholder:0, noReliableOfficialId:0, unresolvedOfficialId:0 } }; }
     function count(counter, row) {
       const sources = getPlayerHeadshotSources(row);
       const kind = classify(sources);
       counter[kind]++;
       if (kind !== 'initials') return;
+      counter.initialsNames.push(row && (row.nameEN || row.nameEn || row.name) || '');
       const pid = getOfficialPlayerHeadshotId(row);
       if (!pid) counter.initialsReasons.noReliableOfficialId++;
       else if (_hsIsExcludedOfficialId(pid)) counter.initialsReasons.excludedOfficialPlaceholder++;
@@ -121,6 +122,7 @@ const { chromium } = require('playwright');
     });
     return { draft, openings };
   });
+  console.log('headshot coverage audit', JSON.stringify(coverage));
   assert.equal(coverage.draft.total, 600);
   assert.ok(coverage.draft.hupu + coverage.draft.official + coverage.draft.otherLocal >= 495, 'at least 82.5% of the formal 600-player draft chain should be local real photos');
   assert.equal(coverage.draft.remote, 0, 'all resolvable official draft IDs should be materialized or excluded as placeholders');
@@ -130,7 +132,8 @@ const { chromium } = require('playwright');
   for (const era of [2003,2010,2016]) {
     const row = coverage.openings[era];
     assert.equal(row.total, ({2003:438,2010:426,2016:420})[era]);
-    assert.ok(row.hupu + row.official + row.otherLocal >= row.total * 0.74, `${era}: at least 74% of the opening league should have local real photos`);
+    const minimumLocalShare = ({2003:0.86,2010:0.75,2016:0.97})[era];
+    assert.ok(row.hupu + row.official + row.otherLocal >= row.total * minimumLocalShare, `${era}: opening league local real-photo coverage must meet the audited target`);
     assert.equal(Object.values(row.initialsReasons).reduce((sum, value) => sum + value, 0), row.initials, `${era}: every fallback must have an auditable reason`);
     assert.equal(row.initialsReasons.unresolvedOfficialId, 0, `${era}: reliable official IDs must be materialized`);
   }
@@ -169,9 +172,9 @@ const { chromium } = require('playwright');
     return { paths, rookie:{ local:sources.local, remote:sources.remote, fallback:sources.fallback, style:getPlayerHeadshotStyle(rookie, 30) } };
   });
   assert.ok(identity.paths["Shaquille O'Neal"] && identity.paths['Manu Ginóbili'] && identity.paths["Amar’e Stoudemire"], 'apostrophe/accent aliases must resolve');
-  assert.ok(identity.paths['Glenn Robinson'] && !identity.paths['Glenn Robinson III']);
-  assert.ok(identity.paths['Tim Hardaway'] && !identity.paths['Tim Hardaway Jr.']);
-  assert.ok(identity.paths['Larry Nance'] && !identity.paths['Larry Nance Jr.']);
+  assert.ok(identity.paths['Glenn Robinson'] && identity.paths['Glenn Robinson III'] !== identity.paths['Glenn Robinson'], 'father/son identities must never share a photo');
+  assert.ok(identity.paths['Tim Hardaway'] && identity.paths['Tim Hardaway Jr.'] !== identity.paths['Tim Hardaway'], 'suffix-aware official lookup must not collapse Hardaway Jr. onto his father');
+  assert.ok(identity.paths['Larry Nance'] && identity.paths['Larry Nance Jr.'] !== identity.paths['Larry Nance'], 'suffix-aware official lookup must not collapse Nance Jr. onto his father');
   assert.deepEqual(identity.rookie.local, []);
   assert.deepEqual(identity.rookie.remote, []);
   assert.ok(identity.rookie.fallback.startsWith('data:image/svg+xml') && identity.rookie.style.includes("url('data:image/svg+xml"));

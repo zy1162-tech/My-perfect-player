@@ -100,6 +100,6 @@ assert.match(extension, /findRuntimeCurrentRating\(teamAbbr, playerName\)/);
 assert.match(extension, /NBA_CURRENT_RATINGS_2026 runtime source/);
 assert.match(extension, /calibration\.peakFor\(playerName, sourceRating\)/);
 assert.match(sw, /player-rating-calibration\.js\?v=20260826-rating-v2/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260826-rating-v13'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260827-new-career-system-reset-v16'/);
 
 console.log('✓ rating calibration', JSON.stringify({ distributions, amare, draftRows:everyDraftRow.length }));

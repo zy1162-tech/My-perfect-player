@@ -16,7 +16,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
     story: [
       ['assets/js/perfect-player-event-library.js?v=20260825-stamina-v14', '赛季事件'],
       ['assets/js/perfect-player-story-events.js?v=20260825-stamina-v14', '生涯剧情'],
-      ['assets/js/perfect-player-era-story.js?v=20260826-era-story-v2', '年代主线'],
+      ['assets/js/perfect-player-era-story.js?v=20260827-prologue-v3', '年代主线'],
       ['assets/js/perfect-player-legend-challenge.js?v=20260824-legend-v12', '传奇挑战'],
       ['assets/js/perfect-player-allstar.js?v=20260824-double-points-mod-v1', '全明星周末']
     ],
@@ -324,7 +324,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20260826-rating-v6').catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20260827-systems-prologue-headshots-v8').catch(function () {});
   }
 
   function idleLoad() {

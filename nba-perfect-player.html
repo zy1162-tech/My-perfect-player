@@ -43,8 +43,8 @@ html.pp-booting #app{visibility:hidden}
 <script src="assets/data/era-headshot-index.js?v=20260826-era-headshots-v1"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20260826-rating-v6" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20260826-rating-v6"></script>
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20260827-systems-prologue-headshots-v8" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20260827-systems-prologue-headshots-v8"></script>
   <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260826-era-headshots-v2">
   <link rel="stylesheet" href="assets/css/perfect-player-season-report.css?v=20260826-season-report-v1">
 
@@ -379,7 +379,7 @@ html.pp-booting #app{visibility:hidden}
   </div>
 </div>
 
-<script src="assets/js/hupu/script-00-2678-58zyeprc-upload-1783508428855-12.js"></script>
+<script src="assets/js/hupu/script-00-2678-58zyeprc-upload-1783508428855-12.js?v=20260827-verified-names-v1"></script>
 <script>
 // 所有头像来源与 CSS URL 序列化统一由下方 resolver 处理。
 </script>
@@ -435,6 +435,9 @@ var PERFECT_PLAYER_HEADSHOT_ID_FIX = {
   'Julian Reese': 1642882,
   'KyShawn George': 1642273,
   'Jimmy Butler': 202710,
+  // 年代名单使用的历史姓名与 NBA 当前资料页姓名不同，均为明确一对一身份。
+  'Walter Tavares': 204002,
+  'Nene Hilario': 2403,
 };
 // 少量新签约球员的 NBA CDN 仍是灰色占位图；本地缓存使用 ESPN 官方球员资料头像，
 // 外链兜底也保持同一来源，避免头像加载失败时再次露出剪影。
@@ -460,17 +463,30 @@ function _hsNormKey(s) {
   try { s = s.normalize('NFD').replace(/[̀-ͯ]/g, ''); } catch (e) {}
   return s.toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9]/g, '');
 }
-/** 懒构建 NBA_PLAYER_IMAGES 的归一化索引（只建一次）。 */
+/** 懒构建 NBA_PLAYER_IMAGES 的安全索引（只建一次）。
+ *  同一规范姓名若指向多个 ID 则整项放弃；只接受已落盘且通过占位图审计的 ID。 */
 var _hsNormIndex = null;
 function _hsGetNormIndex() {
   if (_hsNormIndex) return _hsNormIndex;
   _hsNormIndex = {};
+  var candidates = {};
+  function remember(key, rawId) {
+    var id = Number(rawId);
+    if (!key || !id || !_hsHasLocalOfficialId(id) || _hsIsExcludedOfficialId(id)) return;
+    if (!(key in candidates)) candidates[key] = id;
+    else if (candidates[key] !== id) candidates[key] = 0;
+  }
+  var generated = window.__PP_ERA_HEADSHOT_INDEX__ && window.__PP_ERA_HEADSHOT_INDEX__.verifiedOfficialByName || {};
+  for (var generatedKey in generated) remember(generatedKey, generated[generatedKey]);
   if (typeof NBA_PLAYER_IMAGES !== 'undefined') {
     for (var key in NBA_PLAYER_IMAGES) {
       var nk = _hsNormKey(key);
-      if (nk && !(nk in _hsNormIndex)) _hsNormIndex[nk] = NBA_PLAYER_IMAGES[key];
+      remember(nk, NBA_PLAYER_IMAGES[key]);
+      var comma = String(key).match(/^([^,]+),\s*(.+)$/);
+      if (comma) remember(_hsNormKey(comma[2] + ' ' + comma[1]), NBA_PLAYER_IMAGES[key]);
     }
   }
+  for (var candidateKey in candidates) if (candidates[candidateKey]) _hsNormIndex[candidateKey] = candidates[candidateKey];
   return _hsNormIndex;
 }
 function _hsPlayerLookupName(player) {
@@ -492,15 +508,12 @@ function getOfficialPlayerHeadshotId(player) {
   var fixedName = HEADSHOT_NAME_FIX[name] || name;
   var pid = PERFECT_PLAYER_HEADSHOT_ID_FIX[name] || PERFECT_PLAYER_HEADSHOT_ID_FIX[fixedName] || 0;
   if (!pid && typeof NBA_PLAYER_IMAGES !== 'undefined') {
-    pid = NBA_PLAYER_IMAGES[fixedName] || NBA_PLAYER_IMAGES[name] || 0;
+    var idx = _hsGetNormIndex();
+    var nk = _hsNormKey(fixedName || name);
+    if (nk && (nk in idx)) pid = idx[nk];
     if (!pid) {
-      var idx = _hsGetNormIndex();
-      var nk = _hsNormKey(name);
-      if (nk && (nk in idx)) pid = idx[nk];
-      if (!pid) {
-        var reverseNk = _hsReverseNormKey(name);
-        if (reverseNk && (reverseNk in idx)) pid = idx[reverseNk];
-      }
+      var reverseNk = _hsReverseNormKey(fixedName || name);
+      if (reverseNk && (reverseNk in idx)) pid = idx[reverseNk];
     }
   }
   return pid ? Number(pid) : 0;
@@ -514,11 +527,14 @@ function _hsOfficialRemotePath(playerId) {
 }
 var _hsValidOfficialIdSet = null;
 var _hsExcludedOfficialIdSet = null;
+// 由 NBA 官方 CDN 按明确 ID 本地化并人工确认非通用占位图；下次生成索引时会自动并入。
+var PERFECT_PLAYER_EXTRA_VERIFIED_OFFICIAL_IDS = [204002, 1627775, 1627823, 2403];
 function _hsGetValidOfficialIdSet() {
   if (_hsValidOfficialIdSet) return _hsValidOfficialIdSet;
   _hsValidOfficialIdSet = {};
   var list = window.__PP_ERA_HEADSHOT_INDEX__ && window.__PP_ERA_HEADSHOT_INDEX__.validOfficialIds || [];
   list.forEach(function(id) { _hsValidOfficialIdSet[String(id)] = true; });
+  PERFECT_PLAYER_EXTRA_VERIFIED_OFFICIAL_IDS.forEach(function(id) { _hsValidOfficialIdSet[String(id)] = true; });
   return _hsValidOfficialIdSet;
 }
 function _hsHasLocalOfficialId(playerId) {
@@ -545,6 +561,11 @@ window.resolveVerifiedLocalPlayerHeadshot = function(player) {
   for (var i = 0; i < names.length; i++) {
     var record = index[_hsPresentationKey(names[i])];
     if (record && record.p) return record.p;
+  }
+  var safeOfficial = _hsGetNormIndex();
+  for (var j = 0; j < names.length; j++) {
+    var playerId = safeOfficial[_hsNormKey(names[j])] || safeOfficial[_hsReverseNormKey(names[j])];
+    if (playerId) return _hsOfficialLocalPath(playerId);
   }
   return '';
 };
@@ -879,9 +900,9 @@ var Storage = {
   }
 };
 </script>
-<script src="assets/js/perfect-player-core.js?v=20260826-era-presentation-v30"></script>
+<script src="assets/js/perfect-player-core.js?v=20260827-new-career-system-reset-v32"></script>
 <script src="assets/js/perfect-player-season-report.js?v=20260826-season-report-v2"></script>
-<script src="assets/js/perfect-player-mod-v4.js?v=20260826-season-report-v16"></script>
+<script src="assets/js/perfect-player-mod-v4.js?v=20260827-systems-prologue-v17"></script>
 <script src="assets/js/perfect-player-era-mode.js?v=20260826-rating-v31"></script>
 
 <!-- ====== 随机事件系统 — EVENT REGISTRY ====== -->
