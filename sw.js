@@ -2,7 +2,7 @@
 'use strict';
 
 var CACHE_PREFIX = 'perfect-player-shell-';
-var CACHE_NAME = CACHE_PREFIX + '20260827-new-career-system-reset-v16';
+var CACHE_NAME = CACHE_PREFIX + '20260827-local-headshot-attach-v17';
 var SHELL = [
   './',
   './nba-perfect-player.html',
@@ -22,7 +22,7 @@ var SHELL = [
   './assets/data/era-headshot-index.js?v=20260826-era-headshots-v1',
   './assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4',
   './assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10',
-  './assets/js/perfect-player-boot.js?v=20260827-systems-prologue-headshots-v8',
+  './assets/js/perfect-player-boot.js?v=20260827-local-headshot-attach-v10',
   './assets/js/current-player-ratings-2026.js?v=20260826-rating-v1',
   './assets/js/hupu/script-00-2678-58zyeprc-upload-1783508428855-12.js?v=20260827-verified-names-v1',
   './assets/js/hupu/script-01-2678-5hu3djrc-upload-1783494754597-12.js',

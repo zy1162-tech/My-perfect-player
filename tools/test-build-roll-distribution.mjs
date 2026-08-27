@@ -209,6 +209,6 @@ assert.match(html, /perfect-player-core\.js\?v=20260827-new-career-system-reset-
 assert.match(html, /perfect-player-era-mode\.js\?v=20260826-rating-v31/);
 assert.match(sw, /perfect-player-core\.js\?v=20260827-new-career-system-reset-v32/);
 assert.match(sw, /perfect-player-era-mode\.js\?v=20260826-rating-v31/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260827-new-career-system-reset-v16'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260827-local-headshot-attach-v17'/);
 
 console.log(`✓ build roll: ${rounds} seeded rounds, special=${(specialRate * 100).toFixed(2)}%, mixed-fixture HOF=${(hofShare * 100).toFixed(2)}%, real-pool HOF=${(realHofShare * 100).toFixed(2)}%, normal cards=${(normalShare * 100).toFixed(2)}%`);

@@ -179,6 +179,32 @@ const { chromium } = require('playwright');
   assert.deepEqual(identity.rookie.remote, []);
   assert.ok(identity.rookie.fallback.startsWith('data:image/svg+xml') && identity.rookie.style.includes("url('data:image/svg+xml"));
 
+  const attachPriority = await page.evaluate(() => {
+    initGame(); STATE.mode='legend'; STATE.eraStart=2003; STATE.draftMode='historical'; PP_ERA_MODE.apply(2003);
+    attachOfficialPlayerHeadshots();
+    const amare = NBA2K_TEAMS.flatMap(team => NBA2K_DATA[team] || []).find(player => /stoudemire/i.test(player && (player.nameEN || player.name || '')));
+    const roster = NBA2K_DATA.ATL;
+    const official = { name:'Patrick McCaw', nameEN:'Patrick McCaw' };
+    const remote = { name:'Remote Fixture', nameEN:'Remote Fixture', nbaId:999999999 };
+    roster.push(official, remote);
+    attachOfficialPlayerHeadshots();
+    const output = {
+      amare:{ photoLocal:amare.photoLocal, photoUrl:amare.photoUrl, preferred:getPlayerHeadshotSources(amare).local[0] },
+      official:{ photoLocal:official.photoLocal, photoUrl:official.photoUrl },
+      remote:{ photoLocal:remote.photoLocal || '', photoUrl:remote.photoUrl }
+    };
+    roster.splice(roster.indexOf(official), 1);
+    roster.splice(roster.indexOf(remote), 1);
+    return output;
+  });
+  assert.match(attachPriority.amare.photoLocal, /\/hupu-era\/amarestoudemire\.png$/);
+  assert.equal(attachPriority.amare.photoUrl, attachPriority.amare.photoLocal, 'attach must keep Amar\'e photoUrl on the verified local Hupu asset');
+  assert.equal(attachPriority.amare.preferred, attachPriority.amare.photoLocal);
+  assert.match(attachPriority.official.photoLocal, /\/nba-official\/1627775\.png$/);
+  assert.equal(attachPriority.official.photoUrl, attachPriority.official.photoLocal, 'verifiedOfficialByName/local-ID players must not retain a CDN URL');
+  assert.equal(attachPriority.remote.photoLocal, '');
+  assert.equal(attachPriority.remote.photoUrl, 'https://cdn.nba.com/headshots/nba/latest/260x190/999999999.png');
+
   const legacyUrlSafety = await page.evaluate(() => {
     const index = window.__PP_ERA_HEADSHOT_INDEX__;
     const excludedId = 3;
@@ -203,7 +229,7 @@ const { chromium } = require('playwright');
   assert.deepEqual(legacyUrlSafety.custom.remote, ['https://example.com/player/custom-avatar.png']);
   assert.deepEqual(pageErrors, [], `page errors are not allowed: ${pageErrors.join(' | ')}`);
 
-  console.log(JSON.stringify({ passed:true, renderAudit:{ modes:renderAudit.modeResults, decodedLocal:renderAudit.decodedCount }, coverage, draftInsertion, identity, legacyUrlSafety }, null, 2));
+  console.log(JSON.stringify({ passed:true, renderAudit:{ modes:renderAudit.modeResults, decodedLocal:renderAudit.decodedCount }, coverage, draftInsertion, identity, attachPriority, legacyUrlSafety }, null, 2));
   await browser.close();
 })().catch(error => {
   console.error(error);

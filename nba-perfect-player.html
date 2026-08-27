@@ -43,8 +43,8 @@ html.pp-booting #app{visibility:hidden}
 <script src="assets/data/era-headshot-index.js?v=20260826-era-headshots-v1"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20260827-systems-prologue-headshots-v8" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20260827-systems-prologue-headshots-v8"></script>
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20260827-local-headshot-attach-v10" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20260827-local-headshot-attach-v10"></script>
   <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260826-era-headshots-v2">
   <link rel="stylesheet" href="assets/css/perfect-player-season-report.css?v=20260826-season-report-v1">
 
@@ -598,13 +598,44 @@ function attachOfficialPlayerHeadshots() {
   if (typeof NBA2K_TEAMS === 'undefined' || typeof NBA2K_DATA === 'undefined') return;
   NBA2K_TEAMS.forEach(function(team) {
     (NBA2K_DATA[team] || []).forEach(function(player) {
+      var indexedLocal = resolveVerifiedLocalPlayerHeadshot(player);
       var pid = getOfficialPlayerHeadshotId(player);
+      if (indexedLocal) {
+        if (pid) player.nbaId = pid;
+        player.photoLocal = indexedLocal;
+        // 部分旧界面直接读取 photoUrl；本地已验证资源不能再被不稳定 CDN 覆盖。
+        player.photoUrl = indexedLocal;
+        player.photoSource = /\/nba-official\//i.test(indexedLocal) ? 'nba-official-headshot' : 'verified-local-headshot';
+        player.photoStatus = 'cached';
+        return;
+      }
       if (!pid) return;
       player.nbaId = pid;
-      player.photoUrl = _hsIsExcludedOfficialId(pid) ? '' : _hsOfficialRemotePath(pid);
-      if (_hsHasLocalOfficialId(pid)) player.photoLocal = player.photoLocal || _hsOfficialLocalPath(pid);
-      player.photoSource = player.photoSource || (PERFECT_PLAYER_HEADSHOT_URL_FIX[pid] ? 'espn-official-player-headshot' : 'nba-official-headshot');
-      player.photoStatus = _hsHasLocalOfficialId(pid) ? 'cached' : (_hsIsExcludedOfficialId(pid) ? 'placeholder-excluded' : 'remote');
+      if (_hsHasLocalOfficialId(pid)) {
+        var officialLocal = _hsOfficialLocalPath(pid);
+        player.photoLocal = officialLocal;
+        player.photoUrl = officialLocal;
+        player.photoSource = 'nba-official-headshot';
+        player.photoStatus = 'cached';
+        return;
+      }
+      var existingLocal = player.photoLocal || player._photoLocal || '';
+      if (_hsIsReliableRecordLocal(existingLocal, player, '', pid)) {
+        player.photoLocal = existingLocal;
+        player.photoUrl = existingLocal;
+        player.photoSource = player.photoSource || 'verified-local-headshot';
+        player.photoStatus = 'cached';
+        return;
+      }
+      if (_hsIsExcludedOfficialId(pid)) {
+        if (/^assets\/images\/Player\/nba-official\//i.test(String(player.photoLocal || ''))) player.photoLocal = '';
+        if (_hsOfficialIdFromRemoteUrl(player.photoUrl || player._photoUrl)) player.photoUrl = '';
+        player.photoStatus = 'placeholder-excluded';
+        return;
+      }
+      player.photoUrl = _hsOfficialRemotePath(pid);
+      player.photoSource = PERFECT_PLAYER_HEADSHOT_URL_FIX[pid] ? 'espn-official-player-headshot' : 'nba-official-headshot';
+      player.photoStatus = 'remote';
     });
   });
 }

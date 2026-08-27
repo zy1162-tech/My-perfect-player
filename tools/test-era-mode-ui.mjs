@@ -29,7 +29,7 @@ assert.match(premium, /\.feature-card\.mode-card-legend \{[^}]*#e5f5ed[^}]*#ead7
 assert.match(html, /perfect-player-premium\.css\?v=20260826-era-story-ui-v2/);
 assert.match(html, /perfect-player-era-mode\.js\?v=20260826-rating-v31/);
 assert.match(html, /perfect-player-core\.js\?v=20260827-new-career-system-reset-v32/);
-assert.match(html, /perfect-player-boot\.js\?v=20260827-systems-prologue-headshots-v8/);
+assert.match(html, /perfect-player-boot\.js\?v=20260827-local-headshot-attach-v10/);
 assert.match(core, /__PP_openCareerFeature\(\\'achievements\\'\)/);
 assert.match(core, /__PP_openCareerFeature\(\\'legacy\\'\)/);
 assert.doesNotMatch(core, /if\(window\.PP_FX\) PP_FX\.open(?:Legacy)?Panel/);

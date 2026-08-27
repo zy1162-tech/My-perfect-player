@@ -79,6 +79,9 @@ assert.match(html, /urls\.map\(_hsCssBgUrl\)/);
 assert.match(html, /function _hsOfficialIdFromRemoteUrl\(remoteUrl\)/);
 assert.match(html, /urlPlayerId && \(_hsIsExcludedOfficialId\(urlPlayerId\) \|\| _hsIsExcludedOfficialId\(playerId\)\)/, 'stale NBA CDN URLs from excluded old-save IDs must be filtered');
 assert.match(html, /_hsIsReliableRecordRemote\(recordRemote, pid\)/);
+assert.match(html, /var indexedLocal = resolveVerifiedLocalPlayerHeadshot\(player\);[\s\S]*player\.photoLocal = indexedLocal;[\s\S]*player\.photoUrl = indexedLocal;/, 'attach must expose verified local assets through both legacy photo fields');
+assert.match(html, /if \(_hsHasLocalOfficialId\(pid\)\)[\s\S]*player\.photoLocal = officialLocal;[\s\S]*player\.photoUrl = officialLocal;/, 'verified official local IDs must not be overwritten by CDN URLs');
+assert.match(html, /player\.photoUrl = _hsOfficialRemotePath\(pid\);[\s\S]*player\.photoStatus = 'remote';/, 'remote CDN is only the final non-excluded fallback');
 assert.doesNotMatch(html.match(/function getPlayerHeadshotStyle[\s\S]*?\n\}/)[0], /url\("/);
 assert.doesNotMatch(css, /\.bp-headshot:empty|\.bl-headshot:empty/);
 assert.match(eraMode, /photoLocal: presentation\.p \|\| ''/);
@@ -95,7 +98,7 @@ assert.ok(html.indexOf('script-00-2678-58zyeprc-upload-1783508428855-12.js?v=202
 assert.ok(html.indexOf('era-headshot-index.js?v=20260826-era-headshots-v1') < html.indexOf('perfect-player-core.js?v='));
 assert.match(html, /perfect-player-era-mode\.js\?v=20260826-rating-v31/);
 assert.match(html, /perfect-player\.css\?v=20260826-era-headshots-v2/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260827-new-career-system-reset-v16'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260827-local-headshot-attach-v17'/);
 assert.match(sw, /\.\/assets\/js\/hupu\/script-00-2678-58zyeprc-upload-1783508428855-12\.js\?v=20260827-verified-names-v1/);
 assert.doesNotMatch(sw, /['"]\.\/assets\/images\/Player\/(?:hupu-era|nba-official)\//, 'large on-demand image directories must not be install-shell entries');
 
