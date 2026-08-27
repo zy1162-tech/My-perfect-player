@@ -9,9 +9,9 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
       ['assets/js/perfect-player-hupu-extensions.js?v=20260826-rating-v16', '角色扩展']
     ],
     career: [
-      ['assets/js/perfect-player-skills.js?v=20260824-balance-v7', '球风技能'],
+        ['assets/js/perfect-player-skills.js?v=20260827-style-economy-v9', '球风技能'],
       ['assets/js/perfect-player-awards.js?v=20260823-allstar-v3', '荣誉评选'],
-      ['assets/js/perfect-player-enhancements.js?v=20260826-legacy-sim-v15', '成就特效']
+        ['assets/js/perfect-player-enhancements.js?v=20260827-evidence-legacy-v17', '成就特效']
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20260825-stamina-v14', '赛季事件'],
@@ -22,7 +22,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
     ],
     live: [
     ['assets/js/perfect-player-live-court.js?v=20260824-era-positions-v7', '俯瞰球场'],
-    ['assets/js/perfect-player-live-sim.js?v=20260826-simulation-v17', '文字直播']
+        ['assets/js/perfect-player-live-sim.js?v=20260827-endurance-v18', '文字直播']
     ]
   };
 
@@ -324,7 +324,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20260827-local-headshot-attach-v10').catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20260827-style-economy-v11').catch(function () {});
   }
 
   function idleLoad() {

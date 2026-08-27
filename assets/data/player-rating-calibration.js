@@ -2,7 +2,7 @@
 (function (global) {
   'use strict';
 
-  var VERSION = '20260826-rating-calibration-v2';
+  var VERSION = '20260827-bounded-rating-v4';
   var BANDS = [
     { min:96, max:99, label:'历史级 / 统治级' },
     { min:93, max:95, label:'MVP 级' },
@@ -27,6 +27,30 @@
     var result = {};
     Object.keys(source || {}).forEach(function (name) { result[nameKey(name)] = source[name]; });
     return result;
+  }
+
+  function stableBucket(value, size) {
+    var text = nameKey(value);
+    var hash = 2166136261;
+    for (var i = 0; i < text.length; i++) {
+      hash ^= text.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+    return size > 0 ? (hash >>> 0) % size : 0;
+  }
+
+  // 历史首轮只校准“新秀当季下限”，潜力与成长曲线仍决定以后能走多远。
+  function historicalRookieFloor(pick, identity) {
+    pick = Math.max(1, Math.min(30, Math.round(Number(pick) || 30)));
+    var variation = stableBucket(String(pick) + ' ' + identity, 3);
+    if (pick <= 3) return 74 + variation;
+    if (pick <= 10) return 72 + variation;
+    if (pick <= 20) return 71 + variation;
+    return 70 + variation;
+  }
+
+  function normalizeHistoricalRookieOvr(sourceOvr, pick, identity) {
+    return clamp(Math.max(Number(sourceOvr) || 0, historicalRookieFloor(pick, identity)), 70, 99);
   }
 
   // These are target-season evaluations, not copied edition ratings. The source
@@ -88,28 +112,32 @@
   }
   function modernScaleBaseline(sourceOvr) {
     // Old edition ratings are a relative-order reference, not a hard floor.
-    // Translate them continuously onto the product bands without flattening 60s.
-    if (sourceOvr < 65) return sourceOvr;                    // true fringe remains at its relative baseline
-    if (sourceOvr < 70) return sourceOvr + 0.25;             // role evidence, not a flat floor, decides rotation entry
-    if (sourceOvr < 80) return sourceOvr;                    // preserve ordinary-starter ordering
+    // 旧版 45-64 连续映射到现代 70.5-73.5，65-79 映射到 74-79；
+    // 两段都严格单调，保留源排序，避免“全员直接 +N”或大量精确 70。
+    if (sourceOvr < 65) return 70.5 + (sourceOvr - 45) * (3 / 19);
+    if (sourceOvr < 80) return 74 + (sourceOvr - 65) * (5 / 14);
     return 80 + (sourceOvr - 80) * 0.85;                     // modest high-end compression
   }
 
   function calibrateEra(row, context) {
     context = context || {};
-    var sourceOvr = clamp(context.sourceOvr != null ? context.sourceOvr : (row && (row.ovr != null ? row.ovr : row.rating)), 45, 99);
+    var rawSource = context.sourceOvr != null ? context.sourceOvr : (row && (row.ovr != null ? row.ovr : row.rating));
+    var ratingMissing = rawSource == null || rawSource === '' || !isFinite(Number(rawSource));
+    var sourceOvr = clamp(ratingMissing ? 45 : rawSource, 45, 99);
     var kind = context.kind || 'season';
     var targetAge = clamp(context.targetAge != null ? context.targetAge : (row && row.age), 18, 49);
     var peakOverride = PEAK_OVERRIDES[nameKey(row && (row.nameEn || row.nameEN || row.name))];
     if (kind === 'rookie') {
+      var rookieOvr = normalizeHistoricalRookieOvr(sourceOvr, context.pick != null ? context.pick : (row && row.pick), row && (row.nameEn || row.nameEN || row.name));
       return {
         sourceOvr:sourceOvr,
-        seasonOvr:sourceOvr,
-        rookieOvr:sourceOvr,
+        seasonOvr:rookieOvr,
+        rookieOvr:rookieOvr,
         peakOvr:peakOverride || null,
         targetAge:targetAge,
-        adjusted:false,
-        reference:{ version:VERSION, kind:'rookie', basis:'draft-class rookie OVR + potential/curve' }
+        adjusted:rookieOvr !== sourceOvr,
+        ratingMissing:ratingMissing,
+        reference:{ version:VERSION, kind:'rookie', basis:'source rookie OVR preserved above deterministic real-pick role floor; potential/curve remains separate', pick:Number(context.pick != null ? context.pick : (row && row.pick)) || null, roleFloor:historicalRookieFloor(context.pick != null ? context.pick : (row && row.pick), row && (row.nameEn || row.nameEN || row.name)), ratingMissing:ratingMissing }
       };
     }
     var era = Number(context.eraStart) || 0;
@@ -122,7 +150,7 @@
     var baseline = modernScaleBaseline(sourceOvr);
     var performanceAdjustment = Math.max(-3, Math.min(3, (estimated - baseline) * reliability));
     var seasonOvr = override ? override.seasonOvr : baseline + performanceAdjustment + ageDelta;
-    seasonOvr = clamp(seasonOvr, 50, 99);
+    seasonOvr = clamp(seasonOvr, 70, 99);
     return {
       sourceOvr:sourceOvr,
       seasonOvr:seasonOvr,
@@ -130,6 +158,7 @@
       peakOvr:(override && override.peakOvr) || peakOverride || null,
       targetAge:(override && override.targetAge) || targetAge,
       adjusted:seasonOvr !== sourceOvr || !!override,
+      ratingMissing:ratingMissing,
       reference:{
         version:VERSION,
         kind:'season',
@@ -141,7 +170,8 @@
         sampleMinutes:Math.round(minutes),
         reliability:Math.round(reliability * 1000) / 1000,
         performanceAdjustment:Math.round(performanceAdjustment * 10) / 10,
-        override:!!override
+        override:!!override,
+        ratingMissing:ratingMissing
       }
     };
   }
@@ -163,6 +193,10 @@
     peakOverrides:PEAK_OVERRIDES,
     nameKey:nameKey,
     roleEstimate:roleEstimate,
+    modernScaleBaseline:modernScaleBaseline,
+    stableBucket:stableBucket,
+    historicalRookieFloor:historicalRookieFloor,
+    normalizeHistoricalRookieOvr:normalizeHistoricalRookieOvr,
     calibrateEra:calibrateEra,
     peakFor:peakFor,
     bandFor:bandFor

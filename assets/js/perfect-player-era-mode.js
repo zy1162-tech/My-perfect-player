@@ -549,6 +549,7 @@
       _ratingKind: options.ratingKind || 'season',
       _seasonAgeCalibrated: !!options.seasonAgeCalibrated,
       _ratingBalanceAdjusted: !!rating.adjusted,
+      _ratingMissing: !!rating.ratingMissing,
       _seasonLine: row.seasonLine || null,
       // 真实年代球员优先使用身份校验后的统一索引；避免空/错误旧路径遮住有效头像。
       photoLocal: presentation.p || '',
@@ -830,7 +831,8 @@
     var positions = ['PG','SG','SF','PF','C'];
     var seq = (Number(STATE._eraRookieSeq) || 0) + 1;
     var pos = positions[(seq + year) % positions.length];
-    var ovr = 60 + ((seq * 7 + year) % 15);
+    // 2023+ 虚构新秀仍是边缘/轮换级，但不再把低段整批钳成同一个 70。
+    var ovr = 70 + ((seq * 7 + year) % 5);
     var player = makePlayer({
       nameEn:'Era Prospect ' + year + '-' + seq,
       nameCn:'年代新秀', pos:pos, ovr:ovr, potential:5 + (seq % 8), ratingSource:'传奇年代虚构新秀（联盟下限 70）'
@@ -884,6 +886,28 @@
       STATE.career.flags.legendEraStart = start;
       STATE.career.flags.legendEraLabel = ({ 2003:'2003 白金一代', 2010:'2010 吾皇登基纪元', 2016:'2016-17 巨星合体纪元' })[start] || (start + ' 传奇年代');
     }
+  }
+
+  function normalizeOpeningLeagueRatings(start) {
+    var calibration = global.PP_RATING_CALIBRATION;
+    if (!calibration) return 0;
+    NBA2K_TEAMS.forEach(function(team) {
+      var roster = Array.isArray(NBA2K_DATA[team]) ? NBA2K_DATA[team] : [];
+      var ordered = roster.slice().sort(function(a, b) {
+        var diff = (Number(b.ovr) || 0) - (Number(a.ovr) || 0);
+        return diff || nameKey(a.nameEN || a.name).localeCompare(nameKey(b.nameEN || b.name));
+      });
+      ordered.forEach(function(player, rank) {
+        var before = Number(player.ovr) || 0;
+        player._preRoleNormalizationOvr = before;
+        // 组队后只记录可审计深度，不再二次修改 OVR 或 13 项属性。
+        player._ratingRoleAdjustment = 0;
+        player._ratingReference = Object.assign({}, player._ratingReference || {}, {
+          teamDepthRank:rank + 1, openingRoleAdjustment:0
+        });
+      });
+    });
+    return 0;
   }
 
   function isHistoricalActive() {
@@ -955,6 +979,8 @@
       applyEraDraftNight(ERA_2017_DRAFT_NIGHT);
       STATE._eraFirstDraftYear = 2017;
     }
+    // 只在新建年代联盟组装完成时归一化；读档 repair 路径不会进入这里。
+    normalizeOpeningLeagueRatings(start);
     STATE._legendLeagueApplied = start;
     syncLegendEraState(start);
     if (typeof clearLineupCache === 'function') clearLineupCache();
@@ -1019,6 +1045,7 @@
     getSpinTeams:getSpinTeams,
     addDraftClass:addDraftClass,
     generateRookie:generateEraRookie,
+    normalizeOpeningLeagueRatings:normalizeOpeningLeagueRatings,
     peakOvrFor:peakOvrFor
   };
 })(window);

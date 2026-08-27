@@ -11,9 +11,10 @@
     3: { mu: 1.13, sigma: 0.07, lo: 0.99, hi: 1.28 },
     4: { mu: 1.21, sigma: 0.085, lo: 1.00, hi: 1.36 }
   };
-  // 完整赛季保底20点，出场、表现与高光奖励可提高到30点，不再二次翻倍。
-  var SEASON_POINT_BASE = 20;
-  var SEASON_POINT_CAP = 30;
+  // 常规结算最高 26；全明星、剧情和结算等当季来源共享 32 点硬上限。
+  var SEASON_POINT_BASE = 16;
+  var SEASON_POINT_CAP = 26;
+  var ALL_SEASON_POINT_CAP = 32;
   var STYLE_POINT_REWARD_MULTIPLIER = 1;
 
   /** 梦境挑战击败传奇队后可解锁第四级的球风技能 */
@@ -224,6 +225,11 @@
         [{ key: 'CLU', min: 90 }],
         [{ key: 'CLU', min: 94 }]
       ]
+    },
+    {
+      id: 'endurance_training', icon: '🔋', name: '耐力专精', group: '长期训练', max: Infinity, infinite: true,
+      desc: '无等级上限的长期消耗项。只让末节与背靠背体能更稳、轮换分钟波动更小；不加能力值，不影响伤病、年龄衰退或退役。',
+      reqs: [null]
     }
   ];
   var SKILL_MAP = {};
@@ -289,9 +295,17 @@
     return c.skills;
   }
 
-  function grantStylePoints(amount) {
+  function grantStylePoints(amount, options) {
+    options = options || {};
     var baseAmount = Math.max(0, Number(amount) || 0);
     var creditedAmount = baseAmount * STYLE_POINT_REWARD_MULTIPLIER;
+    var s = (typeof STATE !== 'undefined') ? STATE : global.STATE;
+    if (options.seasonal !== false && s && s.season) {
+      var seasonEarned = Math.max(0, Number(s.season._stylePointsEarned) || 0);
+      creditedAmount = Math.max(0, Math.min(creditedAmount, ALL_SEASON_POINT_CAP - seasonEarned));
+      s.season._stylePointsEarned = seasonEarned + creditedAmount;
+      s.season._stylePointsCapReached = s.season._stylePointsEarned >= ALL_SEASON_POINT_CAP;
+    }
     var st = ensureSkillState();
     st.points += creditedAmount;
     st.earned += creditedAmount;
@@ -322,6 +336,7 @@
   function getSkillMax(id) {
     var def = SKILL_MAP[id];
     if (!def) return 0;
+    if (def.infinite) return Infinity;
     if (isLegendTierUnlocked(id)) return 4;
     return def.max || 3;
   }
@@ -354,6 +369,7 @@
 
   function maxAffordableByAttrs(def, attrs) {
     def = def || {};
+    if (def.infinite) return Infinity;
     var cap = getSkillMax(def.id);
     var max = 0;
     for (var lv = 1; lv <= cap; lv++) {
@@ -366,6 +382,7 @@
   function getPurchasedLevel(id) {
     var st = ensureSkillState();
     var cap = getSkillMax(id);
+    if (cap === Infinity) return Math.max(0, Math.floor(Number(st.purchased[id]) || 0));
     return Math.max(0, Math.min(cap, Number(st.purchased[id]) || 0));
   }
 
@@ -373,12 +390,24 @@
     var def = SKILL_MAP[id];
     if (!def) return 0;
     var purchased = Number(ensureSkillState().purchased[id]) || 0;
+    if (def.infinite) return Math.max(0, Math.floor(purchased));
     if (purchased >= 4) return purchased;
     return Math.min(purchased, maxAffordableByAttrs(def, liveAttrs()));
   }
 
-  function skillCost(nextLevel) {
+  function skillCost(nextLevel, id) {
+    if (id === 'endurance_training') return Math.min(12, 2 + Math.floor(Math.max(0, nextLevel - 1) / 5));
     return SKILL_COSTS[nextLevel] || Infinity;
+  }
+
+  function getEnduranceTrainingEffects(level) {
+    level = Math.max(0, Math.floor(Number(level == null ? getPurchasedLevel('endurance_training') : level) || 0));
+    var curve = 1 - Math.exp(-level / 18);
+    return {
+      level:level,
+      fatigueReduction:Math.min(0.10, 0.10 * curve),
+      minuteVarianceReduction:Math.min(0.08, 0.08 * curve)
+    };
   }
 
   function availableStylePoints() {
@@ -393,10 +422,10 @@
     var next = purchased + 1;
     var retired = false;
     try { retired = !!(liveCareer() && liveCareer().retired); } catch (e) {}
-    var legendFreeFour = next === 4 && isLegendTierUnlocked(def.id);
-    var nextReqs = def.reqs[next] || [];
+    var legendFreeFour = !def.infinite && next === 4 && isLegendTierUnlocked(def.id);
+    var nextReqs = (def.reqs && def.reqs[next]) || [];
     var canAffordAttrs = !retired && next <= skillMax && (legendFreeFour || meetsReqs(nextReqs, attrs));
-    var cost = next <= skillMax ? (legendFreeFour ? 0 : skillCost(next)) : 0;
+    var cost = next <= skillMax ? (legendFreeFour ? 0 : skillCost(next, def.id)) : 0;
     var canBuy = canAffordAttrs && (legendFreeFour || availableStylePoints() >= cost);
     var conds = [];
     var showLv;
@@ -411,7 +440,8 @@
       });
     });
     var status;
-    if (purchased <= 0 && effective <= 0) status = canBuy ? '可激活' : (canAffordAttrs ? '球风点不足' : '未点亮');
+    if (def.infinite) status = retired ? '生涯已结束' : (canBuy ? (purchased ? '可继续训练' : '可激活') : '球风点不足');
+    else if (purchased <= 0 && effective <= 0) status = canBuy ? '可激活' : (canAffordAttrs ? '球风点不足' : '未点亮');
     else if (purchased >= 4) status = '满级';
     else if (effective < purchased) status = '降效 Lv.' + effective;
     else if (purchased >= skillMax) status = '满级';
@@ -425,7 +455,10 @@
       4: '这套打法已登峰造极，不再受属性波动影响。'
     };
     var effect;
-    if (effective >= 4) effect = EFFECT_TONE[4];
+    if (def.infinite) {
+      var endurance = getEnduranceTrainingEffects(effective);
+      effect = '背靠背/末节体能波动 -' + Math.round(endurance.fatigueReduction * 1000) / 10 + '% · 分钟波动 -' + Math.round(endurance.minuteVarianceReduction * 1000) / 10 + '%（软上限 10% / 8%）';
+    } else if (effective >= 4) effect = EFFECT_TONE[4];
     else if (effective > 0) effect = EFFECT_TONE[effective] || EFFECT_TONE[1];
     else if (purchased > 0) effect = '已购买，但当前条件不够，这套打法暂时休眠。';
     else effect = '激活后立即生效。';
@@ -439,7 +472,7 @@
       purchased: purchased,
       level: effective,
       effective: effective,
-      eligible: maxAffordableByAttrs(def, attrs) > purchased || purchased > 0,
+      eligible: def.infinite ? (!retired || purchased > 0) : (maxAffordableByAttrs(def, attrs) > purchased || purchased > 0),
       activated: effective > 0,
       canUpgrade: canBuy,
       canBuy: canBuy,
@@ -449,6 +482,7 @@
       effect: effect,
       conds: conds,
       tokenSkill: true
+      ,infinite: !!def.infinite
     };
   }
 
@@ -462,12 +496,12 @@
     var st = ensureSkillState();
     var skillMax = getSkillMax(id);
     var purchased = Number(st.purchased[id]) || 0;
-    if (purchased >= skillMax) return { ok: false, reason: '已满级' };
+    if (skillMax !== Infinity && purchased >= skillMax) return { ok: false, reason: '已满级' };
     if (liveCareer() && liveCareer().retired) return { ok: false, reason: '生涯已结束' };
     var next = purchased + 1;
-    var legendFreeFour = next === 4 && isLegendTierUnlocked(id);
-    if (!legendFreeFour && !meetsReqs(def.reqs[next], liveAttrs())) return { ok: false, reason: '属性未达标' };
-    var cost = legendFreeFour ? 0 : skillCost(next);
+    var legendFreeFour = !def.infinite && next === 4 && isLegendTierUnlocked(id);
+    if (!legendFreeFour && !def.infinite && !meetsReqs(def.reqs[next], liveAttrs())) return { ok: false, reason: '属性未达标' };
+    var cost = legendFreeFour ? 0 : skillCost(next, id);
     if (!legendFreeFour && st.points < cost) return { ok: false, reason: '球风点不足' };
     if (cost > 0) st.points -= cost;
     st.purchased[id] = next;
@@ -614,7 +648,8 @@
     if (!s || !s.season || !s.career) return null;
     if (s.season._stylePointsGranted) return s.career.skills && s.career.skills.lastGrant;
     var grant = computeSeasonStyleGrant();
-    grant.total = grantStylePoints(grant.total);
+    grant.requested = grant.total;
+    grant.total = grantStylePoints(grant.total, { seasonal:true, source:'season_settlement' });
     grant.parts = (grant.parts || []).map(function (part) {
       return Object.assign({}, part, { amount: part.amount * STYLE_POINT_REWARD_MULTIPLIER });
     });
@@ -629,7 +664,13 @@
     grant = grant || (ensureSkillState().lastGrant);
     if (!grant) return '';
     var bits = (grant.parts || []).map(function (p) { return p.label + '+' + p.amount; });
-    return '本季球风点 +' + grant.total + (bits.length ? '（' + bits.join(' · ') + '）' : '');
+    var s = (typeof STATE !== 'undefined') ? STATE : global.STATE;
+    var capText = s && s.season && s.season._stylePointsCapReached ? ' · 已达单季 32 点上限' : '';
+    var requested = Math.max(0, Number(grant.requested) || 0);
+    if (requested > Number(grant.total || 0)) {
+      return '本季球风点 +' + grant.total + '（结算原可得 ' + requested + '，受单季 32 点上限）' + capText;
+    }
+    return '本季球风点 +' + grant.total + (bits.length ? '（' + bits.join(' · ') + '）' : '') + capText;
   }
 
   global.PP_SKILLS = {
@@ -637,6 +678,9 @@
     SKILL_COSTS: SKILL_COSTS,
     SKILL_MULT: SKILL_MULT,
     STYLE_POINT_REWARD_MULTIPLIER: STYLE_POINT_REWARD_MULTIPLIER,
+    SEASON_POINT_BASE: SEASON_POINT_BASE,
+    SEASON_POINT_CAP: SEASON_POINT_CAP,
+    ALL_SEASON_POINT_CAP: ALL_SEASON_POINT_CAP,
     ensureSkillState: ensureSkillState,
     grantStylePoints: grantStylePoints,
     getPurchasedLevel: getPurchasedLevel,
@@ -653,6 +697,7 @@
     computeSeasonStyleGrant: computeSeasonStyleGrant,
     formatGrantLine: formatGrantLine,
     skillCost: skillCost,
+    getEnduranceTrainingEffects: getEnduranceTrainingEffects,
     getSkillMax: getSkillMax,
     isLegendTierUnlocked: isLegendTierUnlocked,
     grantLegendTierUnlock: grantLegendTierUnlock,

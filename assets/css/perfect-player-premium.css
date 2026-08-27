@@ -276,13 +276,12 @@ body {
 
 /* 季后赛赛后表：表头与数字共用完全相同的列宽。 */
 .pp-game-box-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:4px 10px 10px; }
-.pp-game-box-head,.pp-game-box-row { display:grid; grid-template-columns:minmax(70px,1fr) 28px 26px 26px 26px 46px; gap:3px; align-items:center; font-variant-numeric:tabular-nums; }
+.pp-game-box-head,.pp-game-box-row { display:grid; grid-template-columns:minmax(64px,1fr) repeat(5,38px); gap:3px; align-items:center; font-variant-numeric:tabular-nums; }
 .pp-game-box-head { padding:0 0 3px; color:var(--text-muted); font-size:8px; }
 .pp-game-box-head > span:not(:first-child),.pp-game-box-num { text-align:right; }
 .pp-game-box-row { min-height:27px; padding:3px 0; border-bottom:1px solid var(--border-light); font-size:9px; }
 .pp-game-box-row.is-user { background:var(--orange-dim); color:var(--orange); font-weight:700; }
 .pp-game-box-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.pp-game-box-fg { white-space:nowrap; }
 @media (max-width:620px) { .pp-game-box-grid { grid-template-columns:1fr; } }
 .career-archive-modal { width: min(94vw,460px); max-height: 94vh; }
 .career-archive-content { max-height: calc(94vh - 54px); padding: 10px; overflow-y: auto; overscroll-behavior: contain; }

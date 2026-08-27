@@ -383,6 +383,9 @@
       var ironMu = getStyleSkillMu('iron_man');
       if (ironMu > 1) fatigueA *= Math.max(0.35, 1 - (ironMu - 1) * 3.5);
     }
+    if (fatigueA && teamA === STATE.careerTeam && typeof PP_SKILLS !== 'undefined' && PP_SKILLS.getEnduranceTrainingEffects) {
+      fatigueA *= 1 - PP_SKILLS.getEnduranceTrainingEffects().fatigueReduction;
+    }
     var averageAthletic = ((Number(powerA.athletic) || 60) + (Number(powerB.athletic) || 60)) / 2;
     var averageDepth = ((Number(powerA.depth) || 60) + (Number(powerB.depth) || 60)) / 2;
     var pace = clamp(Math.round(99.4 + (averageAthletic - baseline.athletic) * 0.08 + (averageDepth - baseline.depth) * 0.02 + gauss(0, 2.8)), 90, 109);
@@ -2012,7 +2015,11 @@
     var adj = 0;
     if (ctx.secLeft <= 6) adj += stam * 0.005; // 压哨：rush(-0.10) 最多被抵消到 -0.04
     if (ctx.q === 4 && !ctx.isOT && ctx.secLeft < 300) {
-      adj -= Math.max(0, 0.030 - stam * 0.0025); // 第四节末段：续航 12 无惩罚，续航 0 约 -3%
+      var latePenalty = Math.max(0, 0.030 - stam * 0.0025);
+      if (typeof PP_SKILLS !== 'undefined' && PP_SKILLS.getEnduranceTrainingEffects) {
+        latePenalty *= 1 - PP_SKILLS.getEnduranceTrainingEffects().fatigueReduction;
+      }
+      adj -= latePenalty; // 第四节末段：耐力专精只平滑既有体能波动
     }
     return adj;
   }

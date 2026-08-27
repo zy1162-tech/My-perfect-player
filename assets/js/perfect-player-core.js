@@ -4524,6 +4524,9 @@ function simulate82StyleMatchup(teamA, teamB, options) {
   }
   var fatigueA = Number(options.fatigueA) || 0;
   var fatigueB = Number(options.fatigueB) || 0;
+  if (fatigueA && teamA === STATE.careerTeam && typeof PP_SKILLS !== 'undefined' && PP_SKILLS.getEnduranceTrainingEffects) {
+    fatigueA *= 1 - PP_SKILLS.getEnduranceTrainingEffects().fatigueReduction;
+  }
   var averageAthletic = ((Number(powerA.athletic) || 60) + (Number(powerB.athletic) || 60)) / 2;
   var averageDepth = ((Number(powerA.depth) || 60) + (Number(powerB.depth) || 60)) / 2;
   // 2025-26联盟基线：99.4回合、115.7进攻效率。
@@ -5062,6 +5065,9 @@ function getPlayerRotationMinutes(attrs, pos, isPlayoff) {
   // 续航影响轮换：满续航约 +2.2 分钟，出场时间波动也更小。
   roleMinutes += stamina * 0.18;
   var minuteSigma = Math.max(0.75, 1.40 - stamina * 0.06);
+  if (typeof PP_SKILLS !== 'undefined' && PP_SKILLS.getEnduranceTrainingEffects) {
+    minuteSigma *= 1 - PP_SKILLS.getEnduranceTrainingEffects().minuteVarianceReduction;
+  }
   return Math.max(6, Math.min(42, Math.round(simGaussian(roleMinutes, minuteSigma))));
 }
 
@@ -8474,9 +8480,9 @@ function showPlayoffGameDataPanel(gameEntry, teamA, teamB, roundName, onContinue
   var teamBBox = (box[teamB] || []).slice().sort(function(a, b) { return (b.pts || 0) - (a.pts || 0); });
   function totals(players) {
     return players.reduce(function(sum, p) {
-      ['pts','reb','ast','stl','blk','tov','fgm','fga','threeM','threeA'].forEach(function(key) { sum[key] += Number(p[key]) || 0; });
+      ['pts','reb','ast','stl','blk'].forEach(function(key) { sum[key] += Number(p[key]) || 0; });
       return sum;
-    }, { pts:0,reb:0,ast:0,stl:0,blk:0,tov:0,fgm:0,fga:0,threeM:0,threeA:0 });
+    }, { pts:0,reb:0,ast:0,stl:0,blk:0 });
   }
   var ta = totals(teamABox), tb = totals(teamBBox);
   function statRow(label, key) {
@@ -8486,13 +8492,13 @@ function showPlayoffGameDataPanel(gameEntry, teamA, teamB, roundName, onContinue
   function boxRows(players) {
     return players.slice(0, 8).map(function(p) {
       return '<div class="pp-game-box-row' + (p.isUser ? ' is-user' : '') + '">' +
-        '<span class="pp-game-box-name">' + (p.name || '球员') + '</span><b class="pp-game-box-num">' + (p.pts || 0) + '</b><span class="pp-game-box-num">' + (p.reb || 0) + '</span><span class="pp-game-box-num">' + (p.ast || 0) + '</span><span class="pp-game-box-num">' + (p.tov || 0) + '</span><span class="pp-game-box-num pp-game-box-fg">' + (p.fgm || 0) + '-' + (p.fga || 0) + '</span></div>';
+        '<span class="pp-game-box-name">' + (p.name || '球员') + '</span><b class="pp-game-box-num">' + (p.pts || 0) + '</b><span class="pp-game-box-num">' + (p.reb || 0) + '</span><span class="pp-game-box-num">' + (p.ast || 0) + '</span><span class="pp-game-box-num">' + (p.stl || 0) + '</span><span class="pp-game-box-num">' + (p.blk || 0) + '</span></div>';
     }).join('');
   }
   function teamBox(team, players) {
     return '<section style="min-width:0;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);padding:7px;">' +
       '<strong style="display:block;font-size:11px;margin-bottom:4px;">' + getTeamLogo(team, 16) + ' ' + getTeamName(team) + '</strong>' +
-      '<div class="pp-game-box-head"><span>球员</span><span>分</span><span>板</span><span>助</span><span>误</span><span>投篮</span></div>' + boxRows(players) + '</section>';
+      '<div class="pp-game-box-head"><span>球员</span><span>得分</span><span>篮板</span><span>助攻</span><span>抢断</span><span>盖帽</span></div>' + boxRows(players) + '</section>';
   }
   var overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
@@ -8501,8 +8507,7 @@ function showPlayoffGameDataPanel(gameEntry, teamA, teamB, roundName, onContinue
     '<div class="modal-header"><span style="font-family:var(--font-display);">📊 ' + roundName + ' G' + gameEntry.game + ' · 赛后数据</span></div>' +
     '<div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:10px 14px;text-align:center;">' +
       '<strong>' + getTeamName(teamA) + '</strong><span style="font-family:var(--font-display);font-size:23px;color:var(--orange);">' + gameEntry.myScore + ' - ' + gameEntry.oppScore + '</span><strong>' + getTeamName(teamB) + '</strong></div>' +
-    '<div style="padding:0 14px 8px;">' + statRow('篮板','reb') + statRow('助攻','ast') + statRow('抢断','stl') + statRow('盖帽','blk') + statRow('失误','tov') +
-      '<div style="display:grid;grid-template-columns:1fr 66px 1fr;gap:5px;padding:3px 0;font-size:10px;"><strong style="text-align:right;">' + ta.fgm + '-' + ta.fga + '</strong><span style="text-align:center;color:var(--text-muted);">投篮</span><strong>' + tb.fgm + '-' + tb.fga + '</strong></div></div>' +
+    '<div style="padding:0 14px 8px;">' + statRow('篮板','reb') + statRow('助攻','ast') + statRow('抢断','stl') + statRow('盖帽','blk') + '</div>' +
     '<div class="pp-game-box-grid">' + teamBox(teamA, teamABox) + teamBox(teamB, teamBBox) + '</div>' +
     '<div style="padding:0 12px 13px;"><button class="btn btn-primary btn-sm" id="playoff-game-data-continue" style="width:100%;">继续下一场</button></div></div>';
   document.body.appendChild(overlay);
@@ -18124,16 +18129,15 @@ var DRAFT_CLASS_2026 = [
 ];
 
 function draftOvrByPick(pick) {
-  if (pick <= 3) return 81;
-  if (pick <= 8) return 80;
-  if (pick <= 15) return 79;
-  if (pick <= 22) return 78;
-  if (pick <= 30) return 77;
-  if (pick <= 40) return 75;
-  if (pick <= 50) return 73;
-  if (pick <= 60) return 71;
-  if (pick <= 80) return 70;
-  return 70;
+  pick = Math.max(1, Math.round(Number(pick) || 99));
+  // 连续顺位层级 + 确定性微差，避免尾段所有新秀都卡在 70。
+  var jitter = ((pick * 17 + 11) % 3);
+  if (pick <= 3) return 80 + jitter;
+  if (pick <= 10) return 77 + jitter;
+  if (pick <= 20) return 75 + jitter;
+  if (pick <= 30) return 73 + jitter;
+  if (pick <= 45) return 71 + jitter;
+  return 70 + jitter;
 }
 
 function draftPosToCode(pos) {

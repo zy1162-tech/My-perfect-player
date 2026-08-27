@@ -338,7 +338,16 @@
     { id: 'explorer', icon: '🧭', name: '成就猎人', desc: '解锁 10 个成就', rarity: 'rare' },
     { id: 'collector', icon: '🗂️', name: '收藏家', desc: '解锁 20 个成就', rarity: 'legend' }
   ];
+  // 稀有度只负责视觉；传承点按成就 ID 明确记账，29 项合计严格 150。
+  var ACHIEVEMENT_LP_REWARDS = {
+    create_player:1, playoffs:2, season_5:2,
+    ovr_80:3, lottery_pick:3, undrafted:4, all_star:4, sixth_man:4, game_40:4, triple_double:4, season_10:5, explorer:5,
+    ovr_90:5, first_pick:5, all_nba:5, roty:5, dpoy:6, win_60:6, game_50:6, avg_30:6, season_25_10:6, retire:7,
+    ovr_95:6, mvp:7, fmvp:7, mvp_x3:9, champion:7, champion_x3:9, collector:7
+  };
+  ACHIEVEMENTS.forEach(function(a) { a.legacyPoints = Number(ACHIEVEMENT_LP_REWARDS[a.id]) || 0; });
   PP_FX.ACHIEVEMENTS = ACHIEVEMENTS;
+  PP_FX.ACHIEVEMENT_LP_REWARDS = ACHIEVEMENT_LP_REWARDS;
   var ACH_MAP = {};
   ACHIEVEMENTS.forEach(function (a) { ACH_MAP[a.id] = a; });
 
@@ -359,26 +368,8 @@
   var unlocked = loadUnlocked();
   PP_FX.getUnlocked = function () { return unlocked; };
 
-  // 一次性补发：防守中枢(DPOY) + 超级第六人。传承点由稀有度自动计入（史诗4 + 稀有2）。
-  (function grantMissingAwardAchievements() {
-    var GRANT_KEY = 'pp_grant_dpoy_sixth_v1';
-    try { if (localStorage.getItem(GRANT_KEY) === '1') return; } catch (e) {}
-    var now = Date.now();
-    var added = false;
-    [
-      { id: 'dpoy', fact: 'dpoy' },
-      { id: 'sixth_man', fact: 'sixthman' }
-    ].forEach(function (item) {
-      if (unlocked[item.id]) return;
-      unlocked[item.id] = {
-        at: now,
-        factEvidence: { version: 1, gameId: 'manual-grant', fact: item.fact, count: 1 }
-      };
-      added = true;
-    });
-    if (added) saveUnlocked(unlocked);
-    try { localStorage.setItem(GRANT_KEY, '1'); } catch (e) {}
-  })();
+  // 不在页面启动时猜测历史荣誉。旧档补发只允许由后续事实同步路径读取
+  // 可验证的 season/career 奖项证据；全新 localStorage 必须保持零解锁。
 
   // 已解锁的"真实成就"数量：只统计存在于 ACH_MAP 的键，
   // 排除 __counters 等内部记账键（否则会把进度算多，甚至 29/28 > 100%）。
@@ -499,7 +490,7 @@
           '<div class="pp-ach-name">' + (has ? a.name : '？？？') + '</div>' +
           '<div class="pp-ach-desc">' + a.desc + '</div>' +
         '</div>' +
-        '<div class="pp-ach-rarity">' + (RARITY_CN[a.rarity] || '') + '</div>' +
+          '<div class="pp-ach-rarity">' + (RARITY_CN[a.rarity] || '') + ' · 🧬' + a.legacyPoints + '</div>' +
       '</div>';
     }).join('');
     var overlay = ce('div'); overlay.id = 'pp-ach-panel'; overlay.className = 'pp-ach-panel-overlay';
@@ -627,6 +618,7 @@
   }
 
   function skillPipsHtml(skill) {
+    if (skill.infinite) return '<span class="pp-skill-effect">长期可投入 · 收益递减</span>';
     var html = '';
     var purchased = Number(skill.purchased != null ? skill.purchased : skill.level) || 0;
     var effective = Number(skill.effective != null ? skill.effective : skill.level) || 0;
@@ -641,7 +633,7 @@
 
   function skillCardHtml(skill) {
     var active = !!skill.activated;
-    var maxed = skill.tokenSkill ? (skill.purchased >= skill.max) : (skill.level >= (skill.max || 1));
+    var maxed = skill.infinite ? false : (skill.tokenSkill ? (skill.purchased >= skill.max) : (skill.level >= (skill.max || 1)));
     var down = !!(skill.tokenSkill && skill.purchased > skill.effective);
     var cls = 'pp-ach-item pp-skill-item' + (down ? ' down' : (maxed ? ' maxed' : (active ? ' active' : (skill.canBuy ? ' ready' : ' locked'))));
     var condHtml = (skill.conds || []).map(function (c) {
@@ -651,11 +643,11 @@
     if (skill.tokenSkill && skill.purchased !== skill.effective) {
       lvlLabel = '已购 Lv.' + skill.purchased + ' / 生效 Lv.' + skill.effective;
     } else {
-      lvlLabel = 'Lv.' + (skill.tokenSkill ? skill.purchased : skill.level) + '/' + skill.max;
+      lvlLabel = 'Lv.' + (skill.tokenSkill ? skill.purchased : skill.level) + (skill.infinite ? ' · 无上限' : '/' + skill.max);
     }
     var btn = '';
     if (skill.tokenSkill) {
-      var label = maxed ? '满级' : ((skill.purchased <= 0 ? '激活 ' : '升级 ') + skill.cost);
+      var label = maxed ? '满级' : ((skill.purchased <= 0 ? '激活 ' : (skill.infinite ? '训练 ' : '升级 ')) + skill.cost);
       if (!skill.canBuy && !maxed) {
         if (down) label = '降效中';
         else if (skill.status.indexOf('互斥') >= 0) label = '互斥';
@@ -781,7 +773,8 @@
     var activeCount = skills.filter(function (s) { return s.activated || s.effective > 0; }).length;
     var lp = root.querySelector('.pp-lg-lp');
     if (lp) {
-      lp.innerHTML = '可用球风点 <b>' + pts + '</b> · 生涯累计 ' + earned;
+      var seasonUsed = (typeof STATE !== 'undefined' && STATE.season) ? (Number(STATE.season._stylePointsEarned) || 0) : 0;
+      lp.innerHTML = '可用球风点 <b>' + pts + '</b> · 生涯累计 ' + earned + ' · 本季 ' + seasonUsed + '/32' + (seasonUsed >= 32 ? '（已达上限）' : '');
     }
     var progress = root.querySelector('.pp-ach-progress-txt');
     if (progress) progress.textContent = '已生效 ' + activeCount + ' / ' + skills.length;
@@ -828,26 +821,23 @@
   /* ==================== 传承系统（Roguelike 重生） ==================== */
   // 玩法：解锁成就累计"传承点(LP)"，在传承祭坛把 LP 投入永久强化。
   // 每次开启新生涯(揭晓球员时)按已购强化，给初始属性/OVR 永久加成——即"重生奖励"。
-  // 设计要点：LP 由成就稀有度决定，跨生涯保留；强化可叠加但有上限，避免破坏平衡。
+  // 设计要点：LP 由显式成就 ID 奖励表决定，跨生涯保留；强化可叠加但有上限，避免破坏平衡。
   var LEGACY_KEY = 'pp_legacy_v1';
-  var LEGACY_SCHEMA_VERSION = 5;
-  var LP_BY_RARITY = { common: 1, rare: 2, epic: 4, legend: 8 };
-  var LP_PER_ARCHIVE_RECORD = 5;
+  var LEGACY_SCHEMA_VERSION = 6;
 
-  // 强化项：costs 为购买 Lv.1 → 满级的逐级消耗。高阶成本明显增加，
-  // 全路线总成本高于全部成就可获得的 LP，玩家必须做专精取舍。
+  // 10 条路线统一使用 Lv.1→Lv.5 = 1/2/3/4/5，总树严格 150 点。
   // attrs 用主引擎 13 项属性键（threePT/MID/FIN/DNK/HAN/PAS/PDEF/IDEF/BLK/REB/ATH/STR/CLU）。
   var LEGACY_PERKS = [
-    { id: 'scorer',    icon: '🎯', name: '得分天赋', desc: '每级 三分/中投/终结 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['threePT', 'MID', 'FIN'] },
-    { id: 'playmaker', icon: '🎩', name: '组织视野', desc: '每级 传球/控球 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['PAS', 'HAN'] },
-    { id: 'defender',  icon: '🛡️', name: '防守本能', desc: '每级 外防/内防/盖帽 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['PDEF', 'IDEF', 'BLK'] },
-    { id: 'athlete',   icon: '💪', name: '身体天赋', desc: '每级 运动/力量/篮板 +1', max: 5, costs: [3, 4, 5, 7, 9], attrs: ['ATH', 'STR', 'REB'] },
-    { id: 'clutch',    icon: '❄️', name: '大心脏',   desc: '每级 关键 +2', max: 5, costs: [4, 6, 8, 10, 13], attrs: ['CLU'], step: 2 },
-    { id: 'rim_runner', icon: '🛫', name: '冲框达人', desc: '每级 扣篮 +2', max: 5, costs: [4, 6, 8, 11, 14], attrs: ['DNK'], step: 2 },
-    { id: 'floor_general', icon: '🧠', name: '控场大师', desc: '每级 助攻争取 +3%、个人失误风险 -2%（满级 +15% / -10%）', max: 5, costs: [4, 6, 8, 11, 14], attrs: [], assistWeight: 0.03, turnoverRisk: -0.02 },
-    { id: 'glass_cleaner', icon: '🧹', name: '篮板嗅觉', desc: '每级 篮板争抢权重 +5%（满级 +25%）', max: 5, costs: [4, 6, 8, 11, 14], attrs: [], reboundWeight: 0.05 },
-    { id: 'leader', icon: '📣', name: '领袖气质', desc: '每级 队友攻防效率 +0.5（满级约 +2.5）', max: 5, costs: [5, 7, 9, 12, 16], attrs: [], teamBoost: 0.5 },
-    { id: 'prodigy',   icon: '🌟', name: '天选之才', desc: '每级 全属性 +1（最贵）', max: 5, costs: [10, 14, 20, 26, 34],
+    { id: 'scorer',    icon: '🎯', name: '得分天赋', desc: '每级 三分/中投/终结 +1', max: 5, costs: [1, 2, 3, 4, 5], attrs: ['threePT', 'MID', 'FIN'] },
+    { id: 'playmaker', icon: '🎩', name: '组织视野', desc: '每级 传球/控球 +1', max: 5, costs: [1, 2, 3, 4, 5], attrs: ['PAS', 'HAN'] },
+    { id: 'defender',  icon: '🛡️', name: '防守本能', desc: '每级 外防/内防/盖帽 +1', max: 5, costs: [1, 2, 3, 4, 5], attrs: ['PDEF', 'IDEF', 'BLK'] },
+    { id: 'athlete',   icon: '💪', name: '身体天赋', desc: '每级 运动/力量/篮板 +1', max: 5, costs: [1, 2, 3, 4, 5], attrs: ['ATH', 'STR', 'REB'] },
+    { id: 'clutch',    icon: '❄️', name: '大心脏',   desc: '每级 关键 +2', max: 5, costs: [1, 2, 3, 4, 5], attrs: ['CLU'], step: 2 },
+    { id: 'rim_runner', icon: '🛫', name: '冲框达人', desc: '每级 扣篮 +2', max: 5, costs: [1, 2, 3, 4, 5], attrs: ['DNK'], step: 2 },
+    { id: 'floor_general', icon: '🧠', name: '控场大师', desc: '每级 助攻争取 +3%、个人失误风险 -2%（满级 +15% / -10%）', max: 5, costs: [1, 2, 3, 4, 5], attrs: [], assistWeight: 0.03, turnoverRisk: -0.02 },
+    { id: 'glass_cleaner', icon: '🧹', name: '篮板嗅觉', desc: '每级 篮板争抢权重 +5%（满级 +25%）', max: 5, costs: [1, 2, 3, 4, 5], attrs: [], reboundWeight: 0.05 },
+    { id: 'leader', icon: '📣', name: '领袖气质', desc: '每级 队友攻防效率 +0.5（满级约 +2.5）', max: 5, costs: [1, 2, 3, 4, 5], attrs: [], teamBoost: 0.5 },
+    { id: 'prodigy',   icon: '🌟', name: '天选之才', desc: '每级 全属性 +1', max: 5, costs: [1, 2, 3, 4, 5],
       attrs: ['threePT', 'MID', 'FIN', 'DNK', 'HAN', 'PAS', 'PDEF', 'IDEF', 'BLK', 'REB', 'ATH', 'STR', 'CLU'] }
   ];
   PP_FX.LEGACY_PERKS = LEGACY_PERKS;
@@ -874,15 +864,14 @@
       return sum + p.costs.reduce(function(costSum, cost) { return costSum + cost; }, 0);
     }, 0);
   }
-  // 魔改设置：开局即获得升满整棵传承强化树所需的全部传承点。
-  var STARTING_LEGACY_LP = legacyTreeCost();
+  var STARTING_LEGACY_LP = 30;
 
   function loadLegacy() {
     try {
       var o = JSON.parse(localStorage.getItem(LEGACY_KEY) || '{}');
       if (!o || typeof o !== 'object') o = {};
       if (Number(o.version) !== LEGACY_SCHEMA_VERSION) {
-        // 语义升级只替换模拟效果，旧版已购买等级与 perk id 原样保留。
+        // 新成本迁移只保留旧等级；spent 在加载后按新表重算，绝不扣级。
         o = { version: LEGACY_SCHEMA_VERSION, levels: o.levels || {}, spent: 0, rebalanceNoticePending: false };
         saveLegacy(o);
       }
@@ -895,13 +884,13 @@
   legacy.spent = legacySpentForLevels(legacy.levels);
   saveLegacy(legacy);
 
-  // 总 LP = 开局全满点数 + 已解锁成就按稀有度求和 + 生涯档案馆每条记录 5 点
+  // 总 LP = 初始 30 + 已解锁成就 ID 奖励。档案馆只展示，不再额外发点。
   function achievementLP() {
     var sum = 0;
     for (var k in unlocked) {
       if (!Object.prototype.hasOwnProperty.call(unlocked, k)) continue;
       var def = ACH_MAP[k];
-      if (def) sum += (LP_BY_RARITY[def.rarity] || 0);
+      if (def) sum += (ACHIEVEMENT_LP_REWARDS[def.id] || 0);
     }
     return sum;
   }
@@ -914,14 +903,14 @@
     return 0;
   }
   function archiveLP() {
-    return archiveRecordCount() * LP_PER_ARCHIVE_RECORD;
+    return 0;
   }
   function totalLP() {
     return STARTING_LEGACY_LP + achievementLP() + archiveLP();
   }
   function maxAchievementLP() {
     return ACHIEVEMENTS.reduce(function(sum, achievement) {
-      return sum + (LP_BY_RARITY[achievement.rarity] || 0);
+      return sum + (ACHIEVEMENT_LP_REWARDS[achievement.id] || 0);
     }, 0);
   }
   function maxLegacyLP() {
@@ -1016,7 +1005,7 @@
   function renderLegacyBody(root) {
     var avail = availableLP(), total = totalLP();
     root.querySelector('.pp-lg-lp').innerHTML =
-      '可用传承点 <b>' + avail + '</b> · 累计 ' + total;
+      '可用传承点 <b>' + avail + '</b> · 累计 ' + total + ' · 初始 30 / 成就池 150 / 技能树 150';
     root.querySelector('.pp-lg-grid').innerHTML =
       LEGACY_PERKS.map(legacyPerkCardHtml).join('');
     root.querySelectorAll('.pp-lg-buy').forEach(function (b) {
@@ -1060,7 +1049,7 @@
       delete legacy.rebalanceNoticePending;
       saveLegacy(legacy);
       setTimeout(function() {
-        PP_FX.toast('传承系统已重新平衡：旧强化已重置，全部传承点已返还', { gold: true, icon: '🧬', duration: 4200 });
+        PP_FX.toast('传承规则已更新：旧强化等级保留，已按新成本重新核算', { gold: true, icon: '🧬', duration: 4200 });
       }, 260);
     }
   };
