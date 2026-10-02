@@ -324,6 +324,7 @@ function createFreshCareer() {
 }
 
 function initGame() {
+  if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.resetTransient();
   restoreBaseLeagueRoster();
   _rngState = null;
   _rookieNameSeq = 0;
@@ -2704,8 +2705,9 @@ function liveOrSkipUserPack(opponent, options, onPack) {
     });
   };
   var canPrompt = window.PP_LIVE && typeof PP_LIVE.promptChoice === 'function';
-  if (!canPrompt || options.forceSkip) { runSkip(); return false; }
   var isLegend = options.isLegendChallenge || (typeof isLegendChallengeSeriesActive === 'function' && isLegendChallengeSeriesActive());
+  if (!isLegend && window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.prepareGame(opponent, options, runSkip, runWatch)) return true;
+  if (!canPrompt || options.forceSkip) { runSkip(); return false; }
   if (options.preferWatch) {
     if (STATE.season) STATE.season._legendFirstGameWatch = false;
     runWatch();
@@ -2777,8 +2779,10 @@ function quickSimAllGames() {
 
   var gi = 0;
   function simNextWithDelay() {
+    if (window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.pauseForCoach(simNextWithDelay)) return;
     if (gi >= games.length) {
       function finishRegularSeasonSim() {
+      if (window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.showFeedback(finishRegularSeasonSim)) return;
       processAllRemainingDays();
       reconcileStandings();
       calcSeasonAwards();
@@ -2899,6 +2903,7 @@ function quickSimAllGames() {
           updateStreak(STATE.careerTeam, skipResult.won);
           recordUserMatchupBox(skipResult, g.opponent);
           STATE.season.games.push({ result: skipResult, stats: null, game: g, suspended: true });
+          if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.settleGame(PP_CAREER_EVENTS.matchKey(g.opponent, { game:g }), null, skipResult, {});
           simDayLeagueGames(g.day);
           refreshPulseBoard();
           var dotEl2 = document.getElementById('gdot-' + gi);
@@ -2947,6 +2952,7 @@ function quickSimAllGames() {
           psH.mins = (psH.mins || 0) + hurtStats.mins;
           psH.games++;
           STATE.season.games.push({ result: hurtResult, stats: hurtStats, game: g, playedThroughInjury: true });
+          if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.settleGame(PP_CAREER_EVENTS.matchKey(g.opponent, { game:g }), hurtStats, hurtResult, {});
           var worsenText = maybeWorsenInjuryAfterPlaying(ev, severity);
           simDayLeagueGames(g.day);
           refreshPulseBoard();
@@ -3006,6 +3012,7 @@ function quickSimAllGames() {
         ps.games++;
 
         STATE.season.games.push({ result: result, stats: stats, game: g, liveSim: !!result.liveSim });
+        if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.settleGame(PP_CAREER_EVENTS.matchKey(g.opponent, { game:g }), stats, result, {});
         simDayLeagueGames(g.day);
         refreshPulseBoard();
 
@@ -4462,6 +4469,9 @@ function splitRegulationScore(total) {
 function getCareerTeamGameModifiers(team) {
   if (team !== STATE.careerTeam || !STATE.career) return { offense:0, defense:0, variance:0 };
   var mods = getNextSeasonMods();
+  var careerEffects = window.PP_CAREER_EVENTS ? PP_CAREER_EVENTS.getModifiers() : { load:0, chemistry:0 };
+  var chemistry = Math.max(-10, Math.min(10, (Number(mods.teamChemistry) || 0) + careerEffects.chemistry));
+  var load = (Number(mods.staminaLoad) || 0) + careerEffects.load;
   var profileEffects = typeof getCareerProfileEffects === 'function' ? getCareerProfileEffects() : { gameOffenseBonus:0, gameDefenseBonus:0, gameVarianceBonus:0 };
   var lockBonus = 0;
   var rimBonus = 0;
@@ -4474,8 +4484,8 @@ function getCareerTeamGameModifiers(team) {
     leaderVar = (getStyleSkillMu('leader_aura') - 1) * -2.2;
   }
   return {
-    offense: (Number(mods.moraleBonus) || 0) * 0.35 + (Number(mods.teamChemistry) || 0) * 0.28 - (Number(mods.mediaPressure) || 0) * 0.16 - (Number(mods.staminaLoad) || 0) * 0.34 + profileEffects.gameOffenseBonus + pnrBonus,
-    defense: (Number(mods.teamChemistry) || 0) * 0.32 + (Number(mods.moraleBonus) || 0) * 0.18 - (Number(mods.staminaLoad) || 0) * 0.25 + profileEffects.gameDefenseBonus + lockBonus + rimBonus,
+    offense: (Number(mods.moraleBonus) || 0) * 0.35 + chemistry * 0.28 - (Number(mods.mediaPressure) || 0) * 0.16 - load * 0.34 + profileEffects.gameOffenseBonus + pnrBonus,
+    defense: chemistry * 0.32 + (Number(mods.moraleBonus) || 0) * 0.18 - load * 0.25 + profileEffects.gameDefenseBonus + lockBonus + rimBonus,
     variance: (Number(mods.formVariance) || 0) * 0.45 + profileEffects.gameVarianceBonus + leaderVar
   };
 }
@@ -4810,12 +4820,13 @@ function generateBoxScore(teamA, teamB, totalA, totalB) {
       return profile.mins >= 32 ? 6 : (profile.mins >= 26 ? 4 : (profile.mins >= 16 ? 2 : (profile.mins >= 8 ? 1 : 0)));
     });
     var attempts = allocateIntegerTotal(teamFga, shotWeights, attemptMinimums);
+    var teamThreeBias = typeof getTeamSystemEffects === 'function' ? (Number(getTeamSystemEffects(team).three) || 0) : 0;
     // 先生成真实命中，再以全队罚球做有限校准。个人得分始终由
     // 2PM/3PM/FTM 正向汇总，不再先分配 points 后倒推命中。
     var shootingLines = profiles.map(function(profile, i) {
       var player = profile.player;
       var fga = attempts[i];
-      var threeShare = Math.max(0.04, Math.min(0.68, 0.18 + ((parseInt(player.threePT)||50) - 60) * 0.008));
+      var threeShare = Math.max(0.04, Math.min(0.68, 0.18 + ((parseInt(player.threePT)||50) - 60) * 0.008 + teamThreeBias));
       var threeA = Math.min(fga, Math.max(0, Math.round(fga * threeShare)));
       var formPct = (profile.gameForm - 1) * 0.045;
       var threePct = Math.max(0.20, Math.min(0.48, 0.255 + simSkill01(player.threePT) * 0.155 + formPct));
@@ -5029,7 +5040,7 @@ function calcPlayerCreationRating(attrs, pos) {
   return Object.keys(selected).reduce(function(sum, key) { return sum + softCap99(parseInt(attrs[key]) || 50) * selected[key]; }, 0);
 }
 
-function getPlayerRotationMinutes(attrs, pos, isPlayoff) {
+function getPlayerRotationPlan(attrs, pos, isPlayoff) {
   var ovr = typeof calcOVR === 'function' ? calcOVR(attrs, pos) : (STATE.finalOVR || 70);
   var rank = -1;
   var isStarter = false;
@@ -5058,11 +5069,22 @@ function getPlayerRotationMinutes(attrs, pos, isPlayoff) {
   var stamina = typeof getStaminaAttr === 'function' ? Math.min(12, getStaminaAttr()) : 0;
   // 续航影响轮换：满续航约 +2.2 分钟，出场时间波动也更小。
   roleMinutes += stamina * 0.18;
+  if (window.PP_CAREER_EVENTS) {
+    var careerEffects = PP_CAREER_EVENTS.getModifiers();
+    roleMinutes = Math.min(roleMinutes + careerEffects.minutes, careerEffects.limit);
+  }
+  return roleMinutes;
+}
+
+function getPlayerRotationMinutes(attrs, pos, isPlayoff) {
+  var roleMinutes = getPlayerRotationPlan(attrs, pos, isPlayoff);
+  var stamina = typeof getStaminaAttr === 'function' ? Math.min(12, getStaminaAttr()) : 0;
   var minuteSigma = Math.max(0.75, 1.40 - stamina * 0.06);
   if (typeof PP_SKILLS !== 'undefined' && PP_SKILLS.getEnduranceTrainingEffects) {
     minuteSigma *= 1 - PP_SKILLS.getEnduranceTrainingEffects().minuteVarianceReduction;
   }
-  return Math.max(6, Math.min(42, Math.round(simGaussian(roleMinutes, minuteSigma))));
+  var limit = window.PP_CAREER_EVENTS ? PP_CAREER_EVENTS.getModifiers().limit : 42;
+  return Math.max(6, Math.min(limit, Math.round(simGaussian(roleMinutes, minuteSigma))));
 }
 
 function normalizeScoringLineToPoints(stats, maxPoints) {
@@ -5231,6 +5253,8 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   distWeights.threePT *= 1 + (coldM - 1) * 0.55 - (postM - 1) * 0.35;
   distWeights.MID *= 1 + (midM - 1) * 0.55;
   distWeights.FIN *= 1 + (dunkM - 1) * 0.50 + (postM - 1) * 0.60 + (breakM - 1) * 0.28;
+  var systemThree = typeof getTeamSystemEffects === 'function' ? (Number(getTeamSystemEffects(STATE.careerTeam).three) || 0) : 0;
+  if (systemThree) distWeights.threePT = Math.max(0.01, distWeights.threePT + systemThree);
   const distTotal = Math.max(0.001, distWeights.threePT + distWeights.MID + distWeights.FIN);
   const threeA = Math.max(0, Math.min(fga, Math.round(fga * distWeights.threePT / distTotal)));
   const midA = Math.max(0, Math.min(fga - threeA, Math.round(fga * distWeights.MID / distTotal)));
@@ -7024,6 +7048,8 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
         renderPlayoffGameBrief(skipEntry, teamA, teamB, true, roundName, gameNum + 1, 7, round, seriesIdx);
       }
       seriesGames.push(skipEntry);
+      if (isMySeries && !legendImmune && window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.settleGame(
+        PP_CAREER_EVENTS.matchKey(teamB, { isPlayoff:true, title:roundName + ' G' + (gameNum + 1) }), null, skipResult, { isPlayoff:true });
       var continueSkippedGame = function() { setTimeout(function() {
         simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, skipNewWinsA, skipNewWinsB, seriesGames, userGameStats, roundName, onDone);
       }, isMySeries ? 120 : 50); };
@@ -7057,6 +7083,8 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
         injuryReason: skipEv.injuryReason || '伤病',
       };
       seriesGames.push(hurtEntry);
+      if (isMySeries && !legendImmune && window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.settleGame(
+        PP_CAREER_EVENTS.matchKey(teamB, { isPlayoff:true, title:roundName + ' G' + (gameNum + 1) }), hurtStats, hurtResult, { isPlayoff:true });
       renderPlayoffGameBrief(hurtEntry, teamA, teamB, true, roundName, gameNum + 1, 7, round, seriesIdx);
       maybeWorsenInjuryAfterPlaying(skipEv, severity);
       var continueHurtGame = function() { setTimeout(function() {
@@ -7107,6 +7135,8 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
       renderPlayoffGameBrief(gameEntry, teamA, teamB, true, roundName, gameNum + 1, 7, round, seriesIdx);
     }
     seriesGames.push(gameEntry);
+    if (isMySeries && !legendImmune && window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.settleGame(
+      PP_CAREER_EVENTS.matchKey(teamB, { isPlayoff:true, title:roundName + ' G' + (gameNum + 1) }), gameEntry.myStats, gameResult, { isPlayoff:true });
     var continueAfterGamePanel = function() { setTimeout(function() {
       if (isMySeries && !legendImmune) {
         try {
@@ -9740,6 +9770,7 @@ function checkSeasonBranchEvent(game, result, stats) {
   if ((c.branchSeasonEvents._count || 0) >= maxRandomEvents) return null;
   var pool = getBranchEventSource().filter(function(ev) {
     if (ev._eraStory) return false; // 年代剧情只由上方的冷却/赛季限额入口调度
+    if (window.PP_CAREER_EVENTS && ev.id && ev.id.indexOf('pp_season_') === 0) return false;
     if (getEventPhases(ev).indexOf('season') < 0) return false;
     if (c.branchSeasonEvents[ev.branch]) return false;
     // 日常见过后仍可进池（降权），长线剧情继续生涯去重
@@ -9779,19 +9810,16 @@ function showSeasonBranchEventModal() {
   var existing = document.getElementById('season-branch-modal');
   if (existing) existing.remove();
   var scenes = ev.scenes || [];
-  var sceneIdx = STATE._seasonBranchScenePage || 0;
   var title = getPlayerFacingBranchTitle(ev.title);
   var html = '<div class="team-picker-overlay" id="season-branch-modal">';
   html += '<div class="team-picker-modal">';
   html += '<div class="team-picker-header"><span>' + title + '</span></div>';
   html += '<div style="padding:14px 14px 8px;">';
-  if (scenes.length && sceneIdx < scenes.length) {
+  if (scenes.length) {
     html += '<div style="font-size:11px;color:var(--orange);font-weight:700;margin-bottom:6px;">剧情</div>';
-    html += '<div style="font-size:13px;color:var(--text-dim);line-height:1.65;margin-bottom:14px;">' + fillBranchEventText(scenes[sceneIdx]) + '</div>';
-    html += '<button class="btn btn-primary btn-sm" style="width:100%;" onclick="continueSeasonBranchScene()">继续</button>';
-    html += '</div></div></div>';
-    document.body.insertAdjacentHTML('beforeend', html);
-    return;
+    html += '<div style="font-size:13px;color:var(--text-dim);line-height:1.65;margin-bottom:14px;">' + scenes.map(function(scene) {
+      return sanitizePlayerFacingText(fillBranchEventText(scene));
+    }).join('<br><br>') + '</div>';
   }
   html += '<div style="font-size:11px;color:var(--orange);font-weight:700;margin-bottom:6px;">重点</div>';
   html += '<div style="font-size:13px;color:var(--text-dim);line-height:1.55;margin-bottom:12px;">' + sanitizePlayerFacingText(fillBranchEventText(ev.body)) + '</div>';
@@ -9805,11 +9833,6 @@ function showSeasonBranchEventModal() {
   });
   html += '</div></div></div>';
   document.body.insertAdjacentHTML('beforeend', html);
-}
-
-function continueSeasonBranchScene() {
-  STATE._seasonBranchScenePage = (STATE._seasonBranchScenePage || 0) + 1;
-  showSeasonBranchEventModal();
 }
 
 function chooseSeasonBranchEvent(choiceIdx) {
@@ -14549,23 +14572,22 @@ function manualSaveGame(slot) {
   var key = MANUAL_SAVE_KEYS[slot - 1];
   var raw = JSON.stringify(snap);
   function write(rawStr) {
-    storageSet(key, rawStr).then(function() {
+    return storageSet(key, rawStr).then(function() {
       var meta = null;
       try { var parsed = JSON.parse(rawStr); meta = { label: parsed.label || '自动存档', savedAt: parsed.savedAt || 0 }; } catch(e) {}
       MANUAL_SAVE_META[slot] = meta && Object.assign(meta, { mode: snap.state.mode || 'current' });
-      renderAfterSaveLoad(snap.screen);
+      // 保存检查点；比赛仍由当前的赛前、赛后回调继续。
       renderMenuSavePanel();
       showManualSaveToast('已保存到存档' + slot + '（' + snap.label + '）');
     });
   }
   if (typeof CompressionStream === 'undefined' || typeof DecompressionStream === 'undefined') {
-    write(raw);
-    return;
+    return write(raw);
   }
-  compressText(raw).then(function(compressed) {
-    write(JSON.stringify({ c: 1, d: compressed, label: snap.label, savedAt: snap.savedAt, mode: snap.state.mode || 'current' }));
+  return compressText(raw).then(function(compressed) {
+    return write(JSON.stringify({ c: 1, d: compressed, label: snap.label, savedAt: snap.savedAt, mode: snap.state.mode || 'current' }));
   }, function() {
-    write(raw);
+    return write(raw);
   });
 }
 
@@ -14617,6 +14639,7 @@ function manualLoadGame(slot) {
       try {
         // STATE 与 NBA2K_DATA 是 const，只能原地清空后填充，保证所有引用仍然有效
         Object.keys(STATE).forEach(function(k) { delete STATE[k]; });
+        if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.resetTransient();
         Object.assign(STATE, snap.state);
         if (typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.normalizeLoadedState) PP_SEASON_REPORT.normalizeLoadedState(STATE);
         if (typeof PP_SKILLS !== 'undefined' && PP_SKILLS.ensureSkillState) PP_SKILLS.ensureSkillState();
@@ -17747,6 +17770,7 @@ function selectContractOption(team, years) {
     STATE.career.contract = clampCareerContractYears((STATE.career.flags && STATE.career.flags.freeAgentChoice === 'stay') ? 3 : 2, STATE.career.currentAge);
   }
   if (STATE.career && STATE.career.flags) STATE.career.flags.waived = false;
+  if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.renewContract();
   if (STATE.career && STATE.career.flags && STATE.career.flags.superstarRecruitInterest) {
     STATE.career.flags.lastSuperstarRecruitChoiceTeam = team;
     delete STATE.career.flags.superstarRecruitInterest;
@@ -18035,16 +18059,20 @@ function resetForNewSeason() {
 
 function renderSeasonScreenDOM() {
   clearSimSeasonFooter();
+  var record = STATE.season || {};
+  var wins = Number(record.wins) || 0, losses = Number(record.losses) || 0;
+  var pct = wins + losses ? (wins / (wins + losses) * 100).toFixed(1) + '%' : '—';
+  var avg = record.playerStats && record.playerStats.games > 0 ? getUserAvg() : { pts:0, reb:0, ast:0 };
   var confName = getConference(STATE.careerTeam) === 'EAST' ? '东部' : '西部';
   html('season-header').innerHTML =
     '<div class="sh-top" style="margin-top:8px;">' +
       '<div class="sh-team"><div class="sh-team-name">' + getTeamLogo(STATE.careerTeam, 24) + ' ' + getTeamName(STATE.careerTeam) + '</div><div class="sh-team-full">' + ((window.TEAM_CITY && window.TEAM_CITY[STATE.careerTeam]) || '') + '</div></div>' +
       '<div class="sh-season">' + getCurrentSeasonLabel() + '</div>' +
-      '<div class="sh-record" id="simRecord"><span class="sh-wins">0</span><span class="sh-dash">-</span><span class="sh-losses">0</span><div class="sh-pct">—</div></div>' +
+      '<div class="sh-record" id="simRecord"><span class="sh-wins">' + wins + '</span><span class="sh-dash">-</span><span class="sh-losses">' + losses + '</span><div class="sh-pct">' + pct + '</div></div>' +
     '</div>' +
     '<div class="sh-info" id="simInfo">' +
       '<span>' + SIM_CONFIG.POSITIONS[STATE.position] + ' · OVR ' + STATE.finalOVR + '</span>' +
-      '<span>场均 0分 0板 0助</span>' +
+      '<span>场均 ' + avg.pts + '分 ' + avg.reb + '板 ' + avg.ast + '助</span>' +
       '<span id="simStreak"></span>' +
     '</div>' +
     (typeof renderPlayerStateStrip === 'function' ? renderPlayerStateStrip() : '') +

@@ -311,7 +311,7 @@
         var label = key === 'STA' ? '续航' : (effectLabels[key] || key);
         var beneficial = badWhenRaised[key] ? value < 0 : value > 0;
         var strong = Math.abs(value) >= 2 ? '明显' : '';
-        var text = label + strong + (beneficial ? '提升' : '下降');
+        var text = naturalEffect(key, value);
         if (key === 'STA') text = '续航+' + value;
         (beneficial ? gains : costs).push(text);
       });

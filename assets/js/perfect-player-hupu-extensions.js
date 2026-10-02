@@ -310,6 +310,7 @@
   }
 
   window.renderPlayerStateStrip = function () {
+    if (window.PP_CAREER_EVENTS) return PP_CAREER_EVENTS.renderStateStrip();
     var career = typeof STATE !== 'undefined' && STATE.career ? STATE.career : {};
     var profile = career.profile || {};
     var mods = typeof getNextSeasonMods === 'function' ? getNextSeasonMods() : {};

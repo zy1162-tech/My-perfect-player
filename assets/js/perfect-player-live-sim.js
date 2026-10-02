@@ -304,6 +304,7 @@
     threeW *= 1 + (coldM - 1) * 0.55 - (postM - 1) * 0.35;
     midW *= 1 + (midM - 1) * 0.55;
     finW *= 1 + (dunkM - 1) * 0.50 + (postM - 1) * 0.60 + (breakM - 1) * 0.28;
+    if (bp.systemA && bp.systemA.three) threeW = Math.max(0.01, threeW + bp.systemA.three);
     var distTotal = Math.max(0.001, threeW + midW + finW);
     var form = 0;
     var midPressure = defensePressure * (1 - (midM - 1) * 0.7);
@@ -366,6 +367,9 @@
     var baseline = typeof getSimulationPowerBaseline === 'function' ? getSimulationPowerBaseline() : { offense: 70, defense: 70, athletic: 70, depth: 70 };
     var modA = options.neutralState ? { offense: 0, defense: 0, variance: 0 } : (typeof getCareerTeamGameModifiers === 'function' ? getCareerTeamGameModifiers(teamA) : { offense: 0, defense: 0, variance: 0 });
     var modB = options.neutralState ? { offense: 0, defense: 0, variance: 0 } : (typeof getCareerTeamGameModifiers === 'function' ? getCareerTeamGameModifiers(teamB) : { offense: 0, defense: 0, variance: 0 });
+    var neutralSystem = { offense:0, defense:0, pace:0, three:0 };
+    var systemA = !options.neutralState && typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamA) : neutralSystem;
+    var systemB = !options.neutralState && typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamB) : neutralSystem;
     var teamAHome = options.teamAHome !== false;
     var homeA = teamAHome ? 0.018 : 0;
     var homeB = teamAHome ? 0 : 0.018;
@@ -388,7 +392,8 @@
     }
     var averageAthletic = ((Number(powerA.athletic) || 60) + (Number(powerB.athletic) || 60)) / 2;
     var averageDepth = ((Number(powerA.depth) || 60) + (Number(powerB.depth) || 60)) / 2;
-    var pace = clamp(Math.round(99.4 + (averageAthletic - baseline.athletic) * 0.08 + (averageDepth - baseline.depth) * 0.02 + gauss(0, 2.8)), 90, 109);
+    var pace = clamp(Math.round(99.4 + (averageAthletic - baseline.athletic) * 0.08 + (averageDepth - baseline.depth) * 0.02 +
+      ((Number(systemA.pace) || 0) + (Number(systemB.pace) || 0)) * 0.5 + gauss(0, 2.8)), 90, 109);
     if (!options.neutralState && (teamA === STATE.careerTeam || teamB === STATE.careerTeam) && typeof getStyleSkillMu === 'function') {
       var paceAdj = 0;
       var tempoMu = getStyleSkillMu('tempo_master');
@@ -399,14 +404,14 @@
       if (postMu > 1) paceAdj -= (postMu - 1) * 8;
       if (paceAdj) pace = clamp(Math.round(pace + paceAdj), 90, 109);
     }
-    var edgeA = ((powerA.offense - baseline.offense) + modA.offense) - ((powerB.defense - baseline.defense) + modB.defense);
-    var edgeB = ((powerB.offense - baseline.offense) + modB.offense) - ((powerA.defense - baseline.defense) + modA.defense);
+    var edgeA = ((powerA.offense - baseline.offense) + modA.offense + (Number(systemA.offense) || 0)) - ((powerB.defense - baseline.defense) + modB.defense + (Number(systemB.defense) || 0));
+    var edgeB = ((powerB.offense - baseline.offense) + modB.offense + (Number(systemB.offense) || 0)) - ((powerA.defense - baseline.defense) + modA.defense + (Number(systemA.defense) || 0));
     var playoffFactor = options.isPlayoff ? 1.20 : 1;
     var depthEdge = ((Number(powerA.depth) || 60) - (Number(powerB.depth) || 60)) * (options.isPlayoff ? 0.00115 : 0.00075);
     var seedPts = (Number(options.seedBonus) || 0) * 0.65;
     var injuryPts = options.probMultiplier == null ? 0 : (Number(options.probMultiplier) - 1) * 28;
-    var efficiencyA = clamp(1.154 + edgeA * 0.0034 * playoffFactor + depthEdge + homeA - fatigueA * 0.012 + seedPts / pace + injuryPts / pace, 0.91, 1.36);
-    var efficiencyB = clamp(1.154 + edgeB * 0.0034 * playoffFactor - depthEdge + homeB - fatigueB * 0.012 - seedPts / pace, 0.91, 1.36);
+    var efficiencyA = clamp(1.154 + edgeA * 0.0034 * playoffFactor + depthEdge + homeA - fatigueA * 0.012 + seedPts / pace + injuryPts / pace + (Number(systemA.three) || 0), 0.91, 1.36);
+    var efficiencyB = clamp(1.154 + edgeB * 0.0034 * playoffFactor - depthEdge + homeB - fatigueB * 0.012 - seedPts / pace + (Number(systemB.three) || 0), 0.91, 1.36);
     var lineupA = options.customLineupA || (typeof calcTeamLineup === 'function' ? calcTeamLineup(teamA) : { starters: {}, bench: [], isUserStarter: false });
     var lineupB = options.customLineupB || (typeof calcTeamLineup === 'function' ? calcTeamLineup(teamB) : { starters: {}, bench: [], isUserStarter: false });
     // 12 人大名单，但实际轮换控制为 10 人（5 首发 + 5 替补），避免得分均摊。
@@ -423,6 +428,7 @@
       powerA: powerA, powerB: powerB, baseline: baseline,
       pace: pace, efficiencyA: efficiencyA, efficiencyB: efficiencyB,
       edgeA: edgeA, edgeB: edgeB, modA: modA, modB: modB,
+      systemA:systemA, systemB:systemB,
       expA: pace * efficiencyA, expB: pace * efficiencyB,
       lineupA: lineupA, lineupB: lineupB,
       rosterA: rosterFromLineup(lineupA, rosterSize), rosterB: rosterFromLineup(lineupB, rosterSize),
@@ -601,6 +607,10 @@
     var user = bp.rosterA.filter(function (p) { return p && p._isUser; })[0];
     if (!user) return false;
     var played = (game.lines[pid(user)] && game.lines[pid(user)].mins) || 0;
+    if (window.PP_CAREER_EVENTS) {
+      var careerLimit = PP_CAREER_EVENTS.getModifiers().limit;
+      if (careerLimit < 42 && played >= careerLimit) return false;
+    }
     var left = Math.max(0.4, remainingMins(q, secLeft, isOT, game));
     var need = bp.userMins - played;
     if (need <= -1.2 && !(q === 4 && Math.abs(margin) <= 6 && bp.userMins >= 20)) return false;
@@ -812,7 +822,7 @@
     });
   }
 
-  function pickShotType(player, distHint, styles) {
+  function pickShotType(player, distHint, styles, systemThree) {
     var pos = posOf(player);
     var dist = (typeof SIM_CONFIG !== 'undefined' && SIM_CONFIG.SHOT_DIST[pos]) || { threePT: 0.3, MID: 0.22, FIN: 0.3 };
     var three = dist.threePT * (0.45 + Math.pow(skill01(attr(player, 'threePT')), 1.15) * 1.25);
@@ -823,6 +833,7 @@
       mid *= 1 + (st(styles, 'mid_craftsman') - 1) * 0.55;
       fin *= 1 + (st(styles, 'dunk_threat') - 1) * 0.50 + (st(styles, 'post_bully') - 1) * 0.60 + (st(styles, 'fast_break') - 1) * 0.28;
     }
+    if (systemThree) three = Math.max(0.01, three + systemThree);
     if (distHint === 'three') { three *= 2.2; mid *= 0.6; fin *= 0.5; }
     if (distHint === 'MID') { mid *= 2.1; }
     if (distHint === 'FIN') { fin *= 2.2; three *= 0.45; }
@@ -2289,7 +2300,8 @@
     if (threeOnlyLab) shot = 'threePT';
     else {
       var hint = fx.shot === 'three' ? 'threePT' : fx.shot;
-      shot = hint || pickShotType(shooter, null, game.styles);
+      var system = ctx.side === 'A' ? game.bp.systemA : game.bp.systemB;
+      shot = hint || pickShotType(shooter, null, game.styles, system && system.three);
       if (shot === 'three') shot = 'threePT';
     }
     var evHint = eventActionHint(ev, fx);

@@ -191,11 +191,16 @@
     STATE._teamSystemDone = done;
   };
 
-  global.chooseTeamSystem = function(key) {
-    if (!TEAM_SYSTEMS[key]) key = 'balanced';
+  function setTeamSystem(key) {
+    if (!TEAM_SYSTEMS[key] || !STATE.careerTeam) return false;
     STATE.teamSystems = STATE.teamSystems || {};
     STATE.teamSystems[STATE.careerTeam] = key;
     if (typeof clearLineupCache === 'function') clearLineupCache();
+    return true;
+  }
+
+  global.chooseTeamSystem = function(key) {
+    setTeamSystem(TEAM_SYSTEMS[key] ? key : 'balanced');
     var modal = document.getElementById('team-system-modal');
     if (modal) modal.remove();
     var done = STATE._teamSystemDone;
@@ -467,6 +472,7 @@
     showLeagueIntel: global.showLeagueIntel,
     showTeamSystemChooser: global.showTeamSystemChooser,
     chooseTeamSystem: global.chooseTeamSystem,
+    setTeamSystem: setTeamSystem,
     getTeamSystemEffects: global.getTeamSystemEffects,
     hasRosterAuthority: hasRosterAuthority,
     showRosterAuthority: showRosterAuthority

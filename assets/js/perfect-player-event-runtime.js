@@ -235,6 +235,7 @@ function getAgeBasedInjuryRate() {
 function getSeasonInjuryEventRate() {
   var ev = STATE.season && STATE.season.events;
   var bonus = ev && ev.injuryRiskBonus ? ev.injuryRiskBonus : 0;
+  if (window.PP_CAREER_EVENTS) bonus += PP_CAREER_EVENTS.getModifiers().load * 0.3;
   var rate = Math.max(0, Math.min(12, getAgeBasedInjuryRate() + bonus));
   if (typeof getStyleSkillMu === 'function') {
     var ironMu = getStyleSkillMu('iron_man');
