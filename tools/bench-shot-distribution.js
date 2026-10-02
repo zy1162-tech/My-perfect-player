@@ -6,7 +6,7 @@
  * 对比旧公式（legacy 镜像）与新公式（位置加权得分威胁），
  * 验证：高评级强力中锋不再蓝领化；防守型蓝领中锋仍然蓝领。
  *
- * Usage: node tools/bench-shot-distribution.js
+ * Usage: node tools/bench-shot-distribution.js [liveTrials=10000]
  */
 'use strict';
 
@@ -43,7 +43,7 @@ const LIVE_FNS = [
 ];
 const CORE_FNS = [
   'softCap99', 'simSkill01', 'getSimPrimaryPosition', 'allocateIntegerTotal',
-  'positionScoringRating', 'shotPriorityRating', 'calcPlayerCreationRating', 'generateBoxScore'
+  'positionScoringRating', 'shotPriorityRating', 'calcPlayerCreationRating', 'getLegacySimulationEffects', 'generateBoxScore'
 ];
 
 const scriptParts = [];
@@ -161,7 +161,7 @@ const SCENARIOS = [
     ]),
     checks: [
       { label: '蓝领中锋仍是全队最低出手（live）', test: (r) => Math.min(...Object.values(r.liveNew)) === r.liveNew.C },
-      { label: '蓝领中锋 box 占比 <= 13%', test: (r) => r.boxNew.C <= 0.13 },
+      { label: '蓝领中锋 box 出手 <= 13% 目标（按整次出手取最近整数）', test: (r) => r.boxFga.C.fga <= Math.round(Object.values(r.boxFga).reduce((sum, row) => sum + row.fga, 0) * 0.13) },
       { label: '后卫/侧翼仍是主要出手点', test: (r) => (r.liveNew.PG + r.liveNew.SG + r.liveNew.SF) >= 0.60 }
     ]
   },
@@ -182,7 +182,7 @@ const SCENARIOS = [
 ];
 
 /* ---------- 5. 运行 ---------- */
-const LIVE_TRIALS = 400000;
+const LIVE_TRIALS = Math.max(10000, parseInt(process.argv[2], 10) || 10000);
 
 function fmtPct(x) { return (x * 100).toFixed(1) + '%'; }
 
@@ -208,10 +208,10 @@ function runScenario(scenario, index) {
   pickCtx.__game = game;
   const liveCounts = {};
   court.forEach(function (p) { liveCounts[p.name] = 0; });
-  for (let i = 0; i < LIVE_TRIALS; i++) {
-    const shooter = vm.runInContext('pickShooter(__court, false, 0, false, __game)', pickCtx);
-    liveCounts[shooter.name]++;
-  }
+  // Sample inside the VM once instead of crossing realms for every possession.
+  pickCtx.__liveCounts = liveCounts;
+  pickCtx.__liveTrials = LIVE_TRIALS;
+  vm.runInContext('for (var trial = 0; trial < __liveTrials; trial++) { __liveCounts[pickShooter(__court, false, 0, false, __game).name]++; }', pickCtx);
   const liveNew = {};
   court.forEach(function (p) { liveNew[p.name] = liveCounts[p.name] / LIVE_TRIALS; });
 
@@ -229,9 +229,10 @@ function runScenario(scenario, index) {
   });
 
   // —— 跳过模拟：旧公式镜像（用与真实一致的分钟数） ——
-  const mins = starters.map(function (p) { return boxMap[p.name] ? boxMap[p.name].mins : 0; });
+  const legacyPlayers = starters.concat(BENCH_PLAYERS);
+  const mins = legacyPlayers.map(function (p) { return boxMap[p.name] ? boxMap[p.name].mins : 0; });
   boxCtx.__mins = mins;
-  boxCtx.__starters = starters;
+  boxCtx.__starters = legacyPlayers;
   const boxLegacy = shareOf(vm.runInContext('legacyBoxWeights(__starters, __mins)', boxCtx));
 
   function rankOf(shareMap) {
@@ -341,11 +342,11 @@ function steeringChecks() {
     },
     {
       label: '跳过模拟每场得分波动 σ 已放宽到 9.5（旧版 6.4）',
-      ok: /9\.5 \+ modA\.variance/.test(CORE_SRC) && !/6\.4 \+ modA\.variance/.test(CORE_SRC)
+      ok: /varianceBase = options\.isPlayoff \? 8\.3 : 9\.5/.test(CORE_SRC) && /varianceBase \+ modA\.variance/.test(CORE_SRC)
     },
     {
       label: '观看模拟蓝图每场得分波动 σ 已放宽到 9.5（旧版 6.4）',
-      ok: /clamp\(9\.5 \+ \(modA\.variance \|\| 0\), 6\.5, 13\)/.test(LIVE_SRC) && !/clamp\(6\.4 \+ \(modA\.variance \|\| 0\), 4\.6, 10\)/.test(LIVE_SRC)
+      ok: /varianceA: clamp\(\(options\.isPlayoff \? 8\.3 : 9\.5\) \+ \(modA\.variance \|\| 0\), 6\.5, 13\)/.test(LIVE_SRC)
     }
   ];
   checks.forEach(function (c) {

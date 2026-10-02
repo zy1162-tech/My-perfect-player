@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+
+const source=fs.readFileSync(new URL('../sw.js',import.meta.url),'utf8');
+const events={},old={label:'old'},fresh={label:'new',ok:true,type:'basic',clone(){return this;}},saved=[];
+let offline=false,fetches=0,finished=0;
+const context={self:{addEventListener:(name,callback)=>events[name]=callback},fetch:async()=>{fetches++;if(offline)throw Error('offline');return fresh;}};
+vm.createContext(context);vm.runInContext(source,context);
+const cache={match:async(request,options)=>options?.ignoreSearch?old:undefined,put:async(request,response)=>saved.push(response)};
+const tracker={finish:()=>finished++,follow:async work=>{await work;finished++;}};
+assert.equal(await context.cacheFirst(cache,{url:'core.js?v=new'},tracker),fresh,'a new query cannot silently load an older cached script while online');
+assert.equal(fetches,1);assert.equal(saved[0],fresh);
+offline=true;
+assert.equal(await context.cacheFirst(cache,{url:'core.js?v=newer'},tracker),old,'offline fallback must remain usable');
+const exact={match:async()=>fresh};
+assert.equal(await context.cacheFirst(exact,{url:'core.js?v=new'},tracker),fresh);
+assert.equal(fetches,2,'exact cache hits should not fetch again');
+assert.ok(finished>=2);
+console.log('Cache version refresh passed: online version queries, exact hits and offline fallbacks.');

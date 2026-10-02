@@ -1,0 +1,2403 @@
+[
+  {
+    "name": "Corey Benjamin",
+    "id": 1736,
+    "canonical": "Corey Benjamin",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Darko Miličić",
+    "id": 2545,
+    "canonical": "Darko Milicic",
+    "eras": [
+      2003,
+      2003,
+      2010
+    ]
+  },
+  {
+    "name": "Troy Bell",
+    "id": 2559,
+    "canonical": "Troy Bell",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Walter Herrmann",
+    "id": 200835,
+    "canonical": "Walter Herrmann",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Sean May",
+    "id": 101118,
+    "canonical": "Sean May",
+    "eras": [
+      2003,
+      2010
+    ]
+  },
+  {
+    "name": "Adam Morrison",
+    "id": 200747,
+    "canonical": "Adam Morrison",
+    "eras": [
+      2003,
+      2010
+    ]
+  },
+  {
+    "name": "Bernard Robinson",
+    "id": 2774,
+    "canonical": "Bernard Robinson",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Kevin Burleson",
+    "id": 101207,
+    "canonical": "Kevin Burleson",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Roger Mason",
+    "eras": [
+      2003,
+      2010
+    ],
+    "id": 2427,
+    "canonical": "Roger Mason Jr."
+  },
+  {
+    "name": "Rick Brunson",
+    "id": 1594,
+    "canonical": "Rick Brunson",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Dalibor Bagaric",
+    "id": 2053,
+    "canonical": "Dalibor Bagaric",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Tierre Brown",
+    "id": 2357,
+    "canonical": "Tierre Brown",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Antoine Rigaudeau",
+    "id": 2541,
+    "canonical": "Antoine Rigaudeau",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Vincent Yarbrough",
+    "id": 2428,
+    "canonical": "Vincent Yarbrough",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Junior Harrington",
+    "id": 2454,
+    "canonical": "Junior Harrington",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Adam Harrington",
+    "id": 2492,
+    "canonical": "Adam Harrington",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Pepe Sánchez",
+    "id": 2143,
+    "canonical": "Pepe Sanchez",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Carlos Delfino",
+    "id": 2568,
+    "canonical": "Carlos Delfino",
+    "eras": [
+      2003,
+      2010
+    ]
+  },
+  {
+    "name": "Oscar Torres",
+    "id": 2351,
+    "canonical": "Oscar Torres",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Dean Oliver",
+    "id": 2352,
+    "canonical": "Dean Oliver",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "A.J. Guyton",
+    "id": 2062,
+    "canonical": "A.J. Guyton",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Nick Van",
+    "id": 89,
+    "canonical": "Nick Van Exel",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Eddie Griffin",
+    "id": 2204,
+    "canonical": "Eddie Griffin",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Terence Morris",
+    "id": 2242,
+    "canonical": "Terence Morris",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Torraye Braggs",
+    "id": 1765,
+    "canonical": "Torraye Braggs",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Tito Maddox",
+    "id": 2432,
+    "canonical": "Tito Maddox",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Metta World",
+    "id": 1897,
+    "canonical": "Metta World Peace",
+    "eras": [
+      2003,
+      2010
+    ]
+  },
+  {
+    "name": "Wang Zhizhi",
+    "id": 1917,
+    "canonical": "Wang Zhi-zhi",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Soumaila Samake",
+    "id": 2066,
+    "canonical": "Soumaila Samake",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Brian Cook",
+    "id": 2567,
+    "canonical": "Brian Cook",
+    "eras": [
+      2003,
+      2010
+    ]
+  },
+  {
+    "name": "Mike Batiste",
+    "id": 2471,
+    "canonical": "Mike Batiste",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Chris Owens",
+    "id": 2442,
+    "canonical": "Chris Owens",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Cezary Trybański",
+    "id": 2456,
+    "canonical": "Cezary Trybanski",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Anthony Carter",
+    "id": 1853,
+    "canonical": "Anthony Carter",
+    "eras": [
+      2003,
+      2010
+    ]
+  },
+  {
+    "name": "Sean Lampley",
+    "id": 2253,
+    "canonical": "Sean Lampley",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Reggie Slater",
+    "id": 1073,
+    "canonical": "Reggie Slater",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Ndudi Ebi",
+    "id": 2569,
+    "canonical": "Ndudi Ebi",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Bryce Drew",
+    "id": 1724,
+    "canonical": "Bryce Drew",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Kirk Haston",
+    "id": 2213,
+    "canonical": "Kirk Haston",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Mike Sweetney",
+    "id": 2552,
+    "canonical": "Michael Sweetney",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Lavor Postell",
+    "id": 2068,
+    "canonical": "Lavor Postell",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Keith Van",
+    "id": 1496,
+    "canonical": "Keith Van Horn",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Richie Frahm",
+    "id": 2499,
+    "canonical": "Richie Frahm",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Joseph Forte",
+    "id": 2218,
+    "canonical": "Joseph Forte",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Olumide Oyedeji",
+    "id": 2071,
+    "canonical": "Olumide Oyedeji",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Efthimi Rentzias",
+    "eras": [
+      2003
+    ],
+    "id": 981,
+    "canonical": "Efthimios Rentzias"
+  },
+  {
+    "name": "Art Long",
+    "id": 1609,
+    "canonical": "Art Long",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Kenny Satterfield",
+    "id": 2261,
+    "canonical": "Kenny Satterfield",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Alton Ford",
+    "id": 2228,
+    "canonical": "Alton Ford",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Charles Smith",
+    "id": 78179,
+    "canonical": "Charles Smith",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Mateen Cleaves",
+    "id": 2043,
+    "canonical": "Mateen Cleaves",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Lawrence Funderburke",
+    "id": 1444,
+    "canonical": "Lawrence Funderburke",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Mengke Bateer",
+    "id": 2370,
+    "canonical": "Mengke Bateer",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Jermaine Jackson",
+    "id": 1983,
+    "canonical": "Jermaine Jackson",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Damone Brown",
+    "id": 2245,
+    "canonical": "Damone Brown",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "John Amaechi",
+    "id": 680,
+    "canonical": "John Amaechi",
+    "eras": [
+      2003
+    ]
+  },
+  {
+    "name": "Maurice Evans",
+    "id": 2230,
+    "canonical": "Maurice Evans",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Mario West",
+    "id": 201238,
+    "canonical": "Mario West",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Othello Hunter",
+    "id": 201629,
+    "canonical": "Othello Hunter",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Randolph Morris",
+    "id": 201043,
+    "canonical": "Randolph Morris",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Terrence Williams",
+    "id": 201944,
+    "canonical": "Terrence Williams",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Chris Quinn",
+    "id": 200809,
+    "canonical": "Chris Quinn",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Johan Petro",
+    "id": 101130,
+    "canonical": "Johan Petro",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Damion James",
+    "id": 202345,
+    "canonical": "Damion James",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Nate Robinson",
+    "id": 101126,
+    "canonical": "Nate Robinson",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Oliver Lafayette",
+    "id": 201802,
+    "canonical": "Oliver Lafayette",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Glen Davis",
+    "id": 201175,
+    "canonical": "Glen Davis",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Lester Hudson",
+    "id": 201991,
+    "canonical": "Lester Hudson",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Tyrus Thomas",
+    "id": 200748,
+    "canonical": "Tyrus Thomas",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Derrick Brown",
+    "id": 201974,
+    "canonical": "Derrick Brown",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Stephen Graham",
+    "id": 101211,
+    "canonical": "Stephen Graham",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Hakim Warrick",
+    "id": 101124,
+    "canonical": "Hakim Warrick",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Acie Law",
+    "id": 201151,
+    "canonical": "Acie Law",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Chris Richard",
+    "id": 201181,
+    "canonical": "Chris Richard",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Ronnie Brewer",
+    "id": 200758,
+    "canonical": "Ronnie Brewer",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Delonte West",
+    "id": 2753,
+    "canonical": "Delonte West",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Sebastian Telfair",
+    "id": 2742,
+    "canonical": "Sebastian Telfair",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Leon Powe",
+    "id": 200796,
+    "canonical": "Leon Powe",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Daniel Gibson",
+    "id": 200789,
+    "canonical": "Daniel Gibson",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Jawad Williams",
+    "id": 101214,
+    "canonical": "Jawad Williams",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Rodrigue Beaubois",
+    "id": 201958,
+    "canonical": "Rodrigue Beaubois",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Shawne Williams",
+    "id": 200761,
+    "canonical": "Shawne Williams",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Renaldo Balkman",
+    "id": 200764,
+    "canonical": "Renaldo Balkman",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Joey Graham",
+    "id": 101121,
+    "canonical": "Joey Graham",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Gary Forbes",
+    "id": 201814,
+    "canonical": "Gary Forbes",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Jason Maxiell",
+    "id": 101131,
+    "canonical": "Jason Maxiell",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Andris Biedriņš",
+    "id": 2740,
+    "canonical": "Andris Biedrins",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Anthony Randolph",
+    "id": 201576,
+    "canonical": "Anthony Randolph",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Ronny Turiaf",
+    "id": 101142,
+    "canonical": "Ronny Turiaf",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Coby Karl",
+    "id": 201207,
+    "canonical": "Coby Karl",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Charlie Bell",
+    "id": 2294,
+    "canonical": "Charlie Bell",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Pops Mensah-Bonsu",
+    "id": 200822,
+    "canonical": "Pops Mensah-Bonsu",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Joey Dorsey",
+    "id": 201595,
+    "canonical": "Joey Dorsey",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Hasheem Thabeet",
+    "id": 201934,
+    "canonical": "Hasheem Thabeet",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "A.J. Price",
+    "id": 201985,
+    "canonical": "AJ Price",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Craig Smith",
+    "id": 200783,
+    "canonical": "Craig Smith",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Mardy Collins",
+    "id": 200776,
+    "canonical": "Mardy Collins",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Andrew Bynum",
+    "id": 101115,
+    "canonical": "Andrew Bynum",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Shannon Brown",
+    "id": 200769,
+    "canonical": "Shannon Brown",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Devin Ebanks",
+    "id": 202365,
+    "canonical": "Devin Ebanks",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Derrick Caracter",
+    "id": 202382,
+    "canonical": "Derrick Caracter",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Trey Gilder",
+    "id": 201821,
+    "canonical": "Trey Gilder",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Sam Young",
+    "id": 201970,
+    "canonical": "Sam Young",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Marcus Williams",
+    "id": 201173,
+    "canonical": "Marcus Williams",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Hamed Haddadi",
+    "id": 201632,
+    "canonical": "Hamed Haddadi",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Xavier Henry",
+    "id": 202333,
+    "canonical": "Xavier Henry",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Daequan Cook",
+    "id": 201161,
+    "canonical": "Daequan Cook",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Shavlik Randolph",
+    "id": 101183,
+    "canonical": "Shavlik Randolph",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Luc Mbah",
+    "eras": [
+      2010
+    ],
+    "id": 201601,
+    "canonical": "Luc Mbah a Moute"
+  },
+  {
+    "name": "Royal Ivey",
+    "id": 2767,
+    "canonical": "Royal Ivey",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Jonny Flynn",
+    "id": 201938,
+    "canonical": "Jonny Flynn",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Ryan Gomes",
+    "id": 101155,
+    "canonical": "Ryan Gomes",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Nathan Jawai",
+    "id": 201605,
+    "canonical": "Nathan Jawai",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Lazar Hayward",
+    "id": 202351,
+    "canonical": "Lazar Hayward",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Aaron Gray",
+    "id": 201189,
+    "canonical": "Aaron Gray",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Julian Wright",
+    "id": 201153,
+    "canonical": "Julian Wright",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Sean Marks",
+    "id": 1752,
+    "canonical": "Sean Marks",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Chris Duhon",
+    "id": 2768,
+    "canonical": "Chris Duhon",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Henry Walker",
+    "id": 201611,
+    "canonical": "Henry Walker",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Landry Fields",
+    "id": 202361,
+    "canonical": "Landry Fields",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Eric Maynor",
+    "id": 201953,
+    "canonical": "Eric Maynor",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "D.J. White",
+    "id": 201591,
+    "canonical": "DJ White",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Kyle Weaver",
+    "id": 201602,
+    "canonical": "Kyle Weaver",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Jeremy Richardson",
+    "id": 200978,
+    "canonical": "Jeremy Richardson",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Daniel Orton",
+    "id": 202350,
+    "canonical": "Daniel Orton",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Earl Clark",
+    "id": 201947,
+    "canonical": "Earl Clark",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Taylor Griffin",
+    "id": 201981,
+    "canonical": "Taylor Griffin",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Alando Tucker",
+    "id": 201169,
+    "canonical": "Alando Tucker",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Dwayne Jones",
+    "id": 101204,
+    "canonical": "Dwayne Jones",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Brandon Roy",
+    "id": 200750,
+    "canonical": "Brandon Roy",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Greg Oden",
+    "id": 201141,
+    "canonical": "Greg Oden",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Travis Diener",
+    "id": 101143,
+    "canonical": "Travis Diener",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Francisco García",
+    "id": 101128,
+    "canonical": "Francisco Garcia",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Dominic McGuire",
+    "id": 201187,
+    "canonical": "Dominic McGuire",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Jon Brockman",
+    "id": 201972,
+    "canonical": "Jon Brockman",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Donté Greene",
+    "id": 201590,
+    "canonical": "Donte Greene",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Malik Hairston",
+    "id": 201612,
+    "canonical": "Malik Hairston",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Antoine Wright",
+    "id": 101120,
+    "canonical": "Antoine Wright",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Patrick O'Bryant",
+    "id": 200753,
+    "canonical": "Patrick O'Bryant",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Linas Kleiza",
+    "id": 101132,
+    "canonical": "Linas Kleiza",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Sundiata Gaines",
+    "id": 202178,
+    "canonical": "Sundiata Gaines",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Othyus Jeffers",
+    "id": 201785,
+    "canonical": "Othyus Jeffers",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Kyrylo Fesenko",
+    "id": 201178,
+    "canonical": "Kyrylo Fesenko",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Al Thornton",
+    "id": 201154,
+    "canonical": "Al Thornton",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "James Singleton",
+    "id": 101189,
+    "canonical": "James Singleton",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Quinton Ross",
+    "id": 2624,
+    "canonical": "Quinton Ross",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Andray Blatche",
+    "id": 101154,
+    "canonical": "Andray Blatche",
+    "eras": [
+      2010
+    ]
+  },
+  {
+    "name": "Marcus Morris",
+    "id": 202694,
+    "canonical": "Marcus Morris Sr.",
+    "eras": [
+      2016
+    ]
+  },
+  {
+    "name": "James Michael",
+    "id": 203949,
+    "canonical": "James Michael McAdoo",
+    "eras": [
+      2016
+    ]
+  },
+  {
+    "name": "Bryce Cotton",
+    "id": 203955,
+    "canonical": "Bryce Cotton",
+    "eras": [
+      2016
+    ]
+  },
+  {
+    "name": "Wade Baldwin",
+    "id": 1627735,
+    "canonical": "Wade Baldwin IV",
+    "eras": [
+      2016
+    ]
+  },
+  {
+    "name": "Greg Smith",
+    "id": 202962,
+    "canonical": "Greg Smith",
+    "eras": [
+      2016
+    ]
+  },
+  {
+    "name": "Willy Hernangomez",
+    "id": 1626195,
+    "canonical": "Willy Hernangomez",
+    "eras": [
+      2016
+    ]
+  },
+  {
+    "name": "Mindaugas Kuzminskas",
+    "id": 1627851,
+    "canonical": "Mindaugas Kuzminskas",
+    "eras": [
+      2016
+    ]
+  },
+  {
+    "name": "Enes Kanter",
+    "id": 202683,
+    "canonical": "Enes Freedom",
+    "eras": [
+      2016
+    ]
+  },
+  {
+    "name": "Christian Koloko",
+    "id": 1631132,
+    "canonical": "Christian Koloko",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Keaton Wallace",
+    "id": 1630811,
+    "canonical": "Keaton Wallace",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "RayJ Dennis",
+    "id": 1642484,
+    "canonical": "RayJ Dennis",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Nolan Traore",
+    "id": 1642849,
+    "canonical": "Nolan Traore",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Ben Saraf",
+    "id": 1642879,
+    "canonical": "Ben Saraf",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jalen Wilson",
+    "id": 1630592,
+    "canonical": "Jalen Wilson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Tyson Etienne",
+    "id": 1630623,
+    "canonical": "Tyson Etienne",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "E.J. Liddell",
+    "id": 1630604,
+    "canonical": "E.J. Liddell",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Trevon Scott",
+    "id": 1630286,
+    "canonical": "Trevon Scott",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Hugo Gonzalez",
+    "id": 1642864,
+    "canonical": "Hugo González",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Dalano Banton",
+    "id": 1630625,
+    "canonical": "Dalano Banton",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Ron Harper Jr.",
+    "id": 1631199,
+    "canonical": "Ron Harper Jr.",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Amari Williams",
+    "id": 1642873,
+    "canonical": "Amari Williams",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "John Tonje",
+    "id": 1642910,
+    "canonical": "John Tonje",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Max Shulga",
+    "id": 1642917,
+    "canonical": "Max Shulga",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Sion James",
+    "id": 1642883,
+    "canonical": "Sion James",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Xavier Tillman",
+    "id": 1630214,
+    "canonical": "Xavier Tillman",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "PJ Hall",
+    "id": 1641790,
+    "canonical": "PJ Hall",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Liam McNeeley",
+    "id": 1642862,
+    "canonical": "Liam McNeeley",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Antonio Reeves",
+    "id": 1641810,
+    "canonical": "Antonio Reeves",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Yuki Kawamura",
+    "id": 1642530,
+    "canonical": "Yuki Kawamura",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Noa Essengue",
+    "id": 1642855,
+    "canonical": "Noa Essengue",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Mac McClung",
+    "id": 1630644,
+    "canonical": "Mac McClung",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Lachlan Olbrich",
+    "id": 1642950,
+    "canonical": "Lachlan Olbrich",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Thomas Bryant",
+    "id": 1628418,
+    "canonical": "Thomas Bryant",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Nae’Qwan Tomlin",
+    "id": 1641772,
+    "canonical": "Nae'Qwan Tomlin",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Tyrese Proctor",
+    "id": 1642878,
+    "canonical": "Tyrese Proctor",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Olivier Sarr",
+    "id": 1630846,
+    "canonical": "Olivier Sarr",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Riley Minix",
+    "id": 1642434,
+    "canonical": "Riley Minix",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Caleb Martin",
+    "id": 1628997,
+    "canonical": "Caleb Martin",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Moussa Cisse",
+    "id": 1630619,
+    "canonical": "Moussa Cisse",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Tyler Smith",
+    "id": 1641890,
+    "canonical": "Tyler Smith",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jalen Pickett",
+    "id": 1629618,
+    "canonical": "Jalen Pickett",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "KJ Simpson",
+    "id": 1642354,
+    "canonical": "KJ Simpson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Curtis Jones",
+    "id": 1642938,
+    "canonical": "Curtis Jones",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Marcus Sasser",
+    "id": 1631204,
+    "canonical": "Marcus Sasser",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Isaac Jones",
+    "id": 1642403,
+    "canonical": "Isaac Jones",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Chaz Lanier",
+    "id": 1642404,
+    "canonical": "Chaz Lanier",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Tolu Smith",
+    "id": 1642449,
+    "canonical": "Tolu Smith",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Gui Santos",
+    "id": 1630611,
+    "canonical": "Gui Santos",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Will Richard",
+    "id": 1642954,
+    "canonical": "Will Richard",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Nate Williams",
+    "id": 1631466,
+    "canonical": "Nate Williams",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Charles Bassey",
+    "id": 1629646,
+    "canonical": "Charles Bassey",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Malevy Leons",
+    "id": 1642502,
+    "canonical": "Malevy Leons",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jae’Sean Tate",
+    "id": 1630256,
+    "canonical": "Jae'Sean Tate",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "JD Davison",
+    "id": 1631120,
+    "canonical": "JD Davison",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Tristen Newton",
+    "id": 1641803,
+    "canonical": "Tristen Newton",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Isaiah Crawford",
+    "id": 1642384,
+    "canonical": "Isaiah Crawford",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Quenton Jackson",
+    "id": 1631245,
+    "canonical": "Quenton Jackson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Kobe Brown",
+    "id": 1641738,
+    "canonical": "Kobe Brown",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Johnny Furphy",
+    "id": 1642277,
+    "canonical": "Johnny Furphy",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jalen Slawson",
+    "id": 1641771,
+    "canonical": "Jalen Slawson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Ethan Thompson",
+    "id": 1630679,
+    "canonical": "Ethan Thompson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Taelon Peter",
+    "id": 1643007,
+    "canonical": "Taelon Peter",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Yanic Konan Niederhauser",
+    "id": 1642949,
+    "canonical": "Yanic Konan Niederhäuser",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Cam Christie",
+    "id": 1642353,
+    "canonical": "Cam Christie",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jaden Hardy",
+    "id": 1630702,
+    "canonical": "Jaden Hardy",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Maxi Kleber",
+    "id": 1628467,
+    "canonical": "Maxi Kleber",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Drew Timme",
+    "id": 1631166,
+    "canonical": "Drew Timme",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Bronny James",
+    "id": 1642355,
+    "canonical": "Bronny James",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Adou Thiero",
+    "id": 1642876,
+    "canonical": "Adou Thiero",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Chris Manon",
+    "id": 1643024,
+    "canonical": "Chris Mañon",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "GG Jackson",
+    "id": 1641713,
+    "canonical": "GG Jackson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Olivier-Maxence Prosper",
+    "id": 1641765,
+    "canonical": "Olivier-Maxence Prosper",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Javon Small",
+    "id": 1642914,
+    "canonical": "Javon Small",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "AJ Johnson",
+    "id": 1642358,
+    "canonical": "AJ Johnson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Dariq Whitehead",
+    "id": 1641727,
+    "canonical": "Dariq Whitehead",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Myron Gardner",
+    "id": 1642066,
+    "canonical": "Myron Gardner",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Keshad Johnson",
+    "id": 1642352,
+    "canonical": "Keshad Johnson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Trevor Keels",
+    "id": 1631211,
+    "canonical": "Trevor Keels",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Vladislav Goldin",
+    "id": 1642884,
+    "canonical": "Vladislav Goldin",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jahmir Young",
+    "id": 1642443,
+    "canonical": "Jahmir Young",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Kasparas Jakucionis",
+    "id": 1642857,
+    "canonical": "Kasparas Jakučionis",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jericho Sims",
+    "id": 1630579,
+    "canonical": "Jericho Sims",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Kam Jones",
+    "id": 1642880,
+    "canonical": "Kam Jones",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Andre Jackson Jr.",
+    "id": 1641748,
+    "canonical": "Andre Jackson Jr.",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Alex Antetokounmpo",
+    "id": 1630828,
+    "canonical": "Alex Antetokounmpo",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Terrence Shannon Jr.",
+    "id": 1630545,
+    "canonical": "Terrence Shannon Jr.",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jaylen Clark",
+    "id": 1641740,
+    "canonical": "Jaylen Clark",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Julian Phillips",
+    "id": 1641763,
+    "canonical": "Julian Phillips",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Joan Beringer",
+    "id": 1642866,
+    "canonical": "Joan Beringer",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Enrique Freeman",
+    "id": 1642402,
+    "canonical": "Enrique Freeman",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Rocco Zikarsky",
+    "id": 1642911,
+    "canonical": "Rocco Zikarsky",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Mouhamadou Gueye",
+    "id": 1631338,
+    "canonical": "Mouhamadou Gueye",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Zyon Pullin",
+    "id": 1642389,
+    "canonical": "Zyon Pullin",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Karlo Matkovic",
+    "id": 1631255,
+    "canonical": "Karlo Matković",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Bryce McGowens",
+    "id": 1631121,
+    "canonical": "Bryce McGowens",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Micah Peavy",
+    "id": 1642877,
+    "canonical": "Micah Peavy",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Hunter Dickinson",
+    "id": 1630621,
+    "canonical": "Hunter Dickinson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Tyler Kolek",
+    "id": 1642278,
+    "canonical": "Tyler Kolek",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Mohamed Diawara",
+    "id": 1642885,
+    "canonical": "Mohamed Diawara",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Trey Jemison III",
+    "id": 1641998,
+    "canonical": "Trey Jemison III",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Pacome Dadiet",
+    "id": 1642359,
+    "canonical": "Pacôme Dadiet",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Dillon Jones",
+    "id": 1641794,
+    "canonical": "Dillon Jones",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Nikola Topic",
+    "id": 1642260,
+    "canonical": "Nikola Topić",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Thomas Sorber",
+    "id": 1642850,
+    "canonical": "Thomas Sorber",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Brooks Barnhizer",
+    "id": 1642964,
+    "canonical": "Brooks Barnhizer",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Noah Penda",
+    "id": 1642869,
+    "canonical": "Noah Penda",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jett Howard",
+    "id": 1641724,
+    "canonical": "Jett Howard",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jase Richardson",
+    "id": 1642859,
+    "canonical": "Jase Richardson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Colin Castleton",
+    "id": 1630658,
+    "canonical": "Colin Castleton",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Justin Edwards",
+    "id": 1642348,
+    "canonical": "Justin Edwards",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Caleb Love",
+    "id": 1631126,
+    "canonical": "Caleb Love",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Rayan Rupert",
+    "id": 1641712,
+    "canonical": "Rayan Rupert",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jabari Walker",
+    "id": 1631133,
+    "canonical": "Jabari Walker",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Johni Broome",
+    "id": 1641780,
+    "canonical": "Johni Broome",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Rasheer Fleming",
+    "id": 1642853,
+    "canonical": "Rasheer Fleming",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Khaman Maluach",
+    "id": 1642863,
+    "canonical": "Khaman Maluach",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Isaiah Livers",
+    "id": 1630587,
+    "canonical": "Isaiah Livers",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Koby Brea",
+    "id": 1642886,
+    "canonical": "Koby Brea",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "CJ Huntley",
+    "id": 1643047,
+    "canonical": "CJ Huntley",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Sidy Cissoko",
+    "id": 1631321,
+    "canonical": "Sidy Cissoko",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Branden Carlson",
+    "id": 1642382,
+    "canonical": "Branden Carlson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Yang Hansen",
+    "id": 1642905,
+    "canonical": "Yang Hansen",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Chris Youngblood",
+    "id": 1642959,
+    "canonical": "Chris Youngblood",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Nique Clifford",
+    "id": 1642363,
+    "canonical": "Nique Clifford",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Drew Eubanks",
+    "id": 1629234,
+    "canonical": "Drew Eubanks",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jonathan Mogbo",
+    "id": 1642367,
+    "canonical": "Jonathan Mogbo",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Daeqwon Plowden",
+    "id": 1631342,
+    "canonical": "Daeqwon Plowden",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Isaiah Stevens",
+    "id": 1641815,
+    "canonical": "Isaiah Stevens",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Adam Flagler",
+    "id": 1641745,
+    "canonical": "Adam Flagler",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Carter Bryant",
+    "id": 1642868,
+    "canonical": "Carter Bryant",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Lindy Waters III",
+    "id": 1630322,
+    "canonical": "Lindy Waters III",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jordan McLaughlin",
+    "id": 1629162,
+    "canonical": "Jordan McLaughlin",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "David Jones Garcia",
+    "id": 1642357,
+    "canonical": "David Jones Garcia",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Harrison Ingram",
+    "id": 1631127,
+    "canonical": "Harrison Ingram",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Emanuel Miller",
+    "id": 1641801,
+    "canonical": "Emanuel Miller",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jamison Battle",
+    "id": 1642419,
+    "canonical": "Jamison Battle",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "A.J. Lawson",
+    "id": 1630639,
+    "canonical": "A.J. Lawson",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Trayce Jackson-Davis",
+    "id": 1631218,
+    "canonical": "Trayce Jackson-Davis",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Alijah Martin",
+    "id": 1642918,
+    "canonical": "Alijah Martin",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Chucky Hepburn",
+    "id": 1642935,
+    "canonical": "Chucky Hepburn",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Cody Williams",
+    "id": 1642262,
+    "canonical": "Cody Williams",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "John Konchar",
+    "id": 1629723,
+    "canonical": "John Konchar",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Svi Mykhailiuk",
+    "id": 1629004,
+    "canonical": "Svi Mykhailiuk",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Oscar Tshiebwe",
+    "id": 1631131,
+    "canonical": "Oscar Tshiebwe",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Elijah Harkless",
+    "id": 1641989,
+    "canonical": "Elijah Harkless",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Trey Alexander",
+    "id": 1641725,
+    "canonical": "Trey Alexander",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Tamar Bates",
+    "id": 1642926,
+    "canonical": "Tamar Bates",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Will Riley",
+    "id": 1642860,
+    "canonical": "Will Riley",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Tristan Vukcevic",
+    "id": 1641774,
+    "canonical": "Tristan Vukcevic",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Jamir Watkins",
+    "id": 1642364,
+    "canonical": "Jamir Watkins",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Sharife Cooper",
+    "id": 1630536,
+    "canonical": "Sharife Cooper",
+    "eras": [
+      "current"
+    ]
+  },
+  {
+    "name": "Anthony Gill",
+    "id": 1630264,
+    "canonical": "Anthony Gill",
+    "eras": [
+      "current"
+    ]
+  }
+]

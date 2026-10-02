@@ -1,0 +1,772 @@
+[
+  {
+    "name": "A.J. Guyton",
+    "id": 2062,
+    "canonical": "A.J. Guyton",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/288.png",
+    "espnId": 288,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/288/aj-guyton"
+  },
+  {
+    "name": "Adam Morrison",
+    "id": 200747,
+    "canonical": "Adam Morrison",
+    "eras": [
+      2003,
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3016.png",
+    "espnId": 3016,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/3016/adam-morrison",
+    "p": "assets/images/Player/verified/espn-3016.png",
+    "profile": "https://www.espn.com/nba/player/_/id/3016/adam-morrison",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Al Thornton",
+    "id": 201154,
+    "canonical": "Al Thornton",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3237.png",
+    "espnId": 3237,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/3237/al-thornton",
+    "p": "assets/images/Player/verified/espn-3237.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/3237/al-thornton",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Andrew Bynum",
+    "id": 101115,
+    "canonical": "Andrew Bynum",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2748.png",
+    "espnId": 2748,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2748/andrew-bynum",
+    "p": "assets/images/Player/verified/espn-2748.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2748/andrew-bynum",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Anthony Carter",
+    "id": 1853,
+    "canonical": "Anthony Carter",
+    "eras": [
+      2003,
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/137.png",
+    "espnId": 137,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/137/anthony-carter",
+    "p": "assets/images/Player/verified/espn-137.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/137/anthony-carter",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Antoine Wright",
+    "id": 101120,
+    "canonical": "Antoine Wright",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2801.png",
+    "espnId": 2801,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2801/antoine-wright",
+    "p": "assets/images/Player/verified/espn-2801.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2801/antoine-wright",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Brandon Roy",
+    "id": 200750,
+    "canonical": "Brandon Roy",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3027.png",
+    "espnId": 3027,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/3027/brandon-roy",
+    "p": "assets/images/Player/verified/espn-3027.png",
+    "profile": "https://www.espn.com/nba/player/_/id/3027/brandon-roy",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Bryce Drew",
+    "id": 1724,
+    "canonical": "Bryce Drew",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/211.png",
+    "espnId": 211,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/211/bryce-drew"
+  },
+  {
+    "name": "Chris Duhon",
+    "id": 2768,
+    "canonical": "Chris Duhon",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2377.png",
+    "espnId": 2377,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2377/chris-duhon",
+    "p": "assets/images/Player/verified/espn-2377.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2377/chris-duhon",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Coby Karl",
+    "id": 201207,
+    "canonical": "Coby Karl",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3251.png",
+    "espnId": 3251,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/3251/coby-karl",
+    "p": "assets/images/Player/verified/espn-3251.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/3251/coby-karl",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Corey Benjamin",
+    "id": 1736,
+    "canonical": "Corey Benjamin",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/52.png",
+    "espnId": 52,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/52/corey-benjamin"
+  },
+  {
+    "name": "Dalibor Bagaric",
+    "id": 2053,
+    "canonical": "Dalibor Bagaric",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/31.png",
+    "espnId": 31,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/31/dalibor-bagaric"
+  },
+  {
+    "name": "Daniel Gibson",
+    "id": 200789,
+    "canonical": "Daniel Gibson",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3006.png",
+    "espnId": 3006,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/3006/daniel-gibson",
+    "p": "assets/images/Player/verified/espn-3006.png",
+    "profile": "https://www.espn.com/nba/player/_/id/3006/daniel-gibson",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Darko Miličić",
+    "id": 2545,
+    "canonical": "Darko Milicic",
+    "eras": [
+      2003,
+      2003,
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2171.png",
+    "espnId": 2171,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2171/darko-milicic",
+    "p": "assets/images/Player/verified/espn-2171.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2171/darko-milicic",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Devin Ebanks",
+    "id": 202365,
+    "canonical": "Devin Ebanks",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/4256.png",
+    "espnId": 4256,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/4256/devin-ebanks",
+    "p": "assets/images/Player/verified/espn-4256.png",
+    "profile": "https://www.espn.com/nba/player/_/id/4256/devin-ebanks",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Eddie Griffin",
+    "id": 2204,
+    "canonical": "Eddie Griffin",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/997.png",
+    "espnId": 997,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/997/eddie-griffin"
+  },
+  {
+    "name": "Gary Forbes",
+    "id": 201814,
+    "canonical": "Gary Forbes",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/4312.png",
+    "espnId": 4312,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/4312/gary-forbes",
+    "p": "assets/images/Player/verified/espn-4312.png",
+    "profile": "https://www.espn.com/nba/player/_/id/4312/gary-forbes",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Hakim Warrick",
+    "id": 101124,
+    "canonical": "Hakim Warrick",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2794.png",
+    "espnId": 2794,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/2794/hakim-warrick",
+    "p": "assets/images/Player/verified/espn-2794.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/2794/hakim-warrick",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Hasheem Thabeet",
+    "id": 201934,
+    "canonical": "Hasheem Thabeet",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/4016.png",
+    "espnId": 4016,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/4016/hasheem-thabeet",
+    "p": "assets/images/Player/verified/espn-4016.png",
+    "profile": "https://www.espn.com/nba/player/_/id/4016/hasheem-thabeet",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Jawad Williams",
+    "id": 101214,
+    "canonical": "Jawad Williams",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2850.png",
+    "espnId": 2850,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2850/jawad-williams",
+    "p": "assets/images/Player/verified/espn-2850.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2850/jawad-williams",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Joey Dorsey",
+    "id": 201595,
+    "canonical": "Joey Dorsey",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3421.png",
+    "espnId": 3421,
+    "espnProfile": "https://www.espn.com/nba/player/advancedstats/_/id/3421/joey-dorsey",
+    "p": "assets/images/Player/verified/espn-3421.png",
+    "profile": "https://www.espn.com/nba/player/advancedstats/_/id/3421/joey-dorsey",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Jon Brockman",
+    "id": 201972,
+    "canonical": "Jon Brockman",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3966.png",
+    "espnId": 3966,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/3966/jon-brockman",
+    "p": "assets/images/Player/verified/espn-3966.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/3966/jon-brockman",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Julian Wright",
+    "id": 201153,
+    "canonical": "Julian Wright",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3241.png",
+    "espnId": 3241,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/3241/julian-wright",
+    "p": "assets/images/Player/verified/espn-3241.png",
+    "profile": "https://www.espn.com/nba/player/_/id/3241/julian-wright",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Kyle Weaver",
+    "id": 201602,
+    "canonical": "Kyle Weaver",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3466.png",
+    "espnId": 3466,
+    "espnProfile": "https://www.espn.com/nba/player/bio/_/id/3466/kyle-weaver",
+    "p": "assets/images/Player/verified/espn-3466.png",
+    "profile": "https://www.espn.com/nba/player/bio/_/id/3466/kyle-weaver",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Landry Fields",
+    "id": 202361,
+    "canonical": "Landry Fields",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/4274.png",
+    "espnId": 4274,
+    "espnProfile": "https://www.espn.com/nba/player/bio/_/id/4274/landry-fields",
+    "p": "assets/images/Player/verified/espn-4274.png",
+    "profile": "https://www.espn.com/nba/player/bio/_/id/4274/landry-fields",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Lawrence Funderburke",
+    "id": 1444,
+    "canonical": "Lawrence Funderburke",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/259.png",
+    "espnId": 259,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/259/lawrence-funderburke"
+  },
+  {
+    "name": "Lazar Hayward",
+    "id": 202351,
+    "canonical": "Lazar Hayward",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/4277.png",
+    "espnId": 4277,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/4277/lazar-hayward",
+    "p": "assets/images/Player/verified/espn-4277.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/4277/lazar-hayward",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Mario West",
+    "id": 201238,
+    "canonical": "Mario West",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3278.png",
+    "espnId": 3278,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/3278/mario-west",
+    "p": "assets/images/Player/verified/espn-3278.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/3278/mario-west",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Mateen Cleaves",
+    "id": 2043,
+    "canonical": "Mateen Cleaves",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/151.png",
+    "espnId": 151,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/151/mateen-cleaves"
+  },
+  {
+    "name": "Maurice Evans",
+    "id": 2230,
+    "canonical": "Maurice Evans",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/1031.png",
+    "espnId": 1031,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/1031/maurice-evans",
+    "p": "assets/images/Player/verified/espn-1031.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/1031/maurice-evans",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Nate Robinson",
+    "id": 101126,
+    "canonical": "Nate Robinson",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2782.png",
+    "espnId": 2782,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2782/nate-robinson",
+    "p": "assets/images/Player/verified/espn-2782.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2782/nate-robinson",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Nathan Jawai",
+    "id": 201605,
+    "canonical": "Nathan Jawai",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3441.png",
+    "espnId": 3441,
+    "espnProfile": "https://www.espn.com/nba/player/news/_/id/3441/nathan-jawai"
+  },
+  {
+    "name": "Oscar Torres",
+    "id": 2351,
+    "canonical": "Oscar Torres",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/1054.png",
+    "espnId": 1054,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/1054/oscar-torres"
+  },
+  {
+    "name": "Othello Hunter",
+    "id": 201629,
+    "canonical": "Othello Hunter",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3475.png",
+    "espnId": 3475,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/3475/othello-hunter"
+  },
+  {
+    "name": "Othyus Jeffers",
+    "id": 201785,
+    "canonical": "Othyus Jeffers",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/4231.png",
+    "espnId": 4231,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/4231/othyus-jeffers",
+    "p": "assets/images/Player/verified/espn-4231.png",
+    "profile": "https://www.espn.com/nba/player/_/id/4231/othyus-jeffers",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Pops Mensah-Bonsu",
+    "id": 200822,
+    "canonical": "Pops Mensah-Bonsu",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3053.png",
+    "espnId": 3053,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/3053/pops-mensah-bonsu",
+    "p": "assets/images/Player/verified/espn-3053.png",
+    "profile": "https://www.espn.com/nba/player/_/id/3053/pops-mensah-bonsu",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Randolph Morris",
+    "id": 201043,
+    "canonical": "Randolph Morris",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3179.png",
+    "espnId": 3179,
+    "espnProfile": "https://www.espn.com/nba/player/advancedstats/_/id/3179/randolph-morris"
+  },
+  {
+    "name": "Renaldo Balkman",
+    "id": 200764,
+    "canonical": "Renaldo Balkman",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2986.png",
+    "espnId": 2986,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/2986/renaldo-balkman",
+    "p": "assets/images/Player/verified/espn-2986.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/2986/renaldo-balkman",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Rick Brunson",
+    "id": 1594,
+    "canonical": "Rick Brunson",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/106.png",
+    "espnId": 106,
+    "espnProfile": "https://www.espn.com/nba/player/bio/_/id/106/rick-brunson"
+  },
+  {
+    "name": "Ronnie Brewer",
+    "id": 200758,
+    "canonical": "Ronnie Brewer",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2991.png",
+    "espnId": 2991,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2991/ronnie-brewer",
+    "p": "assets/images/Player/verified/espn-2991.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2991/ronnie-brewer",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Royal Ivey",
+    "id": 2767,
+    "canonical": "Royal Ivey",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2387.png",
+    "espnId": 2387,
+    "espnProfile": "https://www.espn.com/nba/player/bio/_/id/2387/royal-ivey",
+    "p": "assets/images/Player/verified/espn-2387.png",
+    "profile": "https://www.espn.com/nba/player/bio/_/id/2387/royal-ivey",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Ryan Gomes",
+    "id": 101155,
+    "canonical": "Ryan Gomes",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2757.png",
+    "espnId": 2757,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2757/ryan-gomes",
+    "p": "assets/images/Player/verified/espn-2757.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2757/ryan-gomes",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Sean May",
+    "id": 101118,
+    "canonical": "Sean May",
+    "eras": [
+      2003,
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2776.png",
+    "espnId": 2776,
+    "espnProfile": "https://www.espn.com/nba/player/bio/_/id/2776/sean-may"
+  },
+  {
+    "name": "Sebastian Telfair",
+    "id": 2742,
+    "canonical": "Sebastian Telfair",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2417.png",
+    "espnId": 2417,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2417/sebastian-telfair",
+    "p": "assets/images/Player/verified/espn-2417.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2417/sebastian-telfair",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Shawne Williams",
+    "id": 200761,
+    "canonical": "Shawne Williams",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3038.png",
+    "espnId": 3038,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/3038/shawne-williams",
+    "p": "assets/images/Player/verified/espn-3038.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/3038/shawne-williams",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Soumaila Samake",
+    "id": 2066,
+    "canonical": "Soumaila Samake",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/748.png",
+    "espnId": 748,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/748/soumaila-samake"
+  },
+  {
+    "name": "Sundiata Gaines",
+    "id": 202178,
+    "canonical": "Sundiata Gaines",
+    "eras": [
+      2010
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/4224.png",
+    "espnId": 4224,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/4224/sundiata-gaines",
+    "p": "assets/images/Player/verified/espn-4224.png",
+    "profile": "https://www.espn.com/nba/player/stats/_/id/4224/sundiata-gaines",
+    "identityCheck": "exact-name public ESPN profile search result"
+  },
+  {
+    "name": "Tierre Brown",
+    "id": 2357,
+    "canonical": "Tierre Brown",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/1057.png",
+    "espnId": 1057,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/1057/tierre-brown"
+  },
+  {
+    "name": "Trevon Scott",
+    "id": 1630286,
+    "canonical": "Trevon Scott",
+    "eras": [
+      "current"
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/3934620.png",
+    "espnId": 3934620,
+    "espnProfile": "https://www.espn.com/nba/player/stats/_/id/3934620/trevon-scott"
+  },
+  {
+    "name": "Vincent Yarbrough",
+    "id": 2428,
+    "canonical": "Vincent Yarbrough",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "HTTP Error 404: Not Found",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/1735.png",
+    "espnId": 1735,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/1735/vincent-yarbrough"
+  },
+  {
+    "name": "Bryce Cotton",
+    "id": 203955,
+    "canonical": "Bryce Cotton",
+    "eras": [
+      2016
+    ],
+    "status": "imported",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://a.espncdn.com/i/headshots/nba/players/full/2531054.png",
+    "espnId": 2531054,
+    "espnProfile": "https://www.espn.com/nba/player/_/id/2531054/bryce-cotton",
+    "p": "assets/images/Player/verified/espn-2531054.png",
+    "profile": "https://www.espn.com/nba/player/_/id/2531054/bryce-cotton",
+    "identityCheck": "exact-name public ESPN profile search result"
+  }
+]

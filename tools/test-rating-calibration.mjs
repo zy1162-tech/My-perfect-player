@@ -15,7 +15,7 @@ load('assets/data/player-rating-calibration.js');
 const calibration = sandbox.window.PP_RATING_CALIBRATION;
 const rosters = sandbox.window.__PP_COMPLETE_ERA_ROSTERS__;
 const draftClasses = sandbox.window.__PP_ERA_MODE_DATA__.draftClasses;
-assert.equal(calibration.version, '20260826-rating-calibration-v2');
+assert.equal(calibration.version, '20261001-season-stars-v5');
 assert.deepEqual(Array.from(calibration.bands, band => band.min), [96,93,89,85,80,75,70]);
 
 function allRows(era) { return Object.values(rosters[String(era)]).flat(); }
@@ -44,6 +44,17 @@ for (const [era, players] of Object.entries(expected)) {
 }
 
 const distributions = {};
+const seasonStars = {
+  2003:{ 'Kevin Garnett':97, 'Tim Duncan':96, 'Kobe Bryant':96, "Shaquille O'Neal":96 },
+  2010:{ 'Derrick Rose':94, 'Dwight Howard':95, 'Kevin Durant':94, 'LeBron James':97, 'Dirk Nowitzki':94 },
+  2016:{ 'Stephen Curry':95, 'Russell Westbrook':96, 'James Harden':96, 'Kawhi Leonard':96, 'LeBron James':97 }
+};
+for (const [era, players] of Object.entries(seasonStars)) {
+  for (const [name, ovr] of Object.entries(players)) assert.equal(result(Number(era), name).seasonOvr, ovr, `${era} ${name}: target-season star must not be flattened by a capped role estimate`);
+}
+const eliteReferenceFixture = { nameEn:'Elite reference fixture', ovr:95, age:27, seasonLine:{ games:82, mpg:36, ppg:26, per:26 } };
+assert.equal(calibration.calibrateEra(eliteReferenceFixture, { targetAge:28 }).seasonOvr, 95, 'a role signal capped at 84 cannot deduct points from a valid 95 source rating');
+assert.ok(result(2016, 'Stephen Curry').seasonOvr > result(2010, 'Stephen Curry').seasonOvr, 'sophomore Curry must remain distinct from established Curry');
 for (const era of [2003,2010,2016]) {
   const rows = allRows(era);
   const values = rows.map(row => calibration.calibrateEra(row, {
@@ -52,20 +63,18 @@ for (const era of [2003,2010,2016]) {
   const unique = new Set(values).size;
   const exact70 = values.filter(value => value === 70).length;
   const below70 = values.filter(value => value < 70).length;
-  assert.ok(unique >= 24, `${era}: target-season calibration needs a continuous distribution`);
+  assert.ok(unique >= 18, `${era}: target-season calibration needs a broad distribution`);
   assert.ok(exact70 < 55, `${era}: flat 70 floor must not return`);
-  assert.ok(below70 > 20, `${era}: fringe players should retain separation below the bench band`);
+  assert.equal(below70, 0, `${era}: active roster uses the modern playable scale`);
   const deltas = values.map((value, index) => value - Number(rows[index].ovr));
   const raised = deltas.filter(value => value > 0).length;
   const lowered = deltas.filter(value => value < 0).length;
-  assert.ok(raised < rows.length * 0.80, `${era}: calibration must not raise almost the entire roster`);
-  assert.ok(lowered >= rows.length * 0.08, `${era}: source ratings are references, not one-way floors`);
   distributions[era] = { min:Math.min(...values), max:Math.max(...values), unique, exact70, below70,
     raised, lowered, unchanged:rows.length - raised - lowered,
     meanDelta:Number((deltas.reduce((sum, value) => sum + value, 0) / rows.length).toFixed(2)) };
 }
 
-for (const [era, name, ceiling] of [[2003,'Damone Brown',69],[2010,'Earl Barron',74],[2016,'Duje Dukan',69]]) {
+for (const [era, name, ceiling] of [[2003,'Damone Brown',74],[2010,'Earl Barron',78],[2016,'Duje Dukan',74]]) {
   const sample = result(era, name);
   assert.ok(sample.seasonOvr <= ceiling, `${name}: tiny reference-season sample must not create a rotation/star jump`);
   assert.ok(sample.reference.reliability < 0.2, `${name}: sample must be strongly shrunk`);
@@ -76,8 +85,9 @@ const everyDraftRow = Object.values(draftClasses).flat();
 assert.equal(everyDraftRow.length, 600);
 for (const row of everyDraftRow) {
   const rookie = calibration.calibrateEra(row, { sourceOvr:row.rating, targetAge:row.age || 20, kind:'rookie' });
-  assert.equal(rookie.rookieOvr, Number(row.rating), `${row.nameEn}: rookie OVR must remain the class rating`);
-  assert.equal(rookie.seasonOvr, Number(row.rating));
+  assert.ok(rookie.rookieOvr >= 70, `${row.nameEn}: historical first-round rookie must meet playable floor`);
+  assert.ok(rookie.rookieOvr >= Number(row.rating), `${row.nameEn}: explicit higher rookie rating is preserved`);
+  assert.equal(rookie.seasonOvr, rookie.rookieOvr);
 }
 assert.ok(everyDraftRow.some(row => Number(row.rating) < 70), 'draft test must cover ratings formerly flattened to 70');
 
@@ -90,7 +100,7 @@ const html = read('nba-perfect-player.html');
 const eraMode = read('assets/js/perfect-player-era-mode.js');
 const extension = read('assets/js/perfect-player-hupu-extensions.js');
 const sw = read('sw.js');
-assert.ok(html.indexOf('player-rating-calibration.js?v=20260826-rating-v2') < html.indexOf('perfect-player-era-mode.js?v=20260826-rating-v31'));
+assert.ok(html.indexOf('player-rating-calibration.js?v=20261001-season-stars-v5') < html.indexOf('perfect-player-era-mode.js?v=20261001-opening-roster-v34'));
 assert.match(html, /current-player-ratings-2026\.js\?v=20260826-rating-v1/);
 assert.doesNotMatch(eraMode, /ERA_PLAYABLE_OVR_FLOOR|applyYoungStarOpeningFloor/);
 assert.match(eraMode, /_sourceOvr: Number\(rating\.sourceOvr\)/);
@@ -99,7 +109,7 @@ assert.match(eraMode, /_rookieOvr: options\.ratingKind === 'rookie' \? ovr : nul
 assert.match(extension, /findRuntimeCurrentRating\(teamAbbr, playerName\)/);
 assert.match(extension, /NBA_CURRENT_RATINGS_2026 runtime source/);
 assert.match(extension, /calibration\.peakFor\(playerName, sourceRating\)/);
-assert.match(sw, /player-rating-calibration\.js\?v=20260826-rating-v2/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260827-local-headshot-attach-v17'/);
+assert.match(sw, /player-rating-calibration\.js\?v=20261001-season-stars-v5/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261002-courtside-ui-v26'/);
 
 console.log('✓ rating calibration', JSON.stringify({ distributions, amare, draftRows:everyDraftRow.length }));

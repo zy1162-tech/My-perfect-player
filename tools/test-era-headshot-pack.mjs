@@ -75,7 +75,8 @@ const generator = read('tools/generate-era-headshot-index.mjs');
 const css = read('assets/css/perfect-player.css');
 const sw = read('sw.js');
 assert.match(html, /function _hsCssBgUrl\(url\)[\s\S]*return "url\('"/);
-assert.match(html, /urls\.map\(_hsCssBgUrl\)/);
+assert.match(html, /background-color:#fff;background-image:/);
+assert.match(html, /image\.onerror = function\(\) \{ tryPhoto\(index \+ 1\); \}/, 'photo alternatives must load in sequence instead of stacking transparent images');
 assert.match(html, /function _hsOfficialIdFromRemoteUrl\(remoteUrl\)/);
 assert.match(html, /urlPlayerId && \(_hsIsExcludedOfficialId\(urlPlayerId\) \|\| _hsIsExcludedOfficialId\(playerId\)\)/, 'stale NBA CDN URLs from excluded old-save IDs must be filtered');
 assert.match(html, /_hsIsReliableRecordRemote\(recordRemote, pid\)/);
@@ -96,9 +97,9 @@ assert.match(html, /var PERFECT_PLAYER_EXTRA_VERIFIED_OFFICIAL_IDS = \[204002, 1
 assert.match(html, /else if \(candidates\[key\] !== id\) candidates\[key\] = 0/, 'runtime lookup must reject normalized-name collisions');
 assert.ok(html.indexOf('script-00-2678-58zyeprc-upload-1783508428855-12.js?v=20260827-verified-names-v1') < html.indexOf('function _hsGetNormIndex()'), 'the verified name map must load before resolver construction');
 assert.ok(html.indexOf('era-headshot-index.js?v=20260826-era-headshots-v1') < html.indexOf('perfect-player-core.js?v='));
-assert.match(html, /perfect-player-era-mode\.js\?v=20260826-rating-v31/);
+assert.match(html, /perfect-player-era-mode\.js\?v=20261001-opening-roster-v34/);
 assert.match(html, /perfect-player\.css\?v=20260826-era-headshots-v2/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20260827-local-headshot-attach-v17'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261002-courtside-ui-v26'/);
 assert.match(sw, /\.\/assets\/js\/hupu\/script-00-2678-58zyeprc-upload-1783508428855-12\.js\?v=20260827-verified-names-v1/);
 assert.doesNotMatch(sw, /['"]\.\/assets\/images\/Player\/(?:hupu-era|nba-official)\//, 'large on-demand image directories must not be install-shell entries');
 

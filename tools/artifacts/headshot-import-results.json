@@ -1,0 +1,3454 @@
+[
+  {
+    "name": "A.J. Guyton",
+    "id": 2062,
+    "canonical": "A.J. Guyton",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2062.png"
+  },
+  {
+    "name": "A.J. Lawson",
+    "id": 1630639,
+    "canonical": "A.J. Lawson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630639.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630639.png",
+    "profile": "https://www.nba.com/stats/player/1630639/career"
+  },
+  {
+    "name": "A.J. Price",
+    "id": 201985,
+    "canonical": "AJ Price",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201985.png"
+  },
+  {
+    "name": "AJ Johnson",
+    "id": 1642358,
+    "canonical": "AJ Johnson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642358.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642358.png",
+    "profile": "https://www.nba.com/stats/player/1642358/career"
+  },
+  {
+    "name": "Aaron Gray",
+    "id": 201189,
+    "canonical": "Aaron Gray",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201189.png"
+  },
+  {
+    "name": "Acie Law",
+    "id": 201151,
+    "canonical": "Acie Law",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201151.png"
+  },
+  {
+    "name": "Adam Flagler",
+    "id": 1641745,
+    "canonical": "Adam Flagler",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641745.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641745.png",
+    "profile": "https://www.nba.com/stats/player/1641745/career"
+  },
+  {
+    "name": "Adam Harrington",
+    "id": 2492,
+    "canonical": "Adam Harrington",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2492.png"
+  },
+  {
+    "name": "Adam Morrison",
+    "id": 200747,
+    "canonical": "Adam Morrison",
+    "eras": [
+      2003,
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200747.png"
+  },
+  {
+    "name": "Adou Thiero",
+    "id": 1642876,
+    "canonical": "Adou Thiero",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642876.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642876.png",
+    "profile": "https://www.nba.com/stats/player/1642876/career"
+  },
+  {
+    "name": "Al Thornton",
+    "id": 201154,
+    "canonical": "Al Thornton",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201154.png"
+  },
+  {
+    "name": "Alando Tucker",
+    "id": 201169,
+    "canonical": "Alando Tucker",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201169.png"
+  },
+  {
+    "name": "Alex Antetokounmpo",
+    "id": 1630828,
+    "canonical": "Alex Antetokounmpo",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630828.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630828.png",
+    "profile": "https://www.nba.com/stats/player/1630828/career"
+  },
+  {
+    "name": "Alijah Martin",
+    "id": 1642918,
+    "canonical": "Alijah Martin",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642918.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642918.png",
+    "profile": "https://www.nba.com/stats/player/1642918/career"
+  },
+  {
+    "name": "Alton Ford",
+    "id": 2228,
+    "canonical": "Alton Ford",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2228.png"
+  },
+  {
+    "name": "Amari Williams",
+    "id": 1642873,
+    "canonical": "Amari Williams",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642873.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642873.png",
+    "profile": "https://www.nba.com/stats/player/1642873/career"
+  },
+  {
+    "name": "Andray Blatche",
+    "id": 101154,
+    "canonical": "Andray Blatche",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101154.png"
+  },
+  {
+    "name": "Andre Jackson Jr.",
+    "id": 1641748,
+    "canonical": "Andre Jackson Jr.",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641748.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641748.png",
+    "profile": "https://www.nba.com/stats/player/1641748/career"
+  },
+  {
+    "name": "Andrew Bynum",
+    "id": 101115,
+    "canonical": "Andrew Bynum",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101115.png"
+  },
+  {
+    "name": "Andris Biedriņš",
+    "id": 2740,
+    "canonical": "Andris Biedrins",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2740.png"
+  },
+  {
+    "name": "Anthony Carter",
+    "id": 1853,
+    "canonical": "Anthony Carter",
+    "eras": [
+      2003,
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1853.png"
+  },
+  {
+    "name": "Anthony Gill",
+    "id": 1630264,
+    "canonical": "Anthony Gill",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630264.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630264.png",
+    "profile": "https://www.nba.com/stats/player/1630264/career"
+  },
+  {
+    "name": "Anthony Randolph",
+    "id": 201576,
+    "canonical": "Anthony Randolph",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201576.png"
+  },
+  {
+    "name": "Antoine Rigaudeau",
+    "id": 2541,
+    "canonical": "Antoine Rigaudeau",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2541.png"
+  },
+  {
+    "name": "Antoine Wright",
+    "id": 101120,
+    "canonical": "Antoine Wright",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101120.png"
+  },
+  {
+    "name": "Antonio Reeves",
+    "id": 1641810,
+    "canonical": "Antonio Reeves",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641810.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641810.png",
+    "profile": "https://www.nba.com/stats/player/1641810/career"
+  },
+  {
+    "name": "Art Long",
+    "id": 1609,
+    "canonical": "Art Long",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1609.png"
+  },
+  {
+    "name": "Ben Saraf",
+    "id": 1642879,
+    "canonical": "Ben Saraf",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642879.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642879.png",
+    "profile": "https://www.nba.com/stats/player/1642879/career"
+  },
+  {
+    "name": "Bernard Robinson",
+    "id": 2774,
+    "canonical": "Bernard Robinson",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2774.png"
+  },
+  {
+    "name": "Branden Carlson",
+    "id": 1642382,
+    "canonical": "Branden Carlson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642382.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642382.png",
+    "profile": "https://www.nba.com/stats/player/1642382/career"
+  },
+  {
+    "name": "Brandon Roy",
+    "id": 200750,
+    "canonical": "Brandon Roy",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200750.png"
+  },
+  {
+    "name": "Brian Cook",
+    "id": 2567,
+    "canonical": "Brian Cook",
+    "eras": [
+      2003,
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2567.png"
+  },
+  {
+    "name": "Bronny James",
+    "id": 1642355,
+    "canonical": "Bronny James",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642355.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642355.png",
+    "profile": "https://www.nba.com/stats/player/1642355/career"
+  },
+  {
+    "name": "Brooks Barnhizer",
+    "id": 1642964,
+    "canonical": "Brooks Barnhizer",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642964.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642964.png",
+    "profile": "https://www.nba.com/stats/player/1642964/career"
+  },
+  {
+    "name": "Bryce Cotton",
+    "id": 203955,
+    "canonical": "Bryce Cotton",
+    "eras": [
+      2016
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/203955.png"
+  },
+  {
+    "name": "Bryce Drew",
+    "id": 1724,
+    "canonical": "Bryce Drew",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1724.png"
+  },
+  {
+    "name": "Bryce McGowens",
+    "id": 1631121,
+    "canonical": "Bryce McGowens",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631121.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631121.png",
+    "profile": "https://www.nba.com/stats/player/1631121/career"
+  },
+  {
+    "name": "CJ Huntley",
+    "id": 1643047,
+    "canonical": "CJ Huntley",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1643047.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1643047.png",
+    "profile": "https://www.nba.com/stats/player/1643047/career"
+  },
+  {
+    "name": "Caleb Love",
+    "id": 1631126,
+    "canonical": "Caleb Love",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631126.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631126.png",
+    "profile": "https://www.nba.com/stats/player/1631126/career"
+  },
+  {
+    "name": "Caleb Martin",
+    "id": 1628997,
+    "canonical": "Caleb Martin",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1628997.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1628997.png",
+    "profile": "https://www.nba.com/stats/player/1628997/career"
+  },
+  {
+    "name": "Cam Christie",
+    "id": 1642353,
+    "canonical": "Cam Christie",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642353.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642353.png",
+    "profile": "https://www.nba.com/stats/player/1642353/career"
+  },
+  {
+    "name": "Carlos Delfino",
+    "id": 2568,
+    "canonical": "Carlos Delfino",
+    "eras": [
+      2003,
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2568.png"
+  },
+  {
+    "name": "Carter Bryant",
+    "id": 1642868,
+    "canonical": "Carter Bryant",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642868.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642868.png",
+    "profile": "https://www.nba.com/stats/player/1642868/career"
+  },
+  {
+    "name": "Cezary Trybański",
+    "id": 2456,
+    "canonical": "Cezary Trybanski",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2456.png"
+  },
+  {
+    "name": "Charles Bassey",
+    "id": 1629646,
+    "canonical": "Charles Bassey",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1629646.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1629646.png",
+    "profile": "https://www.nba.com/stats/player/1629646/career"
+  },
+  {
+    "name": "Charles Smith",
+    "id": 78179,
+    "canonical": "Charles Smith",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/78179.png"
+  },
+  {
+    "name": "Charlie Bell",
+    "id": 2294,
+    "canonical": "Charlie Bell",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2294.png"
+  },
+  {
+    "name": "Chaz Lanier",
+    "id": 1642404,
+    "canonical": "Chaz Lanier",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642404.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642404.png",
+    "profile": "https://www.nba.com/stats/player/1642404/career"
+  },
+  {
+    "name": "Chris Duhon",
+    "id": 2768,
+    "canonical": "Chris Duhon",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2768.png"
+  },
+  {
+    "name": "Chris Manon",
+    "id": 1643024,
+    "canonical": "Chris Mañon",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1643024.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1643024.png",
+    "profile": "https://www.nba.com/stats/player/1643024/career"
+  },
+  {
+    "name": "Chris Owens",
+    "id": 2442,
+    "canonical": "Chris Owens",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2442.png"
+  },
+  {
+    "name": "Chris Quinn",
+    "id": 200809,
+    "canonical": "Chris Quinn",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200809.png"
+  },
+  {
+    "name": "Chris Richard",
+    "id": 201181,
+    "canonical": "Chris Richard",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201181.png"
+  },
+  {
+    "name": "Chris Youngblood",
+    "id": 1642959,
+    "canonical": "Chris Youngblood",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642959.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642959.png",
+    "profile": "https://www.nba.com/stats/player/1642959/career"
+  },
+  {
+    "name": "Christian Koloko",
+    "id": 1631132,
+    "canonical": "Christian Koloko",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631132.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631132.png",
+    "profile": "https://www.nba.com/stats/player/1631132/career"
+  },
+  {
+    "name": "Chucky Hepburn",
+    "id": 1642935,
+    "canonical": "Chucky Hepburn",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642935.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642935.png",
+    "profile": "https://www.nba.com/stats/player/1642935/career"
+  },
+  {
+    "name": "Coby Karl",
+    "id": 201207,
+    "canonical": "Coby Karl",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201207.png"
+  },
+  {
+    "name": "Cody Williams",
+    "id": 1642262,
+    "canonical": "Cody Williams",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642262.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642262.png",
+    "profile": "https://www.nba.com/stats/player/1642262/career"
+  },
+  {
+    "name": "Colin Castleton",
+    "id": 1630658,
+    "canonical": "Colin Castleton",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630658.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630658.png",
+    "profile": "https://www.nba.com/stats/player/1630658/career"
+  },
+  {
+    "name": "Corey Benjamin",
+    "id": 1736,
+    "canonical": "Corey Benjamin",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1736.png"
+  },
+  {
+    "name": "Craig Smith",
+    "id": 200783,
+    "canonical": "Craig Smith",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200783.png"
+  },
+  {
+    "name": "Curtis Jones",
+    "id": 1642938,
+    "canonical": "Curtis Jones",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642938.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642938.png",
+    "profile": "https://www.nba.com/stats/player/1642938/career"
+  },
+  {
+    "name": "D.J. White",
+    "id": 201591,
+    "canonical": "DJ White",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201591.png"
+  },
+  {
+    "name": "Daequan Cook",
+    "id": 201161,
+    "canonical": "Daequan Cook",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201161.png"
+  },
+  {
+    "name": "Daeqwon Plowden",
+    "id": 1631342,
+    "canonical": "Daeqwon Plowden",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631342.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631342.png",
+    "profile": "https://www.nba.com/stats/player/1631342/career"
+  },
+  {
+    "name": "Dalano Banton",
+    "id": 1630625,
+    "canonical": "Dalano Banton",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630625.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630625.png",
+    "profile": "https://www.nba.com/stats/player/1630625/career"
+  },
+  {
+    "name": "Dalibor Bagaric",
+    "id": 2053,
+    "canonical": "Dalibor Bagaric",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2053.png"
+  },
+  {
+    "name": "Damion James",
+    "id": 202345,
+    "canonical": "Damion James",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202345.png"
+  },
+  {
+    "name": "Damone Brown",
+    "id": 2245,
+    "canonical": "Damone Brown",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2245.png"
+  },
+  {
+    "name": "Daniel Gibson",
+    "id": 200789,
+    "canonical": "Daniel Gibson",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200789.png"
+  },
+  {
+    "name": "Daniel Orton",
+    "id": 202350,
+    "canonical": "Daniel Orton",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202350.png"
+  },
+  {
+    "name": "Dariq Whitehead",
+    "id": 1641727,
+    "canonical": "Dariq Whitehead",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641727.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641727.png",
+    "profile": "https://www.nba.com/stats/player/1641727/career"
+  },
+  {
+    "name": "Darko Miličić",
+    "id": 2545,
+    "canonical": "Darko Milicic",
+    "eras": [
+      2003,
+      2003,
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2545.png"
+  },
+  {
+    "name": "David Jones Garcia",
+    "id": 1642357,
+    "canonical": "David Jones Garcia",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642357.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642357.png",
+    "profile": "https://www.nba.com/stats/player/1642357/career"
+  },
+  {
+    "name": "Dean Oliver",
+    "id": 2352,
+    "canonical": "Dean Oliver",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2352.png"
+  },
+  {
+    "name": "Delonte West",
+    "id": 2753,
+    "canonical": "Delonte West",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2753.png"
+  },
+  {
+    "name": "Derrick Brown",
+    "id": 201974,
+    "canonical": "Derrick Brown",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201974.png"
+  },
+  {
+    "name": "Derrick Caracter",
+    "id": 202382,
+    "canonical": "Derrick Caracter",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202382.png"
+  },
+  {
+    "name": "Devin Ebanks",
+    "id": 202365,
+    "canonical": "Devin Ebanks",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202365.png"
+  },
+  {
+    "name": "Dillon Jones",
+    "id": 1641794,
+    "canonical": "Dillon Jones",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641794.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641794.png",
+    "profile": "https://www.nba.com/stats/player/1641794/career"
+  },
+  {
+    "name": "Dominic McGuire",
+    "id": 201187,
+    "canonical": "Dominic McGuire",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201187.png"
+  },
+  {
+    "name": "Donté Greene",
+    "id": 201590,
+    "canonical": "Donte Greene",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201590.png"
+  },
+  {
+    "name": "Drew Eubanks",
+    "id": 1629234,
+    "canonical": "Drew Eubanks",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1629234.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1629234.png",
+    "profile": "https://www.nba.com/stats/player/1629234/career"
+  },
+  {
+    "name": "Drew Timme",
+    "id": 1631166,
+    "canonical": "Drew Timme",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631166.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631166.png",
+    "profile": "https://www.nba.com/stats/player/1631166/career"
+  },
+  {
+    "name": "Dwayne Jones",
+    "id": 101204,
+    "canonical": "Dwayne Jones",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101204.png"
+  },
+  {
+    "name": "E.J. Liddell",
+    "id": 1630604,
+    "canonical": "E.J. Liddell",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630604.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630604.png",
+    "profile": "https://www.nba.com/stats/player/1630604/career"
+  },
+  {
+    "name": "Earl Clark",
+    "id": 201947,
+    "canonical": "Earl Clark",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201947.png"
+  },
+  {
+    "name": "Eddie Griffin",
+    "id": 2204,
+    "canonical": "Eddie Griffin",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2204.png"
+  },
+  {
+    "name": "Efthimi Rentzias",
+    "eras": [
+      2003
+    ],
+    "id": 981,
+    "canonical": "Efthimios Rentzias",
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/981.png"
+  },
+  {
+    "name": "Elijah Harkless",
+    "id": 1641989,
+    "canonical": "Elijah Harkless",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641989.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641989.png",
+    "profile": "https://www.nba.com/stats/player/1641989/career"
+  },
+  {
+    "name": "Emanuel Miller",
+    "id": 1641801,
+    "canonical": "Emanuel Miller",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641801.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641801.png",
+    "profile": "https://www.nba.com/stats/player/1641801/career"
+  },
+  {
+    "name": "Enes Kanter",
+    "id": 202683,
+    "canonical": "Enes Freedom",
+    "eras": [
+      2016
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/202683.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202683.png",
+    "profile": "https://www.nba.com/stats/player/202683/career"
+  },
+  {
+    "name": "Enrique Freeman",
+    "id": 1642402,
+    "canonical": "Enrique Freeman",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642402.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642402.png",
+    "profile": "https://www.nba.com/stats/player/1642402/career"
+  },
+  {
+    "name": "Eric Maynor",
+    "id": 201953,
+    "canonical": "Eric Maynor",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201953.png"
+  },
+  {
+    "name": "Ethan Thompson",
+    "id": 1630679,
+    "canonical": "Ethan Thompson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630679.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630679.png",
+    "profile": "https://www.nba.com/stats/player/1630679/career"
+  },
+  {
+    "name": "Francisco García",
+    "id": 101128,
+    "canonical": "Francisco Garcia",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101128.png"
+  },
+  {
+    "name": "GG Jackson",
+    "id": 1641713,
+    "canonical": "GG Jackson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641713.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641713.png",
+    "profile": "https://www.nba.com/stats/player/1641713/career"
+  },
+  {
+    "name": "Gary Forbes",
+    "id": 201814,
+    "canonical": "Gary Forbes",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201814.png"
+  },
+  {
+    "name": "Glen Davis",
+    "id": 201175,
+    "canonical": "Glen Davis",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201175.png"
+  },
+  {
+    "name": "Greg Oden",
+    "id": 201141,
+    "canonical": "Greg Oden",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201141.png"
+  },
+  {
+    "name": "Greg Smith",
+    "id": 202962,
+    "canonical": "Greg Smith",
+    "eras": [
+      2016
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202962.png"
+  },
+  {
+    "name": "Gui Santos",
+    "id": 1630611,
+    "canonical": "Gui Santos",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630611.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630611.png",
+    "profile": "https://www.nba.com/stats/player/1630611/career"
+  },
+  {
+    "name": "Hakim Warrick",
+    "id": 101124,
+    "canonical": "Hakim Warrick",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101124.png"
+  },
+  {
+    "name": "Hamed Haddadi",
+    "id": 201632,
+    "canonical": "Hamed Haddadi",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201632.png"
+  },
+  {
+    "name": "Harrison Ingram",
+    "id": 1631127,
+    "canonical": "Harrison Ingram",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631127.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631127.png",
+    "profile": "https://www.nba.com/stats/player/1631127/career"
+  },
+  {
+    "name": "Hasheem Thabeet",
+    "id": 201934,
+    "canonical": "Hasheem Thabeet",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201934.png"
+  },
+  {
+    "name": "Henry Walker",
+    "id": 201611,
+    "canonical": "Henry Walker",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201611.png"
+  },
+  {
+    "name": "Hugo Gonzalez",
+    "id": 1642864,
+    "canonical": "Hugo González",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642864.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642864.png",
+    "profile": "https://www.nba.com/stats/player/1642864/career"
+  },
+  {
+    "name": "Hunter Dickinson",
+    "id": 1630621,
+    "canonical": "Hunter Dickinson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630621.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630621.png",
+    "profile": "https://www.nba.com/stats/player/1630621/career"
+  },
+  {
+    "name": "Isaac Jones",
+    "id": 1642403,
+    "canonical": "Isaac Jones",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642403.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642403.png",
+    "profile": "https://www.nba.com/stats/player/1642403/career"
+  },
+  {
+    "name": "Isaiah Crawford",
+    "id": 1642384,
+    "canonical": "Isaiah Crawford",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642384.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642384.png",
+    "profile": "https://www.nba.com/stats/player/1642384/career"
+  },
+  {
+    "name": "Isaiah Livers",
+    "id": 1630587,
+    "canonical": "Isaiah Livers",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630587.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630587.png",
+    "profile": "https://www.nba.com/stats/player/1630587/career"
+  },
+  {
+    "name": "Isaiah Stevens",
+    "id": 1641815,
+    "canonical": "Isaiah Stevens",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641815.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641815.png",
+    "profile": "https://www.nba.com/stats/player/1641815/career"
+  },
+  {
+    "name": "JD Davison",
+    "id": 1631120,
+    "canonical": "JD Davison",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631120.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631120.png",
+    "profile": "https://www.nba.com/stats/player/1631120/career"
+  },
+  {
+    "name": "Jabari Walker",
+    "id": 1631133,
+    "canonical": "Jabari Walker",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631133.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631133.png",
+    "profile": "https://www.nba.com/stats/player/1631133/career"
+  },
+  {
+    "name": "Jaden Hardy",
+    "id": 1630702,
+    "canonical": "Jaden Hardy",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630702.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630702.png",
+    "profile": "https://www.nba.com/stats/player/1630702/career"
+  },
+  {
+    "name": "Jae’Sean Tate",
+    "id": 1630256,
+    "canonical": "Jae'Sean Tate",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630256.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630256.png",
+    "profile": "https://www.nba.com/stats/player/1630256/career"
+  },
+  {
+    "name": "Jahmir Young",
+    "id": 1642443,
+    "canonical": "Jahmir Young",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642443.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642443.png",
+    "profile": "https://www.nba.com/stats/player/1642443/career"
+  },
+  {
+    "name": "Jalen Pickett",
+    "id": 1629618,
+    "canonical": "Jalen Pickett",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1629618.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1629618.png",
+    "profile": "https://www.nba.com/stats/player/1629618/career"
+  },
+  {
+    "name": "Jalen Slawson",
+    "id": 1641771,
+    "canonical": "Jalen Slawson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641771.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641771.png",
+    "profile": "https://www.nba.com/stats/player/1641771/career"
+  },
+  {
+    "name": "Jalen Wilson",
+    "id": 1630592,
+    "canonical": "Jalen Wilson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630592.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630592.png",
+    "profile": "https://www.nba.com/stats/player/1630592/career"
+  },
+  {
+    "name": "James Michael",
+    "id": 203949,
+    "canonical": "James Michael McAdoo",
+    "eras": [
+      2016
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/203949.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/203949.png",
+    "profile": "https://www.nba.com/stats/player/203949/career"
+  },
+  {
+    "name": "James Singleton",
+    "id": 101189,
+    "canonical": "James Singleton",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101189.png"
+  },
+  {
+    "name": "Jamir Watkins",
+    "id": 1642364,
+    "canonical": "Jamir Watkins",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642364.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642364.png",
+    "profile": "https://www.nba.com/stats/player/1642364/career"
+  },
+  {
+    "name": "Jamison Battle",
+    "id": 1642419,
+    "canonical": "Jamison Battle",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642419.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642419.png",
+    "profile": "https://www.nba.com/stats/player/1642419/career"
+  },
+  {
+    "name": "Jase Richardson",
+    "id": 1642859,
+    "canonical": "Jase Richardson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642859.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642859.png",
+    "profile": "https://www.nba.com/stats/player/1642859/career"
+  },
+  {
+    "name": "Jason Maxiell",
+    "id": 101131,
+    "canonical": "Jason Maxiell",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101131.png"
+  },
+  {
+    "name": "Javon Small",
+    "id": 1642914,
+    "canonical": "Javon Small",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642914.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642914.png",
+    "profile": "https://www.nba.com/stats/player/1642914/career"
+  },
+  {
+    "name": "Jawad Williams",
+    "id": 101214,
+    "canonical": "Jawad Williams",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101214.png"
+  },
+  {
+    "name": "Jaylen Clark",
+    "id": 1641740,
+    "canonical": "Jaylen Clark",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641740.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641740.png",
+    "profile": "https://www.nba.com/stats/player/1641740/career"
+  },
+  {
+    "name": "Jeremy Richardson",
+    "id": 200978,
+    "canonical": "Jeremy Richardson",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200978.png"
+  },
+  {
+    "name": "Jericho Sims",
+    "id": 1630579,
+    "canonical": "Jericho Sims",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630579.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630579.png",
+    "profile": "https://www.nba.com/stats/player/1630579/career"
+  },
+  {
+    "name": "Jermaine Jackson",
+    "id": 1983,
+    "canonical": "Jermaine Jackson",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1983.png"
+  },
+  {
+    "name": "Jett Howard",
+    "id": 1641724,
+    "canonical": "Jett Howard",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641724.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641724.png",
+    "profile": "https://www.nba.com/stats/player/1641724/career"
+  },
+  {
+    "name": "Joan Beringer",
+    "id": 1642866,
+    "canonical": "Joan Beringer",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642866.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642866.png",
+    "profile": "https://www.nba.com/stats/player/1642866/career"
+  },
+  {
+    "name": "Joey Dorsey",
+    "id": 201595,
+    "canonical": "Joey Dorsey",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201595.png"
+  },
+  {
+    "name": "Joey Graham",
+    "id": 101121,
+    "canonical": "Joey Graham",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101121.png"
+  },
+  {
+    "name": "Johan Petro",
+    "id": 101130,
+    "canonical": "Johan Petro",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101130.png"
+  },
+  {
+    "name": "John Amaechi",
+    "id": 680,
+    "canonical": "John Amaechi",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/680.png"
+  },
+  {
+    "name": "John Konchar",
+    "id": 1629723,
+    "canonical": "John Konchar",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1629723.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1629723.png",
+    "profile": "https://www.nba.com/stats/player/1629723/career"
+  },
+  {
+    "name": "John Tonje",
+    "id": 1642910,
+    "canonical": "John Tonje",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642910.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642910.png",
+    "profile": "https://www.nba.com/stats/player/1642910/career"
+  },
+  {
+    "name": "Johni Broome",
+    "id": 1641780,
+    "canonical": "Johni Broome",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641780.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641780.png",
+    "profile": "https://www.nba.com/stats/player/1641780/career"
+  },
+  {
+    "name": "Johnny Furphy",
+    "id": 1642277,
+    "canonical": "Johnny Furphy",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642277.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642277.png",
+    "profile": "https://www.nba.com/stats/player/1642277/career"
+  },
+  {
+    "name": "Jon Brockman",
+    "id": 201972,
+    "canonical": "Jon Brockman",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201972.png"
+  },
+  {
+    "name": "Jonathan Mogbo",
+    "id": 1642367,
+    "canonical": "Jonathan Mogbo",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642367.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642367.png",
+    "profile": "https://www.nba.com/stats/player/1642367/career"
+  },
+  {
+    "name": "Jonny Flynn",
+    "id": 201938,
+    "canonical": "Jonny Flynn",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201938.png"
+  },
+  {
+    "name": "Jordan McLaughlin",
+    "id": 1629162,
+    "canonical": "Jordan McLaughlin",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1629162.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1629162.png",
+    "profile": "https://www.nba.com/stats/player/1629162/career"
+  },
+  {
+    "name": "Joseph Forte",
+    "id": 2218,
+    "canonical": "Joseph Forte",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2218.png"
+  },
+  {
+    "name": "Julian Phillips",
+    "id": 1641763,
+    "canonical": "Julian Phillips",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641763.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641763.png",
+    "profile": "https://www.nba.com/stats/player/1641763/career"
+  },
+  {
+    "name": "Julian Wright",
+    "id": 201153,
+    "canonical": "Julian Wright",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201153.png"
+  },
+  {
+    "name": "Junior Harrington",
+    "id": 2454,
+    "canonical": "Junior Harrington",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2454.png"
+  },
+  {
+    "name": "Justin Edwards",
+    "id": 1642348,
+    "canonical": "Justin Edwards",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642348.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642348.png",
+    "profile": "https://www.nba.com/stats/player/1642348/career"
+  },
+  {
+    "name": "KJ Simpson",
+    "id": 1642354,
+    "canonical": "KJ Simpson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642354.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642354.png",
+    "profile": "https://www.nba.com/stats/player/1642354/career"
+  },
+  {
+    "name": "Kam Jones",
+    "id": 1642880,
+    "canonical": "Kam Jones",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642880.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642880.png",
+    "profile": "https://www.nba.com/stats/player/1642880/career"
+  },
+  {
+    "name": "Karlo Matkovic",
+    "id": 1631255,
+    "canonical": "Karlo Matković",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631255.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631255.png",
+    "profile": "https://www.nba.com/stats/player/1631255/career"
+  },
+  {
+    "name": "Kasparas Jakucionis",
+    "id": 1642857,
+    "canonical": "Kasparas Jakučionis",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642857.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642857.png",
+    "profile": "https://www.nba.com/stats/player/1642857/career"
+  },
+  {
+    "name": "Keaton Wallace",
+    "id": 1630811,
+    "canonical": "Keaton Wallace",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630811.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630811.png",
+    "profile": "https://www.nba.com/stats/player/1630811/career"
+  },
+  {
+    "name": "Keith Van",
+    "id": 1496,
+    "canonical": "Keith Van Horn",
+    "eras": [
+      2003
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1496.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1496.png",
+    "profile": "https://www.nba.com/stats/player/1496/career"
+  },
+  {
+    "name": "Kenny Satterfield",
+    "id": 2261,
+    "canonical": "Kenny Satterfield",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2261.png"
+  },
+  {
+    "name": "Keshad Johnson",
+    "id": 1642352,
+    "canonical": "Keshad Johnson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642352.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642352.png",
+    "profile": "https://www.nba.com/stats/player/1642352/career"
+  },
+  {
+    "name": "Kevin Burleson",
+    "id": 101207,
+    "canonical": "Kevin Burleson",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101207.png"
+  },
+  {
+    "name": "Khaman Maluach",
+    "id": 1642863,
+    "canonical": "Khaman Maluach",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642863.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642863.png",
+    "profile": "https://www.nba.com/stats/player/1642863/career"
+  },
+  {
+    "name": "Kirk Haston",
+    "id": 2213,
+    "canonical": "Kirk Haston",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2213.png"
+  },
+  {
+    "name": "Kobe Brown",
+    "id": 1641738,
+    "canonical": "Kobe Brown",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641738.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641738.png",
+    "profile": "https://www.nba.com/stats/player/1641738/career"
+  },
+  {
+    "name": "Koby Brea",
+    "id": 1642886,
+    "canonical": "Koby Brea",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642886.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642886.png",
+    "profile": "https://www.nba.com/stats/player/1642886/career"
+  },
+  {
+    "name": "Kyle Weaver",
+    "id": 201602,
+    "canonical": "Kyle Weaver",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201602.png"
+  },
+  {
+    "name": "Kyrylo Fesenko",
+    "id": 201178,
+    "canonical": "Kyrylo Fesenko",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201178.png"
+  },
+  {
+    "name": "Lachlan Olbrich",
+    "id": 1642950,
+    "canonical": "Lachlan Olbrich",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642950.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642950.png",
+    "profile": "https://www.nba.com/stats/player/1642950/career"
+  },
+  {
+    "name": "Landry Fields",
+    "id": 202361,
+    "canonical": "Landry Fields",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202361.png"
+  },
+  {
+    "name": "Lavor Postell",
+    "id": 2068,
+    "canonical": "Lavor Postell",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2068.png"
+  },
+  {
+    "name": "Lawrence Funderburke",
+    "id": 1444,
+    "canonical": "Lawrence Funderburke",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1444.png"
+  },
+  {
+    "name": "Lazar Hayward",
+    "id": 202351,
+    "canonical": "Lazar Hayward",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202351.png"
+  },
+  {
+    "name": "Leon Powe",
+    "id": 200796,
+    "canonical": "Leon Powe",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200796.png"
+  },
+  {
+    "name": "Lester Hudson",
+    "id": 201991,
+    "canonical": "Lester Hudson",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201991.png"
+  },
+  {
+    "name": "Liam McNeeley",
+    "id": 1642862,
+    "canonical": "Liam McNeeley",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642862.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642862.png",
+    "profile": "https://www.nba.com/stats/player/1642862/career"
+  },
+  {
+    "name": "Linas Kleiza",
+    "id": 101132,
+    "canonical": "Linas Kleiza",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101132.png"
+  },
+  {
+    "name": "Lindy Waters III",
+    "id": 1630322,
+    "canonical": "Lindy Waters III",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630322.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630322.png",
+    "profile": "https://www.nba.com/stats/player/1630322/career"
+  },
+  {
+    "name": "Luc Mbah",
+    "eras": [
+      2010
+    ],
+    "id": 201601,
+    "canonical": "Luc Mbah a Moute",
+    "status": "imported",
+    "p": "assets/images/Player/verified/201601.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201601.png",
+    "profile": "https://www.nba.com/stats/player/201601/career"
+  },
+  {
+    "name": "Mac McClung",
+    "id": 1630644,
+    "canonical": "Mac McClung",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630644.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630644.png",
+    "profile": "https://www.nba.com/stats/player/1630644/career"
+  },
+  {
+    "name": "Malevy Leons",
+    "id": 1642502,
+    "canonical": "Malevy Leons",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642502.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642502.png",
+    "profile": "https://www.nba.com/stats/player/1642502/career"
+  },
+  {
+    "name": "Malik Hairston",
+    "id": 201612,
+    "canonical": "Malik Hairston",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201612.png"
+  },
+  {
+    "name": "Marcus Morris",
+    "id": 202694,
+    "canonical": "Marcus Morris Sr.",
+    "eras": [
+      2016
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/202694.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202694.png",
+    "profile": "https://www.nba.com/stats/player/202694/career"
+  },
+  {
+    "name": "Marcus Sasser",
+    "id": 1631204,
+    "canonical": "Marcus Sasser",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631204.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631204.png",
+    "profile": "https://www.nba.com/stats/player/1631204/career"
+  },
+  {
+    "name": "Marcus Williams",
+    "id": 201173,
+    "canonical": "Marcus Williams",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201173.png"
+  },
+  {
+    "name": "Mardy Collins",
+    "id": 200776,
+    "canonical": "Mardy Collins",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200776.png"
+  },
+  {
+    "name": "Mario West",
+    "id": 201238,
+    "canonical": "Mario West",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201238.png"
+  },
+  {
+    "name": "Mateen Cleaves",
+    "id": 2043,
+    "canonical": "Mateen Cleaves",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2043.png"
+  },
+  {
+    "name": "Maurice Evans",
+    "id": 2230,
+    "canonical": "Maurice Evans",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2230.png"
+  },
+  {
+    "name": "Max Shulga",
+    "id": 1642917,
+    "canonical": "Max Shulga",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642917.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642917.png",
+    "profile": "https://www.nba.com/stats/player/1642917/career"
+  },
+  {
+    "name": "Maxi Kleber",
+    "id": 1628467,
+    "canonical": "Maxi Kleber",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1628467.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1628467.png",
+    "profile": "https://www.nba.com/stats/player/1628467/career"
+  },
+  {
+    "name": "Mengke Bateer",
+    "id": 2370,
+    "canonical": "Mengke Bateer",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2370.png"
+  },
+  {
+    "name": "Metta World",
+    "id": 1897,
+    "canonical": "Metta World Peace",
+    "eras": [
+      2003,
+      2010
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1897.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1897.png",
+    "profile": "https://www.nba.com/stats/player/1897/career"
+  },
+  {
+    "name": "Micah Peavy",
+    "id": 1642877,
+    "canonical": "Micah Peavy",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642877.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642877.png",
+    "profile": "https://www.nba.com/stats/player/1642877/career"
+  },
+  {
+    "name": "Mike Batiste",
+    "id": 2471,
+    "canonical": "Mike Batiste",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2471.png"
+  },
+  {
+    "name": "Mike Sweetney",
+    "id": 2552,
+    "canonical": "Michael Sweetney",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2552.png"
+  },
+  {
+    "name": "Mindaugas Kuzminskas",
+    "id": 1627851,
+    "canonical": "Mindaugas Kuzminskas",
+    "eras": [
+      2016
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1627851.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1627851.png",
+    "profile": "https://www.nba.com/stats/player/1627851/career"
+  },
+  {
+    "name": "Mohamed Diawara",
+    "id": 1642885,
+    "canonical": "Mohamed Diawara",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642885.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642885.png",
+    "profile": "https://www.nba.com/stats/player/1642885/career"
+  },
+  {
+    "name": "Mouhamadou Gueye",
+    "id": 1631338,
+    "canonical": "Mouhamadou Gueye",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631338.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631338.png",
+    "profile": "https://www.nba.com/stats/player/1631338/career"
+  },
+  {
+    "name": "Moussa Cisse",
+    "id": 1630619,
+    "canonical": "Moussa Cisse",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630619.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630619.png",
+    "profile": "https://www.nba.com/stats/player/1630619/career"
+  },
+  {
+    "name": "Myron Gardner",
+    "id": 1642066,
+    "canonical": "Myron Gardner",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642066.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642066.png",
+    "profile": "https://www.nba.com/stats/player/1642066/career"
+  },
+  {
+    "name": "Nae’Qwan Tomlin",
+    "id": 1641772,
+    "canonical": "Nae'Qwan Tomlin",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641772.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641772.png",
+    "profile": "https://www.nba.com/stats/player/1641772/career"
+  },
+  {
+    "name": "Nate Robinson",
+    "id": 101126,
+    "canonical": "Nate Robinson",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101126.png"
+  },
+  {
+    "name": "Nate Williams",
+    "id": 1631466,
+    "canonical": "Nate Williams",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631466.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631466.png",
+    "profile": "https://www.nba.com/stats/player/1631466/career"
+  },
+  {
+    "name": "Nathan Jawai",
+    "id": 201605,
+    "canonical": "Nathan Jawai",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201605.png"
+  },
+  {
+    "name": "Ndudi Ebi",
+    "id": 2569,
+    "canonical": "Ndudi Ebi",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2569.png"
+  },
+  {
+    "name": "Nick Van",
+    "id": 89,
+    "canonical": "Nick Van Exel",
+    "eras": [
+      2003
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/89.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/89.png",
+    "profile": "https://www.nba.com/stats/player/89/career"
+  },
+  {
+    "name": "Nikola Topic",
+    "id": 1642260,
+    "canonical": "Nikola Topić",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642260.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642260.png",
+    "profile": "https://www.nba.com/stats/player/1642260/career"
+  },
+  {
+    "name": "Nique Clifford",
+    "id": 1642363,
+    "canonical": "Nique Clifford",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642363.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642363.png",
+    "profile": "https://www.nba.com/stats/player/1642363/career"
+  },
+  {
+    "name": "Noa Essengue",
+    "id": 1642855,
+    "canonical": "Noa Essengue",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642855.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642855.png",
+    "profile": "https://www.nba.com/stats/player/1642855/career"
+  },
+  {
+    "name": "Noah Penda",
+    "id": 1642869,
+    "canonical": "Noah Penda",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642869.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642869.png",
+    "profile": "https://www.nba.com/stats/player/1642869/career"
+  },
+  {
+    "name": "Nolan Traore",
+    "id": 1642849,
+    "canonical": "Nolan Traore",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642849.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642849.png",
+    "profile": "https://www.nba.com/stats/player/1642849/career"
+  },
+  {
+    "name": "Oliver Lafayette",
+    "id": 201802,
+    "canonical": "Oliver Lafayette",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201802.png"
+  },
+  {
+    "name": "Olivier Sarr",
+    "id": 1630846,
+    "canonical": "Olivier Sarr",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630846.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630846.png",
+    "profile": "https://www.nba.com/stats/player/1630846/career"
+  },
+  {
+    "name": "Olivier-Maxence Prosper",
+    "id": 1641765,
+    "canonical": "Olivier-Maxence Prosper",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641765.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641765.png",
+    "profile": "https://www.nba.com/stats/player/1641765/career"
+  },
+  {
+    "name": "Olumide Oyedeji",
+    "id": 2071,
+    "canonical": "Olumide Oyedeji",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2071.png"
+  },
+  {
+    "name": "Oscar Torres",
+    "id": 2351,
+    "canonical": "Oscar Torres",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2351.png"
+  },
+  {
+    "name": "Oscar Tshiebwe",
+    "id": 1631131,
+    "canonical": "Oscar Tshiebwe",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631131.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631131.png",
+    "profile": "https://www.nba.com/stats/player/1631131/career"
+  },
+  {
+    "name": "Othello Hunter",
+    "id": 201629,
+    "canonical": "Othello Hunter",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201629.png"
+  },
+  {
+    "name": "Othyus Jeffers",
+    "id": 201785,
+    "canonical": "Othyus Jeffers",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201785.png"
+  },
+  {
+    "name": "PJ Hall",
+    "id": 1641790,
+    "canonical": "PJ Hall",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641790.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641790.png",
+    "profile": "https://www.nba.com/stats/player/1641790/career"
+  },
+  {
+    "name": "Pacome Dadiet",
+    "id": 1642359,
+    "canonical": "Pacôme Dadiet",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642359.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642359.png",
+    "profile": "https://www.nba.com/stats/player/1642359/career"
+  },
+  {
+    "name": "Patrick O'Bryant",
+    "id": 200753,
+    "canonical": "Patrick O'Bryant",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200753.png"
+  },
+  {
+    "name": "Pepe Sánchez",
+    "id": 2143,
+    "canonical": "Pepe Sanchez",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2143.png"
+  },
+  {
+    "name": "Pops Mensah-Bonsu",
+    "id": 200822,
+    "canonical": "Pops Mensah-Bonsu",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200822.png"
+  },
+  {
+    "name": "Quenton Jackson",
+    "id": 1631245,
+    "canonical": "Quenton Jackson",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631245.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631245.png",
+    "profile": "https://www.nba.com/stats/player/1631245/career"
+  },
+  {
+    "name": "Quinton Ross",
+    "id": 2624,
+    "canonical": "Quinton Ross",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2624.png"
+  },
+  {
+    "name": "Randolph Morris",
+    "id": 201043,
+    "canonical": "Randolph Morris",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201043.png"
+  },
+  {
+    "name": "Rasheer Fleming",
+    "id": 1642853,
+    "canonical": "Rasheer Fleming",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642853.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642853.png",
+    "profile": "https://www.nba.com/stats/player/1642853/career"
+  },
+  {
+    "name": "RayJ Dennis",
+    "id": 1642484,
+    "canonical": "RayJ Dennis",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642484.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642484.png",
+    "profile": "https://www.nba.com/stats/player/1642484/career"
+  },
+  {
+    "name": "Rayan Rupert",
+    "id": 1641712,
+    "canonical": "Rayan Rupert",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641712.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641712.png",
+    "profile": "https://www.nba.com/stats/player/1641712/career"
+  },
+  {
+    "name": "Reggie Slater",
+    "id": 1073,
+    "canonical": "Reggie Slater",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1073.png"
+  },
+  {
+    "name": "Renaldo Balkman",
+    "id": 200764,
+    "canonical": "Renaldo Balkman",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200764.png"
+  },
+  {
+    "name": "Richie Frahm",
+    "id": 2499,
+    "canonical": "Richie Frahm",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2499.png"
+  },
+  {
+    "name": "Rick Brunson",
+    "id": 1594,
+    "canonical": "Rick Brunson",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1594.png"
+  },
+  {
+    "name": "Riley Minix",
+    "id": 1642434,
+    "canonical": "Riley Minix",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642434.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642434.png",
+    "profile": "https://www.nba.com/stats/player/1642434/career"
+  },
+  {
+    "name": "Rocco Zikarsky",
+    "id": 1642911,
+    "canonical": "Rocco Zikarsky",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642911.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642911.png",
+    "profile": "https://www.nba.com/stats/player/1642911/career"
+  },
+  {
+    "name": "Rodrigue Beaubois",
+    "id": 201958,
+    "canonical": "Rodrigue Beaubois",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201958.png"
+  },
+  {
+    "name": "Roger Mason",
+    "eras": [
+      2003,
+      2010
+    ],
+    "id": 2427,
+    "canonical": "Roger Mason Jr.",
+    "status": "imported",
+    "p": "assets/images/Player/verified/2427.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2427.png",
+    "profile": "https://www.nba.com/stats/player/2427/career"
+  },
+  {
+    "name": "Ron Harper Jr.",
+    "id": 1631199,
+    "canonical": "Ron Harper Jr.",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631199.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631199.png",
+    "profile": "https://www.nba.com/stats/player/1631199/career"
+  },
+  {
+    "name": "Ronnie Brewer",
+    "id": 200758,
+    "canonical": "Ronnie Brewer",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200758.png"
+  },
+  {
+    "name": "Ronny Turiaf",
+    "id": 101142,
+    "canonical": "Ronny Turiaf",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101142.png"
+  },
+  {
+    "name": "Royal Ivey",
+    "id": 2767,
+    "canonical": "Royal Ivey",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2767.png"
+  },
+  {
+    "name": "Ryan Gomes",
+    "id": 101155,
+    "canonical": "Ryan Gomes",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101155.png"
+  },
+  {
+    "name": "Sam Young",
+    "id": 201970,
+    "canonical": "Sam Young",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201970.png"
+  },
+  {
+    "name": "Sean Lampley",
+    "id": 2253,
+    "canonical": "Sean Lampley",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2253.png"
+  },
+  {
+    "name": "Sean Marks",
+    "id": 1752,
+    "canonical": "Sean Marks",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1752.png"
+  },
+  {
+    "name": "Sean May",
+    "id": 101118,
+    "canonical": "Sean May",
+    "eras": [
+      2003,
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101118.png"
+  },
+  {
+    "name": "Sebastian Telfair",
+    "id": 2742,
+    "canonical": "Sebastian Telfair",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2742.png"
+  },
+  {
+    "name": "Shannon Brown",
+    "id": 200769,
+    "canonical": "Shannon Brown",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200769.png"
+  },
+  {
+    "name": "Sharife Cooper",
+    "id": 1630536,
+    "canonical": "Sharife Cooper",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630536.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630536.png",
+    "profile": "https://www.nba.com/stats/player/1630536/career"
+  },
+  {
+    "name": "Shavlik Randolph",
+    "id": 101183,
+    "canonical": "Shavlik Randolph",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101183.png"
+  },
+  {
+    "name": "Shawne Williams",
+    "id": 200761,
+    "canonical": "Shawne Williams",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200761.png"
+  },
+  {
+    "name": "Sidy Cissoko",
+    "id": 1631321,
+    "canonical": "Sidy Cissoko",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631321.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631321.png",
+    "profile": "https://www.nba.com/stats/player/1631321/career"
+  },
+  {
+    "name": "Sion James",
+    "id": 1642883,
+    "canonical": "Sion James",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642883.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642883.png",
+    "profile": "https://www.nba.com/stats/player/1642883/career"
+  },
+  {
+    "name": "Soumaila Samake",
+    "id": 2066,
+    "canonical": "Soumaila Samake",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2066.png"
+  },
+  {
+    "name": "Stephen Graham",
+    "id": 101211,
+    "canonical": "Stephen Graham",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101211.png"
+  },
+  {
+    "name": "Sundiata Gaines",
+    "id": 202178,
+    "canonical": "Sundiata Gaines",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202178.png"
+  },
+  {
+    "name": "Svi Mykhailiuk",
+    "id": 1629004,
+    "canonical": "Svi Mykhailiuk",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1629004.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1629004.png",
+    "profile": "https://www.nba.com/stats/player/1629004/career"
+  },
+  {
+    "name": "Taelon Peter",
+    "id": 1643007,
+    "canonical": "Taelon Peter",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1643007.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1643007.png",
+    "profile": "https://www.nba.com/stats/player/1643007/career"
+  },
+  {
+    "name": "Tamar Bates",
+    "id": 1642926,
+    "canonical": "Tamar Bates",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642926.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642926.png",
+    "profile": "https://www.nba.com/stats/player/1642926/career"
+  },
+  {
+    "name": "Taylor Griffin",
+    "id": 201981,
+    "canonical": "Taylor Griffin",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201981.png"
+  },
+  {
+    "name": "Terence Morris",
+    "id": 2242,
+    "canonical": "Terence Morris",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2242.png"
+  },
+  {
+    "name": "Terrence Shannon Jr.",
+    "id": 1630545,
+    "canonical": "Terrence Shannon Jr",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630545.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630545.png",
+    "profile": "https://www.nba.com/stats/player/1630545/career"
+  },
+  {
+    "name": "Terrence Williams",
+    "id": 201944,
+    "canonical": "Terrence Williams",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201944.png"
+  },
+  {
+    "name": "Thomas Bryant",
+    "id": 1628418,
+    "canonical": "Thomas Bryant",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1628418.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1628418.png",
+    "profile": "https://www.nba.com/stats/player/1628418/career"
+  },
+  {
+    "name": "Thomas Sorber",
+    "id": 1642850,
+    "canonical": "Thomas Sorber",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642850.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642850.png",
+    "profile": "https://www.nba.com/stats/player/1642850/career"
+  },
+  {
+    "name": "Tierre Brown",
+    "id": 2357,
+    "canonical": "Tierre Brown",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2357.png"
+  },
+  {
+    "name": "Tito Maddox",
+    "id": 2432,
+    "canonical": "Tito Maddox",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2432.png"
+  },
+  {
+    "name": "Tolu Smith",
+    "id": 1642449,
+    "canonical": "Tolu Smith",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642449.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642449.png",
+    "profile": "https://www.nba.com/stats/player/1642449/career"
+  },
+  {
+    "name": "Torraye Braggs",
+    "id": 1765,
+    "canonical": "Torraye Braggs",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1765.png"
+  },
+  {
+    "name": "Travis Diener",
+    "id": 101143,
+    "canonical": "Travis Diener",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/101143.png"
+  },
+  {
+    "name": "Trayce Jackson-Davis",
+    "id": 1631218,
+    "canonical": "Trayce Jackson-Davis",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631218.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631218.png",
+    "profile": "https://www.nba.com/stats/player/1631218/career"
+  },
+  {
+    "name": "Trevon Scott",
+    "id": 1630286,
+    "canonical": "Trevon Scott",
+    "eras": [
+      "current"
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630286.png"
+  },
+  {
+    "name": "Trevor Keels",
+    "id": 1631211,
+    "canonical": "Trevor Keels",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1631211.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1631211.png",
+    "profile": "https://www.nba.com/stats/player/1631211/career"
+  },
+  {
+    "name": "Trey Alexander",
+    "id": 1641725,
+    "canonical": "Trey Alexander",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641725.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641725.png",
+    "profile": "https://www.nba.com/stats/player/1641725/career"
+  },
+  {
+    "name": "Trey Gilder",
+    "id": 201821,
+    "canonical": "Trey Gilder",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/201821.png"
+  },
+  {
+    "name": "Trey Jemison III",
+    "id": 1641998,
+    "canonical": "Trey Jemison III",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641998.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641998.png",
+    "profile": "https://www.nba.com/stats/player/1641998/career"
+  },
+  {
+    "name": "Tristan Vukcevic",
+    "id": 1641774,
+    "canonical": "Tristan Vukcevic",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641774.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641774.png",
+    "profile": "https://www.nba.com/stats/player/1641774/career"
+  },
+  {
+    "name": "Tristen Newton",
+    "id": 1641803,
+    "canonical": "Tristen Newton",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641803.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641803.png",
+    "profile": "https://www.nba.com/stats/player/1641803/career"
+  },
+  {
+    "name": "Troy Bell",
+    "id": 2559,
+    "canonical": "Troy Bell",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2559.png"
+  },
+  {
+    "name": "Tyler Kolek",
+    "id": 1642278,
+    "canonical": "Tyler Kolek",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642278.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642278.png",
+    "profile": "https://www.nba.com/stats/player/1642278/career"
+  },
+  {
+    "name": "Tyler Smith",
+    "id": 1641890,
+    "canonical": "Tyler Smith",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1641890.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1641890.png",
+    "profile": "https://www.nba.com/stats/player/1641890/career"
+  },
+  {
+    "name": "Tyrese Proctor",
+    "id": 1642878,
+    "canonical": "Tyrese Proctor",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642878.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642878.png",
+    "profile": "https://www.nba.com/stats/player/1642878/career"
+  },
+  {
+    "name": "Tyrus Thomas",
+    "id": 200748,
+    "canonical": "Tyrus Thomas",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200748.png"
+  },
+  {
+    "name": "Tyson Etienne",
+    "id": 1630623,
+    "canonical": "Tyson Etienne",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630623.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630623.png",
+    "profile": "https://www.nba.com/stats/player/1630623/career"
+  },
+  {
+    "name": "Vincent Yarbrough",
+    "id": 2428,
+    "canonical": "Vincent Yarbrough",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/2428.png"
+  },
+  {
+    "name": "Vladislav Goldin",
+    "id": 1642884,
+    "canonical": "Vladislav Goldin",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642884.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642884.png",
+    "profile": "https://www.nba.com/stats/player/1642884/career"
+  },
+  {
+    "name": "Wade Baldwin",
+    "id": 1627735,
+    "canonical": "Wade Baldwin IV",
+    "eras": [
+      2016
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1627735.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1627735.png",
+    "profile": "https://www.nba.com/stats/player/1627735/career"
+  },
+  {
+    "name": "Walter Herrmann",
+    "id": 200835,
+    "canonical": "Walter Herrmann",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/200835.png"
+  },
+  {
+    "name": "Wang Zhizhi",
+    "id": 1917,
+    "canonical": "Wang Zhi-zhi",
+    "eras": [
+      2003
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1917.png"
+  },
+  {
+    "name": "Will Richard",
+    "id": 1642954,
+    "canonical": "Will Richard",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642954.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642954.png",
+    "profile": "https://www.nba.com/stats/player/1642954/career"
+  },
+  {
+    "name": "Will Riley",
+    "id": 1642860,
+    "canonical": "Will Riley",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642860.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642860.png",
+    "profile": "https://www.nba.com/stats/player/1642860/career"
+  },
+  {
+    "name": "Willy Hernangomez",
+    "id": 1626195,
+    "canonical": "Willy Hernangomez",
+    "eras": [
+      2016
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1626195.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1626195.png",
+    "profile": "https://www.nba.com/stats/player/1626195/career"
+  },
+  {
+    "name": "Xavier Henry",
+    "id": 202333,
+    "canonical": "Xavier Henry",
+    "eras": [
+      2010
+    ],
+    "status": "unresolved",
+    "reason": "official silhouette or no usable portrait",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/202333.png"
+  },
+  {
+    "name": "Xavier Tillman",
+    "id": 1630214,
+    "canonical": "Xavier Tillman",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1630214.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1630214.png",
+    "profile": "https://www.nba.com/stats/player/1630214/career"
+  },
+  {
+    "name": "Yang Hansen",
+    "id": 1642905,
+    "canonical": "Yang Hansen",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642905.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642905.png",
+    "profile": "https://www.nba.com/stats/player/1642905/career"
+  },
+  {
+    "name": "Yanic Konan Niederhauser",
+    "id": 1642949,
+    "canonical": "Yanic Konan Niederhäuser",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642949.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642949.png",
+    "profile": "https://www.nba.com/stats/player/1642949/career"
+  },
+  {
+    "name": "Yuki Kawamura",
+    "id": 1642530,
+    "canonical": "Yuki Kawamura",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642530.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642530.png",
+    "profile": "https://www.nba.com/stats/player/1642530/career"
+  },
+  {
+    "name": "Zyon Pullin",
+    "id": 1642389,
+    "canonical": "Zyon Pullin",
+    "eras": [
+      "current"
+    ],
+    "status": "imported",
+    "p": "assets/images/Player/verified/1642389.png",
+    "url": "https://cdn.nba.com/headshots/nba/latest/260x190/1642389.png",
+    "profile": "https://www.nba.com/stats/player/1642389/career"
+  }
+]

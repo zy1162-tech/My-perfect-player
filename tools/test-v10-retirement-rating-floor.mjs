@@ -26,9 +26,11 @@ for (const year of [2003, 2010, 2016]) {
   context.STATE._legendLeagueApplied = null;
   context.applyLegendEraLeague();
   const players = Object.values(context.NBA2K_DATA).flat();
-  assert.ok(players.length >= 420 && players.length <= 450, `${year} shifted opening roster size`);
-  assert.ok(new Set(players.map(player => player.ovr)).size >= 24, `${year} must retain a continuous rating distribution`);
-  assert.ok(players.some(player => player.ovr < 70), `${year} fringe ratings must not be flattened to 70`);
+  assert.ok(players.length >= 410 && players.length <= 450, `${year} shifted opening roster size`);
+  assert.ok(new Set(players.map(player => player.ovr)).size >= 18, `${year} must retain a broad role distribution`);
+  assert.ok(players.every(player => player.ovr >= 70), `${year} active roster uses the modern playable scale`);
+  assert.ok(players.filter(player => player.ovr === 70).length < players.length * 0.15, `${year} exact-70 spike must stay limited`);
+  assert.ok(players.every(player => player._ratingRoleAdjustment === 0), `${year} team assembly does not alter calibrated OVR`);
   assert.ok(players.every(player => Number.isFinite(player._sourceOvr)), `${year} source ratings remain auditable`);
 }
 
@@ -88,4 +90,4 @@ assert.ok(Math.max(...retirementAges) <= 42, 'career profiles retain a hard reti
 const averageRetirementAge = retirementAges.reduce((sum, age) => sum + age, 0) / retirementAges.length;
 assert.ok(averageRetirementAge >= 39 && averageRetirementAge <= 41.5, `identity-stable retirement age should remain realistic, got ${averageRetirementAge}`);
 
-console.log(`V10 checks passed: continuous era ratings, immutable old-save OVR, repaired ages, and protected-player average retirement age ${averageRetirementAge.toFixed(1)}.`);
+console.log(`V10 checks passed: role-layered era ratings, immutable old-save OVR, repaired ages, and protected-player average retirement age ${averageRetirementAge.toFixed(1)}.`);

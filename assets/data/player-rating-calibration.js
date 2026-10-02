@@ -2,7 +2,7 @@
 (function (global) {
   'use strict';
 
-  var VERSION = '20260827-bounded-rating-v4';
+  var VERSION = '20261001-season-stars-v5';
   var BANDS = [
     { min:96, max:99, label:'历史级 / 统治级' },
     { min:93, max:95, label:'MVP 级' },
@@ -57,6 +57,18 @@
   // rating remains on every player as _sourceOvr for audit and save compatibility.
   var ERA_OPENING_OVERRIDES = {
     2003:keyed({
+      'Kevin Garnett':{ seasonOvr:97, reference:'2003-04 MVP; game rating on the current league scale' },
+      'Tim Duncan':{ seasonOvr:96, reference:'2003-04 All-NBA first team; source elite rating retained' },
+      "Shaquille O'Neal":{ seasonOvr:96, reference:'2003-04 All-NBA first team; season evaluated separately from the 98 peak' },
+      'Kobe Bryant':{ seasonOvr:96, reference:'2003-04 All-NBA first team' },
+      'Tracy McGrady':{ seasonOvr:95, reference:'2003-04 scoring champion and All-NBA second team' },
+      'Jason Kidd':{ seasonOvr:93, reference:'2003-04 All-NBA first team' },
+      'Dirk Nowitzki':{ seasonOvr:92, reference:'2003-04 All-NBA third team' },
+      'Allen Iverson':{ seasonOvr:91, reference:'2003-04 All-Star lead scorer; season rating below the 97 peak' },
+      'Jermaine O\'Neal':{ seasonOvr:91, peakOvr:94, reference:'2003-04 All-NBA second team' },
+      'Ben Wallace':{ seasonOvr:90, peakOvr:93, reference:'2003-04 All-NBA second team and championship defensive anchor' },
+      'Sam Cassell':{ seasonOvr:89, peakOvr:91, reference:'2003-04 All-NBA second team' },
+      'Yao Ming':{ seasonOvr:87, peakOvr:93, reference:'2003-04 All-NBA third team; early-career season evaluated separately from peak' },
       "Amar'e Stoudemire":{ seasonOvr:85, targetAge:21, peakOvr:92, reference:'2003-04 season breakout; age/role/production calibration' },
       'Zydrunas Ilgauskas':{ seasonOvr:84, reference:'2003-04 All-Star-level starting center season' },
       'Michael Redd':{ seasonOvr:86, reference:'2003-04 All-Star scoring season' },
@@ -67,6 +79,22 @@
       'Jamison Brewer':{ seasonOvr:70, reference:'2003-04 end-of-bench active-roster calibration' }
     }),
     2010:keyed({
+      'LeBron James':{ seasonOvr:97, reference:'2010-11 All-NBA first team, unanimous selection' },
+      'Kobe Bryant':{ seasonOvr:96, reference:'2010-11 All-NBA first team' },
+      'Dwyane Wade':{ seasonOvr:95, reference:'2010-11 All-NBA second team' },
+      'Derrick Rose':{ seasonOvr:94, peakOvr:94, reference:'2010-11 MVP and All-NBA first team; old 80 card predates the breakout' },
+      'Dwight Howard':{ seasonOvr:95, peakOvr:95, reference:'2010-11 DPOY and All-NBA first team' },
+      'Kevin Durant':{ seasonOvr:94, reference:'2010-11 scoring champion and All-NBA first team' },
+      'Dirk Nowitzki':{ seasonOvr:94, reference:'2010-11 All-NBA second team and Finals MVP' },
+      'Chris Paul':{ seasonOvr:93, reference:'2010-11 All-NBA third team; elite playmaking retained' },
+      'Pau Gasol':{ seasonOvr:90, peakOvr:94, reference:'2010-11 All-NBA second team' },
+      "Amar'e Stoudemire":{ seasonOvr:91, peakOvr:92, reference:'2010-11 All-NBA second team' },
+      'Manu Ginobili':{ seasonOvr:89, reference:'2010-11 All-NBA third team' },
+      'Zach Randolph':{ seasonOvr:89, peakOvr:92, reference:'2010-11 All-NBA third team' },
+      'LaMarcus Aldridge':{ seasonOvr:89, peakOvr:93, reference:'2010-11 All-NBA third team' },
+      'Al Horford':{ seasonOvr:89, peakOvr:91, reference:'2010-11 All-NBA third team' },
+      'Chris Bosh':{ seasonOvr:87, reference:'2010-11 All-Star frontcourt starter; reduced scoring role in Miami' },
+      'Kevin Love':{ seasonOvr:88, peakOvr:93, reference:'2010-11 All-Star and rebounding leader; developing star season' },
       'Monta Ellis':{ seasonOvr:85, peakOvr:88, reference:'2010-11 primary scorer workload' },
       'Tyreke Evans':{ seasonOvr:82, peakOvr:86, reference:'2010-11 lead-guard season after rookie peak' },
       'Danilo Gallinari':{ seasonOvr:80, peakOvr:84, reference:'2010-11 starting wing production' },
@@ -74,9 +102,29 @@
       'Andrew Bogut':{ seasonOvr:84, peakOvr:87, reference:'2010-11 elite interior defense and starting-center role' },
       'Marc Gasol':{ seasonOvr:83, peakOvr:93, reference:'2010-11 high-level starter; later DPOY/All-NBA peak' },
       'James Harden':{ seasonOvr:80, peakOvr:96, reference:'2010-11 high-value sixth-man season; peak calibrated separately' },
-      'Russell Westbrook':{ seasonOvr:89, peakOvr:95, reference:'2010-11 All-NBA second-team season' }
+      'Russell Westbrook':{ seasonOvr:90, peakOvr:96, reference:'2010-11 All-NBA second-team season' }
     }),
     2016:keyed({
+      'LeBron James':{ seasonOvr:97, reference:'2016-17 All-NBA first team' },
+      'Stephen Curry':{ seasonOvr:95, peakOvr:98, reference:'2016-17 All-NBA second team; championship lead guard' },
+      'Kevin Durant':{ seasonOvr:96, reference:'2016-17 All-NBA second team and Finals MVP' },
+      'James Harden':{ seasonOvr:96, reference:'2016-17 unanimous All-NBA first team and assists leader' },
+      'Russell Westbrook':{ seasonOvr:96, peakOvr:96, reference:'2016-17 MVP and All-NBA first team; triple-double season' },
+      'Kawhi Leonard':{ seasonOvr:96, reference:'2016-17 All-NBA first team and elite two-way season' },
+      'Anthony Davis':{ seasonOvr:94, reference:'2016-17 All-NBA first team' },
+      'Isaiah Thomas':{ seasonOvr:92, peakOvr:93, reference:'2016-17 All-NBA second team; short peak evaluated separately from later injury decline' },
+      'Rudy Gobert':{ seasonOvr:90, peakOvr:93, reference:'2016-17 All-NBA second team' },
+      'Jimmy Butler':{ seasonOvr:90, reference:'2016-17 All-NBA third team' },
+      'John Wall':{ seasonOvr:90, peakOvr:93, reference:'2016-17 All-NBA third team' },
+      'DeMar DeRozan':{ seasonOvr:89, peakOvr:93, reference:'2016-17 All-NBA third team' },
+      'Draymond Green':{ seasonOvr:89, reference:'2016-17 All-NBA third team and DPOY; scoring skill remains position-specific' },
+      'DeAndre Jordan':{ seasonOvr:89, reference:'2016-17 All-NBA third team; defensive center role' },
+      'Chris Paul':{ seasonOvr:92, reference:'2016-17 elite creator; All-NBA votes and source rating cross-check' },
+      'Damian Lillard':{ seasonOvr:90, reference:'2016-17 primary scoring guard; All-NBA votes' },
+      'Paul George':{ seasonOvr:90, reference:'2016-17 two-way lead wing; All-NBA votes' },
+      'DeMarcus Cousins':{ seasonOvr:90, peakOvr:94, reference:'2016-17 high-usage All-Star center; All-NBA votes' },
+      'Kyrie Irving':{ seasonOvr:90, reference:'2016-17 All-Star scoring guard; All-NBA votes' },
+      'Klay Thompson':{ seasonOvr:89, peakOvr:92, reference:'2016-17 All-Star two-way guard; All-NBA votes' },
       'Kristaps Porzingis':{ seasonOvr:84, peakOvr:90, reference:'2016-17 second-season starting big' },
       'Nikola Jokic':{ seasonOvr:86, peakOvr:98, reference:'2016-17 breakout creator season; peak calibrated separately' },
       'Devin Booker':{ seasonOvr:82, peakOvr:94, reference:'2016-17 high-volume young scorer season' },
@@ -116,7 +164,7 @@
     // 两段都严格单调，保留源排序，避免“全员直接 +N”或大量精确 70。
     if (sourceOvr < 65) return 70.5 + (sourceOvr - 45) * (3 / 19);
     if (sourceOvr < 80) return 74 + (sourceOvr - 65) * (5 / 14);
-    return 80 + (sourceOvr - 80) * 0.85;                     // modest high-end compression
+    return sourceOvr; // Keep the elite scale comparable to current players; season anchors handle genuine changes.
   }
 
   function calibrateEra(row, context) {
@@ -149,6 +197,8 @@
     var reliability = Math.min(1, minutes / 1600);
     var baseline = modernScaleBaseline(sourceOvr);
     var performanceAdjustment = Math.max(-3, Math.min(3, (estimated - baseline) * reliability));
+    // roleEstimate is capped at 84; that ceiling cannot justify deducting points from every elite player.
+    if (baseline >= 85) performanceAdjustment = Math.max(0, performanceAdjustment);
     var seasonOvr = override ? override.seasonOvr : baseline + performanceAdjustment + ageDelta;
     seasonOvr = clamp(seasonOvr, 70, 99);
     return {
@@ -164,7 +214,7 @@
         kind:'season',
         targetSeason:era ? (era + '-' + String(era + 1).slice(-2)) : '',
         referenceSeason:era ? ((era - 1) + '-' + String(era).slice(-2)) : '',
-        basis:override ? override.reference : 'conservative modern-scale source-rank translation + strongly sample-shrunk reference-season role adjustment',
+        basis:override ? override.reference : 'source rank translated below 80; capped reference-season role signal cannot penalize elite players',
         baseline:Math.round(baseline * 10) / 10,
         roleEstimate:estimated,
         sampleMinutes:Math.round(minutes),

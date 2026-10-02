@@ -135,9 +135,9 @@ assert.equal(await context.__PP_openCareerFeature('achievements'), true);
 assert.equal(achievementOpens, 1, 'home achievement entry should open after career finishes');
 const careerLoads = appended.slice(beforeCareer).map(node => node.src);
 assert.deepEqual(careerLoads, [
-  'assets/js/perfect-player-skills.js?v=20260824-balance-v7',
+  'assets/js/perfect-player-skills.js?v=20260827-style-economy-v9',
   'assets/js/perfect-player-awards.js?v=20260823-allstar-v3',
-  'assets/js/perfect-player-enhancements.js?v=20260826-legacy-sim-v15'
+  'assets/js/perfect-player-enhancements.js?v=20260827-evidence-legacy-v17'
 ], 'career must load skills -> awards -> enhancements in order');
 assert.equal(await context.__PP_openCareerFeature('legacy'), true);
 assert.equal(legacyOpens, 1);

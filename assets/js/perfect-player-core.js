@@ -394,7 +394,7 @@ function renderModeSelect() {
       tagClass: 'gold',
       title: '生涯模式',
       sub: '从现役球员中夺取属性，组建我的球员',
-      btnLabel: '🎮 进入活动',
+      btnLabel: '🏀 开始生涯',
       mode: 'current',
     },
     {
@@ -968,15 +968,15 @@ function renderRosterPlayers(team, shown, allPool) {
   </div>${arrivalHtml}<div class="br-roster-list" style="max-height:none;">`;
   
   shown.forEach((p, drawIndex) => {
-    const sel = STATE.selectedPlayer === p || (STATE.selectedPlayer && STATE.selectedPlayer.name === p.name);
+    const sel = !!(STATE.selectedPlayer === p || (STATE.selectedPlayer && STATE.selectedPlayer.name === p.name));
     const playerPos = getPlayerMainPos(p);
-    const hsStyle = getPlayerHeadshotStyle(p, 32);
+    const hsStyle = getPlayerHeadshotStyle(p, 40);
     const ovrGrade = getOvrGrade(parseInt(p.ovr) || 50);
     const historicalCard = p._sourceKind === 'historical';
     const hallOfFame = p._sourceKind === 'historical' && p._historicalTier === 'hall-of-fame';
     const peakAllStar = historicalCard && !hallOfFame;
     const used = (STATE.usedPlayers || []).indexOf(p.name) >= 0;
-    listHtml += `<div class="br-player${historicalCard ? ' historical-effect-card' : ''}${hallOfFame ? ' hall-of-fame-card' : ''}${peakAllStar ? ' peak-all-star-card' : ''}${sel ? ' selected' : ''}${used ? ' used' : ''}" data-draw-index="${drawIndex}" ${used ? '' : 'onclick="pickPlayerAt(' + drawIndex + ')"'}>
+    listHtml += `<div class="br-player${historicalCard ? ' historical-effect-card' : ''}${hallOfFame ? ' hall-of-fame-card' : ''}${peakAllStar ? ' peak-all-star-card' : ''}${sel ? ' selected' : ''}${used ? ' used' : ''}" role="button" tabindex="${used ? -1 : 0}" aria-pressed="${sel}" aria-disabled="${used}" data-draw-index="${drawIndex}" ${used ? '' : 'onclick="pickPlayerAt(' + drawIndex + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();pickPlayerAt(' + drawIndex + ')}"'}>
       <div class="bp-left">
         <div class="bp-headshot" style="${hsStyle}"></div>
         <div>
@@ -4282,6 +4282,7 @@ function calcTeamLineup(team) {
     STATE.careerTeam || '',
     STATE.position || '',
     STATE.finalOVR || '',
+    team === STATE.careerTeam ? JSON.stringify(STATE.attrs || {}) : '',
     careerEffects.lineupBonus || 0,
     STATE.season?.isPlayoffs ? 'po' : 'rs'
   ].join('||');
@@ -4308,6 +4309,10 @@ function calcTeamLineup(team) {
   const POS_ORDER = ['PG', 'SG', 'SF', 'PF', 'C'];
   const starters = {};
   const assigned = new Set();
+  const rankedPlayers = allPlayers.map((player, idx) => ({ player, idx, ovr: parseInt(player._lineupOvr != null ? player._lineupOvr : player.ovr) || 0 }));
+  const positionCandidates = Object.fromEntries(POS_ORDER.map(pos => [pos, rankedPlayers
+    .filter(({ player }) => canPlayPosition(player.pos || '', pos))
+    .sort((a, b) => b.ovr - a.ovr)]));
 
   function fillBestSmall(posList, posIdx, curStarters, curAssigned, curScore, best) {
     if (posIdx >= posList.length) {
@@ -4319,11 +4324,8 @@ function calcTeamLineup(team) {
       return best;
     }
     const pos = posList[posIdx];
-    const candidates = allPlayers
-      .map((p, i) => ({ player: p, idx: i, ovr: parseInt(p._lineupOvr != null ? p._lineupOvr : p.ovr) || 0 }))
+    const candidates = positionCandidates[pos]
       .filter(({ idx }) => !curAssigned.has(idx))
-      .filter(({ player }) => canPlayPosition(player.pos || '', pos))
-      .sort((a, b) => b.ovr - a.ovr)
       .slice(0, 4);
 
     if (candidates.length === 0) {
@@ -4362,21 +4364,13 @@ function calcTeamLineup(team) {
     .slice(0, 7);
   
   // 如果用户没进首发，固定放第六人
-  if (userPlayer && Object.values(starters).indexOf(userPlayer) < 0 && !bench.includes(userPlayer)) {
-    bench.unshift(userPlayer);
-  } else if (userPlayer && Object.values(starters).indexOf(userPlayer) < 0) {
+  const isUserStarter = !!(userPlayer && Object.values(starters).includes(userPlayer));
+  if (userPlayer && !isUserStarter) {
     bench = bench.filter(function(p) { return p !== userPlayer; });
     bench.unshift(userPlayer);
-  } else {
-    bench.sort((a, b) => b.ovr - a.ovr);
-  }
-  if (userPlayer && Object.values(starters).indexOf(userPlayer) < 0) {
-    bench = bench.filter(function(p, idx) { return p === userPlayer ? idx === 0 : true; });
-  } else {
-    bench.sort((a, b) => b.ovr - a.ovr);
   }
   
-  var result = { starters, bench, allPlayers, isUserStarter: !!(userPlayer && Object.values(starters).indexOf(userPlayer) >= 0) };
+  var result = { starters, bench, allPlayers, isUserStarter };
   STATE._lineupCache[lineupCacheKey] = result;
   return result;
 }
@@ -4487,7 +4481,7 @@ function getCareerTeamGameModifiers(team) {
 }
 
 function getSimulationPowerBaseline() {
-  var key = [STATE.careerTeam || '', STATE.finalOVR || 0, STATE.career && STATE.career.seasonCount || 0].join('|');
+  var key = [STATE.careerTeam || '', STATE.finalOVR || 0, STATE.career && STATE.career.seasonCount || 0, STATE.careerTeam ? JSON.stringify(STATE.attrs || {}) : ''].join('|');
   if (STATE._simPowerBaseline && STATE._simPowerBaseline.key === key) return STATE._simPowerBaseline;
   var total = { offense:0, defense:0, athletic:0, depth:0 };
   NBA2K_TEAMS.forEach(function(team) {

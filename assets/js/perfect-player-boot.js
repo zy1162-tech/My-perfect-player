@@ -324,7 +324,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20260827-style-economy-v11').catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20261002-courtside-ui-v26', { updateViaCache:'none' }).catch(function () {});
   }
 
   function idleLoad() {

@@ -28,7 +28,7 @@ let stored = JSON.stringify({
 const ctx = {
   Math,
   JSON,
-  LEGACY_SCHEMA_VERSION:5,
+  LEGACY_SCHEMA_VERSION:6,
   PP_FX:{},
   localStorage:{
     getItem:key => key === 'pp_legacy_v1' ? stored : null,
@@ -45,7 +45,7 @@ vm.runInContext(
 );
 
 const migrated = ctx.loadLegacy();
-assert.equal(migrated.version, 5);
+assert.equal(migrated.version, 6);
 assert.equal(migrated.levels.floor_general, 5, 'old floor_general level should survive migration');
 assert.equal(migrated.levels.glass_cleaner, 5, 'old glass_cleaner level should survive migration');
 

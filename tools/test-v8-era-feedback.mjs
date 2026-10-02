@@ -11,12 +11,15 @@ const authoritySource = await readFile(new URL('../assets/js/perfect-player-mod-
 const growthFnSource = core.match(/function getEraPlayerGrowthBonus\([\s\S]*?\n\}/)?.[0];
 const primeFnSource = core.match(/function getEraPlayerPrimeFloor\([\s\S]*?\n\}/)?.[0];
 const ageFactorFnSource = core.match(/function getLeagueAgeDevelopmentFactor\([\s\S]*?\n\}/)?.[0];
+const profileFnSource = ['averageCareerAttributes', 'careerProfileSeed', 'ensureLeagueCareerProfile'].map(name =>
+  core.match(new RegExp(`function ${name}\\([\\s\\S]*?\\n\\}`))?.[0]);
 assert.ok(growthFnSource, 'era growth function should be independently testable');
 assert.ok(primeFnSource, 'historical prime-window function should be independently testable');
 assert.ok(ageFactorFnSource, 'general rookie-prime-decline lifecycle should be independently testable');
+assert.ok(profileFnSource.every(Boolean), 'age development must load the production career-profile dependencies');
 const growthContext = { window:{} };
 vm.createContext(growthContext);
-vm.runInContext(`${growthFnSource};${primeFnSource};${ageFactorFnSource}; window.growth = getEraPlayerGrowthBonus; window.primeFloor = getEraPlayerPrimeFloor; window.ageFactor = getLeagueAgeDevelopmentFactor;`, growthContext);
+vm.runInContext(`${profileFnSource.join(';')};${growthFnSource};${primeFnSource};${ageFactorFnSource}; window.growth = getEraPlayerGrowthBonus; window.primeFloor = getEraPlayerPrimeFloor; window.ageFactor = getLeagueAgeDevelopmentFactor;`, growthContext);
 let lebronOvr = 80;
 for (let age = 19; age < 24; age++) {
   const player = { _eraRoster:true, _peakOvr:99, ovr:lebronOvr };
@@ -39,7 +42,7 @@ for (const id of ['clutch','rim_runner','floor_general','glass_cleaner','leader'
   const line = legacySource.split('\n').find(value => value.includes(`id: '${id}'`));
   assert.ok(line && /max:\s*5/.test(line), `${id} should support Lv.5`);
 }
-assert.match(legacySource, /LEGACY_SCHEMA_VERSION = 4/);
+assert.match(legacySource, /LEGACY_SCHEMA_VERSION = 6/);
 assert.match(legacySource, /满级约 \+2\.5/);
 assert.match(injurySource, /acl_season_ending/);
 assert.match(injurySource, /min:82, max:82, major:true, seasonEnding:true/);

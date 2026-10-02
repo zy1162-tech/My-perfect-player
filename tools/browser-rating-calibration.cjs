@@ -59,7 +59,7 @@ const { chromium } = require('playwright');
     });
     return { cards, matched, mismatches, aliasMatches, peaks, version:PP_RATING_CALIBRATION.version };
   });
-  assert.equal(currentAudit.version, '20260826-rating-calibration-v2');
+assert.equal(currentAudit.version, '20261001-season-stars-v5');
   assert.ok(currentAudit.matched >= 330, `expected runtime matches for over 90% of current cards, got ${currentAudit.matched}/${currentAudit.cards}`);
   assert.deepEqual(currentAudit.mismatches, [], 'current build cards must use the same OVR and attributes as NBA_CURRENT_RATINGS_2026');
   for (const [name, row] of Object.entries(currentAudit.aliasMatches)) {
@@ -97,6 +97,7 @@ const { chromium } = require('playwright');
       const rookies = players.filter(player => player._ratingKind === 'rookie');
       output[era] = {
         total:players.length,
+        teamSizes:Object.fromEntries(NBA2K_TEAMS.map(team => [team, (NBA2K_DATA[team] || []).length])),
         unique:new Set(values).size,
         exact70:values.filter(value => value === 70).length,
         below70:values.filter(value => value < 70).length,
@@ -126,8 +127,10 @@ const { chromium } = require('playwright');
   };
   for (const era of [2003,2010,2016]) {
     const audit = eraAudit.output[era];
-    assert.ok(audit.total >= 420 && audit.total <= 450, `${era}: shifted opening roster size ${audit.total}`);
-    assert.ok(audit.unique >= 24 && audit.exact70 < 55 && audit.below70 > 10, `${era}: opening distribution regressed to a flat floor`);
+    assert.ok(audit.total >= 420 && audit.total <= 450,
+      `${era}: shifted opening roster size ${audit.total}; ${JSON.stringify(audit.teamSizes)}`);
+    assert.ok(audit.unique >= 18 && audit.exact70 < 60 && audit.below70 === 0 && audit.min >= 70,
+      `${era}: new-save role floors must remove sub-70 players without collapsing the league to a flat 70`);
     for (const [name, ovr] of Object.entries(exact[era])) {
       assert.equal(audit.picked[name].length, 1, `${era} ${name}: must exist exactly once`);
       assert.equal(audit.picked[name][0].ovr, ovr, `${era} ${name}: target-season OVR`);
@@ -135,7 +138,8 @@ const { chromium } = require('playwright');
       assert.equal(audit.picked[name][0].kind, 'season');
     }
     assert.ok(audit.rookies.length > 0, `${era}: opening should contain the era's actual rookie class`);
-    assert.ok(audit.rookies.every(player => player.ovr === player.source && player.rookie === player.source), `${era}: rookie OVR must remain separate from peak/potential`);
+    assert.ok(audit.rookies.every(player => player.rookie >= player.source && player.rookie >= 70 && player.ovr >= player.rookie),
+      `${era}: rookie OVR must use the real-pick floor before the separate team-depth floor, while preserving source OVR and potential`);
   }
   const amare = eraAudit.output[2003].picked["Amar'e Stoudemire"][0];
   assert.deepEqual({ ovr:amare.ovr, age:amare.age, source:amare.source, peak:amare.peak }, { ovr:85, age:21, source:69, peak:92 });

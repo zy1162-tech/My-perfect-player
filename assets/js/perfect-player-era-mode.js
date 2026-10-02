@@ -347,7 +347,8 @@
   ];
   // 2010 届选秀夜交易修正。
   var ERA_2011_DRAFT_NIGHT = {
-    'Jordan Crawford': 'WAS',
+    // 2010 选秀夜加盟老鹰；到奇才的交易发生在 2011-02-23，不能提前到开局。
+    'Jordan Crawford': 'ATL',
     'Luke Babbitt': 'POR',
     'Trevor Booker': 'WAS',
     'Lazar Hayward': 'MIN',
@@ -415,15 +416,17 @@
   function applyEraDraftNight(table) {
     Object.keys(table || {}).forEach(function(key) {
       var target = table[key];
+      if (!target || NBA2K_TEAMS.indexOf(target) < 0) return;
       var normKey = nameKey(key);
       var fromTeam = null, player = null;
       NBA2K_TEAMS.some(function(team) {
         var roster = NBA2K_DATA[team] || [];
         var idx = roster.findIndex(function(p) { return p && nameKey(p.nameEN || p.name) === normKey; });
-        if (idx >= 0) { fromTeam = team; player = roster.splice(idx, 1)[0]; return true; }
+        if (idx >= 0) { fromTeam = team; player = roster[idx]; return true; }
         return false;
       });
-      if (!player || !target || NBA2K_TEAMS.indexOf(target) < 0 || fromTeam === target) return;
+      if (!player || fromTeam === target) return;
+      NBA2K_DATA[fromTeam].splice(NBA2K_DATA[fromTeam].indexOf(player), 1);
       replaceWeakest(target, player);
     });
   }

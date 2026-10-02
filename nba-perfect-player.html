@@ -38,18 +38,19 @@ html.pp-booting #app{visibility:hidden}
 <script src="assets/data/player-ages-local.js?v=20260824-age-local-v5"></script>
 <script src="assets/data/era-mode-data.js?v=20260825-era-v11"></script>
 <script src="assets/data/era-complete-rosters.js?v=20260825-era-v11"></script>
-<script src="assets/data/player-rating-calibration.js?v=20260827-bounded-rating-v4"></script>
+<script src="assets/data/player-rating-calibration.js?v=20261001-season-stars-v5"></script>
 <script src="assets/data/era-presentation.js?v=20260826-era-presentation-v2"></script>
 <script src="assets/data/era-headshot-index.js?v=20260826-era-headshots-v1"></script>
+<script src="assets/data/verified-headshots.js?v=20261002-verified-headshots-v2"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20260827-style-economy-v13" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20260827-style-economy-v13"></script>
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261002-courtside-boot-v14" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20261002-courtside-boot-v14"></script>
   <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260826-era-headshots-v2">
   <link rel="stylesheet" href="assets/css/perfect-player-season-report.css?v=20260826-season-report-v1">
 
 
-<link href="assets/css/perfect-player-premium.css?v=20260827-playoff-box-v1" rel="stylesheet">
+<link href="assets/css/perfect-player-premium.css?v=20261002-courtside-ui-v2" rel="stylesheet">
 </head>
 <body>
 
@@ -187,7 +188,7 @@ html.pp-booting #app{visibility:hidden}
     <!-- Top Nav Bar (like reference site) -->
     <div class="navbar">
       <div class="nav-logo">
-        BUILD<span class="hl">-A-</span>PLAYER
+        PERFECT <span class="hl">PLAYER</span>
       </div>
       <div class="nav-pos-toggle" id="nav-pos-toggle">
         <button class="nav-pos-btn active" data-pos="NBA">🏀</button>
@@ -196,7 +197,7 @@ html.pp-booting #app{visibility:hidden}
 
     <!-- Hero -->
     <div class="hero">
-      <div class="hero-title">Spin the wheel · Build your player</div>
+      <div class="hero-title">自由构筑 · 从新秀到传奇</div>
       <div class="hero-headline">
         打造我的传奇球星
       </div>
@@ -554,11 +555,14 @@ function _hsPresentationKey(value) {
   return text.replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, '');
 }
 window.resolveVerifiedLocalPlayerHeadshot = function(player) {
+  if (player && player._eraGenerated) return '';
   var index = window.__PP_ERA_HEADSHOT_INDEX__ && window.__PP_ERA_HEADSHOT_INDEX__.players || {};
   var names = player && typeof player === 'object'
     ? [player.nameEN, player.nameEn, player.name]
     : [player];
   for (var i = 0; i < names.length; i++) {
+    var supplemental = window.__PP_VERIFIED_HEADSHOTS__ && window.__PP_VERIFIED_HEADSHOTS__.players[_hsPresentationKey(names[i])];
+    if (supplemental && supplemental.p) return supplemental.p;
     var record = index[_hsPresentationKey(names[i])];
     if (record && record.p) return record.p;
   }
@@ -707,15 +711,42 @@ function getPlayerHeadshotSources(playerName) {
   return { lookupName:lookupName, local:local, remote:remote, fallback:_hsInitialsAvatarUrl(lookupName), player:playerRecord };
 }
 /** 获取球员头像样式；CSS URL 使用单引号，嵌入双引号 style 属性时不会被截断。 */
+var _hsPhotoLoads = Object.create(null);
+function _hsPhotoVariable(sources) {
+  var urls = sources.local.concat(sources.remote);
+  var variable = '--pp-headshot-' + _hsPresentationKey(sources.lookupName);
+  var signature = urls.join('|') + '|' + sources.fallback;
+  var previous = _hsPhotoLoads[variable];
+  if (previous && previous.signature === signature) return variable;
+  var load = { signature:signature };
+  _hsPhotoLoads[variable] = load;
+  function tryPhoto(index) {
+    if (_hsPhotoLoads[variable] !== load) return;
+    var url = urls[index] || sources.fallback;
+    document.documentElement.style.setProperty(variable, _hsCssBgUrl(url));
+    if (index >= urls.length) return;
+    var image = new Image();
+    image.onload = function() {
+      if (!image.naturalWidth || !image.naturalHeight) tryPhoto(index + 1);
+    };
+    image.onerror = function() { tryPhoto(index + 1); };
+    image.src = url;
+  }
+  tryPhoto(0);
+  return variable;
+}
 function getPlayerHeadshotStyle(playerName, displaySize) {
   if (!playerName) return '';
   displaySize = displaySize || 30;
   var sources = getPlayerHeadshotSources(playerName);
   var urls = sources.local.concat(sources.remote);
   if (urls.length) {
-    // 缓存路径或远程地址失效时，最底层始终还有稳定缩写头像，不再露出空白。
-    urls.push(sources.fallback);
-    return 'background-image:' + urls.map(_hsCssBgUrl).join(',') + ';background-size:cover;background-position:center top;background-repeat:no-repeat;width:' + displaySize + 'px;height:' + displaySize + 'px;';
+    // 每次只显示一张照片，透明区域露出纯白底；失败后顺次换源，最后才使用缩写。
+    var background = _hsCssBgUrl(urls[0]);
+    if (typeof Image === 'function' && document.documentElement && document.documentElement.style) {
+      background = 'var(' + _hsPhotoVariable(sources) + ',' + background + ')';
+    }
+    return 'background-color:#fff;background-image:' + background + ';background-size:cover;background-position:center top;background-repeat:no-repeat;width:' + displaySize + 'px;height:' + displaySize + 'px;';
   }
   return _hsInitialsAvatar(sources.lookupName, displaySize);
 }
@@ -931,10 +962,10 @@ var Storage = {
   }
 };
 </script>
-<script src="assets/js/perfect-player-core.js?v=20260827-playoff-box-v1"></script>
+<script src="assets/js/perfect-player-core.js?v=20261002-courtside-ui-v2"></script>
 <script src="assets/js/perfect-player-season-report.js?v=20260826-season-report-v2"></script>
 <script src="assets/js/perfect-player-mod-v4.js?v=20260827-systems-prologue-v17"></script>
-<script src="assets/js/perfect-player-era-mode.js?v=20260827-bounded-rating-v33"></script>
+<script src="assets/js/perfect-player-era-mode.js?v=20261001-opening-roster-v34"></script>
 
 <!-- ====== 随机事件系统 — EVENT REGISTRY ====== -->
 <script src="assets/js/perfect-player-event-runtime.js?v=20260825-stamina-v7"></script>

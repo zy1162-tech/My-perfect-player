@@ -6,12 +6,12 @@
    ============================================================ */
 :root {
   /* 全局比赛日配色：木地板、球衣海军蓝、篮球皮革橙。 */
-  --bg: #eee0c8;
-  --bg-card: #fffaf0;
-  --bg-card-hover: #f7ead5;
-  --bg-elevated: #e7d1af;
-  --border: #ccb083;
-  --border-light: #ddc59e;
+  --bg: #f4f1eb;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fff8ee;
+  --bg-elevated: #eee8df;
+  --border: #ddd6c9;
+  --border-light: #e9e4db;
   --text: #132238;
   --text-dim: #5c6674;
   --text-muted: #8e8b84;
@@ -40,8 +40,8 @@ body {
   background-color: var(--bg);
   background-image:
     radial-gradient(circle at 50% 12%, transparent 0 112px, rgba(216,88,34,.075) 113px 115px, transparent 116px),
-    repeating-linear-gradient(0deg, rgba(75,50,28,.045) 0 1px, transparent 1px 72px),
-    repeating-linear-gradient(90deg, rgba(75,50,28,.055) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(0deg, rgba(75,50,28,.018) 0 1px, transparent 1px 72px),
+    repeating-linear-gradient(90deg, rgba(75,50,28,.022) 0 1px, transparent 1px 48px),
     linear-gradient(105deg, rgba(255,255,255,.24), transparent 42%, rgba(157,95,40,.05));
   background-attachment: fixed;
 }
@@ -395,7 +395,7 @@ body {
 
 /* ============================================================
    2026 Basketball palette refresh — color/material only.
-   Layout and interaction dimensions intentionally stay untouched.
+  Responsive court-side dashboard, retaining the original interaction flow.
    ============================================================ */
 .hero::after {
   top: -38px;
@@ -466,7 +466,7 @@ body {
     radial-gradient(circle at 22% 24%,rgba(255,255,255,.13) 0 1px,transparent 1.5px),
     linear-gradient(180deg,var(--orange-light),var(--orange));
   background-size: 8px 8px,auto;
-  box-shadow: 0 4px 0 #923713,0 7px 14px rgba(125,51,21,.22);
+  box-shadow: 0 3px 9px rgba(125,51,21,.16);
 }
 .btn-primary:active, .feature-card .fc-btn:active { box-shadow: 0 1px 0 #923713,0 3px 8px rgba(125,51,21,.18); }
 .btn-secondary { border-color: rgba(16,34,58,.2); background: rgba(255,250,240,.92); }
@@ -501,3 +501,82 @@ body {
 }
 .team-picker-header span { font-family: var(--font-athletic); letter-spacing: .5px; }
 .team-picker-header .team-picker-close { border-color: rgba(255,255,255,.2); background: rgba(255,255,255,.1); color: #fff; }
+
+/* Responsive information hierarchy and accessible interaction states. */
+#app { max-width:1040px; }
+.navbar { border-radius:0 0 18px 18px; padding:18px 24px; }
+.hero { padding:42px 20px 28px; }
+.hero-headline { font-size:clamp(30px,6vw,54px); line-height:1.2; }
+.hero-desc { max-width:540px; line-height:1.8; }
+.feature-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; padding:8px 24px 24px; }
+.feature-card { display:flex; flex-direction:column; min-width:0; padding:26px; border-width:1px; border-radius:20px; }
+.feature-card .fc-tag { align-self:flex-start; font-size:11px; letter-spacing:.8px; }
+.feature-card .fc-title { font-size:28px; margin:2px 0 8px; }
+.feature-card .fc-sub { line-height:1.8; flex:1; }
+.feature-card .fc-btn { margin-top:auto; min-height:48px; }
+.section-title { padding:20px 16px 14px; }
+.section-title h1 { font-size:26px; }
+.build-progress { margin:0 16px 12px; padding:12px 16px; border-width:1px; }
+.build-split { gap:14px; padding:0 16px 12px; }
+.build-left { width:172px; gap:8px; }
+.bl-header { padding:14px 6px; border-width:1px; border-radius:14px; }
+.bl-attrs { gap:5px; scrollbar-width:thin; }
+.ba-slot { min-height:40px; border-width:1px; }
+.ba-slot .ba-label { font-size:11px; }
+.build-right { gap:12px; }
+.br-slot-area { padding:14px; border-width:1px; border-radius:16px; }
+.br-slot-actions .slot-btn { min-height:44px; padding:9px 16px; border-width:1px; font-size:12px; }
+#br-roster-area { scrollbar-width:thin; padding:0 2px 74px; }
+#br-roster-area .br-roster-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.br-player { min-width:0; min-height:68px; padding:11px 12px; border-width:1px; border-radius:13px; }
+.br-player .bp-left { gap:10px; }
+.br-player .bp-left > div:last-child { min-width:0; }
+.br-player .bp-name { font-size:14px; line-height:1.5; }
+.br-player .bp-detail { font-size:10px; line-height:1.6; }
+.br-player .bp-ovr { font-size:25px; font-variant-numeric:tabular-nums; }
+.sh-top { background:var(--navy); color:#fff; padding:18px 22px; border:0; border-radius:16px 16px 0 0; }
+.sh-team-name { color:#ffb072; font-size:30px; }
+.sh-team-full,.sh-pct { color:#cbd5e2; }
+.sh-season { background:rgba(255,255,255,.09); color:#fff; border-color:rgba(255,255,255,.15); }
+.sh-wins { color:#76dfbe; font-size:34px; }
+.sh-losses { color:#ff9f98; font-size:34px; }
+.sh-info { padding:10px 14px; border-width:1px; border-radius:0 0 16px 16px; line-height:1.6; }
+.gc-row { padding:10px 14px; border-width:1px; font-variant-numeric:tabular-nums; }
+.pp-game-box-head { position:sticky; top:0; z-index:1; }
+.pp-game-box-row { font-variant-numeric:tabular-nums; }
+.pp-game-box-row:nth-child(odd) { background:rgba(16,34,58,.025); }
+:is(button,[role=button],input,select,a):focus-visible { outline:3px solid var(--orange); outline-offset:3px; }
+@media (hover:hover) {
+  .feature-card:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(16,34,58,.11); }
+  .br-player:not(.used):hover { border-color:var(--orange); background:var(--bg-card-hover); }
+}
+@media (max-width:700px) {
+  #app { max-width:560px; }
+  .feature-grid { grid-template-columns:1fr; padding:8px 16px 20px; gap:14px; }
+  .feature-card { padding:22px; }
+  .navbar { border-radius:0; padding:15px 20px; }
+  .hero { padding:30px 18px 24px; }
+  .section-title { padding:12px 12px 10px; }
+  .section-title h1 { font-size:22px; }
+  .build-split { gap:8px; padding:0 10px 8px; }
+  .build-left { width:104px; gap:5px; }
+  .build-progress { margin:0 10px 8px; padding:9px 12px; }
+  .br-slot-area { padding:10px 6px; }
+  #br-roster-area .br-roster-list { grid-template-columns:1fr; gap:6px; }
+  .br-player { min-height:64px; padding:10px 8px; }
+  .br-player .bp-left { gap:7px; }
+  .br-player .bp-name { font-size:13px; }
+  .br-player .bp-ovr { font-size:23px; }
+  .sh-top { padding:15px 12px; gap:8px; }
+  .sh-team-name { font-size:25px; }
+  .sh-wins,.sh-losses { font-size:29px; }
+}
+@media (max-width:360px) {
+  .build-left { width:88px; }
+  .br-slot-actions .slot-btn { padding:9px 10px; }
+  .sh-season { padding:5px 7px; font-size:11px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .screen.active,.feature-card,.br-player { animation:none; transition:none; }
+  .feature-card:hover { transform:none; }
+}
