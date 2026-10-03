@@ -84,8 +84,12 @@ assert.equal(api.getBuildPlayerPool('AAA'), normal, 'legend build must read the 
 assert.deepEqual(Array.from(api.getBuildSpinTeams()), ['AAA', 'BBB'], 'legend spinner must use era teams with usable rosters');
 context.STATE.mode = 'current';
 context.window.PP_ERA_MODE.isHistoricalActive = () => false;
-assert.equal(api.getBuildPlayerPool('AAA'), context.window.PERFECT_PLAYER_BUILD_DATA.AAA, 'current mode must keep the current build pool');
-assert.deepEqual(Array.from(api.getBuildSpinTeams()), ['AAA'], 'current spinner must exclude teams missing a current build pool');
+assert.equal(api.getBuildPlayerPool('AAA'), context.NBA2K_DATA.AAA, 'current construction and competition must share the canonical roster even when the old build pool is stale');
+assert.deepEqual(Array.from(api.getBuildSpinTeams()), ['AAA','BBB'], 'a stale empty build pool must not hide a real competition roster');
+const currentBBB=context.NBA2K_DATA.BBB;
+context.NBA2K_DATA.BBB=[];
+assert.deepEqual(Array.from(api.getBuildSpinTeams()), ['AAA'], 'teams with no actual players must remain unavailable');
+context.NBA2K_DATA.BBB=currentBBB;
 context.STATE.mode = 'legend';
 context.window.PP_ERA_MODE.isHistoricalActive = () => true;
 
@@ -205,10 +209,10 @@ assert.doesNotMatch(core, /STATE\.mode === 'legend'\s*&&\s*historical\.length[\s
 assert.match(core, /史诗 · 名人堂惊喜/);
 assert.match(core, /全明星惊喜/);
 assert.match(core, /historicalCard \?[^\n]+: ovrGrade/, 'normal cards should show their OVR grade');
-assert.match(html, /perfect-player-core\.js\?v=20261003-era-economy-v7/);
-assert.match(html, /perfect-player-era-mode\.js\?v=20261001-opening-roster-v34/);
-assert.match(sw, /perfect-player-core\.js\?v=20261003-era-economy-v7/);
-assert.match(sw, /perfect-player-era-mode\.js\?v=20261001-opening-roster-v34/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261003-era-economy-v31'/);
+assert.match(html, /perfect-player-core\.js\?v=20261004-pc-rosters-v9/);
+assert.match(html, /perfect-player-era-mode\.js\?v=20261004-opening-roster-v36/);
+assert.match(sw, /perfect-player-core\.js\?v=20261004-pc-rosters-v9/);
+assert.match(sw, /perfect-player-era-mode\.js\?v=20261004-opening-roster-v36/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-pc-rosters-v35'/);
 
 console.log(`✓ build roll: ${rounds} seeded rounds, special=${(specialRate * 100).toFixed(2)}%, mixed-fixture HOF=${(hofShare * 100).toFixed(2)}%, real-pool HOF=${(realHofShare * 100).toFixed(2)}%, normal cards=${(normalShare * 100).toFixed(2)}%`);

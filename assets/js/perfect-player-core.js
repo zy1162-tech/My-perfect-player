@@ -279,6 +279,7 @@ function generateGameId() {
 }
 
 var _baseLeagueRosterSnapshot = null;
+var _baseLeagueTeamsSnapshot = null;
 
 function cloneLeagueData(obj) {
   return JSON.parse(JSON.stringify(obj || {}));
@@ -287,6 +288,7 @@ function cloneLeagueData(obj) {
 function captureBaseLeagueRoster() {
   if (_baseLeagueRosterSnapshot || typeof NBA2K_DATA === 'undefined' || typeof NBA2K_TEAMS === 'undefined') return;
   _baseLeagueRosterSnapshot = {};
+  _baseLeagueTeamsSnapshot = NBA2K_TEAMS.slice();
   NBA2K_TEAMS.forEach(function(t) {
     _baseLeagueRosterSnapshot[t] = cloneLeagueData(NBA2K_DATA[t] || []);
   });
@@ -295,6 +297,7 @@ function captureBaseLeagueRoster() {
 function restoreBaseLeagueRoster() {
   captureBaseLeagueRoster();
   if (!_baseLeagueRosterSnapshot || typeof NBA2K_DATA === 'undefined' || typeof NBA2K_TEAMS === 'undefined') return;
+  NBA2K_TEAMS.splice.apply(NBA2K_TEAMS,[0,NBA2K_TEAMS.length].concat(_baseLeagueTeamsSnapshot));
   NBA2K_TEAMS.forEach(function(t) {
     NBA2K_DATA[t] = cloneLeagueData(_baseLeagueRosterSnapshot[t] || []);
   });
@@ -329,6 +332,7 @@ function createFreshCareer() {
 }
 
 function initGame() {
+  regularSeasonRun = null;
   resetBranchEventTransient();
   if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.resetTransient();
   restoreBaseLeagueRoster();
@@ -377,6 +381,7 @@ function initGame() {
   delete STATE._draftResultDone;
   delete STATE._mobilityChoice;
   delete STATE._legendLeagueApplied;
+  delete STATE._openingMembershipYear;
   delete STATE._eraRookieSeq;
   delete STATE.eraStart;
   delete STATE.draftMode;
@@ -396,6 +401,8 @@ function initGame() {
 function renderModeSelect() {
   const container = html('feature-grid');
   container.innerHTML = '';
+  var rosterLabel = document.getElementById('league-snapshot-label');
+  if (rosterLabel && window.PP_CURRENT_ROSTER_META) rosterLabel.textContent = PP_CURRENT_ROSTER_META.season + ' · 名单核对 ' + PP_CURRENT_ROSTER_META.asOf;
   
   // 现役生涯与本地独立实现的传奇年代并列保留。
   const cards = [
@@ -851,10 +858,9 @@ function getBuildSpinTeams() {
   }).slice().sort();
 }
 
-/** 仅用于建模阶段的候选池；传奇年代读已应用的年代名单，现役模式仍读独立建模池。 */
+/** 建球和比赛读取同一份已应用的名单；队史惊喜仍由独立入口提供。 */
 function getBuildPlayerPool(team) {
-  if (isHistoricalBuildActive()) return NBA2K_DATA[team] || [];
-  return (window.PERFECT_PLAYER_BUILD_DATA && window.PERFECT_PLAYER_BUILD_DATA[team]) || NBA2K_DATA[team] || [];
+  return NBA2K_DATA[team] || [];
 }
 
 function getBuildHistoricalSurprisePool(team) {
@@ -983,6 +989,7 @@ function renderRosterPlayers(team, shown, allPool) {
     const hsStyle = getPlayerHeadshotStyle(p, 40);
     const ovrGrade = getOvrGrade(parseInt(p.ovr) || 50);
     const historicalCard = p._sourceKind === 'historical';
+    const estimatedRating = !historicalCard && /estimate/.test(p.ratingBasis || '');
     const hallOfFame = p._sourceKind === 'historical' && p._historicalTier === 'hall-of-fame';
     const peakAllStar = historicalCard && !hallOfFame;
     const used = (STATE.usedPlayers || []).indexOf(p.name) >= 0;
@@ -991,7 +998,7 @@ function renderRosterPlayers(team, shown, allPool) {
         <div class="bp-headshot" style="${hsStyle}"></div>
         <div>
           <div class="bp-name">${p.cname || p.name}</div>
-          <div class="bp-detail">${playerPos} · ${historicalCard ? (hallOfFame ? '史诗 · 名人堂惊喜' : '全明星惊喜') : ovrGrade}${historicalCard && p._historicalPeak ? ' · 巅峰' : ''}</div>
+          <div class="bp-detail">${playerPos} · ${historicalCard ? (hallOfFame ? '史诗 · 名人堂惊喜' : '全明星惊喜') : (estimatedRating ? (STATE.mode === 'legend' ? '资料不足 · 估值' : '新赛季评级估算') : ovrGrade)}${historicalCard && p._historicalPeak ? ' · 巅峰' : ''}</div>
         </div>
       </div>
       <div class="bp-meta">
@@ -2446,6 +2453,7 @@ function highlightSlotItem(reelId, middleIndex) {
 }
 
 function getConference(team) {
+  if (team === 'NOP' && STATE.mode === 'legend' && Number(STATE.eraStart) === 2003 && Number(STATE.career && STATE.career.seasonCount || 0) === 0) return 'EAST';
   if (SIM_CONFIG.CONFERENCE.EAST.includes(team)) return 'EAST';
   if (SIM_CONFIG.CONFERENCE.WEST.includes(team)) return 'WEST';
   return 'EAST';
@@ -2654,7 +2662,8 @@ function startSeason() {
     '<div style="text-align:center;padding:4px 0 8px;font-size:12px;color:var(--text-dim);" id="simStatus"></div>';
 
   try { ensurePulseBoard(); refreshPulseBoard(true); } catch (e) { console.error('[Pulse]', e); }
-  setTimeout(quickSimAllGames, 1200);
+  var startedSeason = STATE.season;
+  setTimeout(function() { if (STATE.season === startedSeason) quickSimAllGames(); }, 1200);
 }
 
 function skipUserGamePack(opponent, isPlayoff, seedBonus, probMultiplier, attrs, extra) {
@@ -2768,12 +2777,17 @@ function liveOrSkipUserPack(opponent, options, onPack) {
   return false;
 }
 
+var regularSeasonRun = null;
+
 // ★ 逐场模拟全部 82 场常规赛，点逐个出现
 function quickSimAllGames() {
+  if (regularSeasonRun && regularSeasonRun.season === STATE.season) return;
   var schedule = STATE.season.schedule;
   if (!schedule || schedule.length === 0) { console.error('[Sim] 赛程为空'); renderDotGrid(); return; }
   var games = schedule.filter(function(g) { return !g.simulated; });
   if (games.length === 0) { renderDotGrid(); return; }
+  var run = { season:STATE.season };
+  regularSeasonRun = run;
 
   // 替换加载动画为占位点阵
   var confName = getConference(STATE.careerTeam) === 'EAST' ? '东部' : '西部';
@@ -2789,9 +2803,11 @@ function quickSimAllGames() {
 
   var gi = 0;
   function simNextWithDelay() {
+    if (regularSeasonRun !== run || STATE.season !== run.season) return;
     if (window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.pauseForCoach(simNextWithDelay)) return;
     if (gi >= games.length) {
       function finishRegularSeasonSim() {
+      if (regularSeasonRun !== run || STATE.season !== run.season) return;
       if (window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.showFeedback(finishRegularSeasonSim)) return;
       processAllRemainingDays();
       reconcileStandings();
@@ -2880,6 +2896,7 @@ function quickSimAllGames() {
       }
       trackExposureOnce(document.getElementById('simActions'), {act:"exposure",blk:"BMC099",pos:"T1",label:"赛季结果"});
       setTimeout(function() { maybeShowFirstSixtyWinCelebration(); }, 260);
+      regularSeasonRun = null;
       return;
       }
       if (window.PP_ALLSTAR && PP_ALLSTAR.maybeShowWeekend(finishRegularSeasonSim, { exact: false })) return;
@@ -2897,6 +2914,7 @@ function quickSimAllGames() {
       else if (ev && ev.injuryGamesLeft > 0) skipReason = 'injury';
       if (skipReason) {
         var runSkippedRegularGame = function() {
+          if (regularSeasonRun !== run || STATE.season !== run.season || g.simulated) return;
           if (skipReason === 'suspension') ev.suspensionGamesLeft--;
           else {
             ev.injuryGamesLeft--;
@@ -2941,6 +2959,7 @@ function quickSimAllGames() {
           setTimeout(simNextWithDelay, 120);
         };
         var runPlayedThroughRegularGame = function(severity) {
+          if (regularSeasonRun !== run || STATE.season !== run.season || g.simulated) return;
           ev.injuryGamesLeft = Math.max(0, (ev.injuryGamesLeft || 0) - 1);
           var hurtResult = simulateGameNew(STATE.careerTeam, g.opponent, 0, getInjuryPlayWinMultiplier(severity));
           g.simulated = true;
@@ -2997,6 +3016,7 @@ function quickSimAllGames() {
       }
 
       var applyRegularPack = function (pack) {
+        if (regularSeasonRun !== run || STATE.season !== run.season || g.simulated) return;
         var result = pack.result;
         var stats = pack.stats;
         g.simulated = true;
@@ -3067,6 +3087,7 @@ function quickSimAllGames() {
 
         gi++;
         function chainAfterGame() {
+          if (regularSeasonRun !== run || STATE.season !== run.season) return;
           if (evData && typeof showEventModal === 'function') {
             showEventModal(evData, function() { setTimeout(simNextWithDelay, 120); });
           } else if (branchEv) {
@@ -3087,7 +3108,11 @@ function quickSimAllGames() {
         national: (gi >= 11 && (gi + 1) % 11 === 0)
       }, applyRegularPack);
       return;
-    } catch(e) { console.error('[Sim] 第' + (gi + 1) + '场异常:', e); gi++; setTimeout(simNextWithDelay, 120); }
+    } catch(e) {
+      console.error('[Sim] 第' + (gi + 1) + '场异常:', e);
+      regularSeasonRun = null;
+      html('simStatus').innerHTML = '本场模拟未完成，已完成的比赛会保留。 <button type="button" class="btn btn-secondary btn-sm" onclick="quickSimAllGames()">重试本场</button>';
+    }
   }
 
   simNextWithDelay();
@@ -4178,9 +4203,47 @@ function refreshPulseBoard(instant) {
 }
 
 // ==================== 赛程生成（真实NBA赛程）====================
+function getActiveLeagueSchedule() {
+  var teams = NBA2K_TEAMS.slice();
+  if (teams.length === Object.keys(NBA2K_SCHEDULE).length && teams.every(function(t) { return NBA2K_SCHEDULE[t]; })) return NBA2K_SCHEDULE;
+  // 2003 年只有 29 队：先主客场各交手，再增加 13 组循环配对，恰好每队 82 场。
+  var schedule = {}, gameNum = 0;
+  teams.forEach(function(t) { schedule[t] = []; });
+  function addGame(home, away, day) {
+    gameNum++;
+    schedule[home].push({ opponent:away, home:true, day:day, gameNum:gameNum });
+    schedule[away].push({ opponent:home, home:false, day:day, gameNum:gameNum });
+  }
+  var ring = teams.slice();
+  if (ring.length % 2) ring.push(null);
+  var rounds = ring.length - 1;
+  for (var cycle = 0; cycle < 2; cycle++) {
+    for (var round = 0; round < rounds; round++) {
+      for (var pair = 0; pair < ring.length / 2; pair++) {
+        var a = ring[pair], b = ring[ring.length - 1 - pair];
+        if (a && b) addGame(cycle ? b : a, cycle ? a : b, (cycle * rounds + round) * 2 + 1);
+      }
+      ring.splice(1, 0, ring.pop());
+    }
+  }
+  var extraDays = [], offsets = (82 - 2 * (teams.length - 1)) / 2;
+  for (var offset = 1; offset <= offsets; offset++) {
+    for (var i = 0; i < teams.length; i++) {
+      var home = teams[i], away = teams[(i + offset) % teams.length], slot = 0;
+      while (extraDays[slot] && (extraDays[slot].has(home) || extraDays[slot].has(away))) slot++;
+      if (!extraDays[slot]) extraDays[slot] = new Set();
+      extraDays[slot].add(home); extraDays[slot].add(away);
+      addGame(home, away, (2 * rounds + slot) * 2 + 1);
+    }
+  }
+  teams.forEach(function(t) { schedule[t].sort(function(a,b) { return a.day - b.day || a.gameNum - b.gameNum; }); });
+  return schedule;
+}
+
 function buildRealSchedule() {
   const myTeam = STATE.careerTeam;
-  const rawSchedule = NBA2K_SCHEDULE[myTeam];
+  const leagueSchedule = getActiveLeagueSchedule();
+  const rawSchedule = leagueSchedule[myTeam];
   if (!rawSchedule) {
     console.error('No schedule for', myTeam);
     return;
@@ -4201,8 +4264,8 @@ function buildRealSchedule() {
   const dayMap = {};
   // 遍历所有球队的赛程，每场比赛只记一次（用home team的entry）
   const seen = new Set();
-  Object.keys(NBA2K_SCHEDULE).forEach(team => {
-    NBA2K_SCHEDULE[team].forEach(g => {
+  Object.keys(leagueSchedule).forEach(team => {
+    leagueSchedule[team].forEach(g => {
       if (!g.home) return; // 只记主队entry（避免重复）
       const gameKey = `${g.day}-${team}-${g.opponent}`;
       if (seen.has(gameKey)) return;
@@ -14420,11 +14483,11 @@ function calcTrainingPoints() {
 }
 
 function openCareerSkillPanel(button) {
-  var originalText = button && button.textContent;
+  var originalHTML = button && button.innerHTML;
   function restoreButton() {
     if (!button) return;
     button.disabled = false;
-    button.textContent = originalText || '技能';
+    button.innerHTML = originalHTML || '技能';
   }
   function openLoadedPanel() {
     restoreButton();
@@ -14571,6 +14634,7 @@ function buildManualSaveSnapshot() {
     },
     state: rawState,
     league: JSON.parse(JSON.stringify(NBA2K_DATA || {})),
+    leagueTeams: NBA2K_TEAMS.slice(),
     ages: JSON.parse(JSON.stringify(_playerAges || {})),
     genes: JSON.parse(JSON.stringify(_playerGenes || {})),
     rookieState: {
@@ -14694,6 +14758,7 @@ function manualLoadGame(slot) {
       try {
         // STATE 与 NBA2K_DATA 是 const，只能原地清空后填充，保证所有引用仍然有效
         Object.keys(STATE).forEach(function(k) { delete STATE[k]; });
+        regularSeasonRun = null;
         if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.resetTransient();
         resetBranchEventTransient();
         Object.assign(STATE, snap.state);
@@ -14710,6 +14775,8 @@ function manualLoadGame(slot) {
         }
         closeRemovedAllStarStoryBranch();
         if (snap.league && typeof NBA2K_DATA !== 'undefined') {
+          var savedTeams = snap.leagueTeams || Object.keys(snap.league).filter(function(team) { return Array.isArray(snap.league[team]) && snap.league[team].length > 0; });
+          NBA2K_TEAMS.splice.apply(NBA2K_TEAMS,[0,NBA2K_TEAMS.length].concat(savedTeams));
           Object.keys(NBA2K_DATA).forEach(function(k) { delete NBA2K_DATA[k]; });
           Object.assign(NBA2K_DATA, snap.league);
           if (typeof applyCurrentPlayerChineseDisplayFixes === 'function') applyCurrentPlayerChineseDisplayFixes();
@@ -18242,6 +18309,8 @@ function draftPosToCode(pos) {
 function applyDraftClass2026() {
   if (!NBA2K_DATA || NBA2K_DATA._draftClass2026Applied) return;
   NBA2K_DATA._draftClass2026Applied = true;
+  // 官方现代快照已经包含在队的新秀，不重复注入旧的选秀预设。
+  if (window.PP_CURRENT_ROSTER_META && PP_CURRENT_ROSTER_META.season === '2026-27') return;
   var attrKeys = SIM_CONFIG.ATTR_LIST || ['threePT','MID','FIN','DNK','HAN','PAS','PDEF','IDEF','BLK','REB','ATH','STR','CLU'];
   var byTeam = {};
   DRAFT_CLASS_2026.forEach(function(p) {

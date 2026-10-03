@@ -100,7 +100,7 @@ const html = read('nba-perfect-player.html');
 const eraMode = read('assets/js/perfect-player-era-mode.js');
 const extension = read('assets/js/perfect-player-hupu-extensions.js');
 const sw = read('sw.js');
-assert.ok(html.indexOf('player-rating-calibration.js?v=20261001-season-stars-v5') < html.indexOf('perfect-player-era-mode.js?v=20261001-opening-roster-v34'));
+assert.ok(html.indexOf('player-rating-calibration.js?v=20261001-season-stars-v5') < html.indexOf('perfect-player-era-mode.js?v=20261004-opening-roster-v36'));
 assert.match(html, /current-player-ratings-2026\.js\?v=20260826-rating-v1/);
 assert.doesNotMatch(eraMode, /ERA_PLAYABLE_OVR_FLOOR|applyYoungStarOpeningFloor/);
 assert.match(eraMode, /_sourceOvr: Number\(rating\.sourceOvr\)/);
@@ -110,6 +110,6 @@ assert.match(extension, /findRuntimeCurrentRating\(teamAbbr, playerName\)/);
 assert.match(extension, /NBA_CURRENT_RATINGS_2026 runtime source/);
 assert.match(extension, /calibration\.peakFor\(playerName, sourceRating\)/);
 assert.match(sw, /player-rating-calibration\.js\?v=20261001-season-stars-v5/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261003-era-economy-v31'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-pc-rosters-v35'/);
 
 console.log('✓ rating calibration', JSON.stringify({ distributions, amare, draftRows:everyDraftRow.length }));

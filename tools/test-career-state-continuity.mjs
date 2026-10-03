@@ -201,4 +201,66 @@ for (const legacy of [false, true]) {
   assert.equal(JSON.parse(f.storage.get(c.MANUAL_SAVE_KEYS[0])).state.career.checkpoint, 'recovered');
 }
 
-console.log('Career state continuity passed: live injury modifiers, legacy risk migration, coach/system consistency, new and old pending season saves, offseason queues, prologue restoration, request-ordered saves, rapid loading and write failure recovery.');
+{
+  const f = fixture(), c = f.context;
+  c.captureBaseLeagueRoster();
+  f.state.mode='legend'; f.state.eraStart=2003; c.applyLegendEraLeague();
+  assert.equal(f.teams.length,29);
+  await c.manualSaveGame(1);
+  const raw=f.storage.get(c.MANUAL_SAVE_KEYS[0]);
+  c.restoreBaseLeagueRoster();
+  assert.equal(f.teams.length,30);
+  await c.manualLoadGame(1);
+  assert.equal(f.teams.length,29, 'the saved active-team list must survive restoration');
+  assert.ok(!f.teams.includes('CHA'));
+  const legacy=JSON.parse(raw); delete legacy.leagueTeams;
+  f.storage.set(c.MANUAL_SAVE_KEYS[0],JSON.stringify(legacy));
+  await c.manualLoadGame(1);
+  assert.equal(f.teams.length,29, 'older saves infer active teams from their own saved league');
+}
+
+{
+  const f = fixture(), c = f.context, callbacks=[], elements=new Map();
+  c.document.getElementById = id => {
+    if (!['simStatus','simRecord','simDotGrid','simInfo'].includes(id)) return f.modals.get(id) || null;
+    if(!elements.has(id))elements.set(id,{style:{},innerHTML:'',textContent:'',className:''});
+    return elements.get(id);
+  };
+  c.ensurePulseBoard=c.refreshPulseBoard=()=>{};
+  c.checkRandomEvents=c.checkSeasonBranchEvent=()=>null;
+  c.PP_CAREER_EVENTS.pauseForCoach=()=>false;
+  const keys=['pts','reb','ast','stl','blk','tov','fgm','fga','ftm','fta','threeM','threeA','games','mins'];
+  f.state.season={wins:0,losses:0,games:[],standings:{},playerStats:Object.fromEntries(keys.map(k=>[k,0])),playoffStats:{games:0},events:{injuryGamesLeft:0,suspensionGamesLeft:0,triggeredIds:[],storyTimeline:[]},isUserStarter:true};
+  c.initStandings(); c.buildRealSchedule();
+  f.state.season.schedule=f.state.season.schedule.slice(0,2);
+  f.timers.length=0;
+  c.liveOrSkipUserPack=()=>{throw new Error('fixture pack failure');};
+  c.quickSimAllGames();
+  assert.match(elements.get('simStatus').innerHTML,/重试本场/);
+  assert.equal(f.state.season.schedule[0].simulated,false,'an error must not silently skip an unfinished match');
+  c.liveOrSkipUserPack=(opponent,options,done)=>{callbacks.push({opponent,options,done});return true;};
+  c.quickSimAllGames(); c.quickSimAllGames();
+  assert.equal(callbacks.length,1,'repeated launch must not create parallel simulation callbacks');
+  const first=callbacks[0], pack=c.skipUserGamePack(first.opponent,false);
+  first.done(pack);
+  assert.equal(f.state.season.games.length,1);
+  const settled=JSON.stringify({season:f.state.season,money:c.PP_CAREER_EVENTS.getState().money});
+  first.done(pack);
+  assert.equal(JSON.stringify({season:f.state.season,money:c.PP_CAREER_EVENTS.getState().money}),settled,'a repeated result callback must not duplicate stats or income');
+  f.timers.shift()();
+  assert.equal(callbacks.length,2);
+  const stale=callbacks[1], stalePack=c.skipUserGamePack(stale.opponent,false);
+  assert.equal(await c.manualSaveGame(1),true);
+  await c.manualLoadGame(1);
+  assert.equal(f.toasts.at(-1),'已恢复上局游戏');
+  const restored=JSON.stringify({season:f.state.season,money:c.PP_CAREER_EVENTS.getState().money});
+  stale.done(stalePack);
+  assert.equal(JSON.stringify({season:f.state.season,money:c.PP_CAREER_EVENTS.getState().money}),restored,'a result from before loading must not mutate the restored career');
+  c.quickSimAllGames();
+  assert.equal(callbacks.length,3,'the restored season can start a fresh run');
+  callbacks[2].done(c.skipUserGamePack(callbacks[2].opponent,false));
+  assert.equal(f.state.season.games.length,2);
+  assert.equal(f.state.season.playerStats.games,2);
+}
+
+console.log('Career state continuity passed: injury and coach consistency, executable pending saves, ordered writes, historical league restoration, retryable failures, duplicate-run prevention and stale-result cancellation.');

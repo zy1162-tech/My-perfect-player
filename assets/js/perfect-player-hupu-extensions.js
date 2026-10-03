@@ -256,7 +256,8 @@
 
   window.PERFECT_PLAYER_PHOTO_BY_NAME = window.PERFECT_PLAYER_PHOTO_BY_NAME || {};
   window.PERFECT_PLAYER_DISPLAY_BY_NAME = window.PERFECT_PLAYER_DISPLAY_BY_NAME || {};
-  window.PERFECT_PLAYER_BUILD_DATA = window.PERFECT_PLAYER_BUILD_DATA || {};
+  // 兼容旧诊断入口，但名单本身始终由比赛联盟持有，避免旧 CSV 覆盖转会后的归属。
+  window.PERFECT_PLAYER_BUILD_DATA = typeof NBA2K_DATA !== 'undefined' ? NBA2K_DATA : {};
   window.PERFECT_PLAYER_HISTORICAL_SURPRISE_DATA = window.PERFECT_PLAYER_HISTORICAL_SURPRISE_DATA || {};
   // 本地直接打开 file:// 页面时浏览器会拦截 fetch(JSON)。V3 优先使用预载的 JS 球员库，
   // 部署到网站且未提供预载数据时仍保留 JSON fetch 作为兼容后备。
@@ -289,7 +290,6 @@
           window.PERFECT_PLAYER_DISPLAY_BY_NAME[player.name] = player.cname || player.name;
           report[player._sourceKind] += 1;
         });
-        window.PERFECT_PLAYER_BUILD_DATA[abbr] = converted;
         window.PERFECT_PLAYER_HISTORICAL_SURPRISE_DATA[abbr] = historicalSurprises;
         report.teams += 1;
         if (sourceTeam.currentCount === 12 && converted.length === 12) report.teamsWithTarget12 += 1;

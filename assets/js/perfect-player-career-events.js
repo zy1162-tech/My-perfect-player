@@ -631,7 +631,8 @@ function renderCareerExperienceStrip(pregame) {
   var body = ev.injuryGamesLeft > 0 ? '休战 ' + ev.injuryGamesLeft + ' 场' : fx.limit < 42 ? '限时 ' + fx.limit + ' 分钟' : load >= 2 ? '额外负荷' : load < 0 ? '恢复安排' : '状态正常';
   var role = getCareerExperienceRole(), chemistry = getCareerExperienceChemistry();
   var planned = STATE.season && typeof getPlayerRotationPlan === 'function' ? Math.round(getPlayerRotationPlan(STATE.attrs, STATE.position, !!STATE.season.isPlayoffs)) : null;
-  var cards = '<div class="ce-status-grid"><div><small>身体状态</small><strong>' + body + '</strong><span>负荷 ' + load + '</span></div>' +
+  var risk = typeof getSeasonInjuryEventRate === 'function' ? getSeasonInjuryEventRate().toFixed(1) : '—';
+  var cards = '<div class="ce-status-grid"><div><small>身体状态</small><strong>' + body + '</strong><span>负荷 ' + load + ' · 每场伤病率 ' + risk + '%</span></div>' +
     '<div><small>球队地位</small><strong>' + role + '</strong><span>' + (planned == null ? '等待轮换安排' : '轮换计划 ' + planned + ' 分钟') + '</span></div>' +
     '<div><small>场上默契</small><strong>' + (chemistry >= 6 ? '配合成熟' : chemistry >= 2 ? '逐渐熟悉' : '磨合中') + '</strong><span>' + chemistry + '/10</span></div>' +
     '<div><small>场外收入 · 模拟</small><strong>' + careerExperienceMoney(e.money.cash) + '</strong><span>累计收入 ' + careerExperienceMoney(e.money.earned) + '</span></div></div>';
@@ -642,7 +643,10 @@ function renderCareerExperienceStrip(pregame) {
   var coach = e.coaches[STATE.careerTeam];
   var salaryMarket = getCareerSalaryMarket();
   var salaryType = { rookie:'首轮新秀合同', two_way:'双向合同', minimum:'底薪合同', market:'市场合同估值' }[e.money.contract.type];
-  return '<section id="' + (pregame ? 'career-pregame-status' : 'player-state-strip') + '" class="ce-status-strip">' + cards +
+  var playerName = typeof getHupuDisplayName === 'function' ? getHupuDisplayName() : ((typeof HUPU_USER !== 'undefined' && HUPU_USER.nickname) || '我的球员');
+  var profile = pregame ? '' : '<div class="ce-profile-stage"><img src="assets/images/ui/career-avatar-v1.png" alt="虚拟球员展示形象"><div class="ce-profile-caption"><small>MY PLAYER · 虚拟展示形象</small><h2>' + careerExperienceEscape(playerName) + '</h2><p>' + careerExperienceEscape(STATE.position) + ' · <b>OVR ' + STATE.finalOVR + '</b></p></div></div>';
+  var actions = pregame ? '' : '<nav class="ce-hub-actions" aria-label="生涯功能"><button onclick="openCareerSkillPanel(this)">球风成长<span>属性与技能</span></button><button onclick="openCareerCoachSearch()">球队与教练<span>' + careerExperienceEscape(role) + ' · 默契 ' + chemistry + '</span></button><button onclick="openCareerLedger()">场外账本<span>收入与支出</span></button></nav>';
+  return '<section id="' + (pregame ? 'career-pregame-status' : 'player-state-strip') + '" class="ce-status-strip' + (pregame ? '' : ' ce-career-hub') + '">' + profile + '<div class="ce-hub-content"><div class="ce-hub-heading"><small>CAREER OVERVIEW</small><strong>本场生涯安排</strong></div>' + cards + actions +
     '<details class="player-state-details"><summary>本场安排、收支与制服组</summary><div class="ce-details">' +
     (e.lastNote ? '<p>上次选择：' + careerExperienceEscape(e.lastNote) + '</p>' : '') +
     (e.task ? '<p>当前安排：还剩 ' + e.task.remaining + '/' + e.task.total + ' 场，已完成 ' + e.task.successful + ' 场要求。</p>' : '') +
@@ -653,7 +657,14 @@ function renderCareerExperienceStrip(pregame) {
     (salaryMarket.projected ? '。未来年份沿用 2026–27 工资环境估算' : '') + '。合同期内按已签年度工资支付，续约时重新估值。</p>' +
     '<p class="ce-note">账本从第 ' + (e.money.fromSeason + 1) + ' 赛季、第 ' + (e.money.fromGame + 1) + ' 场起记录。合约工资按常规赛球队比赛结算，伤病缺席也照常发放。</p>' +
     '<ul class="ce-ledger">' + entries + '</ul><p>' + careerExperienceEscape(coach ? '主教练：' + coach.name : '当前主教练沿用球队体系') +
-    '</p><button class="btn btn-secondary btn-sm" onclick="openCareerCoachSearch()">寻找契合球风的教练</button></div></details></section>';
+    '</p><button class="btn btn-secondary btn-sm" onclick="openCareerCoachSearch()">寻找契合球风的教练</button></div></details></div></section>';
+}
+
+function openCareerLedger() {
+  var details = document.querySelector('#player-state-strip .player-state-details');
+  if (!details) return;
+  details.open = true;
+  details.scrollIntoView({ block:'nearest', behavior:'smooth' });
 }
 
 function showCareerExperienceModal(id, title, body) {
@@ -671,8 +682,8 @@ function removeCareerExperienceModal(id) {
 }
 
 function renderCareerMatchupPlayer(player, user) {
-  var name = user ? ((typeof HUPU_USER !== 'undefined' && HUPU_USER.nickname) || '我的球员') : player.cname || player.name;
-  var visual = user ? '<svg class="ce-jersey" viewBox="0 0 160 160" aria-label="我的球衣"><path d="M45 18 25 35 10 75 35 85 38 143 122 143 125 85 150 75 135 35 115 18 102 39 58 39Z" fill="currentColor"/><path d="M58 39Q80 65 102 39" fill="none" stroke="#fff" stroke-width="5"/><text x="80" y="103" text-anchor="middle" fill="#fff" font-size="46" font-weight="900">1</text></svg>' :
+  var name = user ? (typeof getHupuDisplayName === 'function' ? getHupuDisplayName() : ((typeof HUPU_USER !== 'undefined' && HUPU_USER.nickname) || '我的球员')) : player.cname || player.name;
+  var visual = user ? '<div class="ce-user-stage"><img class="ce-user-model" src="assets/images/ui/career-avatar-v1.png" alt="虚拟球员展示形象"><span>MY PLAYER · 虚拟形象</span></div>' :
     '<div class="ce-player-photo" style="' + (typeof getPlayerHeadshotStyle === 'function' ? getPlayerHeadshotStyle(player, 128) : 'background:#fff') + '"></div>';
   var stats = user && STATE.season.playerStats ? STATE.season.playerStats : null;
   var average = stats && stats.games ? (stats.pts / stats.games).toFixed(1) + ' 分 · ' + (stats.reb / stats.games).toFixed(1) + ' 板 · ' + (stats.ast / stats.games).toFixed(1) + ' 助' : '等待本季比赛记录';

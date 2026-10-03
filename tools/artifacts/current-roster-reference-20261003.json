@@ -1,0 +1,5768 @@
+{
+  "asOf": "2026-10-03",
+  "season": "2026-27",
+  "scope": "Official team rosters during training camp, before final opening-night cuts",
+  "teams": [
+    {
+      "team": "ATL",
+      "source": "https://www.nba.com/team/1610612737/hawks",
+      "players": [
+        {
+          "name": "Keshon Gilbert",
+          "nbaId": 1642933,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 03/04/26"
+        },
+        {
+          "name": "Kobe Johnson",
+          "nbaId": 1642937,
+          "position": "G",
+          "height": "6-6",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 09/11/25"
+        },
+        {
+          "name": "Cameron Corhen",
+          "nbaId": 1643723,
+          "position": "F",
+          "height": "6-10",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 09/28/26"
+        },
+        {
+          "name": "Isaac McKneely",
+          "nbaId": 1643724,
+          "position": "G",
+          "height": "6-4",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 09/21/26"
+        },
+        {
+          "name": "RayJ Dennis",
+          "nbaId": 1642484,
+          "position": "G",
+          "height": "6-1",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 12/31/25"
+        },
+        {
+          "name": "Luguentz Dort",
+          "nbaId": 1629652,
+          "position": "G",
+          "height": "6-4",
+          "age": 27,
+          "experience": "7",
+          "acquired": "Traded from OKC on 07/19/26"
+        },
+        {
+          "name": "Jalen Johnson",
+          "nbaId": 1630552,
+          "position": "F",
+          "height": "6-8",
+          "age": 24,
+          "experience": "5",
+          "acquired": "#20 Pick in 2021 Draft"
+        },
+        {
+          "name": "Aaron Wiggins",
+          "nbaId": 1630598,
+          "position": "G",
+          "height": "6-5",
+          "age": 27,
+          "experience": "5",
+          "acquired": "Traded from OKC on 07/06/26"
+        },
+        {
+          "name": "CJ McCollum",
+          "nbaId": 203468,
+          "position": "G",
+          "height": "6-3",
+          "age": 35,
+          "experience": "13",
+          "acquired": "Traded from WAS on 01/09/26"
+        },
+        {
+          "name": "Kingston Flemings",
+          "nbaId": 1643412,
+          "position": "G",
+          "height": "6-4",
+          "age": 19,
+          "experience": "R",
+          "acquired": "#8 Pick in 2026 Draft"
+        },
+        {
+          "name": "Dyson Daniels",
+          "nbaId": 1630700,
+          "position": "G",
+          "height": "6-7",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Traded from NOP on 07/06/24"
+        },
+        {
+          "name": "Nickeil Alexander-Walker",
+          "nbaId": 1629638,
+          "position": "G",
+          "height": "6-5",
+          "age": 28,
+          "experience": "7",
+          "acquired": "Traded from MIN on 07/06/25"
+        },
+        {
+          "name": "Dorian Finney-Smith",
+          "nbaId": 1627827,
+          "position": "F",
+          "height": "6-7",
+          "age": 33,
+          "experience": "10",
+          "acquired": "Traded from CHA on 09/22/26"
+        },
+        {
+          "name": "Henri Veesaar",
+          "nbaId": 1643539,
+          "position": "C",
+          "height": "7-0",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from LAC on 06/24/26"
+        },
+        {
+          "name": "Asa Newell",
+          "nbaId": 1642854,
+          "position": "F",
+          "height": "6-10",
+          "age": 20,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from NOP on 06/25/25"
+        },
+        {
+          "name": "Onyeka Okongwu",
+          "nbaId": 1630168,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 25,
+          "experience": "6",
+          "acquired": "#6 Pick in 2020 Draft"
+        },
+        {
+          "name": "Mouhamed Gueye",
+          "nbaId": 1631243,
+          "position": "F",
+          "height": "6-11",
+          "age": 23,
+          "experience": "3",
+          "acquired": "Draft Rights Traded from BOS on 06/28/23"
+        },
+        {
+          "name": "Zuby Ejiofor",
+          "nbaId": 1643544,
+          "position": "F",
+          "height": "6-9",
+          "age": 22,
+          "experience": "R",
+          "acquired": "#23 Pick in 2026 Draft"
+        },
+        {
+          "name": "Jalen Wilson",
+          "nbaId": 1630592,
+          "position": "F",
+          "height": "6-6",
+          "age": 25,
+          "experience": "3",
+          "acquired": "Signed on 07/22/26"
+        },
+        {
+          "name": "Corey Kispert",
+          "nbaId": 1630557,
+          "position": "F",
+          "height": "6-6",
+          "age": 27,
+          "experience": "5",
+          "acquired": "Traded from WAS on 01/09/26"
+        },
+        {
+          "name": "Jock Landale",
+          "nbaId": 1629111,
+          "position": "C",
+          "height": "6-11",
+          "age": 30,
+          "experience": "5",
+          "acquired": "Traded from UTA on 02/05/26"
+        }
+      ]
+    },
+    {
+      "team": "BKN",
+      "source": "https://www.nba.com/team/1610612751/nets",
+      "players": [
+        {
+          "name": "Josh Minott",
+          "nbaId": 1631169,
+          "position": "F",
+          "height": "6-8",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Traded from BOS on 02/05/26"
+        },
+        {
+          "name": "Mikel Brown Jr.",
+          "nbaId": 1643414,
+          "position": "G",
+          "height": "6-5",
+          "age": 20,
+          "experience": "R",
+          "acquired": "#6 Pick in 2026 Draft"
+        },
+        {
+          "name": "Keon Ellis",
+          "nbaId": 1631165,
+          "position": "G",
+          "height": "6-4",
+          "age": 26,
+          "experience": "4",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Danny Wolf",
+          "nbaId": 1642874,
+          "position": "F",
+          "height": "6-11",
+          "age": 22,
+          "experience": "1",
+          "acquired": "#27 Pick in 2025 Draft"
+        },
+        {
+          "name": "Drake Powell",
+          "nbaId": 1642962,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 21,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from ATL on 07/07/25"
+        },
+        {
+          "name": "Egor Dëmin",
+          "nbaId": 1642856,
+          "position": "G",
+          "height": "6-8",
+          "age": 20,
+          "experience": "1",
+          "acquired": "#8 Pick in 2025 Draft"
+        },
+        {
+          "name": "Joshua Jefferson",
+          "nbaId": 1643538,
+          "position": "F",
+          "height": "6-9",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from MIN on 07/10/26"
+        },
+        {
+          "name": "Nolan Traore",
+          "nbaId": 1642849,
+          "position": "G",
+          "height": "6-3",
+          "age": 20,
+          "experience": "1",
+          "acquired": "#19 Pick in 2025 Draft"
+        },
+        {
+          "name": "Ben Humrichous",
+          "nbaId": 1643750,
+          "position": "F",
+          "height": "6-9",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 09/23/26"
+        },
+        {
+          "name": "Moritz Wagner",
+          "nbaId": 1629021,
+          "position": "F-C",
+          "height": "6-11",
+          "age": 29,
+          "experience": "8",
+          "acquired": "Signed on 07/31/26"
+        },
+        {
+          "name": "Terance Mann",
+          "nbaId": 1629611,
+          "position": "G-F",
+          "height": "6-6",
+          "age": 29,
+          "experience": "7",
+          "acquired": "Traded from ATL on 07/07/25"
+        },
+        {
+          "name": "Grant Nelson",
+          "nbaId": 1641761,
+          "position": "F",
+          "height": "7-0",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 10/15/25"
+        },
+        {
+          "name": "Michael Porter Jr.",
+          "nbaId": 1629008,
+          "position": "F",
+          "height": "6-10",
+          "age": 28,
+          "experience": "7",
+          "acquired": "Traded from DEN on 07/08/25"
+        },
+        {
+          "name": "Day'Ron Sharpe",
+          "nbaId": 1630549,
+          "position": "C",
+          "height": "6-10",
+          "age": 24,
+          "experience": "5",
+          "acquired": "Draft Rights Traded from PHX on 08/06/21"
+        },
+        {
+          "name": "Noah Clowney",
+          "nbaId": 1641730,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 22,
+          "experience": "3",
+          "acquired": "#21 Pick in 2023 Draft"
+        },
+        {
+          "name": "Julius Randle",
+          "nbaId": 203944,
+          "position": "F-C",
+          "height": "6-9",
+          "age": 31,
+          "experience": "12",
+          "acquired": "Traded from MIN on 07/10/26"
+        },
+        {
+          "name": "Chaney Johnson",
+          "nbaId": 1643052,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 12/26/25"
+        },
+        {
+          "name": "Tyler Bilodeau",
+          "nbaId": 1643548,
+          "position": "F",
+          "height": "6-9",
+          "age": 22,
+          "experience": "R",
+          "acquired": "#43 Pick in 2026 Draft"
+        },
+        {
+          "name": "Dain Dainja",
+          "nbaId": 1643120,
+          "position": "F",
+          "height": "6-9",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 09/23/26"
+        },
+        {
+          "name": "Ben Saraf",
+          "nbaId": 1642879,
+          "position": "G",
+          "height": "6-6",
+          "age": 20,
+          "experience": "1",
+          "acquired": "#26 Pick in 2025 Draft"
+        }
+      ]
+    },
+    {
+      "team": "BOS",
+      "source": "https://www.nba.com/team/1610612738/celtics",
+      "players": [
+        {
+          "name": "Milos Uzan",
+          "nbaId": 1642870,
+          "position": "G",
+          "height": "6-3",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 07/14/26"
+        },
+        {
+          "name": "Hayden Gray",
+          "nbaId": 1643060,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 09/23/26"
+        },
+        {
+          "name": "Tucker DeVries",
+          "nbaId": 1643620,
+          "position": null,
+          "height": null,
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 07/14/26"
+        },
+        {
+          "name": "Jayson Tatum",
+          "nbaId": 1628369,
+          "position": "F-G",
+          "height": "6-8",
+          "age": 28,
+          "experience": "9",
+          "acquired": "#3 Pick in 2017 Draft"
+        },
+        {
+          "name": "Mitchell Robinson",
+          "nbaId": 1629011,
+          "position": "C-F",
+          "height": "7-0",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Derrick White",
+          "nbaId": 1628401,
+          "position": "G",
+          "height": "6-4",
+          "age": 32,
+          "experience": "9",
+          "acquired": "Traded from SAS on 02/10/22"
+        },
+        {
+          "name": "Payton Pritchard",
+          "nbaId": 1630202,
+          "position": "G",
+          "height": "6-1",
+          "age": 28,
+          "experience": "6",
+          "acquired": "#26 Pick in 2020 Draft"
+        },
+        {
+          "name": "Chris Cenac Jr.",
+          "nbaId": 1643416,
+          "position": "F",
+          "height": "6-11",
+          "age": 19,
+          "experience": "R",
+          "acquired": "#27 Pick in 2026 Draft"
+        },
+        {
+          "name": "Paul George",
+          "nbaId": 202331,
+          "position": "F",
+          "height": "6-8",
+          "age": 36,
+          "experience": "16",
+          "acquired": "Traded from PHI on 07/06/26"
+        },
+        {
+          "name": "Ron Harper Jr.",
+          "nbaId": 1631199,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 26,
+          "experience": "4",
+          "acquired": "Signed on 09/19/25"
+        },
+        {
+          "name": "Dillon Mitchell",
+          "nbaId": 1641759,
+          "position": "F",
+          "height": "6-8",
+          "age": 23,
+          "experience": "R",
+          "acquired": "#40 Pick in 2026 Draft"
+        },
+        {
+          "name": "Devin Carter",
+          "nbaId": 1642269,
+          "position": "G",
+          "height": "6-2",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Signed on 09/14/26"
+        },
+        {
+          "name": "Jordan Walsh",
+          "nbaId": 1641775,
+          "position": "G",
+          "height": "6-6",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Draft Rights Traded from SAC on 06/28/23"
+        },
+        {
+          "name": "Hugo González",
+          "nbaId": 1642864,
+          "position": "G",
+          "height": "6-6",
+          "age": 20,
+          "experience": "1",
+          "acquired": "#28 Pick in 2025 Draft"
+        },
+        {
+          "name": "Sam Hauser",
+          "nbaId": 1630573,
+          "position": "F",
+          "height": "6-7",
+          "age": 28,
+          "experience": "5",
+          "acquired": "Signed on 08/13/21"
+        },
+        {
+          "name": "Gabe McGlothan",
+          "nbaId": 1642440,
+          "position": "F",
+          "height": "6-6",
+          "age": 27,
+          "experience": "R",
+          "acquired": "Signed on 09/23/26"
+        },
+        {
+          "name": "Mike Conley",
+          "nbaId": 201144,
+          "position": "G",
+          "height": "6-1",
+          "age": 38,
+          "experience": "19",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Luka Garza",
+          "nbaId": 1630568,
+          "position": "C",
+          "height": "6-10",
+          "age": 27,
+          "experience": "5",
+          "acquired": "Signed on 07/07/25"
+        },
+        {
+          "name": "Baylor Scheierman",
+          "nbaId": 1631248,
+          "position": "G",
+          "height": "6-6",
+          "age": 26,
+          "experience": "2",
+          "acquired": "#30 Pick in 2024 Draft"
+        },
+        {
+          "name": "Amari Williams",
+          "nbaId": 1642873,
+          "position": "F-C",
+          "height": "6-11",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from ORL on 06/26/25"
+        },
+        {
+          "name": "Neemias Queta",
+          "nbaId": 1629674,
+          "position": "C",
+          "height": "7-0",
+          "age": 27,
+          "experience": "5",
+          "acquired": "Signed on 09/19/23"
+        }
+      ]
+    },
+    {
+      "team": "CHA",
+      "source": "https://www.nba.com/team/1610612766/hornets",
+      "players": [
+        {
+          "name": "Jarkel Joiner",
+          "nbaId": 1641935,
+          "position": "G",
+          "height": "6-1",
+          "age": 27,
+          "experience": "R",
+          "acquired": "Signed on 09/03/26"
+        },
+        {
+          "name": "Michael Ajayi",
+          "nbaId": 1642369,
+          "position": "G",
+          "height": "6-7",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Kylan Boswell",
+          "nbaId": 1643573,
+          "position": "G",
+          "height": "6-2",
+          "age": 21,
+          "experience": "R",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Wyatt Fricks",
+          "nbaId": 1643769,
+          "position": null,
+          "height": null,
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 09/28/26"
+        },
+        {
+          "name": "Royce O'Neale",
+          "nbaId": 1626220,
+          "position": "F",
+          "height": "6-6",
+          "age": 33,
+          "experience": "9",
+          "acquired": "Traded from PHX on 07/13/26"
+        },
+        {
+          "name": "Grant Williams",
+          "nbaId": 1629684,
+          "position": "F",
+          "height": "6-7",
+          "age": 27,
+          "experience": "7",
+          "acquired": "Traded from DAL on 02/08/24"
+        },
+        {
+          "name": "Coby White",
+          "nbaId": 1629632,
+          "position": "G",
+          "height": "6-4",
+          "age": 26,
+          "experience": "7",
+          "acquired": "Traded from CHI on 02/04/26"
+        },
+        {
+          "name": "Sion James",
+          "nbaId": 1642883,
+          "position": "G",
+          "height": "6-5",
+          "age": 23,
+          "experience": "1",
+          "acquired": "#33 Pick in 2025 Draft"
+        },
+        {
+          "name": "Christian Anderson",
+          "nbaId": 1643515,
+          "position": "G",
+          "height": "6-0",
+          "age": 20,
+          "experience": "R",
+          "acquired": "#18 Pick in 2026 Draft"
+        },
+        {
+          "name": "Kon Knueppel",
+          "nbaId": 1642851,
+          "position": "G-F",
+          "height": "6-6",
+          "age": 21,
+          "experience": "1",
+          "acquired": "#4 Pick in 2025 Draft"
+        },
+        {
+          "name": "Grayson Allen",
+          "nbaId": 1628960,
+          "position": "G",
+          "height": "6-3",
+          "age": 30,
+          "experience": "8",
+          "acquired": "Traded from PHX on 07/13/26"
+        },
+        {
+          "name": "Naz Reid",
+          "nbaId": 1629675,
+          "position": "C-F",
+          "height": "6-9",
+          "age": 27,
+          "experience": "7",
+          "acquired": "Traded from MIN on 07/10/26"
+        },
+        {
+          "name": "Ryan Kalkbrenner",
+          "nbaId": 1641750,
+          "position": "C",
+          "height": "7-1",
+          "age": 24,
+          "experience": "1",
+          "acquired": "#34 Pick in 2025 Draft"
+        },
+        {
+          "name": "Moussa Diabaté",
+          "nbaId": 1631217,
+          "position": "F",
+          "height": "6-10",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Signed on 07/31/24"
+        },
+        {
+          "name": "PJ Hall",
+          "nbaId": 1641790,
+          "position": "C",
+          "height": "6-8",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Signed on 12/24/25"
+        },
+        {
+          "name": "Dennis Schröder",
+          "nbaId": 203471,
+          "position": "G",
+          "height": "6-1",
+          "age": 33,
+          "experience": "13",
+          "acquired": "Traded from CLE on 08/20/26"
+        },
+        {
+          "name": "Pat Connaughton",
+          "nbaId": 1626192,
+          "position": "G",
+          "height": "6-5",
+          "age": 33,
+          "experience": "11",
+          "acquired": "Traded from MIL on 07/06/25"
+        },
+        {
+          "name": "Hannes Steinbach",
+          "nbaId": 1643419,
+          "position": "F",
+          "height": "6-11",
+          "age": 20,
+          "experience": "R",
+          "acquired": "#14 Pick in 2026 Draft"
+        },
+        {
+          "name": "Brandon Miller",
+          "nbaId": 1641706,
+          "position": "F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "3",
+          "acquired": "#2 Pick in 2023 Draft"
+        },
+        {
+          "name": "Tidjane Salaün",
+          "nbaId": 1642275,
+          "position": "F",
+          "height": "6-10",
+          "age": 21,
+          "experience": "2",
+          "acquired": "#6 Pick in 2024 Draft"
+        },
+        {
+          "name": "Liam McNeeley",
+          "nbaId": 1642862,
+          "position": "F",
+          "height": "6-7",
+          "age": 20,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from PHX on 06/30/25"
+        }
+      ]
+    },
+    {
+      "team": "CHI",
+      "source": "https://www.nba.com/team/1610612741/bulls",
+      "players": [
+        {
+          "name": "Tobe Awaka",
+          "nbaId": 1643591,
+          "position": "F",
+          "height": "6-8",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 07/03/26"
+        },
+        {
+          "name": "Jaylin Sellers",
+          "nbaId": 1643637,
+          "position": null,
+          "height": null,
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 07/03/26"
+        },
+        {
+          "name": "Noa Essengue",
+          "nbaId": 1642855,
+          "position": "F",
+          "height": "6-8",
+          "age": 19,
+          "experience": "1",
+          "acquired": "#12 Pick in 2025 Draft"
+        },
+        {
+          "name": "Josh Giddey",
+          "nbaId": 1630581,
+          "position": "G",
+          "height": "6-7",
+          "age": 23,
+          "experience": "5",
+          "acquired": "Traded from OKC on 06/21/24"
+        },
+        {
+          "name": "Dailyn Swain",
+          "nbaId": 1643517,
+          "position": "F",
+          "height": "6-7",
+          "age": 21,
+          "experience": "R",
+          "acquired": "#15 Pick in 2026 Draft"
+        },
+        {
+          "name": "Orlando Robinson",
+          "nbaId": 1631115,
+          "position": "C",
+          "height": "6-10",
+          "age": 26,
+          "experience": "4",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Caleb Wilson",
+          "nbaId": 1643410,
+          "position": "F",
+          "height": "6-10",
+          "age": 20,
+          "experience": "R",
+          "acquired": "#4 Pick in 2026 Draft"
+        },
+        {
+          "name": "Buddy Hield",
+          "nbaId": 1627741,
+          "position": "G",
+          "height": "6-4",
+          "age": 33,
+          "experience": "10",
+          "acquired": "Traded from CHA on 09/27/26"
+        },
+        {
+          "name": "Nic Claxton",
+          "nbaId": 1629651,
+          "position": "C",
+          "height": "6-11",
+          "age": 27,
+          "experience": "7",
+          "acquired": "Traded from BKN on 07/10/26"
+        },
+        {
+          "name": "Drew Peterson",
+          "nbaId": 1641809,
+          "position": "F",
+          "height": "6-8",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Leonard Miller",
+          "nbaId": 1631159,
+          "position": "F",
+          "height": "6-10",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Traded from MIN on 02/05/26"
+        },
+        {
+          "name": "Brandon Boston",
+          "nbaId": 1630527,
+          "position": "G",
+          "height": "6-6",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Zach Collins",
+          "nbaId": 1628380,
+          "position": "F-C",
+          "height": "6-9",
+          "age": 28,
+          "experience": "9",
+          "acquired": "Traded from SAS on 02/03/25"
+        },
+        {
+          "name": "Matas Buzelis",
+          "nbaId": 1641824,
+          "position": "F",
+          "height": "6-8",
+          "age": 21,
+          "experience": "2",
+          "acquired": "#11 Pick in 2024 Draft"
+        },
+        {
+          "name": "Jalen Bridges",
+          "nbaId": 1641779,
+          "position": "F",
+          "height": "6-7",
+          "age": 25,
+          "experience": "1",
+          "acquired": "Signed on 09/30/26"
+        },
+        {
+          "name": "Isaiah Stevens",
+          "nbaId": 1641815,
+          "position": "G",
+          "height": "5-11",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 10/01/26"
+        },
+        {
+          "name": "Norman Powell",
+          "nbaId": 1626181,
+          "position": "G",
+          "height": "6-3",
+          "age": 33,
+          "experience": "11",
+          "acquired": "Signed on 07/10/26"
+        },
+        {
+          "name": "Jalen Smith",
+          "nbaId": 1630188,
+          "position": "F-C",
+          "height": "6-8",
+          "age": 26,
+          "experience": "6",
+          "acquired": "Signed on 07/08/24"
+        },
+        {
+          "name": "Tre Jones",
+          "nbaId": 1630200,
+          "position": "G",
+          "height": "6-1",
+          "age": 26,
+          "experience": "6",
+          "acquired": "Traded from SAS on 02/03/25"
+        },
+        {
+          "name": "Isaac Okoro",
+          "nbaId": 1630171,
+          "position": "F-G",
+          "height": "6-4",
+          "age": 25,
+          "experience": "6",
+          "acquired": "Traded from CLE on 07/06/25"
+        },
+        {
+          "name": "Patrick Williams",
+          "nbaId": 1630172,
+          "position": "F",
+          "height": "6-6",
+          "age": 25,
+          "experience": "6",
+          "acquired": "#4 Pick in 2020 Draft"
+        }
+      ]
+    },
+    {
+      "team": "CLE",
+      "source": "https://www.nba.com/team/1610612739/cavaliers",
+      "players": [
+        {
+          "name": "Kadary Richmond",
+          "nbaId": 1642955,
+          "position": "G",
+          "height": "6-6",
+          "age": 25,
+          "experience": "1",
+          "acquired": "Signed on 09/23/26"
+        },
+        {
+          "name": "Zack Austin",
+          "nbaId": 1643113,
+          "position": "G",
+          "height": "6-5",
+          "age": 25,
+          "experience": "R",
+          "acquired": "Signed on 09/23/26"
+        },
+        {
+          "name": "Rashaun Agee",
+          "nbaId": 1643772,
+          "position": null,
+          "height": null,
+          "age": 25,
+          "experience": "R",
+          "acquired": "Signed on 09/23/26"
+        },
+        {
+          "name": "Curtis Jones",
+          "nbaId": 1642938,
+          "position": "G",
+          "height": "6-3",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 09/23/26"
+        },
+        {
+          "name": "James Harden",
+          "nbaId": 201935,
+          "position": "G",
+          "height": "6-5",
+          "age": 37,
+          "experience": "17",
+          "acquired": "Traded from LAC on 02/04/26"
+        },
+        {
+          "name": "Thomas Bryant",
+          "nbaId": 1628418,
+          "position": "C-F",
+          "height": "6-9",
+          "age": 29,
+          "experience": "9",
+          "acquired": "Signed on 09/25/25"
+        },
+        {
+          "name": "Evan Mobley",
+          "nbaId": 1630596,
+          "position": "C",
+          "height": "6-11",
+          "age": 25,
+          "experience": "5",
+          "acquired": "#3 Pick in 2021 Draft"
+        },
+        {
+          "name": "Sam Merrill",
+          "nbaId": 1630241,
+          "position": "G",
+          "height": "6-4",
+          "age": 30,
+          "experience": "6",
+          "acquired": "Signed on 03/03/23"
+        },
+        {
+          "name": "Peyton Watson",
+          "nbaId": 1631212,
+          "position": "G",
+          "height": "6-8",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Traded from DEN on 08/20/26"
+        },
+        {
+          "name": "Craig Porter Jr.",
+          "nbaId": 1641854,
+          "position": "G",
+          "height": "6-1",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Signed on 07/03/23"
+        },
+        {
+          "name": "Riley Minix",
+          "nbaId": 1642434,
+          "position": "F",
+          "height": "6-7",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Signed on 02/13/26"
+        },
+        {
+          "name": "Meleek Thomas",
+          "nbaId": 1643509,
+          "position": "G",
+          "height": "6-5",
+          "age": 20,
+          "experience": "R",
+          "acquired": "#34 Pick in 2026 Draft"
+        },
+        {
+          "name": "Khalifa Diop",
+          "nbaId": 1631215,
+          "position": "C",
+          "height": "6-11",
+          "age": 24,
+          "experience": "R",
+          "acquired": "#39 Pick in 2022 Draft"
+        },
+        {
+          "name": "Jaylon Tyson",
+          "nbaId": 1642281,
+          "position": "G-F",
+          "height": "6-6",
+          "age": 23,
+          "experience": "2",
+          "acquired": "#20 Pick in 2024 Draft"
+        },
+        {
+          "name": "Tristan Enaruna",
+          "nbaId": 1642400,
+          "position": "F",
+          "height": "6-7",
+          "age": 25,
+          "experience": "1",
+          "acquired": "Signed on 09/26/25"
+        },
+        {
+          "name": "Tyrese Proctor",
+          "nbaId": 1642878,
+          "position": "G",
+          "height": "6-4",
+          "age": 22,
+          "experience": "1",
+          "acquired": "#49 Pick in 2025 Draft"
+        },
+        {
+          "name": "Jarrett Allen",
+          "nbaId": 1628386,
+          "position": "C",
+          "height": "6-9",
+          "age": 28,
+          "experience": "9",
+          "acquired": "Traded from BKN on 01/16/21"
+        },
+        {
+          "name": "Mario Hezonja",
+          "nbaId": 1626209,
+          "position": "F-G",
+          "height": "6-8",
+          "age": 31,
+          "experience": "5",
+          "acquired": "Signed on 07/31/26"
+        },
+        {
+          "name": "Nae'Qwan Tomlin",
+          "nbaId": 1641772,
+          "position": "F",
+          "height": "6-8",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 09/23/24"
+        },
+        {
+          "name": "Donovan Mitchell",
+          "nbaId": 1628378,
+          "position": "G",
+          "height": "6-2",
+          "age": 30,
+          "experience": "9",
+          "acquired": "Traded from UTA on 09/03/22"
+        },
+        {
+          "name": "Ernest Udeh, Jr.",
+          "nbaId": 1643640,
+          "position": "C",
+          "height": "6-11",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 07/01/26"
+        }
+      ]
+    },
+    {
+      "team": "DAL",
+      "source": "https://www.nba.com/team/1610612742/mavericks",
+      "players": [
+        {
+          "name": "Tarik Biberovic",
+          "nbaId": 1641844,
+          "position": "F",
+          "height": "6-7",
+          "age": 25,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from MEM on 07/08/26"
+        },
+        {
+          "name": "Max Christie",
+          "nbaId": 1631108,
+          "position": "G",
+          "height": "6-5",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Traded from LAL on 02/02/25"
+        },
+        {
+          "name": "John Poulakidas",
+          "nbaId": 1642967,
+          "position": "G",
+          "height": "6-6",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 02/28/26"
+        },
+        {
+          "name": "Dereck Lively II",
+          "nbaId": 1641726,
+          "position": "C",
+          "height": "7-1",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Draft Rights Traded from OKC on 07/06/23"
+        },
+        {
+          "name": "Naji Marshall",
+          "nbaId": 1630230,
+          "position": "F",
+          "height": "6-6",
+          "age": 28,
+          "experience": "6",
+          "acquired": "Signed on 07/06/24"
+        },
+        {
+          "name": "Seth Lundy",
+          "nbaId": 1641754,
+          "position": "G-F",
+          "height": "6-4",
+          "age": 26,
+          "experience": "1",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Dwight Powell",
+          "nbaId": 203939,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 35,
+          "experience": "12",
+          "acquired": "Traded from BOS on 12/18/14"
+        },
+        {
+          "name": "Marcus Sasser",
+          "nbaId": 1631204,
+          "position": "G",
+          "height": "6-1",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Traded from DET on 07/08/26"
+        },
+        {
+          "name": "Zaccharie Risacher",
+          "nbaId": 1642258,
+          "position": "F",
+          "height": "6-8",
+          "age": 21,
+          "experience": "2",
+          "acquired": "Traded from ATL on 07/19/26"
+        },
+        {
+          "name": "Kyrie Irving",
+          "nbaId": 202681,
+          "position": "G",
+          "height": "6-2",
+          "age": 34,
+          "experience": "14",
+          "acquired": "Traded from BKN on 02/06/23"
+        },
+        {
+          "name": "Jett Howard",
+          "nbaId": 1641724,
+          "position": "G",
+          "height": "6-8",
+          "age": 23,
+          "experience": "3",
+          "acquired": "Signed on 07/20/26"
+        },
+        {
+          "name": "Morez Johnson Jr.",
+          "nbaId": 1643516,
+          "position": "F",
+          "height": "6-9",
+          "age": 20,
+          "experience": "R",
+          "acquired": "#9 Pick in 2026 Draft"
+        },
+        {
+          "name": "Caleb Martin",
+          "nbaId": 1628997,
+          "position": "F",
+          "height": "6-5",
+          "age": 31,
+          "experience": "7",
+          "acquired": "Traded from PHI on 02/04/25"
+        },
+        {
+          "name": "Daniel Gafford",
+          "nbaId": 1629655,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 28,
+          "experience": "7",
+          "acquired": "Traded from WAS on 02/08/24"
+        },
+        {
+          "name": "P.J. Washington",
+          "nbaId": 1629023,
+          "position": "F",
+          "height": "6-7",
+          "age": 28,
+          "experience": "7",
+          "acquired": "Traded from CHA on 02/08/24"
+        },
+        {
+          "name": "Moussa Cisse",
+          "nbaId": 1630619,
+          "position": "C",
+          "height": "6-11",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 07/08/25"
+        },
+        {
+          "name": "Cooper Flagg",
+          "nbaId": 1642843,
+          "position": "F",
+          "height": "6-9",
+          "age": 19,
+          "experience": "1",
+          "acquired": "#1 Pick in 2025 Draft"
+        },
+        {
+          "name": "Tobi Lawal",
+          "nbaId": 1643588,
+          "position": "F",
+          "height": "6-8",
+          "age": 23,
+          "experience": "R",
+          "acquired": "#48 Pick in 2026 Draft"
+        },
+        {
+          "name": "Santi Aldama",
+          "nbaId": 1630583,
+          "position": "F-C",
+          "height": "7-0",
+          "age": 25,
+          "experience": "5",
+          "acquired": "Traded from MEM on 07/08/26"
+        },
+        {
+          "name": "Sergio de Larrea",
+          "nbaId": 1643547,
+          "position": "G",
+          "height": "6-5",
+          "age": 20,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from LAL on 06/24/26"
+        }
+      ]
+    },
+    {
+      "team": "DEN",
+      "source": "https://www.nba.com/team/1610612743/nuggets",
+      "players": [
+        {
+          "name": "Coleman Hawkins",
+          "nbaId": 1641746,
+          "position": "F",
+          "height": "6-10",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 10/08/25"
+        },
+        {
+          "name": "Dane Goodwin",
+          "nbaId": 1641863,
+          "position": "G",
+          "height": "6-6",
+          "age": 26,
+          "experience": "R",
+          "acquired": "Signed on 09/18/25"
+        },
+        {
+          "name": "Christian Braun",
+          "nbaId": 1631128,
+          "position": "G",
+          "height": "6-6",
+          "age": 25,
+          "experience": "4",
+          "acquired": "#21 Pick in 2022 Draft"
+        },
+        {
+          "name": "Cam Whitmore",
+          "nbaId": 1641715,
+          "position": "F",
+          "height": "6-6",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Signed on 09/18/26"
+        },
+        {
+          "name": "Julian Strawther",
+          "nbaId": 1631124,
+          "position": "G",
+          "height": "6-6",
+          "age": 24,
+          "experience": "3",
+          "acquired": "Draft Rights Traded from IND on 06/23/23"
+        },
+        {
+          "name": "Marvin Bagley III",
+          "nbaId": 1628963,
+          "position": "F",
+          "height": "6-10",
+          "age": 27,
+          "experience": "8",
+          "acquired": "Signed on 07/15/26"
+        },
+        {
+          "name": "Tyus Jones",
+          "nbaId": 1626145,
+          "position": "G",
+          "height": "6-0",
+          "age": 30,
+          "experience": "11",
+          "acquired": "Signed on 03/05/26"
+        },
+        {
+          "name": "Trevon Brazile",
+          "nbaId": 1642350,
+          "position": "F",
+          "height": "6-10",
+          "age": 23,
+          "experience": "R",
+          "acquired": "#35 Pick in 2026 Draft"
+        },
+        {
+          "name": "Ryan Nembhard",
+          "nbaId": 1642948,
+          "position": "G",
+          "height": "5-11",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 09/30/26"
+        },
+        {
+          "name": "DeMar DeRozan",
+          "nbaId": 201942,
+          "position": "G-F",
+          "height": "6-6",
+          "age": 37,
+          "experience": "17",
+          "acquired": "Signed on 09/08/26"
+        },
+        {
+          "name": "Alpha Diallo",
+          "nbaId": 1643813,
+          "position": "G",
+          "height": "6-7",
+          "age": 29,
+          "experience": "R",
+          "acquired": "Signed on 07/13/26"
+        },
+        {
+          "name": "Bryce Hopkins",
+          "nbaId": 1643624,
+          "position": "F",
+          "height": "6-7",
+          "age": 24,
+          "experience": "R",
+          "acquired": "#49 Pick in 2026 Draft"
+        },
+        {
+          "name": "DaRon Holmes II",
+          "nbaId": 1641747,
+          "position": "F",
+          "height": "6-9",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from PHX on 06/26/24"
+        },
+        {
+          "name": "Emanuel Miller",
+          "nbaId": 1641801,
+          "position": "F",
+          "height": "6-5",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Signed on 09/24/26"
+        },
+        {
+          "name": "Nikola Jokić",
+          "nbaId": 203999,
+          "position": "C",
+          "height": "6-11",
+          "age": 31,
+          "experience": "11",
+          "acquired": "#41 Pick in 2014 Draft"
+        },
+        {
+          "name": "Lonnie Walker IV",
+          "nbaId": 1629022,
+          "position": "G-F",
+          "height": "6-4",
+          "age": 27,
+          "experience": "7",
+          "acquired": "Signed on 09/08/26"
+        },
+        {
+          "name": "Spencer Jones",
+          "nbaId": 1642461,
+          "position": "F",
+          "height": "6-7",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 07/30/24"
+        },
+        {
+          "name": "Zeke Nnaji",
+          "nbaId": 1630192,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 25,
+          "experience": "6",
+          "acquired": "#22 Pick in 2020 Draft"
+        },
+        {
+          "name": "Cameron Johnson",
+          "nbaId": 1629661,
+          "position": "F",
+          "height": "6-8",
+          "age": 30,
+          "experience": "7",
+          "acquired": "Traded from BKN on 07/08/25"
+        },
+        {
+          "name": "Jamal Murray",
+          "nbaId": 1627750,
+          "position": "G",
+          "height": "6-4",
+          "age": 29,
+          "experience": "10",
+          "acquired": "#7 Pick in 2016 Draft"
+        },
+        {
+          "name": "Aaron Gordon",
+          "nbaId": 203932,
+          "position": "F",
+          "height": "6-8",
+          "age": 31,
+          "experience": "12",
+          "acquired": "Traded from ORL on 03/25/21"
+        }
+      ]
+    },
+    {
+      "team": "DET",
+      "source": "https://www.nba.com/team/1610612765/pistons",
+      "players": [
+        {
+          "name": "Ugonna Onyenso",
+          "nbaId": 1642391,
+          "position": "C",
+          "height": "6-11",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from NYK on 06/24/26"
+        },
+        {
+          "name": "John Ukomadu",
+          "nbaId": 1642578,
+          "position": "F",
+          "height": "6-7",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 09/17/25"
+        },
+        {
+          "name": "Brice Williams",
+          "nbaId": 1642924,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 25,
+          "experience": "R",
+          "acquired": "Signed on 09/17/25"
+        },
+        {
+          "name": "Jalen Duren",
+          "nbaId": 1631105,
+          "position": "C",
+          "height": "6-10",
+          "age": 22,
+          "experience": "4",
+          "acquired": "Draft Rights Traded from NYK on 07/06/22"
+        },
+        {
+          "name": "Cade Cunningham",
+          "nbaId": 1630595,
+          "position": "G",
+          "height": "6-6",
+          "age": 25,
+          "experience": "5",
+          "acquired": "#1 Pick in 2021 Draft"
+        },
+        {
+          "name": "Isaac Jones",
+          "nbaId": 1642403,
+          "position": "F",
+          "height": "6-8",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Awarded on Waivers on 11/06/25"
+        },
+        {
+          "name": "Ronald Holland II",
+          "nbaId": 1641842,
+          "position": "F",
+          "height": "6-8",
+          "age": 21,
+          "experience": "2",
+          "acquired": "#5 Pick in 2024 Draft"
+        },
+        {
+          "name": "Paul Reed",
+          "nbaId": 1630194,
+          "position": "F",
+          "height": "6-9",
+          "age": 27,
+          "experience": "6",
+          "acquired": "Awarded on Waivers on 07/09/24"
+        },
+        {
+          "name": "Chaz Lanier",
+          "nbaId": 1642404,
+          "position": "G",
+          "height": "6-3",
+          "age": 24,
+          "experience": "1",
+          "acquired": "#37 Pick in 2025 Draft"
+        },
+        {
+          "name": "Ausar Thompson",
+          "nbaId": 1641709,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "3",
+          "acquired": "#5 Pick in 2023 Draft"
+        },
+        {
+          "name": "Taurean Prince",
+          "nbaId": 1627752,
+          "position": "F",
+          "height": "6-6",
+          "age": 32,
+          "experience": "10",
+          "acquired": "Traded from MIL on 07/08/26"
+        },
+        {
+          "name": "Elijah Harkless",
+          "nbaId": 1641989,
+          "position": "G",
+          "height": "6-3",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Signed on 07/08/26"
+        },
+        {
+          "name": "Isaiah Joe",
+          "nbaId": 1630198,
+          "position": "G",
+          "height": "6-4",
+          "age": 27,
+          "experience": "6",
+          "acquired": "Traded from OKC on 07/06/26"
+        },
+        {
+          "name": "John Collins",
+          "nbaId": 1628381,
+          "position": "F-C",
+          "height": "6-9",
+          "age": 29,
+          "experience": "9",
+          "acquired": "Traded from LAC on 07/08/26"
+        },
+        {
+          "name": "Ebuka Okorie",
+          "nbaId": 1643536,
+          "position": "G",
+          "height": "6-2",
+          "age": 19,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from MEM on 06/24/26"
+        },
+        {
+          "name": "Daniss Jenkins",
+          "nbaId": 1642450,
+          "position": "G",
+          "height": "6-4",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 07/06/24"
+        },
+        {
+          "name": "Kevin Huerter",
+          "nbaId": 1628989,
+          "position": "G-F",
+          "height": "6-6",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Traded from CHI on 02/03/26"
+        },
+        {
+          "name": "Javonte Green",
+          "nbaId": 1629750,
+          "position": "G",
+          "height": "6-5",
+          "age": 33,
+          "experience": "7",
+          "acquired": "Signed on 08/14/25"
+        },
+        {
+          "name": "Tolu Smith",
+          "nbaId": 1642449,
+          "position": "F",
+          "height": "6-11",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Signed on 09/17/24"
+        },
+        {
+          "name": "Duncan Robinson",
+          "nbaId": 1629130,
+          "position": "F",
+          "height": "6-7",
+          "age": 32,
+          "experience": "8",
+          "acquired": "Traded from MIA on 07/07/25"
+        }
+      ]
+    },
+    {
+      "team": "GSW",
+      "source": "https://www.nba.com/team/1610612744/warriors",
+      "players": [
+        {
+          "name": "Gary Payton II",
+          "nbaId": 1627780,
+          "position": "G",
+          "height": "6-2",
+          "age": 33,
+          "experience": "10",
+          "acquired": "Traded from POR on 02/09/23"
+        },
+        {
+          "name": "Yaxel Lendeborg",
+          "nbaId": 1642865,
+          "position": "F",
+          "height": "6-9",
+          "age": 24,
+          "experience": "R",
+          "acquired": "#11 Pick in 2026 Draft"
+        },
+        {
+          "name": "Brandin Podziemski",
+          "nbaId": 1641764,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "3",
+          "acquired": "#19 Pick in 2023 Draft"
+        },
+        {
+          "name": "Will Richard",
+          "nbaId": 1642954,
+          "position": "G",
+          "height": "6-3",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from MEM on 07/06/25"
+        },
+        {
+          "name": "Moses Moody",
+          "nbaId": 1630541,
+          "position": "G",
+          "height": "6-5",
+          "age": 24,
+          "experience": "5",
+          "acquired": "#14 Pick in 2021 Draft"
+        },
+        {
+          "name": "Kristaps Porziņģis",
+          "nbaId": 204001,
+          "position": "F-C",
+          "height": "7-2",
+          "age": 31,
+          "experience": "11",
+          "acquired": "Traded from ATL on 02/05/26"
+        },
+        {
+          "name": "De'Anthony Melton",
+          "nbaId": 1629001,
+          "position": "G",
+          "height": "6-2",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Signed on 10/01/25"
+        },
+        {
+          "name": "Jimmy Butler III",
+          "nbaId": 202710,
+          "position": "F",
+          "height": "6-6",
+          "age": 37,
+          "experience": "15",
+          "acquired": "Traded from MIA on 02/06/25"
+        },
+        {
+          "name": "Brandon Williams",
+          "nbaId": 1630314,
+          "position": "G",
+          "height": "6-1",
+          "age": 26,
+          "experience": "4",
+          "acquired": "Signed on 08/26/26"
+        },
+        {
+          "name": "Gui Santos",
+          "nbaId": 1630611,
+          "position": "F",
+          "height": "6-7",
+          "age": 24,
+          "experience": "3",
+          "acquired": "#55 Pick in 2022 Draft"
+        },
+        {
+          "name": "LJ Cryer",
+          "nbaId": 1643018,
+          "position": "G",
+          "height": "6-0",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 09/29/25"
+        },
+        {
+          "name": "Al Horford",
+          "nbaId": 201143,
+          "position": "C",
+          "height": "6-8",
+          "age": 40,
+          "experience": "19",
+          "acquired": "Signed on 10/01/25"
+        },
+        {
+          "name": "Dalen Terry",
+          "nbaId": 1631207,
+          "position": "F",
+          "height": "6-6",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Signed on 08/27/26"
+        },
+        {
+          "name": "Alex Toohey",
+          "nbaId": 1642893,
+          "position": "F",
+          "height": "6-8",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from PHX on 07/06/25"
+        },
+        {
+          "name": "Draymond Green",
+          "nbaId": 203110,
+          "position": "F-C",
+          "height": "6-6",
+          "age": 36,
+          "experience": "14",
+          "acquired": "#35 Pick in 2012 Draft"
+        },
+        {
+          "name": "Miles Kelly",
+          "nbaId": 1642939,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "Charles Bassey",
+          "nbaId": 1629646,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 25,
+          "experience": "5",
+          "acquired": "Signed on 04/05/26"
+        },
+        {
+          "name": "Stephen Curry",
+          "nbaId": 201939,
+          "position": "G",
+          "height": "6-2",
+          "age": 38,
+          "experience": "17",
+          "acquired": "#7 Pick in 2009 Draft"
+        },
+        {
+          "name": "Georges Niang",
+          "nbaId": 1627777,
+          "position": "F",
+          "height": "6-6",
+          "age": 33,
+          "experience": "9",
+          "acquired": "Signed on 08/25/26"
+        },
+        {
+          "name": "Malevy Leons",
+          "nbaId": 1642502,
+          "position": "F",
+          "height": "6-9",
+          "age": 27,
+          "experience": "2",
+          "acquired": "Signed on 12/08/25"
+        },
+        {
+          "name": "Graham Ike",
+          "nbaId": 1643633,
+          "position": "F-C",
+          "height": "6-9",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 09/21/26"
+        }
+      ]
+    },
+    {
+      "team": "HOU",
+      "source": "https://www.nba.com/team/1610612745/rockets",
+      "players": [
+        {
+          "name": "Sean Pedulla",
+          "nbaId": 1642951,
+          "position": "G",
+          "height": "6-1",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 08/17/26"
+        },
+        {
+          "name": "Quadir Copeland",
+          "nbaId": 1643595,
+          "position": "G",
+          "height": "6-6",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 07/07/26"
+        },
+        {
+          "name": "Amen Thompson",
+          "nbaId": 1641708,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "3",
+          "acquired": "#4 Pick in 2023 Draft"
+        },
+        {
+          "name": "Bruce Thornton",
+          "nbaId": 1643570,
+          "position": "G",
+          "height": "6-2",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from NYK on 06/24/26"
+        },
+        {
+          "name": "Julian Phillips",
+          "nbaId": 1641763,
+          "position": "F",
+          "height": "6-6",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Signed on 07/24/26"
+        },
+        {
+          "name": "Fred VanVleet",
+          "nbaId": 1627832,
+          "position": "G",
+          "height": "6-0",
+          "age": 32,
+          "experience": "9",
+          "acquired": "Signed on 07/07/23"
+        },
+        {
+          "name": "Kevin Durant",
+          "nbaId": 201142,
+          "position": "F",
+          "height": "6-11",
+          "age": 38,
+          "experience": "19",
+          "acquired": "Traded from PHX on 07/06/25"
+        },
+        {
+          "name": "Jae'Sean Tate",
+          "nbaId": 1630256,
+          "position": "F",
+          "height": "6-4",
+          "age": 30,
+          "experience": "6",
+          "acquired": "Signed on 11/25/20"
+        },
+        {
+          "name": "Jabari Smith Jr.",
+          "nbaId": 1631095,
+          "position": "F",
+          "height": "6-11",
+          "age": 23,
+          "experience": "4",
+          "acquired": "#3 Pick in 2022 Draft"
+        },
+        {
+          "name": "Steven Adams",
+          "nbaId": 203500,
+          "position": "C",
+          "height": "6-11",
+          "age": 33,
+          "experience": "13",
+          "acquired": "Traded from MEM on 02/01/24"
+        },
+        {
+          "name": "Reed Sheppard",
+          "nbaId": 1642263,
+          "position": "G",
+          "height": "6-2",
+          "age": 22,
+          "experience": "2",
+          "acquired": "#3 Pick in 2024 Draft"
+        },
+        {
+          "name": "Tari Eason",
+          "nbaId": 1631106,
+          "position": "F",
+          "height": "6-8",
+          "age": 25,
+          "experience": "4",
+          "acquired": "#17 Pick in 2022 Draft"
+        },
+        {
+          "name": "Isaiah Crawford",
+          "nbaId": 1642384,
+          "position": "F",
+          "height": "6-6",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Signed on 07/26/25"
+        },
+        {
+          "name": "Alperen Sengun",
+          "nbaId": 1630578,
+          "position": "C",
+          "height": "6-11",
+          "age": 24,
+          "experience": "5",
+          "acquired": "Draft Rights Traded from OKC on 07/30/21"
+        },
+        {
+          "name": "Clint Capela",
+          "nbaId": 203991,
+          "position": "C",
+          "height": "6-10",
+          "age": 32,
+          "experience": "12",
+          "acquired": "Traded from ATL on 07/06/25"
+        },
+        {
+          "name": "Bogdan Bogdanović",
+          "nbaId": 203992,
+          "position": "G",
+          "height": "6-5",
+          "age": 34,
+          "experience": "9",
+          "acquired": "Signed on 07/08/26"
+        },
+        {
+          "name": "Oscar Tshiebwe",
+          "nbaId": 1631131,
+          "position": "F-C",
+          "height": "6-8",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Signed on 07/23/26"
+        },
+        {
+          "name": "Marcus Smart",
+          "nbaId": 203935,
+          "position": "G",
+          "height": "6-3",
+          "age": 32,
+          "experience": "12",
+          "acquired": "Signed on 07/10/26"
+        }
+      ]
+    },
+    {
+      "team": "IND",
+      "source": "https://www.nba.com/team/1610612754/pacers",
+      "players": [
+        {
+          "name": "Keba Keita",
+          "nbaId": 1643627,
+          "position": "C",
+          "height": "6-8",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 09/18/26"
+        },
+        {
+          "name": "Rienk Mast",
+          "nbaId": 1643792,
+          "position": "C",
+          "height": "6-10",
+          "age": 25,
+          "experience": "R",
+          "acquired": "Signed on 09/18/26"
+        },
+        {
+          "name": "Tyrese Haliburton",
+          "nbaId": 1630169,
+          "position": "G",
+          "height": "6-5",
+          "age": 26,
+          "experience": "5",
+          "acquired": "Traded from SAC on 02/08/22"
+        },
+        {
+          "name": "Obi Toppin",
+          "nbaId": 1630167,
+          "position": "F",
+          "height": "6-9",
+          "age": 28,
+          "experience": "6",
+          "acquired": "Traded from NYK on 07/07/23"
+        },
+        {
+          "name": "Andrew Nembhard",
+          "nbaId": 1629614,
+          "position": "G-F",
+          "height": "6-4",
+          "age": 26,
+          "experience": "4",
+          "acquired": "#31 Pick in 2022 Draft"
+        },
+        {
+          "name": "Braden Smith",
+          "nbaId": 1643552,
+          "position": "G",
+          "height": "6-0",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from CHI on 06/24/26"
+        },
+        {
+          "name": "Jarace Walker",
+          "nbaId": 1641716,
+          "position": "F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "3",
+          "acquired": "Draft Rights Traded from WAS on 06/23/23"
+        },
+        {
+          "name": "T.J. McConnell",
+          "nbaId": 204456,
+          "position": "G",
+          "height": "6-1",
+          "age": 34,
+          "experience": "11",
+          "acquired": "Signed on 07/29/19"
+        },
+        {
+          "name": "Kelly Oubre Jr.",
+          "nbaId": 1626162,
+          "position": "F-G",
+          "height": "6-8",
+          "age": 30,
+          "experience": "11",
+          "acquired": "Signed on 07/07/26"
+        },
+        {
+          "name": "Johnny Furphy",
+          "nbaId": 1642277,
+          "position": "G",
+          "height": "6-8",
+          "age": 21,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from SAS on 07/06/24"
+        },
+        {
+          "name": "James Johnson",
+          "nbaId": 201949,
+          "position": "F",
+          "height": "6-7",
+          "age": 39,
+          "experience": "16",
+          "acquired": "Signed on 09/15/22"
+        },
+        {
+          "name": "Jalen Slawson",
+          "nbaId": 1641771,
+          "position": "F",
+          "height": "6-7",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Signed on 09/09/25"
+        },
+        {
+          "name": "Larry Nance Jr.",
+          "nbaId": 1626204,
+          "position": "F-C",
+          "height": "6-6",
+          "age": 33,
+          "experience": "11",
+          "acquired": "Signed on 07/09/26"
+        },
+        {
+          "name": "Aaron Nesmith",
+          "nbaId": 1630174,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 26,
+          "experience": "6",
+          "acquired": "Traded from BOS on 07/09/22"
+        },
+        {
+          "name": "Kobe Brown",
+          "nbaId": 1641738,
+          "position": "F",
+          "height": "6-7",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Traded from LAC on 02/05/26"
+        },
+        {
+          "name": "Ben Sheppard",
+          "nbaId": 1641767,
+          "position": "G",
+          "height": "6-6",
+          "age": 25,
+          "experience": "3",
+          "acquired": "#26 Pick in 2023 Draft"
+        },
+        {
+          "name": "Quenton Jackson",
+          "nbaId": 1631245,
+          "position": "G",
+          "height": "6-4",
+          "age": 28,
+          "experience": "4",
+          "acquired": "Signed on 03/04/24"
+        },
+        {
+          "name": "Jay Huff",
+          "nbaId": 1630643,
+          "position": "C",
+          "height": "7-1",
+          "age": 29,
+          "experience": "5",
+          "acquired": "Traded from MEM on 07/06/25"
+        },
+        {
+          "name": "Ivica Zubac",
+          "nbaId": 1627826,
+          "position": "C",
+          "height": "7-0",
+          "age": 29,
+          "experience": "10",
+          "acquired": "Traded from LAC on 02/05/26"
+        },
+        {
+          "name": "Pascal Siakam",
+          "nbaId": 1627783,
+          "position": "F",
+          "height": "6-8",
+          "age": 32,
+          "experience": "10",
+          "acquired": "Traded from TOR on 01/17/24"
+        }
+      ]
+    },
+    {
+      "team": "LAC",
+      "source": "https://www.nba.com/team/1610612746/clippers",
+      "players": [
+        {
+          "name": "Fletcher Loyer",
+          "nbaId": 1643630,
+          "position": null,
+          "height": null,
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "Keaton Wagler",
+          "nbaId": 1643413,
+          "position": "G",
+          "height": "6-6",
+          "age": 19,
+          "experience": "R",
+          "acquired": "#5 Pick in 2026 Draft"
+        },
+        {
+          "name": "Blake Wesley",
+          "nbaId": 1631104,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "Bradley Beal",
+          "nbaId": 203078,
+          "position": "G",
+          "height": "6-4",
+          "age": 33,
+          "experience": "14",
+          "acquired": "Signed on 07/18/25"
+        },
+        {
+          "name": "Kobe Sanders",
+          "nbaId": 1642920,
+          "position": "G",
+          "height": "6-8",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from NYK on 06/26/25"
+        },
+        {
+          "name": "Derrick Jones Jr.",
+          "nbaId": 1627884,
+          "position": "F",
+          "height": "6-6",
+          "age": 29,
+          "experience": "10",
+          "acquired": "Signed on 07/09/24"
+        },
+        {
+          "name": "Brandon Ingram",
+          "nbaId": 1627742,
+          "position": "F",
+          "height": "6-8",
+          "age": 29,
+          "experience": "10",
+          "acquired": "Traded from TOR on 09/14/26"
+        },
+        {
+          "name": "Kris Dunn",
+          "nbaId": 1627739,
+          "position": "G",
+          "height": "6-3",
+          "age": 32,
+          "experience": "10",
+          "acquired": "Traded from UTA on 07/18/24"
+        },
+        {
+          "name": "Yuki Kawamura",
+          "nbaId": 1642530,
+          "position": "G",
+          "height": "5-7",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 08/08/26"
+        },
+        {
+          "name": "Gradey Dick",
+          "nbaId": 1641711,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Traded from TOR on 09/14/26"
+        },
+        {
+          "name": "Darius Garland",
+          "nbaId": 1629636,
+          "position": "G",
+          "height": "6-1",
+          "age": 26,
+          "experience": "7",
+          "acquired": "Traded from CLE on 02/04/26"
+        },
+        {
+          "name": "Brook Lopez",
+          "nbaId": 201572,
+          "position": "C",
+          "height": "7-1",
+          "age": 38,
+          "experience": "18",
+          "acquired": "Signed on 07/06/25"
+        },
+        {
+          "name": "Nick Martinelli",
+          "nbaId": 1643568,
+          "position": "F",
+          "height": "6-7",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from HOU on 06/24/26"
+        },
+        {
+          "name": "Yanic Konan Niederhäuser",
+          "nbaId": 1642949,
+          "position": "C",
+          "height": "6-11",
+          "age": 23,
+          "experience": "1",
+          "acquired": "#30 Pick in 2025 Draft"
+        },
+        {
+          "name": "Baba Miller",
+          "nbaId": 1642394,
+          "position": "F",
+          "height": "6-11",
+          "age": 22,
+          "experience": "R",
+          "acquired": "#36 Pick in 2026 Draft"
+        },
+        {
+          "name": "Jordan Miller",
+          "nbaId": 1641757,
+          "position": "G",
+          "height": "6-5",
+          "age": 26,
+          "experience": "3",
+          "acquired": "#48 Pick in 2023 Draft"
+        },
+        {
+          "name": "Isaiah Jackson",
+          "nbaId": 1630543,
+          "position": "F",
+          "height": "6-8",
+          "age": 24,
+          "experience": "5",
+          "acquired": "Traded from IND on 02/05/26"
+        },
+        {
+          "name": "Cam Christie",
+          "nbaId": 1642353,
+          "position": "G",
+          "height": "6-5",
+          "age": 21,
+          "experience": "2",
+          "acquired": "#46 Pick in 2024 Draft"
+        },
+        {
+          "name": "Jalen Pickett",
+          "nbaId": 1629618,
+          "position": "G",
+          "height": "6-2",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Signed on 08/12/26"
+        },
+        {
+          "name": "Rui Hachimura",
+          "nbaId": 1629060,
+          "position": "F",
+          "height": "6-8",
+          "age": 28,
+          "experience": "7",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Max Strus",
+          "nbaId": 1629622,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 30,
+          "experience": "7",
+          "acquired": "Traded from CLE on 08/20/26"
+        }
+      ]
+    },
+    {
+      "team": "LAL",
+      "source": "https://www.nba.com/team/1610612747/lakers",
+      "players": [
+        {
+          "name": "Arthur Kaluma",
+          "nbaId": 1641751,
+          "position": "F",
+          "height": "6-7",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 07/25/25"
+        },
+        {
+          "name": "William Kyle",
+          "nbaId": 1643759,
+          "position": null,
+          "height": null,
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "Adou Thiero",
+          "nbaId": 1642876,
+          "position": "G",
+          "height": "6-7",
+          "age": 22,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from BKN on 07/06/25"
+        },
+        {
+          "name": "Jarred Vanderbilt",
+          "nbaId": 1629020,
+          "position": "F",
+          "height": "6-8",
+          "age": 27,
+          "experience": "8",
+          "acquired": "Traded from UTA on 02/09/23"
+        },
+        {
+          "name": "Matisse Thybulle",
+          "nbaId": 1629680,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 29,
+          "experience": "7",
+          "acquired": "Signed on 07/27/26"
+        },
+        {
+          "name": "Dalton Knecht",
+          "nbaId": 1642261,
+          "position": "F",
+          "height": "6-6",
+          "age": 25,
+          "experience": "2",
+          "acquired": "#17 Pick in 2024 Draft"
+        },
+        {
+          "name": "Quentin Grimes",
+          "nbaId": 1629656,
+          "position": "G",
+          "height": "6-5",
+          "age": 26,
+          "experience": "5",
+          "acquired": "Signed on 07/07/26"
+        },
+        {
+          "name": "Jaden Hardy",
+          "nbaId": 1630702,
+          "position": "G",
+          "height": "6-3",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Traded from WAS on 07/07/26"
+        },
+        {
+          "name": "Bronny James",
+          "nbaId": 1642355,
+          "position": "G",
+          "height": "6-2",
+          "age": 21,
+          "experience": "2",
+          "acquired": "#55 Pick in 2024 Draft"
+        },
+        {
+          "name": "Collin Sexton",
+          "nbaId": 1629012,
+          "position": "G",
+          "height": "6-3",
+          "age": 27,
+          "experience": "8",
+          "acquired": "Signed on 07/11/26"
+        },
+        {
+          "name": "Ziaire Williams",
+          "nbaId": 1630533,
+          "position": "F",
+          "height": "6-9",
+          "age": 25,
+          "experience": "5",
+          "acquired": "Signed on 07/19/26"
+        },
+        {
+          "name": "Jake LaRavia",
+          "nbaId": 1631222,
+          "position": "F",
+          "height": "6-7",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Signed on 07/06/25"
+        },
+        {
+          "name": "Cole Swider",
+          "nbaId": 1631306,
+          "position": "F",
+          "height": "6-8",
+          "age": 27,
+          "experience": "3",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "Walker Kessler",
+          "nbaId": 1631117,
+          "position": "C",
+          "height": "7-2",
+          "age": 25,
+          "experience": "4",
+          "acquired": "Traded from UTA on 07/08/26"
+        },
+        {
+          "name": "Austin Reaves",
+          "nbaId": 1630559,
+          "position": "G",
+          "height": "6-5",
+          "age": 28,
+          "experience": "5",
+          "acquired": "Signed on 08/03/21"
+        },
+        {
+          "name": "Chris Mañon",
+          "nbaId": 1643024,
+          "position": "G",
+          "height": "6-4",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 07/24/25"
+        },
+        {
+          "name": "AK Okereke",
+          "nbaId": 1643758,
+          "position": "F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 07/03/26"
+        },
+        {
+          "name": "Cameron Carr",
+          "nbaId": 1643418,
+          "position": "G",
+          "height": "6-5",
+          "age": 21,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from NYK on 06/24/26"
+        },
+        {
+          "name": "Sandro Mamukelashvili",
+          "nbaId": 1630572,
+          "position": "F-C",
+          "height": "6-9",
+          "age": 27,
+          "experience": "5",
+          "acquired": "Signed on 07/07/26"
+        },
+        {
+          "name": "Kevon Looney",
+          "nbaId": 1626172,
+          "position": "F",
+          "height": "6-9",
+          "age": 30,
+          "experience": "11",
+          "acquired": "Signed on 07/12/26"
+        },
+        {
+          "name": "Luka Dončić",
+          "nbaId": 1629029,
+          "position": "F-G",
+          "height": "6-8",
+          "age": 27,
+          "experience": "8",
+          "acquired": "Traded from DAL on 02/02/25"
+        }
+      ]
+    },
+    {
+      "team": "MEM",
+      "source": "https://www.nba.com/team/1610612763/grizzlies",
+      "players": [
+        {
+          "name": "Jahmai Mashack",
+          "nbaId": 1642942,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from GSW on 07/06/25"
+        },
+        {
+          "name": "Carson Cooper",
+          "nbaId": 1643721,
+          "position": null,
+          "height": null,
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 09/28/26"
+        },
+        {
+          "name": "Jaylen Wells",
+          "nbaId": 1642377,
+          "position": "F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "2",
+          "acquired": "#39 Pick in 2024 Draft"
+        },
+        {
+          "name": "Scotty Pippen Jr.",
+          "nbaId": 1630590,
+          "position": "G",
+          "height": "6-2",
+          "age": 25,
+          "experience": "4",
+          "acquired": "Signed on 01/16/24"
+        },
+        {
+          "name": "Ty Jerome",
+          "nbaId": 1629660,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 29,
+          "experience": "7",
+          "acquired": "Signed on 07/14/25"
+        },
+        {
+          "name": "Jerami Grant",
+          "nbaId": 203924,
+          "position": "F",
+          "height": "6-7",
+          "age": 32,
+          "experience": "12",
+          "acquired": "Traded from POR on 06/29/26"
+        },
+        {
+          "name": "Walter Clayton Jr.",
+          "nbaId": 1642383,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Traded from UTA on 02/03/26"
+        },
+        {
+          "name": "Micah Peavy",
+          "nbaId": 1642877,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 25,
+          "experience": "1",
+          "acquired": "Traded from NOP on 09/08/26"
+        },
+        {
+          "name": "Javon Small",
+          "nbaId": 1642914,
+          "position": "G",
+          "height": "6-1",
+          "age": 23,
+          "experience": "1",
+          "acquired": "#48 Pick in 2025 Draft"
+        },
+        {
+          "name": "Zach Edey",
+          "nbaId": 1641744,
+          "position": "C",
+          "height": "7-3",
+          "age": 24,
+          "experience": "2",
+          "acquired": "#9 Pick in 2024 Draft"
+        },
+        {
+          "name": "Kris Murray",
+          "nbaId": 1631200,
+          "position": "F",
+          "height": "6-8",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Traded from POR on 06/29/26"
+        },
+        {
+          "name": "Olivier-Maxence Prosper",
+          "nbaId": 1641765,
+          "position": "F",
+          "height": "6-7",
+          "age": 24,
+          "experience": "3",
+          "acquired": "Signed on 09/04/25"
+        },
+        {
+          "name": "Jordan Hawkins",
+          "nbaId": 1641722,
+          "position": "G",
+          "height": "6-5",
+          "age": 24,
+          "experience": "3",
+          "acquired": "Traded from NOP on 09/08/26"
+        },
+        {
+          "name": "Taylor Hendricks",
+          "nbaId": 1641707,
+          "position": "F",
+          "height": "6-9",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Traded from UTA on 02/03/26"
+        },
+        {
+          "name": "Cedric Coward",
+          "nbaId": 1642907,
+          "position": "G",
+          "height": "6-5",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from POR on 06/25/25"
+        },
+        {
+          "name": "Cam Spencer",
+          "nbaId": 1642285,
+          "position": "G",
+          "height": "6-3",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from DET on 07/06/24"
+        },
+        {
+          "name": "Cameron Boozer",
+          "nbaId": 1643409,
+          "position": "F",
+          "height": "6-10",
+          "age": 19,
+          "experience": "R",
+          "acquired": "#3 Pick in 2026 Draft"
+        },
+        {
+          "name": "Isaiah Stewart",
+          "nbaId": 1630191,
+          "position": "F-C",
+          "height": "6-8",
+          "age": 25,
+          "experience": "6",
+          "acquired": "Traded from DET on 07/08/26"
+        },
+        {
+          "name": "Karim Lopez",
+          "nbaId": 1643510,
+          "position": "F",
+          "height": "6-8",
+          "age": 19,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from DET on 06/24/26"
+        },
+        {
+          "name": "Quinten Post",
+          "nbaId": 1642366,
+          "position": "C",
+          "height": "7-0",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Signed on 07/08/26"
+        },
+        {
+          "name": "GG Jackson",
+          "nbaId": 1641713,
+          "position": "F",
+          "height": "6-9",
+          "age": 21,
+          "experience": "3",
+          "acquired": "#45 Pick in 2023 Draft"
+        }
+      ]
+    },
+    {
+      "team": "MIA",
+      "source": "https://www.nba.com/team/1610612748/heat",
+      "players": [
+        {
+          "name": "Simone Fontecchio",
+          "nbaId": 1631323,
+          "position": "F",
+          "height": "6-7",
+          "age": 30,
+          "experience": "4",
+          "acquired": "Traded from DET on 07/07/25"
+        },
+        {
+          "name": "Davion Mitchell",
+          "nbaId": 1630558,
+          "position": "G",
+          "height": "6-0",
+          "age": 28,
+          "experience": "5",
+          "acquired": "Traded from TOR on 02/06/25"
+        },
+        {
+          "name": "Ryan Conwell",
+          "nbaId": 1643553,
+          "position": "G",
+          "height": "6-4",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from OKC on 06/24/26"
+        },
+        {
+          "name": "Nikola Jović",
+          "nbaId": 1631107,
+          "position": "F",
+          "height": "6-10",
+          "age": 23,
+          "experience": "4",
+          "acquired": "#27 Pick in 2022 Draft"
+        },
+        {
+          "name": "Giannis Antetokounmpo",
+          "nbaId": 203507,
+          "position": "F",
+          "height": "6-11",
+          "age": 31,
+          "experience": "13",
+          "acquired": "Traded from MIL on 07/06/26"
+        },
+        {
+          "name": "Nick Richards",
+          "nbaId": 1630208,
+          "position": "C",
+          "height": "6-11",
+          "age": 28,
+          "experience": "6",
+          "acquired": "Signed on 08/27/26"
+        },
+        {
+          "name": "Pelle Larsson",
+          "nbaId": 1641796,
+          "position": "G",
+          "height": "6-5",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from HOU on 06/27/24"
+        },
+        {
+          "name": "Tim Hardaway Jr.",
+          "nbaId": 203501,
+          "position": "G",
+          "height": "6-5",
+          "age": 34,
+          "experience": "13",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Klay Thompson",
+          "nbaId": 202691,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 36,
+          "experience": "15",
+          "acquired": "Signed on 08/23/26"
+        },
+        {
+          "name": "Dru Smith",
+          "nbaId": 1630696,
+          "position": "G",
+          "height": "6-2",
+          "age": 28,
+          "experience": "4",
+          "acquired": "Signed on 07/01/23"
+        },
+        {
+          "name": "Bam Adebayo",
+          "nbaId": 1628389,
+          "position": "C-F",
+          "height": "6-9",
+          "age": 29,
+          "experience": "9",
+          "acquired": "#14 Pick in 2017 Draft"
+        },
+        {
+          "name": "J'Vonne Hadley",
+          "nbaId": 1643727,
+          "position": "F",
+          "height": "6-6",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 08/27/26"
+        },
+        {
+          "name": "Myron Gardner",
+          "nbaId": 1642066,
+          "position": "F",
+          "height": "6-5",
+          "age": 25,
+          "experience": "1",
+          "acquired": "Signed on 07/24/25"
+        },
+        {
+          "name": "Keshad Johnson",
+          "nbaId": 1642352,
+          "position": "F",
+          "height": "6-6",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 07/01/24"
+        },
+        {
+          "name": "Bez Mbeng",
+          "nbaId": 1643016,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Awarded on Waivers on 09/22/26"
+        },
+        {
+          "name": "Ian Schieffelin",
+          "nbaId": 1643867,
+          "position": "F",
+          "height": "6-8",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Andrew Wiggins",
+          "nbaId": 203952,
+          "position": "F",
+          "height": "6-6",
+          "age": 31,
+          "experience": "12",
+          "acquired": "Traded from GSW on 02/06/25"
+        },
+        {
+          "name": "Lester Quinones",
+          "nbaId": 1631311,
+          "position": "G",
+          "height": "6-5",
+          "age": 25,
+          "experience": "3",
+          "acquired": "Signed on 09/29/26"
+        },
+        {
+          "name": "Tre Donaldson",
+          "nbaId": 1643621,
+          "position": "G",
+          "height": "6-3",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 07/03/26"
+        },
+        {
+          "name": "Vladislav Goldin",
+          "nbaId": 1642884,
+          "position": "C",
+          "height": "7-0",
+          "age": 25,
+          "experience": "1",
+          "acquired": "Signed on 07/02/25"
+        },
+        {
+          "name": "Bobby Portis Jr.",
+          "nbaId": 1626171,
+          "position": "F",
+          "height": "6-9",
+          "age": 31,
+          "experience": "11",
+          "acquired": "Traded from MIL on 07/06/26"
+        }
+      ]
+    },
+    {
+      "team": "MIL",
+      "source": "https://www.nba.com/team/1610612749/bucks",
+      "players": [
+        {
+          "name": "Jericho Sims",
+          "nbaId": 1630579,
+          "position": "C",
+          "height": "6-10",
+          "age": 27,
+          "experience": "5",
+          "acquired": "Traded from NYK on 02/06/25"
+        },
+        {
+          "name": "Brayden Burries",
+          "nbaId": 1643415,
+          "position": "G",
+          "height": "6-4",
+          "age": 21,
+          "experience": "R",
+          "acquired": "#10 Pick in 2026 Draft"
+        },
+        {
+          "name": "Myles Turner",
+          "nbaId": 1626167,
+          "position": "C-F",
+          "height": "6-11",
+          "age": 30,
+          "experience": "11",
+          "acquired": "Signed on 07/06/25"
+        },
+        {
+          "name": "Gary Trent Jr.",
+          "nbaId": 1629018,
+          "position": "G",
+          "height": "6-5",
+          "age": 27,
+          "experience": "8",
+          "acquired": "Signed on 07/20/24"
+        },
+        {
+          "name": "Kevin Porter Jr.",
+          "nbaId": 1629645,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 26,
+          "experience": "6",
+          "acquired": "Traded from LAC on 02/06/25"
+        },
+        {
+          "name": "Kel'el Ware",
+          "nbaId": 1642276,
+          "position": "C",
+          "height": "7-0",
+          "age": 22,
+          "experience": "2",
+          "acquired": "Traded from MIA on 07/06/26"
+        },
+        {
+          "name": "Tyler Herro",
+          "nbaId": 1629639,
+          "position": "G",
+          "height": "6-5",
+          "age": 26,
+          "experience": "7",
+          "acquired": "Traded from MIA on 07/06/26"
+        },
+        {
+          "name": "Caris LeVert",
+          "nbaId": 1627747,
+          "position": "G",
+          "height": "6-7",
+          "age": 32,
+          "experience": "10",
+          "acquired": "Traded from DET on 07/08/26"
+        },
+        {
+          "name": "Ryan Rollins",
+          "nbaId": 1631157,
+          "position": "G",
+          "height": "6-3",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Signed on 02/20/24"
+        },
+        {
+          "name": "Nate Ament",
+          "nbaId": 1643417,
+          "position": "F",
+          "height": "6-10",
+          "age": 19,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from MIA on 07/06/26"
+        },
+        {
+          "name": "Kyle Kuzma",
+          "nbaId": 1628398,
+          "position": "F",
+          "height": "6-8",
+          "age": 31,
+          "experience": "9",
+          "acquired": "Traded from WAS on 02/06/25"
+        },
+        {
+          "name": "Kam Jones",
+          "nbaId": 1642880,
+          "position": "G",
+          "height": "6-4",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 07/05/26"
+        },
+        {
+          "name": "AJ Green",
+          "nbaId": 1631260,
+          "position": "G",
+          "height": "6-4",
+          "age": 27,
+          "experience": "4",
+          "acquired": "Signed on 07/01/22"
+        },
+        {
+          "name": "Ousmane Dieng",
+          "nbaId": 1631172,
+          "position": "F",
+          "height": "6-9",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Traded from CHI on 02/05/26"
+        },
+        {
+          "name": "Bogoljub Marković",
+          "nbaId": 1642881,
+          "position": "F",
+          "height": "6-11",
+          "age": 21,
+          "experience": "R",
+          "acquired": "#47 Pick in 2025 Draft"
+        },
+        {
+          "name": "Jaime Jaquez Jr.",
+          "nbaId": 1631170,
+          "position": "G",
+          "height": "6-6",
+          "age": 25,
+          "experience": "3",
+          "acquired": "Traded from MIA on 07/06/26"
+        },
+        {
+          "name": "Kasparas Jakučionis",
+          "nbaId": 1642857,
+          "position": "G",
+          "height": "6-5",
+          "age": 20,
+          "experience": "1",
+          "acquired": "Traded from MIA on 07/06/26"
+        },
+        {
+          "name": "John Butler Jr.",
+          "nbaId": 1631219,
+          "position": "F",
+          "height": "7-0",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 10/15/25"
+        },
+        {
+          "name": "Cormac Ryan",
+          "nbaId": 1642504,
+          "position": "G",
+          "height": "6-5",
+          "age": 27,
+          "experience": "1",
+          "acquired": "Signed on 09/10/25"
+        },
+        {
+          "name": "Pete Nance",
+          "nbaId": 1631250,
+          "position": "F",
+          "height": "6-9",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Signed on 02/27/25"
+        },
+        {
+          "name": "Jake Stephens",
+          "nbaId": 1641868,
+          "position": "C",
+          "height": "6-11",
+          "age": 26,
+          "experience": "R",
+          "acquired": "Signed on 09/17/26"
+        }
+      ]
+    },
+    {
+      "team": "MIN",
+      "source": "https://www.nba.com/team/1610612750/timberwolves",
+      "players": [
+        {
+          "name": "Norchad Omier",
+          "nbaId": 1641807,
+          "position": "F",
+          "height": "6-7",
+          "age": 25,
+          "experience": "1",
+          "acquired": "Signed on 09/24/26"
+        },
+        {
+          "name": "Donte DiVincenzo",
+          "nbaId": 1628978,
+          "position": "G",
+          "height": "6-4",
+          "age": 29,
+          "experience": "8",
+          "acquired": "Traded from NYK on 10/02/24"
+        },
+        {
+          "name": "LaMelo Ball",
+          "nbaId": 1630163,
+          "position": "G",
+          "height": "6-7",
+          "age": 25,
+          "experience": "6",
+          "acquired": "Traded from CHA on 07/10/26"
+        },
+        {
+          "name": "Jaden McDaniels",
+          "nbaId": 1630183,
+          "position": "F",
+          "height": "6-9",
+          "age": 26,
+          "experience": "6",
+          "acquired": "Draft Rights Traded from OKC on 11/20/20"
+        },
+        {
+          "name": "Terrence Shannon Jr",
+          "nbaId": 1630545,
+          "position": "G-F",
+          "height": "6-6",
+          "age": 26,
+          "experience": "2",
+          "acquired": "#27 Pick in 2024 Draft"
+        },
+        {
+          "name": "Anthony Edwards",
+          "nbaId": 1630162,
+          "position": "G",
+          "height": "6-4",
+          "age": 25,
+          "experience": "6",
+          "acquired": "#1 Pick in 2020 Draft"
+        },
+        {
+          "name": "Jaylen Clark",
+          "nbaId": 1641740,
+          "position": "G",
+          "height": "6-5",
+          "age": 24,
+          "experience": "2",
+          "acquired": "#53 Pick in 2023 Draft"
+        },
+        {
+          "name": "Bones Hyland",
+          "nbaId": 1630538,
+          "position": "G",
+          "height": "6-2",
+          "age": 26,
+          "experience": "5",
+          "acquired": "Signed on 02/27/25"
+        },
+        {
+          "name": "Cody Williams",
+          "nbaId": 1642262,
+          "position": "F",
+          "height": "6-8",
+          "age": 21,
+          "experience": "2",
+          "acquired": "Traded from UTA on 08/29/26"
+        },
+        {
+          "name": "Antonio Reeves",
+          "nbaId": 1641810,
+          "position": "G",
+          "height": "6-5",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 09/24/26"
+        },
+        {
+          "name": "Ayo Dosunmu",
+          "nbaId": 1630245,
+          "position": "G",
+          "height": "6-4",
+          "age": 26,
+          "experience": "5",
+          "acquired": "Traded from CHI on 02/05/26"
+        },
+        {
+          "name": "Zyon Pullin",
+          "nbaId": 1642389,
+          "position": "G",
+          "height": "6-4",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 09/28/25"
+        },
+        {
+          "name": "Drew Timme",
+          "nbaId": 1631166,
+          "position": "F",
+          "height": "6-9",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Joan Beringer",
+          "nbaId": 1642866,
+          "position": "F",
+          "height": "6-11",
+          "age": 19,
+          "experience": "1",
+          "acquired": "#17 Pick in 2025 Draft"
+        },
+        {
+          "name": "Jonathan Kuminga",
+          "nbaId": 1630228,
+          "position": "F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "5",
+          "acquired": "Signed on 09/03/26"
+        },
+        {
+          "name": "Enrique Freeman",
+          "nbaId": 1642402,
+          "position": "F",
+          "height": "6-9",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Signed on 08/01/25"
+        },
+        {
+          "name": "Rudy Gobert",
+          "nbaId": 203497,
+          "position": "C",
+          "height": "7-1",
+          "age": 34,
+          "experience": "13",
+          "acquired": "Traded from UTA on 07/06/22"
+        },
+        {
+          "name": "Isaiah Evans",
+          "nbaId": 1642912,
+          "position": "F",
+          "height": "6-6",
+          "age": 20,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from BKN on 07/10/26"
+        },
+        {
+          "name": "Trey Lyles",
+          "nbaId": 1626168,
+          "position": "F",
+          "height": "6-9",
+          "age": 30,
+          "experience": "10",
+          "acquired": "Signed on 07/10/26"
+        },
+        {
+          "name": "Rocco Zikarsky",
+          "nbaId": 1642911,
+          "position": "C",
+          "height": "7-3",
+          "age": 20,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from LAL on 07/06/25"
+        },
+        {
+          "name": "KJ Martin",
+          "nbaId": 1630231,
+          "position": "F",
+          "height": "6-6",
+          "age": 25,
+          "experience": "5",
+          "acquired": "Signed on 09/25/26"
+        }
+      ]
+    },
+    {
+      "team": "NOP",
+      "source": "https://www.nba.com/team/1610612740/pelicans",
+      "players": [
+        {
+          "name": "Julian Reese",
+          "nbaId": 1642882,
+          "position": "F",
+          "height": "6-9",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 09/24/26"
+        },
+        {
+          "name": "Jeremiah Fears",
+          "nbaId": 1642847,
+          "position": "G",
+          "height": "6-3",
+          "age": 19,
+          "experience": "1",
+          "acquired": "#7 Pick in 2025 Draft"
+        },
+        {
+          "name": "Zion Williamson",
+          "nbaId": 1629627,
+          "position": "F",
+          "height": "6-6",
+          "age": 26,
+          "experience": "7",
+          "acquired": "#1 Pick in 2019 Draft"
+        },
+        {
+          "name": "Herbert Jones",
+          "nbaId": 1630529,
+          "position": "F",
+          "height": "6-7",
+          "age": 27,
+          "experience": "5",
+          "acquired": "#35 Pick in 2021 Draft"
+        },
+        {
+          "name": "Jordan Poole",
+          "nbaId": 1629673,
+          "position": "G",
+          "height": "6-4",
+          "age": 27,
+          "experience": "7",
+          "acquired": "Traded from WAS on 07/06/25"
+        },
+        {
+          "name": "Kobe Bufkin",
+          "nbaId": 1641723,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "3",
+          "acquired": "Signed on 07/25/26"
+        },
+        {
+          "name": "Dejounte Murray",
+          "nbaId": 1627749,
+          "position": "G",
+          "height": "6-4",
+          "age": 30,
+          "experience": "10",
+          "acquired": "Traded from ATL on 07/06/24"
+        },
+        {
+          "name": "DeAndre Jordan",
+          "nbaId": 201599,
+          "position": "C",
+          "height": "6-11",
+          "age": 38,
+          "experience": "18",
+          "acquired": "Signed on 10/23/25"
+        },
+        {
+          "name": "Malik Dia",
+          "nbaId": 1643738,
+          "position": "F",
+          "height": "6-9",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 08/18/26"
+        },
+        {
+          "name": "Trendon Watford",
+          "nbaId": 1630570,
+          "position": "G-F",
+          "height": "6-8",
+          "age": 25,
+          "experience": "5",
+          "acquired": "Signed on 08/17/26"
+        },
+        {
+          "name": "Jaron Pierre Jr.",
+          "nbaId": 1643555,
+          "position": "G",
+          "height": "6-5",
+          "age": 24,
+          "experience": "R",
+          "acquired": "#58 Pick in 2026 Draft"
+        },
+        {
+          "name": "Bryce McGowens",
+          "nbaId": 1631121,
+          "position": "G",
+          "height": "6-6",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Signed on 07/30/25"
+        },
+        {
+          "name": "AJ Johnson",
+          "nbaId": 1642358,
+          "position": "G",
+          "height": "6-5",
+          "age": 21,
+          "experience": "2",
+          "acquired": "Traded from MEM on 09/08/26"
+        },
+        {
+          "name": "Karlo Matković",
+          "nbaId": 1631255,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 25,
+          "experience": "2",
+          "acquired": "#52 Pick in 2022 Draft"
+        },
+        {
+          "name": "Yves Missi",
+          "nbaId": 1642274,
+          "position": "C",
+          "height": "6-11",
+          "age": 22,
+          "experience": "2",
+          "acquired": "#21 Pick in 2024 Draft"
+        },
+        {
+          "name": "Derik Queen",
+          "nbaId": 1642852,
+          "position": "C",
+          "height": "6-9",
+          "age": 21,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from ATL on 06/25/25"
+        },
+        {
+          "name": "Bennedict Mathurin",
+          "nbaId": 1631097,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Signed on 09/10/26"
+        },
+        {
+          "name": "Trey Murphy III",
+          "nbaId": 1630530,
+          "position": "F",
+          "height": "6-8",
+          "age": 26,
+          "experience": "5",
+          "acquired": "Draft Rights Traded from MEM on 08/07/21"
+        },
+        {
+          "name": "Caleb Houstan",
+          "nbaId": 1631216,
+          "position": "G",
+          "height": "6-8",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Signed on 08/04/26"
+        },
+        {
+          "name": "Christian Koloko",
+          "nbaId": 1631132,
+          "position": "C",
+          "height": "6-11",
+          "age": 26,
+          "experience": "4",
+          "acquired": "Signed on 07/28/26"
+        },
+        {
+          "name": "Saddiq Bey",
+          "nbaId": 1630180,
+          "position": "G-F",
+          "height": "6-8",
+          "age": 27,
+          "experience": "6",
+          "acquired": "Traded from WAS on 07/06/25"
+        }
+      ]
+    },
+    {
+      "team": "NYK",
+      "source": "https://www.nba.com/team/1610612752/knicks",
+      "players": [
+        {
+          "name": "Jaden Akins",
+          "nbaId": 1643022,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 09/15/26"
+        },
+        {
+          "name": "Andre Drummond",
+          "nbaId": 203083,
+          "position": "C",
+          "height": "6-11",
+          "age": 33,
+          "experience": "14",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Jordan Clarkson",
+          "nbaId": 203903,
+          "position": "G",
+          "height": "6-5",
+          "age": 34,
+          "experience": "12",
+          "acquired": "Signed on 07/07/25"
+        },
+        {
+          "name": "Miles McBride",
+          "nbaId": 1630540,
+          "position": "G",
+          "height": "6-2",
+          "age": 26,
+          "experience": "5",
+          "acquired": "Draft Rights Traded from OKC on 07/30/21"
+        },
+        {
+          "name": "Josh Hart",
+          "nbaId": 1628404,
+          "position": "G",
+          "height": "6-5",
+          "age": 31,
+          "experience": "9",
+          "acquired": "Traded from POR on 02/09/23"
+        },
+        {
+          "name": "Pacôme Dadiet",
+          "nbaId": 1642359,
+          "position": "F",
+          "height": "6-9",
+          "age": 21,
+          "experience": "2",
+          "acquired": "#25 Pick in 2024 Draft"
+        },
+        {
+          "name": "Jose Alvarado",
+          "nbaId": 1630631,
+          "position": "G",
+          "height": "6-0",
+          "age": 28,
+          "experience": "5",
+          "acquired": "Traded from NOP on 02/05/26"
+        },
+        {
+          "name": "OG Anunoby",
+          "nbaId": 1628384,
+          "position": "F-G",
+          "height": "6-7",
+          "age": 29,
+          "experience": "9",
+          "acquired": "Traded from TOR on 12/30/23"
+        },
+        {
+          "name": "Kevin McCullar Jr.",
+          "nbaId": 1641755,
+          "position": "G",
+          "height": "6-6",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from PHX on 06/27/24"
+        },
+        {
+          "name": "James Wiseman",
+          "nbaId": 1630164,
+          "position": "C",
+          "height": "6-11",
+          "age": 25,
+          "experience": "6",
+          "acquired": "Signed on 09/15/26"
+        },
+        {
+          "name": "Bruce Brown",
+          "nbaId": 1628971,
+          "position": "G-F",
+          "height": "6-4",
+          "age": 30,
+          "experience": "8",
+          "acquired": "Signed on 09/15/26"
+        },
+        {
+          "name": "Jalen Brunson",
+          "nbaId": 1628973,
+          "position": "G",
+          "height": "6-2",
+          "age": 30,
+          "experience": "8",
+          "acquired": "Signed on 07/12/22"
+        },
+        {
+          "name": "Tony Bradley",
+          "nbaId": 1628396,
+          "position": "C-F",
+          "height": "6-10",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Signed on 09/30/26"
+        },
+        {
+          "name": "Tyler Kolek",
+          "nbaId": 1642278,
+          "position": "G",
+          "height": "6-2",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from POR on 06/27/24"
+        },
+        {
+          "name": "Drew Eubanks",
+          "nbaId": 1629234,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 29,
+          "experience": "8",
+          "acquired": "Signed on 09/15/26"
+        },
+        {
+          "name": "Mikal Bridges",
+          "nbaId": 1628969,
+          "position": "G-F",
+          "height": "6-6",
+          "age": 30,
+          "experience": "8",
+          "acquired": "Traded from BKN on 07/06/24"
+        },
+        {
+          "name": "Ochai Agbaji",
+          "nbaId": 1630534,
+          "position": "G",
+          "height": "6-5",
+          "age": 26,
+          "experience": "4",
+          "acquired": "Signed on 09/15/26"
+        },
+        {
+          "name": "Karl-Anthony Towns",
+          "nbaId": 1626157,
+          "position": "C-F",
+          "height": "7-0",
+          "age": 30,
+          "experience": "11",
+          "acquired": "Traded from MIN on 10/02/24"
+        },
+        {
+          "name": "Landry Shamet",
+          "nbaId": 1629013,
+          "position": "G",
+          "height": "6-5",
+          "age": 29,
+          "experience": "8",
+          "acquired": "Signed on 09/14/24"
+        },
+        {
+          "name": "Mohamed Diawara",
+          "nbaId": 1642885,
+          "position": "F",
+          "height": "6-9",
+          "age": 21,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from LAC on 06/26/25"
+        },
+        {
+          "name": "Tyler Nickel",
+          "nbaId": 1643589,
+          "position": "F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "R",
+          "acquired": "#47 Pick in 2026 Draft"
+        }
+      ]
+    },
+    {
+      "team": "OKC",
+      "source": "https://www.nba.com/team/1610612760/thunder",
+      "players": [
+        {
+          "name": "Robert McCray V",
+          "nbaId": 1643597,
+          "position": "G",
+          "height": "6-4",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Josh Dix",
+          "nbaId": 1643717,
+          "position": null,
+          "height": null,
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 07/03/26"
+        },
+        {
+          "name": "Christoph Tilly",
+          "nbaId": 1643754,
+          "position": null,
+          "height": null,
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 09/14/26"
+        },
+        {
+          "name": "Andrew Holifield",
+          "nbaId": 1643808,
+          "position": null,
+          "height": null,
+          "age": 22,
+          "experience": "R",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Shai Gilgeous-Alexander",
+          "nbaId": 1628983,
+          "position": "G",
+          "height": "6-6",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Traded from LAC on 07/10/19"
+        },
+        {
+          "name": "Jared McCain",
+          "nbaId": 1642272,
+          "position": "G",
+          "height": "6-3",
+          "age": 22,
+          "experience": "2",
+          "acquired": "Traded from PHI on 02/04/26"
+        },
+        {
+          "name": "Jaylin Williams",
+          "nbaId": 1631119,
+          "position": "F",
+          "height": "6-9",
+          "age": 24,
+          "experience": "4",
+          "acquired": "#34 Pick in 2022 Draft"
+        },
+        {
+          "name": "Chet Holmgren",
+          "nbaId": 1631096,
+          "position": "C-F",
+          "height": "7-1",
+          "age": 24,
+          "experience": "3",
+          "acquired": "#2 Pick in 2022 Draft"
+        },
+        {
+          "name": "Jalen Williams",
+          "nbaId": 1631114,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 25,
+          "experience": "4",
+          "acquired": "#12 Pick in 2022 Draft"
+        },
+        {
+          "name": "Alex Caruso",
+          "nbaId": 1627936,
+          "position": "G",
+          "height": "6-5",
+          "age": 32,
+          "experience": "9",
+          "acquired": "Traded from CHI on 06/21/24"
+        },
+        {
+          "name": "Thomas Sorber",
+          "nbaId": 1642850,
+          "position": "C",
+          "height": "6-9",
+          "age": 20,
+          "experience": "R",
+          "acquired": "#15 Pick in 2025 Draft"
+        },
+        {
+          "name": "Otega Oweh",
+          "nbaId": 1642923,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from MIA on 06/24/26"
+        },
+        {
+          "name": "Bennett Stirtz",
+          "nbaId": 1642892,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from MEM on 06/23/26"
+        },
+        {
+          "name": "Aday Mara",
+          "nbaId": 1643530,
+          "position": "C",
+          "height": "7-2",
+          "age": 21,
+          "experience": "R",
+          "acquired": "#12 Pick in 2026 Draft"
+        },
+        {
+          "name": "Zhaire Smith",
+          "nbaId": 1629015,
+          "position": "G",
+          "height": "6-4",
+          "age": 27,
+          "experience": "2",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Cason Wallace",
+          "nbaId": 1641717,
+          "position": "G",
+          "height": "6-3",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Draft Rights Traded from DAL on 07/06/23"
+        },
+        {
+          "name": "Brooks Barnhizer",
+          "nbaId": 1642964,
+          "position": "G",
+          "height": "6-5",
+          "age": 24,
+          "experience": "1",
+          "acquired": "#44 Pick in 2025 Draft"
+        },
+        {
+          "name": "Ajay Mitchell",
+          "nbaId": 1642349,
+          "position": "G",
+          "height": "6-4",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from NYK on 06/27/24"
+        },
+        {
+          "name": "Kenrich Williams",
+          "nbaId": 1629026,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 31,
+          "experience": "8",
+          "acquired": "Traded from NOP on 11/23/20"
+        },
+        {
+          "name": "Nikola Topić",
+          "nbaId": 1642260,
+          "position": "G",
+          "height": "6-6",
+          "age": 21,
+          "experience": "1",
+          "acquired": "#12 Pick in 2024 Draft"
+        },
+        {
+          "name": "Isaiah Hartenstein",
+          "nbaId": 1628392,
+          "position": "C-F",
+          "height": "7-0",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Signed on 07/06/24"
+        }
+      ]
+    },
+    {
+      "team": "ORL",
+      "source": "https://www.nba.com/team/1610612753/magic",
+      "players": [
+        {
+          "name": "Anthony Black",
+          "nbaId": 1641710,
+          "position": "G",
+          "height": "6-7",
+          "age": 22,
+          "experience": "3",
+          "acquired": "#6 Pick in 2023 Draft"
+        },
+        {
+          "name": "Jonathan Isaac",
+          "nbaId": 1628371,
+          "position": "F",
+          "height": "6-10",
+          "age": 28,
+          "experience": "9",
+          "acquired": "#6 Pick in 2017 Draft"
+        },
+        {
+          "name": "Jevon Carter",
+          "nbaId": 1628975,
+          "position": "G",
+          "height": "6-0",
+          "age": 31,
+          "experience": "8",
+          "acquired": "Signed on 02/06/26"
+        },
+        {
+          "name": "Desmond Bane",
+          "nbaId": 1630217,
+          "position": "G",
+          "height": "6-6",
+          "age": 28,
+          "experience": "6",
+          "acquired": "Traded from MEM on 06/15/25"
+        },
+        {
+          "name": "Jalen Suggs",
+          "nbaId": 1630591,
+          "position": "G",
+          "height": "6-5",
+          "age": 25,
+          "experience": "5",
+          "acquired": "#5 Pick in 2021 Draft"
+        },
+        {
+          "name": "JD Davison",
+          "nbaId": 1631120,
+          "position": "G",
+          "height": "6-1",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Signed on 09/03/26"
+        },
+        {
+          "name": "Paolo Banchero",
+          "nbaId": 1631094,
+          "position": "F",
+          "height": "6-10",
+          "age": 23,
+          "experience": "4",
+          "acquired": "#1 Pick in 2022 Draft"
+        },
+        {
+          "name": "Jamal Cain",
+          "nbaId": 1631288,
+          "position": "F",
+          "height": "6-7",
+          "age": 27,
+          "experience": "4",
+          "acquired": "Signed on 07/25/25"
+        },
+        {
+          "name": "Nikola Vučević",
+          "nbaId": 202696,
+          "position": "C",
+          "height": "6-9",
+          "age": 35,
+          "experience": "15",
+          "acquired": "Signed on 07/01/26"
+        },
+        {
+          "name": "Jase Richardson",
+          "nbaId": 1642859,
+          "position": "G",
+          "height": "6-1",
+          "age": 20,
+          "experience": "1",
+          "acquired": "#25 Pick in 2025 Draft"
+        },
+        {
+          "name": "Malaki Branham",
+          "nbaId": 1631103,
+          "position": "F",
+          "height": "6-4",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Signed on 09/03/26"
+        },
+        {
+          "name": "Colin Castleton",
+          "nbaId": 1630658,
+          "position": "C",
+          "height": "6-10",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Signed on 08/22/25"
+        },
+        {
+          "name": "Franz Wagner",
+          "nbaId": 1630532,
+          "position": "F",
+          "height": "6-10",
+          "age": 25,
+          "experience": "5",
+          "acquired": "#8 Pick in 2021 Draft"
+        },
+        {
+          "name": "Tristan da Silva",
+          "nbaId": 1641783,
+          "position": "F",
+          "height": "6-8",
+          "age": 25,
+          "experience": "2",
+          "acquired": "#18 Pick in 2024 Draft"
+        },
+        {
+          "name": "Izaiyah Nelson",
+          "nbaId": 1643593,
+          "position": "F",
+          "height": "6-10",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from WAS on 06/24/26"
+        },
+        {
+          "name": "Alex Morales",
+          "nbaId": 1631457,
+          "position": "G",
+          "height": "6-6",
+          "age": 28,
+          "experience": "1",
+          "acquired": "Signed on 10/08/22"
+        },
+        {
+          "name": "Kevin Knox II",
+          "nbaId": 1628995,
+          "position": "F",
+          "height": "6-8",
+          "age": 27,
+          "experience": "7",
+          "acquired": "Signed on 09/23/26"
+        },
+        {
+          "name": "Wendell Carter Jr.",
+          "nbaId": 1628976,
+          "position": "C-F",
+          "height": "6-10",
+          "age": 27,
+          "experience": "8",
+          "acquired": "Traded from CHI on 03/25/21"
+        },
+        {
+          "name": "Goga Bitadze",
+          "nbaId": 1629048,
+          "position": "C-F",
+          "height": "6-11",
+          "age": 27,
+          "experience": "7",
+          "acquired": "Signed on 02/13/23"
+        },
+        {
+          "name": "Noah Penda",
+          "nbaId": 1642869,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 21,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from BOS on 06/26/25"
+        }
+      ]
+    },
+    {
+      "team": "PHI",
+      "source": "https://www.nba.com/team/1610612755/sixers",
+      "players": [
+        {
+          "name": "Jameer Nelson Jr.",
+          "nbaId": 1642392,
+          "position": "G",
+          "height": "6-1",
+          "age": 25,
+          "experience": "R",
+          "acquired": "Signed on 09/01/26"
+        },
+        {
+          "name": "Saint Thomas",
+          "nbaId": 1643148,
+          "position": "F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 09/26/25"
+        },
+        {
+          "name": "Duke Miles",
+          "nbaId": 1643575,
+          "position": "G",
+          "height": "6-2",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 07/07/26"
+        },
+        {
+          "name": "Labaron Philon",
+          "nbaId": 1642889,
+          "position": "G",
+          "height": "6-4",
+          "age": 20,
+          "experience": "R",
+          "acquired": "#22 Pick in 2026 Draft"
+        },
+        {
+          "name": "Tyrese Maxey",
+          "nbaId": 1630178,
+          "position": "G",
+          "height": "6-2",
+          "age": 25,
+          "experience": "6",
+          "acquired": "#21 Pick in 2020 Draft"
+        },
+        {
+          "name": "Dillon Jones",
+          "nbaId": 1641794,
+          "position": "F",
+          "height": "6-5",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Signed on 09/07/26"
+        },
+        {
+          "name": "Kentavious Caldwell-Pope",
+          "nbaId": 203484,
+          "position": "G",
+          "height": "6-5",
+          "age": 33,
+          "experience": "13",
+          "acquired": "Signed on 08/05/26"
+        },
+        {
+          "name": "Caleb Love",
+          "nbaId": 1631126,
+          "position": "G",
+          "height": "6-3",
+          "age": 25,
+          "experience": "1",
+          "acquired": "Signed on 07/05/26"
+        },
+        {
+          "name": "Anfernee Simons",
+          "nbaId": 1629014,
+          "position": "G",
+          "height": "6-3",
+          "age": 27,
+          "experience": "8",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Jaylen Brown",
+          "nbaId": 1627759,
+          "position": "G-F",
+          "height": "6-6",
+          "age": 29,
+          "experience": "10",
+          "acquired": "Traded from BOS on 07/06/26"
+        },
+        {
+          "name": "Justin Edwards",
+          "nbaId": 1642348,
+          "position": "F",
+          "height": "6-7",
+          "age": 22,
+          "experience": "2",
+          "acquired": "Signed on 07/04/24"
+        },
+        {
+          "name": "Rayan Rupert",
+          "nbaId": 1641712,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Signed on 07/08/26"
+        },
+        {
+          "name": "Joel Embiid",
+          "nbaId": 203954,
+          "position": "C-F",
+          "height": "7-0",
+          "age": 32,
+          "experience": "10",
+          "acquired": "#3 Pick in 2014 Draft"
+        },
+        {
+          "name": "LeBron James",
+          "nbaId": 2544,
+          "position": "F",
+          "height": "6-9",
+          "age": 41,
+          "experience": "23",
+          "acquired": "Signed on 07/26/26"
+        },
+        {
+          "name": "Dominick Barlow",
+          "nbaId": 1631230,
+          "position": "F",
+          "height": "6-9",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Signed on 07/09/25"
+        },
+        {
+          "name": "Adem Bona",
+          "nbaId": 1641737,
+          "position": "F",
+          "height": "6-10",
+          "age": 23,
+          "experience": "2",
+          "acquired": "#41 Pick in 2024 Draft"
+        },
+        {
+          "name": "Jabari Walker",
+          "nbaId": 1631133,
+          "position": "F",
+          "height": "6-7",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Signed on 07/05/25"
+        },
+        {
+          "name": "Dean Wade",
+          "nbaId": 1629731,
+          "position": "F-C",
+          "height": "6-9",
+          "age": 29,
+          "experience": "7",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Ariel Hukporti",
+          "nbaId": 1630574,
+          "position": "C",
+          "height": "7-0",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "VJ Edgecombe",
+          "nbaId": 1642845,
+          "position": "G",
+          "height": "6-4",
+          "age": 21,
+          "experience": "1",
+          "acquired": "#3 Pick in 2025 Draft"
+        },
+        {
+          "name": "Tacko Fall",
+          "nbaId": 1629605,
+          "position": "C",
+          "height": "7-6",
+          "age": 30,
+          "experience": "3",
+          "acquired": "Signed on 09/01/26"
+        }
+      ]
+    },
+    {
+      "team": "PHX",
+      "source": "https://www.nba.com/team/1610612756/suns",
+      "players": [
+        {
+          "name": "Phillip Wheeler",
+          "nbaId": 1630762,
+          "position": "F",
+          "height": "6-8",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Kennedy Chandler",
+          "nbaId": 1631113,
+          "position": "G",
+          "height": "6-0",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Ryan Dunn",
+          "nbaId": 1642346,
+          "position": "F",
+          "height": "6-7",
+          "age": 23,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from DEN on 06/26/24"
+        },
+        {
+          "name": "Dillon Brooks",
+          "nbaId": 1628415,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 30,
+          "experience": "9",
+          "acquired": "Traded from HOU on 07/06/25"
+        },
+        {
+          "name": "Jalen Green",
+          "nbaId": 1630224,
+          "position": "G",
+          "height": "6-4",
+          "age": 24,
+          "experience": "5",
+          "acquired": "Traded from HOU on 07/06/25"
+        },
+        {
+          "name": "Haywood Highsmith",
+          "nbaId": 1629312,
+          "position": "F",
+          "height": "6-5",
+          "age": 29,
+          "experience": "6",
+          "acquired": "Signed on 02/18/26"
+        },
+        {
+          "name": "Luke Kennard",
+          "nbaId": 1628379,
+          "position": "G",
+          "height": "6-5",
+          "age": 30,
+          "experience": "9",
+          "acquired": "Signed on 07/14/26"
+        },
+        {
+          "name": "Khaman Maluach",
+          "nbaId": 1642863,
+          "position": "C",
+          "height": "7-1",
+          "age": 20,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from HOU on 07/06/25"
+        },
+        {
+          "name": "Oso Ighodaro",
+          "nbaId": 1642345,
+          "position": "F",
+          "height": "6-11",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from NYK on 06/27/24"
+        },
+        {
+          "name": "Collin Gillespie",
+          "nbaId": 1631221,
+          "position": "G",
+          "height": "6-1",
+          "age": 27,
+          "experience": "3",
+          "acquired": "Signed on 07/02/24"
+        },
+        {
+          "name": "Koby Brea",
+          "nbaId": 1642886,
+          "position": "G",
+          "height": "6-5",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from GSW on 07/06/25"
+        },
+        {
+          "name": "Mark Williams",
+          "nbaId": 1631109,
+          "position": "C",
+          "height": "7-1",
+          "age": 24,
+          "experience": "4",
+          "acquired": "Traded from CHA on 06/30/25"
+        },
+        {
+          "name": "Devin Booker",
+          "nbaId": 1626164,
+          "position": "G",
+          "height": "6-5",
+          "age": 29,
+          "experience": "11",
+          "acquired": "#13 Pick in 2015 Draft"
+        },
+        {
+          "name": "Jamaree Bouyea",
+          "nbaId": 1631123,
+          "position": "G",
+          "height": "6-2",
+          "age": 27,
+          "experience": "4",
+          "acquired": "Signed on 11/18/25"
+        },
+        {
+          "name": "Koa Peat",
+          "nbaId": 1643520,
+          "position": "F",
+          "height": "6-8",
+          "age": 19,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from DAL on 06/24/26"
+        },
+        {
+          "name": "Rasheer Fleming",
+          "nbaId": 1642853,
+          "position": "F",
+          "height": "6-9",
+          "age": 22,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from MIN on 07/06/25"
+        },
+        {
+          "name": "Miles Bridges",
+          "nbaId": 1628970,
+          "position": "F",
+          "height": "6-7",
+          "age": 28,
+          "experience": "7",
+          "acquired": "Traded from CHA on 07/13/26"
+        },
+        {
+          "name": "CJ Huntley",
+          "nbaId": 1643047,
+          "position": "F",
+          "height": "6-11",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 07/03/25"
+        },
+        {
+          "name": "Jordan Goodwin",
+          "nbaId": 1630692,
+          "position": "G",
+          "height": "6-3",
+          "age": 27,
+          "experience": "5",
+          "acquired": "Awarded on Waivers on 07/23/25"
+        },
+        {
+          "name": "Duop Reath",
+          "nbaId": 1641871,
+          "position": "C",
+          "height": "6-9",
+          "age": 30,
+          "experience": "3",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Pat Spencer",
+          "nbaId": 1630311,
+          "position": "G",
+          "height": "6-2",
+          "age": 30,
+          "experience": "3",
+          "acquired": "Signed on 07/03/26"
+        }
+      ]
+    },
+    {
+      "team": "POR",
+      "source": "https://www.nba.com/team/1610612757/blazers",
+      "players": [
+        {
+          "name": "Jayson Kent",
+          "nbaId": 1643257,
+          "position": "F",
+          "height": "6-8",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 03/03/26"
+        },
+        {
+          "name": "Damian Lillard",
+          "nbaId": 203081,
+          "position": "G",
+          "height": "6-2",
+          "age": 36,
+          "experience": "13",
+          "acquired": "Signed on 07/19/25"
+        },
+        {
+          "name": "Scoot Henderson",
+          "nbaId": 1630703,
+          "position": "G",
+          "height": "6-3",
+          "age": 22,
+          "experience": "3",
+          "acquired": "#3 Pick in 2023 Draft"
+        },
+        {
+          "name": "Ja Morant",
+          "nbaId": 1629630,
+          "position": "G",
+          "height": "6-2",
+          "age": 27,
+          "experience": "7",
+          "acquired": "Traded from MEM on 06/29/26"
+        },
+        {
+          "name": "Chris Youngblood",
+          "nbaId": 1642959,
+          "position": "G",
+          "height": "6-4",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 03/03/26"
+        },
+        {
+          "name": "Jaylen Martin",
+          "nbaId": 1641798,
+          "position": "G",
+          "height": "6-6",
+          "age": 22,
+          "experience": "1",
+          "acquired": "Signed on 09/30/26"
+        },
+        {
+          "name": "Jrue Holiday",
+          "nbaId": 201950,
+          "position": "G",
+          "height": "6-4",
+          "age": 36,
+          "experience": "17",
+          "acquired": "Traded from BOS on 07/07/25"
+        },
+        {
+          "name": "John Tonje",
+          "nbaId": 1642910,
+          "position": "G",
+          "height": "6-4",
+          "age": 25,
+          "experience": "1",
+          "acquired": "Signed on 07/24/26"
+        },
+        {
+          "name": "Deni Avdija",
+          "nbaId": 1630166,
+          "position": "F",
+          "height": "6-8",
+          "age": 25,
+          "experience": "6",
+          "acquired": "Traded from WAS on 07/06/24"
+        },
+        {
+          "name": "Micah Potter",
+          "nbaId": 1630695,
+          "position": "C",
+          "height": "6-9",
+          "age": 28,
+          "experience": "5",
+          "acquired": "Awarded on Waivers on 07/10/26"
+        },
+        {
+          "name": "Branden Carlson",
+          "nbaId": 1642382,
+          "position": "C",
+          "height": "7-0",
+          "age": 27,
+          "experience": "2",
+          "acquired": "Signed on 07/01/26"
+        },
+        {
+          "name": "Yang Hansen",
+          "nbaId": 1642905,
+          "position": "C",
+          "height": "7-1",
+          "age": 21,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from MEM on 06/25/25"
+        },
+        {
+          "name": "Shaedon Sharpe",
+          "nbaId": 1631101,
+          "position": "G",
+          "height": "6-5",
+          "age": 23,
+          "experience": "4",
+          "acquired": "#7 Pick in 2022 Draft"
+        },
+        {
+          "name": "Jeremy Sochan",
+          "nbaId": 1631110,
+          "position": "F",
+          "height": "6-8",
+          "age": 23,
+          "experience": "4",
+          "acquired": "Signed on 08/02/26"
+        },
+        {
+          "name": "Donovan Clingan",
+          "nbaId": 1642270,
+          "position": "C",
+          "height": "7-2",
+          "age": 22,
+          "experience": "2",
+          "acquired": "#7 Pick in 2024 Draft"
+        },
+        {
+          "name": "Vít Krejčí",
+          "nbaId": 1630249,
+          "position": "G",
+          "height": "6-8",
+          "age": 26,
+          "experience": "5",
+          "acquired": "Traded from ATL on 02/01/26"
+        },
+        {
+          "name": "Toumani Camara",
+          "nbaId": 1641739,
+          "position": "F",
+          "height": "6-7",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Traded from PHX on 09/27/23"
+        },
+        {
+          "name": "Robert Williams III",
+          "nbaId": 1629057,
+          "position": "C-F",
+          "height": "6-9",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Traded from BOS on 10/01/23"
+        },
+        {
+          "name": "Sidy Cissoko",
+          "nbaId": 1631321,
+          "position": "G",
+          "height": "6-6",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Signed on 02/08/25"
+        }
+      ]
+    },
+    {
+      "team": "SAC",
+      "source": "https://www.nba.com/team/1610612758/kings",
+      "players": [
+        {
+          "name": "Sean East II",
+          "nbaId": 1642398,
+          "position": "G",
+          "height": "6-3",
+          "age": 26,
+          "experience": "R",
+          "acquired": "Signed on 09/28/26"
+        },
+        {
+          "name": "Viktor Lakhin",
+          "nbaId": 1642940,
+          "position": "F",
+          "height": "6-11",
+          "age": 25,
+          "experience": "R",
+          "acquired": "Signed on 09/28/26"
+        },
+        {
+          "name": "Malik Monk",
+          "nbaId": 1628370,
+          "position": "G",
+          "height": "6-3",
+          "age": 28,
+          "experience": "9",
+          "acquired": "Signed on 07/06/22"
+        },
+        {
+          "name": "Jonathan Mogbo",
+          "nbaId": 1642367,
+          "position": "F",
+          "height": "6-9",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Signed on 07/02/26"
+        },
+        {
+          "name": "Elfrid Payton",
+          "nbaId": 203901,
+          "position": "G",
+          "height": "6-3",
+          "age": 32,
+          "experience": "9",
+          "acquired": "Signed on 09/16/26"
+        },
+        {
+          "name": "Darius Acuff Jr.",
+          "nbaId": 1643411,
+          "position": "G",
+          "height": "6-2",
+          "age": 19,
+          "experience": "R",
+          "acquired": "#7 Pick in 2026 Draft"
+        },
+        {
+          "name": "Zach LaVine",
+          "nbaId": 203897,
+          "position": "G",
+          "height": "6-5",
+          "age": 31,
+          "experience": "12",
+          "acquired": "Traded from CHI on 02/03/25"
+        },
+        {
+          "name": "Precious Achiuwa",
+          "nbaId": 1630173,
+          "position": "F",
+          "height": "6-8",
+          "age": 27,
+          "experience": "6",
+          "acquired": "Signed on 11/04/25"
+        },
+        {
+          "name": "Nique Clifford",
+          "nbaId": 1642363,
+          "position": "G",
+          "height": "6-5",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from OKC on 06/25/25"
+        },
+        {
+          "name": "Domantas Sabonis",
+          "nbaId": 1627734,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 30,
+          "experience": "10",
+          "acquired": "Traded from IND on 02/08/22"
+        },
+        {
+          "name": "Leaky Black",
+          "nbaId": 1641778,
+          "position": "F",
+          "height": "6-6",
+          "age": 27,
+          "experience": "2",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Tristen Newton",
+          "nbaId": 1641803,
+          "position": "G",
+          "height": "6-5",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Keegan Murray",
+          "nbaId": 1631099,
+          "position": "F",
+          "height": "6-8",
+          "age": 26,
+          "experience": "4",
+          "acquired": "#4 Pick in 2022 Draft"
+        },
+        {
+          "name": "Adam Flagler",
+          "nbaId": 1641745,
+          "position": "G",
+          "height": "6-1",
+          "age": 26,
+          "experience": "2",
+          "acquired": "Signed on 07/01/26"
+        },
+        {
+          "name": "De'Andre Hunter",
+          "nbaId": 1629631,
+          "position": "F-G",
+          "height": "6-7",
+          "age": 28,
+          "experience": "7",
+          "acquired": "Traded from CLE on 02/01/26"
+        },
+        {
+          "name": "Ben Simmons",
+          "nbaId": 1627732,
+          "position": "G-F",
+          "height": "6-10",
+          "age": 30,
+          "experience": "8",
+          "acquired": "Signed on 09/07/26"
+        },
+        {
+          "name": "Daeqwon Plowden",
+          "nbaId": 1631342,
+          "position": "G-F",
+          "height": "6-4",
+          "age": 28,
+          "experience": "2",
+          "acquired": "Signed on 07/30/25"
+        },
+        {
+          "name": "Dylan Cardwell",
+          "nbaId": 1642928,
+          "position": "C",
+          "height": "6-10",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 07/02/25"
+        },
+        {
+          "name": "Alex Karaban",
+          "nbaId": 1642284,
+          "position": "F",
+          "height": "6-8",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from CLE on 06/24/26"
+        },
+        {
+          "name": "Emanuel Sharp",
+          "nbaId": 1643567,
+          "position": "G",
+          "height": "6-3",
+          "age": 22,
+          "experience": "R",
+          "acquired": "#45 Pick in 2026 Draft"
+        },
+        {
+          "name": "Maxime Raynaud",
+          "nbaId": 1642875,
+          "position": "C",
+          "height": "7-1",
+          "age": 23,
+          "experience": "1",
+          "acquired": "#42 Pick in 2025 Draft"
+        }
+      ]
+    },
+    {
+      "team": "SAS",
+      "source": "https://www.nba.com/team/1610612759/spurs",
+      "players": [
+        {
+          "name": "Jon Elmore",
+          "nbaId": 1631399,
+          "position": "G",
+          "height": "6-3",
+          "age": 30,
+          "experience": "R",
+          "acquired": "Signed on 09/24/26"
+        },
+        {
+          "name": "Malik Williams",
+          "nbaId": 1642013,
+          "position": "C",
+          "height": "6-11",
+          "age": 28,
+          "experience": "1",
+          "acquired": "Signed on 09/24/26"
+        },
+        {
+          "name": "R.J. Davis",
+          "nbaId": 1642930,
+          "position": "G",
+          "height": "6-0",
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Jordan McLaughlin",
+          "nbaId": 1629162,
+          "position": "G",
+          "height": "5-11",
+          "age": 30,
+          "experience": "7",
+          "acquired": "Traded from SAC on 02/03/25"
+        },
+        {
+          "name": "Victor Wembanyama",
+          "nbaId": 1641705,
+          "position": "F-C",
+          "height": "7-4",
+          "age": 22,
+          "experience": "3",
+          "acquired": "#1 Pick in 2023 Draft"
+        },
+        {
+          "name": "Dylan Harper",
+          "nbaId": 1642844,
+          "position": "G",
+          "height": "6-5",
+          "age": 20,
+          "experience": "1",
+          "acquired": "#2 Pick in 2025 Draft"
+        },
+        {
+          "name": "Keldon Johnson",
+          "nbaId": 1629640,
+          "position": "F-G",
+          "height": "6-6",
+          "age": 26,
+          "experience": "7",
+          "acquired": "#29 Pick in 2019 Draft"
+        },
+        {
+          "name": "De'Aaron Fox",
+          "nbaId": 1628368,
+          "position": "G",
+          "height": "6-3",
+          "age": 28,
+          "experience": "9",
+          "acquired": "Traded from SAC on 02/03/25"
+        },
+        {
+          "name": "Taelon Peter",
+          "nbaId": 1643007,
+          "position": "G",
+          "height": "6-3",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 08/07/26"
+        },
+        {
+          "name": "Stephon Castle",
+          "nbaId": 1642264,
+          "position": "G",
+          "height": "6-6",
+          "age": 21,
+          "experience": "2",
+          "acquired": "#4 Pick in 2024 Draft"
+        },
+        {
+          "name": "Luke Kornet",
+          "nbaId": 1628436,
+          "position": "C-F",
+          "height": "7-1",
+          "age": 31,
+          "experience": "9",
+          "acquired": "Signed on 07/07/25"
+        },
+        {
+          "name": "Tarris Reed Jr.",
+          "nbaId": 1643542,
+          "position": "C",
+          "height": "6-11",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from DEN on 06/23/26"
+        },
+        {
+          "name": "Carter Bryant",
+          "nbaId": 1642868,
+          "position": "F",
+          "height": "6-6",
+          "age": 20,
+          "experience": "1",
+          "acquired": "#14 Pick in 2025 Draft"
+        },
+        {
+          "name": "Maliq Brown",
+          "nbaId": 1643576,
+          "position": "F",
+          "height": "6-9",
+          "age": 22,
+          "experience": "R",
+          "acquired": "#44 Pick in 2026 Draft"
+        },
+        {
+          "name": "Ja'Kobi Gillespie",
+          "nbaId": 1643551,
+          "position": "G",
+          "height": "6-1",
+          "age": 22,
+          "experience": "R",
+          "acquired": "#42 Pick in 2026 Draft"
+        },
+        {
+          "name": "Jayden Quaintance",
+          "nbaId": 1643519,
+          "position": "F",
+          "height": "6-10",
+          "age": 19,
+          "experience": "R",
+          "acquired": "#20 Pick in 2026 Draft"
+        },
+        {
+          "name": "Tobias Harris",
+          "nbaId": 202699,
+          "position": "F",
+          "height": "6-8",
+          "age": 34,
+          "experience": "15",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Devin Vassell",
+          "nbaId": 1630170,
+          "position": "G-F",
+          "height": "6-5",
+          "age": 26,
+          "experience": "6",
+          "acquired": "#11 Pick in 2020 Draft"
+        },
+        {
+          "name": "David Jones Garcia",
+          "nbaId": 1642357,
+          "position": "G",
+          "height": "6-4",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 07/23/25"
+        },
+        {
+          "name": "Julian Champagnie",
+          "nbaId": 1630577,
+          "position": "F",
+          "height": "6-7",
+          "age": 25,
+          "experience": "4",
+          "acquired": ""
+        },
+        {
+          "name": "Harrison Barnes",
+          "nbaId": 203084,
+          "position": "F",
+          "height": "6-7",
+          "age": 34,
+          "experience": "14",
+          "acquired": "Traded from SAC on 07/08/24"
+        }
+      ]
+    },
+    {
+      "team": "TOR",
+      "source": "https://www.nba.com/team/1610612761/raptors",
+      "players": [
+        {
+          "name": "Tyreke Key",
+          "nbaId": 1642615,
+          "position": "G",
+          "height": "6-2",
+          "age": 27,
+          "experience": "R",
+          "acquired": "Signed on 09/10/25"
+        },
+        {
+          "name": "Nate Bittle",
+          "nbaId": 1642927,
+          "position": "C",
+          "height": "7-0",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 07/09/26"
+        },
+        {
+          "name": "Nimari Burnett",
+          "nbaId": 1643718,
+          "position": null,
+          "height": null,
+          "age": 24,
+          "experience": "R",
+          "acquired": "Signed on 09/24/26"
+        },
+        {
+          "name": "Jamal Shead",
+          "nbaId": 1642347,
+          "position": "G",
+          "height": "6-1",
+          "age": 24,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from SAC on 06/28/24"
+        },
+        {
+          "name": "Kawhi Leonard",
+          "nbaId": 202695,
+          "position": "F",
+          "height": "6-6",
+          "age": 35,
+          "experience": "15",
+          "acquired": "Traded from LAC on 09/14/26"
+        },
+        {
+          "name": "Scottie Barnes",
+          "nbaId": 1630567,
+          "position": "F-G",
+          "height": "6-8",
+          "age": 25,
+          "experience": "5",
+          "acquired": "#4 Pick in 2021 Draft"
+        },
+        {
+          "name": "Immanuel Quickley",
+          "nbaId": 1630193,
+          "position": "G",
+          "height": "6-2",
+          "age": 27,
+          "experience": "6",
+          "acquired": "Traded from NYK on 12/30/23"
+        },
+        {
+          "name": "Jaden Bradley",
+          "nbaId": 1643558,
+          "position": "G",
+          "height": "6-3",
+          "age": 23,
+          "experience": "R",
+          "acquired": "#50 Pick in 2026 Draft"
+        },
+        {
+          "name": "RJ Barrett",
+          "nbaId": 1629628,
+          "position": "F-G",
+          "height": "6-6",
+          "age": 26,
+          "experience": "7",
+          "acquired": "Traded from NYK on 12/30/23"
+        },
+        {
+          "name": "Kyle Anderson",
+          "nbaId": 203937,
+          "position": "F-G",
+          "height": "6-8",
+          "age": 33,
+          "experience": "12",
+          "acquired": "Signed on 07/06/26"
+        },
+        {
+          "name": "Ja'Kobe Walter",
+          "nbaId": 1642266,
+          "position": "G",
+          "height": "6-4",
+          "age": 22,
+          "experience": "2",
+          "acquired": "#19 Pick in 2024 Draft"
+        },
+        {
+          "name": "Malachi Smith",
+          "nbaId": 1641869,
+          "position": "G",
+          "height": "6-4",
+          "age": 26,
+          "experience": "1",
+          "acquired": "Signed on 08/17/26"
+        },
+        {
+          "name": "Jakob Poeltl",
+          "nbaId": 1627751,
+          "position": "C",
+          "height": "7-0",
+          "age": 30,
+          "experience": "10",
+          "acquired": "Traded from SAS on 02/09/23"
+        },
+        {
+          "name": "Allen Graves",
+          "nbaId": 1643512,
+          "position": "F",
+          "height": "6-9",
+          "age": 20,
+          "experience": "R",
+          "acquired": "#19 Pick in 2026 Draft"
+        },
+        {
+          "name": "Chucky Hepburn",
+          "nbaId": 1642935,
+          "position": "G",
+          "height": "6-0",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 07/01/25"
+        },
+        {
+          "name": "Collin Murray-Boyles",
+          "nbaId": 1642867,
+          "position": "F",
+          "height": "6-7",
+          "age": 21,
+          "experience": "1",
+          "acquired": "#9 Pick in 2025 Draft"
+        },
+        {
+          "name": "Trayce Jackson-Davis",
+          "nbaId": 1631218,
+          "position": "F",
+          "height": "6-9",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Traded from GSW on 02/05/26"
+        },
+        {
+          "name": "Andre Jackson Jr.",
+          "nbaId": 1641748,
+          "position": "G",
+          "height": "6-6",
+          "age": 24,
+          "experience": "3",
+          "acquired": "Signed on 08/04/26"
+        },
+        {
+          "name": "Trey Jemison III",
+          "nbaId": 1641998,
+          "position": "C",
+          "height": "6-10",
+          "age": 26,
+          "experience": "3",
+          "acquired": "Signed on 08/04/26"
+        },
+        {
+          "name": "Alijah Martin",
+          "nbaId": 1642918,
+          "position": "G",
+          "height": "6-2",
+          "age": 24,
+          "experience": "1",
+          "acquired": "#39 Pick in 2025 Draft"
+        },
+        {
+          "name": "Jamison Battle",
+          "nbaId": 1642419,
+          "position": "F",
+          "height": "6-7",
+          "age": 25,
+          "experience": "2",
+          "acquired": "Signed on 07/16/24"
+        }
+      ]
+    },
+    {
+      "team": "UTA",
+      "source": "https://www.nba.com/team/1610612762/jazz",
+      "players": [
+        {
+          "name": "Terrell Brown Jr.",
+          "nbaId": 1631474,
+          "position": "G",
+          "height": "6-3",
+          "age": 28,
+          "experience": "R",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "Jonas Aidoo",
+          "nbaId": 1643265,
+          "position": "C",
+          "height": "6-11",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 09/25/26"
+        },
+        {
+          "name": "Kyle Filipowski",
+          "nbaId": 1642271,
+          "position": "C",
+          "height": "6-11",
+          "age": 22,
+          "experience": "2",
+          "acquired": "#32 Pick in 2024 Draft"
+        },
+        {
+          "name": "Blake Hinson",
+          "nbaId": 1642396,
+          "position": "F",
+          "height": "6-8",
+          "age": 26,
+          "experience": "1",
+          "acquired": "Signed on 02/09/26"
+        },
+        {
+          "name": "Keyonte George",
+          "nbaId": 1641718,
+          "position": "G",
+          "height": "6-4",
+          "age": 22,
+          "experience": "3",
+          "acquired": "#16 Pick in 2023 Draft"
+        },
+        {
+          "name": "Josh Green",
+          "nbaId": 1630182,
+          "position": "G",
+          "height": "6-6",
+          "age": 25,
+          "experience": "6",
+          "acquired": "Traded from MIN on 08/29/26"
+        },
+        {
+          "name": "Tamar Bates",
+          "nbaId": 1642926,
+          "position": "G",
+          "height": "6-4",
+          "age": 23,
+          "experience": "R",
+          "acquired": "Signed on 07/03/26"
+        },
+        {
+          "name": "Isaiah Collier",
+          "nbaId": 1642268,
+          "position": "G",
+          "height": "6-4",
+          "age": 21,
+          "experience": "2",
+          "acquired": "#29 Pick in 2024 Draft"
+        },
+        {
+          "name": "Svi Mykhailiuk",
+          "nbaId": 1629004,
+          "position": "G-F",
+          "height": "6-7",
+          "age": 29,
+          "experience": "8",
+          "acquired": "Signed on 08/10/24"
+        },
+        {
+          "name": "Jaxson Hayes",
+          "nbaId": 1629637,
+          "position": "C-F",
+          "height": "7-0",
+          "age": 26,
+          "experience": "7",
+          "acquired": "Signed on 07/09/26"
+        },
+        {
+          "name": "Ace Bailey",
+          "nbaId": 1642846,
+          "position": "F",
+          "height": "6-9",
+          "age": 20,
+          "experience": "1",
+          "acquired": "#5 Pick in 2025 Draft"
+        },
+        {
+          "name": "Jaren Jackson Jr.",
+          "nbaId": 1628991,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 27,
+          "experience": "8",
+          "acquired": "Traded from MEM on 02/03/26"
+        },
+        {
+          "name": "Josh Okogie",
+          "nbaId": 1629006,
+          "position": "G",
+          "height": "6-4",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Signed on 07/09/26"
+        },
+        {
+          "name": "Darryn Peterson",
+          "nbaId": 1643408,
+          "position": "G",
+          "height": "6-6",
+          "age": 19,
+          "experience": "R",
+          "acquired": "#2 Pick in 2026 Draft"
+        },
+        {
+          "name": "Lauri Markkanen",
+          "nbaId": 1628374,
+          "position": "F-C",
+          "height": "7-1",
+          "age": 29,
+          "experience": "9",
+          "acquired": "Traded from CLE on 09/03/22"
+        },
+        {
+          "name": "Trey Alexander",
+          "nbaId": 1641725,
+          "position": "G",
+          "height": "6-5",
+          "age": 23,
+          "experience": "2",
+          "acquired": "Signed on 07/07/26"
+        },
+        {
+          "name": "Brice Sensabaugh",
+          "nbaId": 1641729,
+          "position": "F",
+          "height": "6-6",
+          "age": 22,
+          "experience": "3",
+          "acquired": "#28 Pick in 2023 Draft"
+        },
+        {
+          "name": "Jusuf Nurkić",
+          "nbaId": 203994,
+          "position": "C",
+          "height": "6-11",
+          "age": 32,
+          "experience": "12",
+          "acquired": "Traded from CHA on 06/29/25"
+        },
+        {
+          "name": "Mo Bamba",
+          "nbaId": 1628964,
+          "position": "C",
+          "height": "7-0",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Signed on 02/26/26"
+        },
+        {
+          "name": "Harrison Ingram",
+          "nbaId": 1631127,
+          "position": "F",
+          "height": "6-5",
+          "age": 23,
+          "experience": "2",
+          "acquired": "Signed on 07/25/26"
+        }
+      ]
+    },
+    {
+      "team": "WAS",
+      "source": "https://www.nba.com/team/1610612764/wizards",
+      "players": [
+        {
+          "name": "Steve Settle III",
+          "nbaId": 1643121,
+          "position": "F",
+          "height": "6-10",
+          "age": 25,
+          "experience": "R",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "Bilal Coulibaly",
+          "nbaId": 1641731,
+          "position": "G",
+          "height": "6-7",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Draft Rights Traded from IND on 06/23/23"
+        },
+        {
+          "name": "Tristan Vukcevic",
+          "nbaId": 1641774,
+          "position": "F",
+          "height": "7-0",
+          "age": 23,
+          "experience": "3",
+          "acquired": "#42 Pick in 2023 Draft"
+        },
+        {
+          "name": "Jazian Gortman",
+          "nbaId": 1641789,
+          "position": "G",
+          "height": "6-2",
+          "age": 23,
+          "experience": "1",
+          "acquired": "Signed on 10/02/26"
+        },
+        {
+          "name": "Tre Mann",
+          "nbaId": 1630544,
+          "position": "G",
+          "height": "6-4",
+          "age": 25,
+          "experience": "5",
+          "acquired": "Traded from CHA on 08/20/26"
+        },
+        {
+          "name": "Trae Young",
+          "nbaId": 1629027,
+          "position": "G",
+          "height": "6-2",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Traded from ATL on 01/09/26"
+        },
+        {
+          "name": "Trevor Keels",
+          "nbaId": 1631211,
+          "position": "G",
+          "height": "6-3",
+          "age": 23,
+          "experience": "2",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "AJ Dybantsa",
+          "nbaId": 1643407,
+          "position": "F",
+          "height": "6-9",
+          "age": 19,
+          "experience": "R",
+          "acquired": "#1 Pick in 2026 Draft"
+        },
+        {
+          "name": "Jamir Watkins",
+          "nbaId": 1642364,
+          "position": "F",
+          "height": "6-6",
+          "age": 25,
+          "experience": "1",
+          "acquired": "#43 Pick in 2025 Draft"
+        },
+        {
+          "name": "Bub Carrington",
+          "nbaId": 1642267,
+          "position": "G",
+          "height": "6-4",
+          "age": 21,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from POR on 07/06/24"
+        },
+        {
+          "name": "Chris Livingston",
+          "nbaId": 1641753,
+          "position": "F",
+          "height": "6-6",
+          "age": 22,
+          "experience": "3",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "Deandre Ayton",
+          "nbaId": 1629028,
+          "position": "C",
+          "height": "7-0",
+          "age": 28,
+          "experience": "8",
+          "acquired": "Traded from LAL on 07/07/26"
+        },
+        {
+          "name": "Justin Champagnie",
+          "nbaId": 1630551,
+          "position": "G-F",
+          "height": "6-6",
+          "age": 25,
+          "experience": "5",
+          "acquired": "Signed on 02/22/24"
+        },
+        {
+          "name": "Tre Johnson",
+          "nbaId": 1642848,
+          "position": "G",
+          "height": "6-5",
+          "age": 20,
+          "experience": "1",
+          "acquired": "#6 Pick in 2025 Draft"
+        },
+        {
+          "name": "Anthony Gill",
+          "nbaId": 1630264,
+          "position": "F",
+          "height": "6-7",
+          "age": 33,
+          "experience": "6",
+          "acquired": "Signed on 11/30/20"
+        },
+        {
+          "name": "Kyshawn George",
+          "nbaId": 1642273,
+          "position": "F",
+          "height": "6-8",
+          "age": 22,
+          "experience": "2",
+          "acquired": "Draft Rights Traded from NYK on 06/26/24"
+        },
+        {
+          "name": "Alex Sarr",
+          "nbaId": 1642259,
+          "position": "C",
+          "height": "7-0",
+          "age": 21,
+          "experience": "2",
+          "acquired": "#2 Pick in 2024 Draft"
+        },
+        {
+          "name": "Khris Middleton",
+          "nbaId": 203114,
+          "position": "F",
+          "height": "6-7",
+          "age": 35,
+          "experience": "14",
+          "acquired": "Traded from DAL on 07/08/26"
+        },
+        {
+          "name": "Anthony Davis",
+          "nbaId": 203076,
+          "position": "F-C",
+          "height": "6-10",
+          "age": 33,
+          "experience": "14",
+          "acquired": "Traded from DAL on 02/05/26"
+        },
+        {
+          "name": "Reece Beekman",
+          "nbaId": 1641736,
+          "position": "G",
+          "height": "6-3",
+          "age": 24,
+          "experience": "1",
+          "acquired": "Signed on 09/27/26"
+        },
+        {
+          "name": "Will Riley",
+          "nbaId": 1642860,
+          "position": "F",
+          "height": "6-9",
+          "age": 20,
+          "experience": "1",
+          "acquired": "Draft Rights Traded from UTA on 06/25/25"
+        },
+        {
+          "name": "Felix Okpara",
+          "nbaId": 1643590,
+          "position": "C",
+          "height": "6-11",
+          "age": 22,
+          "experience": "R",
+          "acquired": "Draft Rights Traded from ORL on 06/24/26"
+        }
+      ]
+    }
+  ],
+  "duplicates": []
+}

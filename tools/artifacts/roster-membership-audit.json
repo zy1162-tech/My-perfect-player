@@ -1,0 +1,38 @@
+{
+  "asOf": "2026-10-03",
+  "officialTeams": 30,
+  "officialPlayers": 620,
+  "referenceDuplicates": [],
+  "wrongMembership": [],
+  "notOnCurrentOfficialRoster": [],
+  "missingFromGame": [],
+  "historical": [
+    {
+      "era": 2003,
+      "referenceTeams": 29,
+      "referencePlayers": 424,
+      "wrongMembership": [],
+      "extraPlayers": [],
+      "missingPlayers": [],
+      "duplicates": []
+    },
+    {
+      "era": 2010,
+      "referenceTeams": 30,
+      "referencePlayers": 436,
+      "wrongMembership": [],
+      "extraPlayers": [],
+      "missingPlayers": [],
+      "duplicates": []
+    },
+    {
+      "era": 2016,
+      "referenceTeams": 30,
+      "referencePlayers": 450,
+      "wrongMembership": [],
+      "extraPlayers": [],
+      "missingPlayers": [],
+      "duplicates": []
+    }
+  ]
+}

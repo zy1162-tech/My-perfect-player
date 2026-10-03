@@ -10,6 +10,7 @@ const scripts = [
   'assets/data/player-ages-local.js',
   'assets/data/era-mode-data.js',
   'assets/data/era-complete-rosters.js',
+  'assets/data/era-opening-membership.js',
   'assets/data/player-rating-calibration.js',
   'assets/data/era-presentation.js',
   'assets/js/hupu/script-01-2678-5hu3djrc-upload-1783494754597-12.js',

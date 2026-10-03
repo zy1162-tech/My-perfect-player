@@ -2,30 +2,30 @@
 <html lang="zh-CN" class="pp-booting">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfect Player · 完美球员</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%80%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/css/fonts.css?v=20260826-performance-v1">
   <style id="pp-boot-css">
-html.pp-booting,html.pp-booting body{background:#faf5eb}
+html.pp-booting,html.pp-booting body{background:#080c13}
 html.pp-booting #app{visibility:hidden}
-#pp-boot{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;background:#faf5eb;color:#2d1f0e;font-family:'Noto Sans SC',sans-serif;transition:opacity .35s ease}
+#pp-boot{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;background:#080c13;color:#edf3ff;font-family:'Noto Sans SC',sans-serif;transition:opacity .35s ease}
 #pp-boot.is-out{opacity:0;pointer-events:none}
 #pp-boot-card{width:min(360px,86vw);text-align:center;padding:8px 6px}
 #pp-boot-mark{font-size:42px;line-height:1;margin-bottom:10px}
 #pp-boot-title{font-size:22px;font-weight:800;letter-spacing:1px;margin-bottom:4px}
-#pp-boot-title span{color:#ff6b35}
-#pp-boot-sub{font-size:13px;color:#8a7a66;margin-bottom:18px}
-#pp-boot-track{height:10px;border-radius:8px;background:#f0e0cc;overflow:hidden}
-#pp-boot-fill{height:100%;width:100%;border-radius:8px;background:linear-gradient(90deg,#ff6b35,#ff8a5c);transform-origin:left center;transform:scaleX(0.08);animation:ppBootGrow 16s ease-out forwards;will-change:transform}
+#pp-boot-title span{color:#ff6a67}
+#pp-boot-sub{font-size:13px;color:#a1b0c6;margin-bottom:18px}
+#pp-boot-track{height:10px;border-radius:8px;background:#213044;overflow:hidden}
+#pp-boot-fill{height:100%;width:100%;border-radius:8px;background:linear-gradient(90deg,#d92b42,#ff6a67);transform-origin:left center;transform:scaleX(0.08);animation:ppBootGrow 16s ease-out forwards;will-change:transform}
 #pp-boot-fill.is-real{animation:none;transition:transform .28s ease}
-#pp-boot-row{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#8a7a66;font-weight:700}
+#pp-boot-row{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#a1b0c6;font-weight:700}
 #pp-boot-pct.is-fake{font-variant-numeric:tabular-nums}
 #pp-boot-pct.is-fake::after{content:"8%";animation:ppBootPct 16s linear forwards}
-#pp-mod-gate{position:fixed;inset:0;z-index:2147482000;display:none;align-items:center;justify-content:center;background:rgba(250,245,235,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#pp-mod-gate{position:fixed;inset:0;z-index:2147482000;display:none;align-items:center;justify-content:center;background:rgba(8,12,19,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 #pp-mod-gate.is-on{display:flex}
-#pp-mod-gate-card{min-width:200px;text-align:center;padding:20px 24px;background:#fffaf2;border:2px solid #f0e0cc;border-radius:16px;box-shadow:0 8px 32px rgba(45,31,14,.12)}
-#pp-mod-gate-msg{margin-top:12px;font-family:'Noto Sans SC',sans-serif;font-size:13px;font-weight:700;color:#8a7a66;letter-spacing:.4px}
+#pp-mod-gate-card{min-width:200px;text-align:center;padding:20px 24px;background:#111a27;border:2px solid #2b3a50;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+#pp-mod-gate-msg{margin-top:12px;font-family:'Noto Sans SC',sans-serif;font-size:13px;font-weight:700;color:#a1b0c6;letter-spacing:.4px}
 @keyframes ppBootGrow{from{transform:scaleX(0.08)}to{transform:scaleX(0.48)}}
 @keyframes ppBootPct{
   0%{content:"8%"}8%{content:"12%"}16%{content:"16%"}24%{content:"20%"}32%{content:"24%"}
@@ -38,19 +38,20 @@ html.pp-booting #app{visibility:hidden}
 <script src="assets/data/player-ages-local.js?v=20260824-age-local-v5"></script>
 <script src="assets/data/era-mode-data.js?v=20260825-era-v11"></script>
 <script src="assets/data/era-complete-rosters.js?v=20260825-era-v11"></script>
+  <script src="assets/data/era-opening-membership.js?v=20261004-opening-membership-v2"></script>
 <script src="assets/data/player-rating-calibration.js?v=20261001-season-stars-v5"></script>
 <script src="assets/data/era-presentation.js?v=20260826-era-presentation-v2"></script>
 <script src="assets/data/era-headshot-index.js?v=20260826-era-headshots-v1"></script>
 <script src="assets/data/verified-headshots.js?v=20261002-verified-headshots-v2"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261003-era-economy-boot-v19" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20261003-era-economy-boot-v19"></script>
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261004-pc-rosters-boot-v23" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20261004-pc-rosters-boot-v23"></script>
   <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260826-era-headshots-v2">
   <link rel="stylesheet" href="assets/css/perfect-player-season-report.css?v=20260826-season-report-v1">
 
 
-<link href="assets/css/perfect-player-premium.css?v=20261003-era-economy-v7" rel="stylesheet">
+<link href="assets/css/perfect-player-premium.css?v=20261004-pc-rosters-v9" rel="stylesheet">
 </head>
 <body>
 
@@ -195,17 +196,22 @@ html.pp-booting #app{visibility:hidden}
       </div>
     </div>
 
-    <!-- Hero -->
-    <div class="hero">
-      <div class="hero-title">自由构筑 · 从新秀到传奇</div>
-      <div class="hero-headline">
-        打造我的传奇球星
+    <div class="menu-arena">
+      <div class="hero">
+        <div class="hero-title">MY CAREER · 球员生涯</div>
+        <div class="hero-headline">把名字<br><span class="hl">写进联盟</span></div>
+        <div class="hero-desc">构筑自己的球员，走进选秀与更衣室。让训练、选择和每一场比赛，留下属于你的生涯。</div>
+        <div class="menu-season-tag"><span class="live-dot"></span><span id="league-snapshot-label">2026–27 · 现代与历史赛场</span></div>
+        <div class="menu-feature-note"><b>01</b><span>进入球队 · 赢得轮换</span><b>02</b><span>建立配合 · 影响球队</span><b>03</b><span>留住荣誉 · 写下生涯</span></div>
       </div>
-      <div class="hero-desc">从现役与历史球星中夺取属性，打造属于我的球星</div>
+      <div class="arena-player-stage" aria-label="虚拟球员形象展示">
+        <div class="arena-court-floor"></div>
+        <span class="arena-stage-word" aria-hidden="true">PLAYER</span>
+        <img class="arena-player-model" src="assets/images/ui/career-avatar-v1.png" alt="穿 1 号球衣持球的虚拟球员展示形象">
+        <div class="arena-stage-caption"><strong>YOUR PLAYER.<br>YOUR LEGACY.</strong><small>虚拟形象展示 · 实际能力由你构筑</small></div>
+      </div>
+      <div class="menu-game-modes"><div class="menu-mode-heading"><span>PLAY</span><strong>选择你的赛场</strong></div><div class="feature-grid" id="feature-grid"></div></div>
     </div>
-
-    <!-- Feature Cards -->
-    <div class="feature-grid" id="feature-grid"></div>
 
     <div class="fc-footer"></div>
 
@@ -751,7 +757,7 @@ function getPlayerHeadshotStyle(playerName, displaySize) {
   return _hsInitialsAvatar(sources.lookupName, displaySize);
 }
 </script>
-<script src="assets/js/hupu/script-01-2678-5hu3djrc-upload-1783494754597-12.js"></script>
+<script src="assets/js/hupu/script-01-2678-5hu3djrc-upload-1783494754597-12.js?v=20261003-official-rosters-v2"></script>
 <script src="assets/js/current-player-ratings-2026.js?v=20260826-rating-v1"></script>
 <script src="assets/js/hupu/script-02-2678-gd4jvxrc-upload-1783494754597-15.js"></script>
 <script src="assets/js/hupu/script-03-2678-456sfprc-upload-1783494754597-18.js"></script>
@@ -962,11 +968,11 @@ var Storage = {
   }
 };
 </script>
-<script src="assets/js/perfect-player-core.js?v=20261003-era-economy-v7"></script>
+<script src="assets/js/perfect-player-core.js?v=20261004-pc-rosters-v9"></script>
 <script src="assets/js/perfect-player-season-report.js?v=20260826-season-report-v2"></script>
 <script src="assets/js/perfect-player-mod-v4.js?v=20261003-coach-state-v20"></script>
-<script src="assets/js/perfect-player-career-events.js?v=20261003-era-salary-v3"></script>
-<script src="assets/js/perfect-player-era-mode.js?v=20261001-opening-roster-v34"></script>
+<script src="assets/js/perfect-player-career-events.js?v=20261004-career-hub-v6"></script>
+<script src="assets/js/perfect-player-era-mode.js?v=20261004-opening-roster-v36"></script>
 
 <!-- ====== 随机事件系统 — EVENT REGISTRY ====== -->
 <script src="assets/js/perfect-player-event-runtime.js?v=20261003-risk-state-v10"></script>

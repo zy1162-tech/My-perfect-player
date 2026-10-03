@@ -1,0 +1,767 @@
+[
+  {
+    "name": "Kobe Johnson",
+    "team": "ATL",
+    "ovr": 69
+  },
+  {
+    "name": "Cameron Corhen",
+    "team": "ATL",
+    "ovr": 71
+  },
+  {
+    "name": "Isaac McKneely",
+    "team": "ATL",
+    "ovr": 68
+  },
+  {
+    "name": "Kingston Flemings",
+    "team": "ATL",
+    "ovr": 68
+  },
+  {
+    "name": "Henri Veesaar",
+    "team": "ATL",
+    "ovr": 71
+  },
+  {
+    "name": "Zuby Ejiofor",
+    "team": "ATL",
+    "ovr": 68
+  },
+  {
+    "name": "Mikel Brown Jr.",
+    "team": "BKN",
+    "ovr": 70
+  },
+  {
+    "name": "Joshua Jefferson",
+    "team": "BKN",
+    "ovr": 70
+  },
+  {
+    "name": "Ben Humrichous",
+    "team": "BKN",
+    "ovr": 70
+  },
+  {
+    "name": "Grant Nelson",
+    "team": "BKN",
+    "ovr": 69
+  },
+  {
+    "name": "Tyler Bilodeau",
+    "team": "BKN",
+    "ovr": 68
+  },
+  {
+    "name": "Dain Dainja",
+    "team": "BKN",
+    "ovr": 68
+  },
+  {
+    "name": "Milos Uzan",
+    "team": "BOS",
+    "ovr": 70
+  },
+  {
+    "name": "Tucker DeVries",
+    "team": "BOS",
+    "ovr": 68
+  },
+  {
+    "name": "Chris Cenac Jr.",
+    "team": "BOS",
+    "ovr": 68
+  },
+  {
+    "name": "Dillon Mitchell",
+    "team": "BOS",
+    "ovr": 71
+  },
+  {
+    "name": "Gabe McGlothan",
+    "team": "BOS",
+    "ovr": 68
+  },
+  {
+    "name": "Jarkel Joiner",
+    "team": "CHA",
+    "ovr": 71
+  },
+  {
+    "name": "Michael Ajayi",
+    "team": "CHA",
+    "ovr": 69
+  },
+  {
+    "name": "Kylan Boswell",
+    "team": "CHA",
+    "ovr": 69
+  },
+  {
+    "name": "Wyatt Fricks",
+    "team": "CHA",
+    "ovr": 69
+  },
+  {
+    "name": "Christian Anderson",
+    "team": "CHA",
+    "ovr": 71
+  },
+  {
+    "name": "Hannes Steinbach",
+    "team": "CHA",
+    "ovr": 71
+  },
+  {
+    "name": "Tobe Awaka",
+    "team": "CHI",
+    "ovr": 71
+  },
+  {
+    "name": "Jaylin Sellers",
+    "team": "CHI",
+    "ovr": 69
+  },
+  {
+    "name": "Dailyn Swain",
+    "team": "CHI",
+    "ovr": 69
+  },
+  {
+    "name": "Orlando Robinson",
+    "team": "CHI",
+    "ovr": 71
+  },
+  {
+    "name": "Caleb Wilson",
+    "team": "CHI",
+    "ovr": 70
+  },
+  {
+    "name": "Drew Peterson",
+    "team": "CHI",
+    "ovr": 69
+  },
+  {
+    "name": "Brandon Boston",
+    "team": "CHI",
+    "ovr": 71
+  },
+  {
+    "name": "Jalen Bridges",
+    "team": "CHI",
+    "ovr": 71
+  },
+  {
+    "name": "Kadary Richmond",
+    "team": "CLE",
+    "ovr": 71
+  },
+  {
+    "name": "Zack Austin",
+    "team": "CLE",
+    "ovr": 69
+  },
+  {
+    "name": "Rashaun Agee",
+    "team": "CLE",
+    "ovr": 68
+  },
+  {
+    "name": "James Harden",
+    "team": "CLE",
+    "ovr": 71
+  },
+  {
+    "name": "Meleek Thomas",
+    "team": "CLE",
+    "ovr": 69
+  },
+  {
+    "name": "Khalifa Diop",
+    "team": "CLE",
+    "ovr": 71
+  },
+  {
+    "name": "Mario Hezonja",
+    "team": "CLE",
+    "ovr": 69
+  },
+  {
+    "name": "Ernest Udeh, Jr.",
+    "team": "CLE",
+    "ovr": 68
+  },
+  {
+    "name": "Tarik Biberovic",
+    "team": "DAL",
+    "ovr": 68
+  },
+  {
+    "name": "Seth Lundy",
+    "team": "DAL",
+    "ovr": 70
+  },
+  {
+    "name": "Morez Johnson Jr.",
+    "team": "DAL",
+    "ovr": 68
+  },
+  {
+    "name": "Tobi Lawal",
+    "team": "DAL",
+    "ovr": 68
+  },
+  {
+    "name": "Sergio de Larrea",
+    "team": "DAL",
+    "ovr": 71
+  },
+  {
+    "name": "Coleman Hawkins",
+    "team": "DEN",
+    "ovr": 70
+  },
+  {
+    "name": "Dane Goodwin",
+    "team": "DEN",
+    "ovr": 71
+  },
+  {
+    "name": "Trevon Brazile",
+    "team": "DEN",
+    "ovr": 70
+  },
+  {
+    "name": "DeMar DeRozan",
+    "team": "DEN",
+    "ovr": 70
+  },
+  {
+    "name": "Alpha Diallo",
+    "team": "DEN",
+    "ovr": 69
+  },
+  {
+    "name": "Bryce Hopkins",
+    "team": "DEN",
+    "ovr": 68
+  },
+  {
+    "name": "Lonnie Walker IV",
+    "team": "DEN",
+    "ovr": 70
+  },
+  {
+    "name": "Ugonna Onyenso",
+    "team": "DET",
+    "ovr": 71
+  },
+  {
+    "name": "John Ukomadu",
+    "team": "DET",
+    "ovr": 70
+  },
+  {
+    "name": "Brice Williams",
+    "team": "DET",
+    "ovr": 68
+  },
+  {
+    "name": "Ebuka Okorie",
+    "team": "DET",
+    "ovr": 68
+  },
+  {
+    "name": "Yaxel Lendeborg",
+    "team": "GSW",
+    "ovr": 69
+  },
+  {
+    "name": "Jimmy Butler III",
+    "team": "GSW",
+    "ovr": 70
+  },
+  {
+    "name": "Brandon Williams",
+    "team": "GSW",
+    "ovr": 70
+  },
+  {
+    "name": "Alex Toohey",
+    "team": "GSW",
+    "ovr": 69
+  },
+  {
+    "name": "Miles Kelly",
+    "team": "GSW",
+    "ovr": 71
+  },
+  {
+    "name": "Georges Niang",
+    "team": "GSW",
+    "ovr": 69
+  },
+  {
+    "name": "Graham Ike",
+    "team": "GSW",
+    "ovr": 69
+  },
+  {
+    "name": "Quadir Copeland",
+    "team": "HOU",
+    "ovr": 71
+  },
+  {
+    "name": "Bruce Thornton",
+    "team": "HOU",
+    "ovr": 70
+  },
+  {
+    "name": "Keba Keita",
+    "team": "IND",
+    "ovr": 71
+  },
+  {
+    "name": "Rienk Mast",
+    "team": "IND",
+    "ovr": 68
+  },
+  {
+    "name": "Braden Smith",
+    "team": "IND",
+    "ovr": 68
+  },
+  {
+    "name": "James Johnson",
+    "team": "IND",
+    "ovr": 69
+  },
+  {
+    "name": "Fletcher Loyer",
+    "team": "LAC",
+    "ovr": 70
+  },
+  {
+    "name": "Keaton Wagler",
+    "team": "LAC",
+    "ovr": 69
+  },
+  {
+    "name": "Nick Martinelli",
+    "team": "LAC",
+    "ovr": 68
+  },
+  {
+    "name": "Baba Miller",
+    "team": "LAC",
+    "ovr": 70
+  },
+  {
+    "name": "Arthur Kaluma",
+    "team": "LAL",
+    "ovr": 71
+  },
+  {
+    "name": "William Kyle",
+    "team": "LAL",
+    "ovr": 71
+  },
+  {
+    "name": "Cole Swider",
+    "team": "LAL",
+    "ovr": 70
+  },
+  {
+    "name": "AK Okereke",
+    "team": "LAL",
+    "ovr": 70
+  },
+  {
+    "name": "Cameron Carr",
+    "team": "LAL",
+    "ovr": 70
+  },
+  {
+    "name": "Carson Cooper",
+    "team": "MEM",
+    "ovr": 69
+  },
+  {
+    "name": "Cameron Boozer",
+    "team": "MEM",
+    "ovr": 69
+  },
+  {
+    "name": "Karim Lopez",
+    "team": "MEM",
+    "ovr": 70
+  },
+  {
+    "name": "Ryan Conwell",
+    "team": "MIA",
+    "ovr": 69
+  },
+  {
+    "name": "J'Vonne Hadley",
+    "team": "MIA",
+    "ovr": 71
+  },
+  {
+    "name": "Ian Schieffelin",
+    "team": "MIA",
+    "ovr": 71
+  },
+  {
+    "name": "Lester Quinones",
+    "team": "MIA",
+    "ovr": 71
+  },
+  {
+    "name": "Tre Donaldson",
+    "team": "MIA",
+    "ovr": 69
+  },
+  {
+    "name": "Bobby Portis Jr.",
+    "team": "MIA",
+    "ovr": 71
+  },
+  {
+    "name": "Brayden Burries",
+    "team": "MIL",
+    "ovr": 71
+  },
+  {
+    "name": "Nate Ament",
+    "team": "MIL",
+    "ovr": 69
+  },
+  {
+    "name": "Bogoljub Marković",
+    "team": "MIL",
+    "ovr": 69
+  },
+  {
+    "name": "John Butler Jr.",
+    "team": "MIL",
+    "ovr": 71
+  },
+  {
+    "name": "Pete Nance",
+    "team": "MIL",
+    "ovr": 70
+  },
+  {
+    "name": "Jake Stephens",
+    "team": "MIL",
+    "ovr": 68
+  },
+  {
+    "name": "Jonathan Kuminga",
+    "team": "MIN",
+    "ovr": 68
+  },
+  {
+    "name": "Isaiah Evans",
+    "team": "MIN",
+    "ovr": 68
+  },
+  {
+    "name": "KJ Martin",
+    "team": "MIN",
+    "ovr": 71
+  },
+  {
+    "name": "Kobe Bufkin",
+    "team": "NOP",
+    "ovr": 71
+  },
+  {
+    "name": "Malik Dia",
+    "team": "NOP",
+    "ovr": 70
+  },
+  {
+    "name": "Jaron Pierre Jr.",
+    "team": "NOP",
+    "ovr": 71
+  },
+  {
+    "name": "Caleb Houstan",
+    "team": "NOP",
+    "ovr": 68
+  },
+  {
+    "name": "Jaden Akins",
+    "team": "NYK",
+    "ovr": 70
+  },
+  {
+    "name": "James Wiseman",
+    "team": "NYK",
+    "ovr": 68
+  },
+  {
+    "name": "Tyler Nickel",
+    "team": "NYK",
+    "ovr": 69
+  },
+  {
+    "name": "Robert McCray V",
+    "team": "OKC",
+    "ovr": 69
+  },
+  {
+    "name": "Josh Dix",
+    "team": "OKC",
+    "ovr": 69
+  },
+  {
+    "name": "Christoph Tilly",
+    "team": "OKC",
+    "ovr": 70
+  },
+  {
+    "name": "Andrew Holifield",
+    "team": "OKC",
+    "ovr": 68
+  },
+  {
+    "name": "Otega Oweh",
+    "team": "OKC",
+    "ovr": 71
+  },
+  {
+    "name": "Bennett Stirtz",
+    "team": "OKC",
+    "ovr": 68
+  },
+  {
+    "name": "Aday Mara",
+    "team": "OKC",
+    "ovr": 70
+  },
+  {
+    "name": "Zhaire Smith",
+    "team": "OKC",
+    "ovr": 71
+  },
+  {
+    "name": "Malaki Branham",
+    "team": "ORL",
+    "ovr": 71
+  },
+  {
+    "name": "Izaiyah Nelson",
+    "team": "ORL",
+    "ovr": 69
+  },
+  {
+    "name": "Kevin Knox II",
+    "team": "ORL",
+    "ovr": 71
+  },
+  {
+    "name": "Jameer Nelson Jr.",
+    "team": "PHI",
+    "ovr": 68
+  },
+  {
+    "name": "Saint Thomas",
+    "team": "PHI",
+    "ovr": 68
+  },
+  {
+    "name": "Duke Miles",
+    "team": "PHI",
+    "ovr": 71
+  },
+  {
+    "name": "Labaron Philon",
+    "team": "PHI",
+    "ovr": 69
+  },
+  {
+    "name": "Tacko Fall",
+    "team": "PHI",
+    "ovr": 69
+  },
+  {
+    "name": "Phillip Wheeler",
+    "team": "PHX",
+    "ovr": 70
+  },
+  {
+    "name": "Kennedy Chandler",
+    "team": "PHX",
+    "ovr": 69
+  },
+  {
+    "name": "Koa Peat",
+    "team": "PHX",
+    "ovr": 68
+  },
+  {
+    "name": "Duop Reath",
+    "team": "PHX",
+    "ovr": 71
+  },
+  {
+    "name": "Jaylen Martin",
+    "team": "POR",
+    "ovr": 70
+  },
+  {
+    "name": "Micah Potter",
+    "team": "POR",
+    "ovr": 71
+  },
+  {
+    "name": "Sean East II",
+    "team": "SAC",
+    "ovr": 70
+  },
+  {
+    "name": "Viktor Lakhin",
+    "team": "SAC",
+    "ovr": 68
+  },
+  {
+    "name": "Elfrid Payton",
+    "team": "SAC",
+    "ovr": 69
+  },
+  {
+    "name": "Darius Acuff Jr.",
+    "team": "SAC",
+    "ovr": 71
+  },
+  {
+    "name": "Leaky Black",
+    "team": "SAC",
+    "ovr": 70
+  },
+  {
+    "name": "Ben Simmons",
+    "team": "SAC",
+    "ovr": 68
+  },
+  {
+    "name": "Alex Karaban",
+    "team": "SAC",
+    "ovr": 68
+  },
+  {
+    "name": "Emanuel Sharp",
+    "team": "SAC",
+    "ovr": 71
+  },
+  {
+    "name": "Jon Elmore",
+    "team": "SAS",
+    "ovr": 71
+  },
+  {
+    "name": "Malik Williams",
+    "team": "SAS",
+    "ovr": 69
+  },
+  {
+    "name": "R.J. Davis",
+    "team": "SAS",
+    "ovr": 70
+  },
+  {
+    "name": "Tarris Reed Jr.",
+    "team": "SAS",
+    "ovr": 70
+  },
+  {
+    "name": "Maliq Brown",
+    "team": "SAS",
+    "ovr": 68
+  },
+  {
+    "name": "Ja'Kobi Gillespie",
+    "team": "SAS",
+    "ovr": 71
+  },
+  {
+    "name": "Jayden Quaintance",
+    "team": "SAS",
+    "ovr": 71
+  },
+  {
+    "name": "Tyreke Key",
+    "team": "TOR",
+    "ovr": 71
+  },
+  {
+    "name": "Nate Bittle",
+    "team": "TOR",
+    "ovr": 71
+  },
+  {
+    "name": "Nimari Burnett",
+    "team": "TOR",
+    "ovr": 70
+  },
+  {
+    "name": "Jaden Bradley",
+    "team": "TOR",
+    "ovr": 70
+  },
+  {
+    "name": "Allen Graves",
+    "team": "TOR",
+    "ovr": 68
+  },
+  {
+    "name": "Terrell Brown Jr.",
+    "team": "UTA",
+    "ovr": 70
+  },
+  {
+    "name": "Jonas Aidoo",
+    "team": "UTA",
+    "ovr": 69
+  },
+  {
+    "name": "Darryn Peterson",
+    "team": "UTA",
+    "ovr": 68
+  },
+  {
+    "name": "Steve Settle III",
+    "team": "WAS",
+    "ovr": 69
+  },
+  {
+    "name": "Jazian Gortman",
+    "team": "WAS",
+    "ovr": 69
+  },
+  {
+    "name": "AJ Dybantsa",
+    "team": "WAS",
+    "ovr": 71
+  },
+  {
+    "name": "Chris Livingston",
+    "team": "WAS",
+    "ovr": 69
+  },
+  {
+    "name": "Reece Beekman",
+    "team": "WAS",
+    "ovr": 68
+  },
+  {
+    "name": "Felix Okpara",
+    "team": "WAS",
+    "ovr": 70
+  }
+]

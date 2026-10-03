@@ -9,20 +9,26 @@ body{margin:0;background:#f4f1eb;font:14px system-ui;color:#17283d}header{paddin
 <header>
 <strong>生涯事件功能验证 · 测试用角色</strong>
 <p>使用独立本地端口运行，实际调用正式页面的模拟、事件、教练和存档函数。</p>
+<select id="layout-width" aria-label="验证布局宽度" onchange="document.getElementById('game').style.width=this.value==='auto'?'100%':this.value+'px'"><option value="auto">桌面宽度</option><option value="1440">PC 1440</option><option value="390">手机 390</option><option value="320">手机 320</option></select>
+<select id="roster-era" aria-label="阵容验证年代"><option value="current">现代</option><option value="2003">2003</option><option value="2010">2010</option><option value="2016">2016</option></select>
+<select id="roster-team" aria-label="阵容验证球队"><option value="PHI">PHI 费城</option><option value="BOS">BOS 波士顿</option><option value="LAL">LAL 洛杉矶</option><option value="CHA">CHA 夏洛特</option></select>
+<button onclick="prepareRosterSmoke()">展示真实建球名单</button>
 <button onclick="prepareCareerSmoke()">准备正常赛季验证</button>
 <button onclick="prepareMedicalSmoke()">准备恢复事件验证</button>
+<button onclick="prepareCurrentRecoverySmoke()">继续检查恢复联动</button>
 <button onclick="prepareCoachSmoke()">准备教练与账本验证</button>
 <button onclick="prepareBranchContinuitySmoke()">准备旧剧情读档验证</button>
 <select id="salary-era" aria-label="工资验证场景"><option value="veteran">现代十年资历巨星</option><option value="current">现代状元新秀</option><option value="2003">2003 状元新秀</option><option value="2010">2010 状元新秀</option><option value="2016">2016 状元新秀</option></select>
 <button onclick="prepareSalarySmoke()">准备年代工资验证</button>
 <button onclick="advanceCoachSmoke()">继续检查团队联动</button>
 <button onclick="gameWindow.showTeamSystemChooser()">检查更换球队体系</button>
+<button onclick="showCareerOverviewSmoke()">查看实际生涯面板</button>
 <button onclick="saveCareerSmoke()">保存测试进度</button>
 <button onclick="loadCareerSmoke()">恢复测试进度</button>
 <button onclick="reportCareerSmoke()">读取实际结果</button>
 <div id="report">等待准备。</div>
 </header>
-<iframe id="game" src="../nba-perfect-player.html?career-events-smoke=20261003-era-economy-v7" title="正式游戏"></iframe>
+<iframe id="game" src="../nba-perfect-player.html?career-events-smoke=20261004-pc-rosters-v9" title="正式游戏"></iframe>
 <script>
 var gameWindow, gameState, smokeResult = [], nextCoachStep = 0, savedCareerSmoke = null, branchContinuity = null;
 async function prepareCareerSmokeBase(ovr) {
@@ -38,6 +44,7 @@ async function prepareCareerSmokeBase(ovr) {
   s.attrs = Object.fromEntries(['FIN','MID','threePT','DNK','HAN','PAS','PDEF','IDEF','REB','BLK','STL','ATH','STR','CLU','STA'].map(k=>[k,k==='STA'?0:ovr]));
   s.finalOVR = gameWindow.calcOVR(s.attrs, 'SG');
   gameWindow.eval('HUPU_USER').nickname = '生涯验证球员';
+  gameWindow.PERFECT_PLAYER_PROFILE = {name:'生涯验证球员',avatar:gameWindow.getHupuAvatarUrl()};
   smokeResult = [];
   savedCareerSmoke = null;
   branchContinuity = null;
@@ -49,6 +56,19 @@ async function prepareCareerSmoke() {
     gameWindow.startSeason();
     document.getElementById('report').textContent = '正常赛季已启动。请在下方赛前面板模拟本场，随后选择真实事件。';
   } catch(e) { document.getElementById('report').textContent = 'FAIL '+e.message; }
+}
+async function prepareRosterSmoke() {
+  try {
+    var s=await prepareCareerSmokeBase(80), era=document.getElementById('roster-era').value, team=document.getElementById('roster-team').value;
+    s.mode=era==='current'?'current':'legend';s.eraStart=era==='current'?null:Number(era);
+    if(s.mode==='legend')gameWindow.applyLegendEraLeague();
+    gameWindow.beginAttributeBuild();
+    var players=gameWindow.getBuildPlayerPool(team);
+    s.currentTeam=team;s._drawPlayers=players;
+    gameWindow.showScreen('screen-build');
+    gameWindow.renderRosterPlayers(team,players,players);
+    document.getElementById('report').textContent=JSON.stringify({era:era,team:team,count:players.length,players:players.map(p=>({name:p.nameEN||p.name,ovr:p.ovr,estimated:/estimate/.test(p.ratingBasis||'')}))},null,2);
+  } catch(e) { document.getElementById('report').textContent='FAIL '+e.message; }
 }
 async function prepareMedicalSmoke() {
   try {
@@ -77,6 +97,19 @@ function advanceCoachSmoke() {
   if (nextCoachStep >= 2) { gameWindow.openCareerCoachSearch(); return; }
   e.pending = {id:nextCoachStep === 0 ? 'team_evening' : 'rotation_identity',key:'coach-step-'+nextCoachStep,opponent:'BOS'};
   nextCoachStep++;
+  gameWindow.showCareerExperienceDecision();
+}
+function showCareerOverviewSmoke() {
+  gameWindow.PP_CAREER_EVENTS.resetTransient();
+  gameWindow.eval('regularSeasonRun = null');
+  gameWindow.renderSeasonScreenDOM();gameWindow.showScreen('screen-season');
+}
+function prepareCurrentRecoverySmoke() {
+  var e=gameWindow.PP_CAREER_EVENTS.getState();
+  gameWindow.PP_CAREER_EVENTS.resetTransient();
+  var stage=e.arcs.recovery||0,id=['recovery_plan','recovery_review','recovery_habit'][stage];
+  if(!id)return;
+  e.pending={id:id,key:'recovery-after-business-'+stage,opponent:'BOS'};
   gameWindow.showCareerExperienceDecision();
 }
 async function prepareBranchContinuitySmoke() {
@@ -152,7 +185,7 @@ function reportCareerSmoke() {
       choiceCount:s.career.branchHistory.filter(row=>row.eventId==='fan_culture_score').length,
       attrsPreserved:branchContinuity.attrs===JSON.stringify(s.attrs),ovrPreserved:branchContinuity.ovr===s.finalOVR,pendingEvent:s._seasonBranchEventId} : null;
     document.getElementById('report').textContent = JSON.stringify({salaryMarket:gameWindow.getCareerSalaryMarket(),annualSalary:e.money.annualSalary,salaryContract:e.money.contract,continuity:continuity,scheduledResults:(s.season.schedule||[]).filter(game=>game.simulated).length,saveRestored:savedCareerSmoke ? savedCareerSmoke===JSON.stringify(careerSmokeSaveFields()) : null,cash:e.money.cash,earned:e.money.earned,salary:e.money.salary,
-      offcourt:e.money.offcourt,spent:e.money.spent,modifiers:fx,coach:gameWindow.getTeamSystemEffects('LAL').name,
+      offcourt:e.money.offcourt,spent:e.money.spent,modifiers:fx,injuryRate:gameWindow.getSeasonInjuryEventRate(),rotationPlan:gameWindow.getPlayerRotationPlan(s.attrs,s.position,false),chemistry:gameWindow.getCareerExperienceChemistry(),coach:gameWindow.getTeamSystemEffects('LAL').name,
       coachRecord:e.coaches[s.careerTeam]||null,authority:gameWindow.PP_CAREER_EVENTS.getCoachAuthority(),effects:e.effects,task:e.task,feedback:e.feedback,games:rows,checks:smokeResult},null,2);
   } catch(e) { document.getElementById('report').textContent = 'FAIL '+e.message; }
 }

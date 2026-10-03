@@ -406,6 +406,7 @@
   /** 缺失真实球员补充：makePlayer 生成后入队（15 人上限自动替换最弱者）。 */
   function applyEraAdditions(start, additions) {
     (additions || []).forEach(function(row) {
+      removeEraPlayerFromOtherTeams(row.nameEn, row.team);
       var player = makePlayer(row, { age:row.age, targetAge:row.age, ovr:row.ovr, draftYear:start,
         eraStart:start, ratingKind:'season', seasonAgeCalibrated:true });
       player._eraAddition = true;
@@ -633,6 +634,15 @@
     }
     roster.push(player);
     return true;
+  }
+
+  function removeEraPlayerFromOtherTeams(name, destination) {
+    var key = nameKey(name);
+    NBA2K_TEAMS.forEach(function(team) {
+      if (team !== destination) NBA2K_DATA[team] = (NBA2K_DATA[team] || []).filter(function(player) {
+        return player._isUser || nameKey(player.nameEN || player.nameEn || player.name) !== key;
+      });
+    });
   }
   function apply2003LakersF4() {
     if (Number(STATE.eraStart) !== 2003) return;
@@ -870,6 +880,7 @@
       var age = row.birth ? year + years - Number(row.birth) : (Number(row.age) || 20) + years;
       var player = makePlayer(row, { ovr:ovr, age:age, targetAge:age, draftYear:year,
         eraStart:Number(STATE.eraStart), ratingKind:'rookie' });
+      removeEraPlayerFromOtherTeams(row.nameEn || row.name, team);
       if (replaceWeakest(team, player)) {
         added++;
         if (recordChanges) {
@@ -911,6 +922,59 @@
       });
     });
     return 0;
+  }
+
+  function openingIdentity(value) {
+    var key=nameKey(value);
+    var aliases={ 'metta world peace':'ron artest','enes freedom':'enes kanter','nene hilario':'nene','raulzinho neto':'raul neto','michael patrick gbinije':'michael gbinije','sheldon mac':'sheldon mcclellan','menke batere':'mengke bateer','zhizhi wang':'wang zhizhi','jianlian yi':'yi jianlian','matt dellavedova':'matthew dellavedova' };
+    return aliases[key] || key;
+  }
+
+  function makeOpeningRoster(rows,team,start,catalog) {
+    return rows.map(function(row) {
+      var candidates=catalog[openingIdentity(row[0])] || [];
+      var found=candidates.find(function(entry) { return entry.team===team; }) || candidates[0];
+      var player=found ? Object.assign({},found.player) : makePlayer({nameEn:row[0],pos:row[1],ovr:66,ratingSource:'历史开赛日名单 · 无统计样本估值'},{age:row[2]||26,targetAge:row[2]||26,ovr:66,eraStart:start,ratingKind:'season',seasonAgeCalibrated:true});
+      if(!found)player.ratingBasis='opening-roster-estimate';
+      if(row[2]>0)player._age=row[2];
+      player._seasonAgeCalibrated=true;
+      player._openingMembershipYear=start;
+      return player;
+    });
+  }
+
+  function collectOpeningCatalog() {
+    var catalog={};
+    Object.keys(NBA2K_DATA).forEach(function(team) {
+      if(!Array.isArray(NBA2K_DATA[team]))return;
+      NBA2K_DATA[team].forEach(function(player) {
+        var key=openingIdentity(player.nameEN||player.nameEn||player.name);
+        (catalog[key]||(catalog[key]=[])).push({team:team,player:player});
+      });
+    });
+    return catalog;
+  }
+
+  function applyOpeningMembership(start) {
+    var snapshot=global.PP_ERA_OPENING_MEMBERSHIP;
+    var teams=snapshot && snapshot.eras[start];
+    if(!teams)return;
+    var catalog=collectOpeningCatalog(), active=Object.keys(teams).sort();
+    NBA2K_TEAMS.splice.apply(NBA2K_TEAMS,[0,NBA2K_TEAMS.length].concat(active));
+    Object.keys(NBA2K_DATA).forEach(function(team) { if(Array.isArray(NBA2K_DATA[team]))NBA2K_DATA[team]=[]; });
+    active.forEach(function(team) { NBA2K_DATA[team]=makeOpeningRoster(teams[team],team,start,catalog); });
+    STATE._openingMembershipYear=start;
+  }
+
+  function expandCharlotteIfDue(year) {
+    var snapshot=global.PP_ERA_OPENING_MEMBERSHIP;
+    if(Number(STATE.eraStart)!==2003||year<2004||NBA2K_TEAMS.indexOf('CHA')>=0||!snapshot)return;
+    var catalog=collectOpeningCatalog();
+    NBA2K_TEAMS.push('CHA');NBA2K_TEAMS.sort();
+    snapshot.expansion2004.forEach(function(row) { removeEraPlayerFromOtherTeams(row[0],'CHA'); });
+    NBA2K_DATA.CHA=makeOpeningRoster(snapshot.expansion2004,'CHA',2004,catalog);
+    STATE._leagueChanges=STATE._leagueChanges||{};
+    STATE._leagueChanges.expansion='夏洛特山猫加入联盟';
   }
 
   function isHistoricalActive() {
@@ -983,6 +1047,7 @@
       STATE._eraFirstDraftYear = 2017;
     }
     // 只在新建年代联盟组装完成时归一化；读档 repair 路径不会进入这里。
+    applyOpeningMembership(start);
     normalizeOpeningLeagueRatings(start);
     STATE._legendLeagueApplied = start;
     syncLegendEraState(start);
@@ -1001,7 +1066,7 @@
     overlay.id = 'legend-era-picker';
     overlay.innerHTML = '<div class="team-picker-modal legend-era-picker-modal">' +
       '<div class="team-picker-header"><span>🏆 选择传奇年代</span><button class="modal-close" id="legend-era-close">✕</button></div>' +
-      '<div class="legend-era-picker-intro">现役生涯会完整保留。传奇年代每队最多 15 人；开局评分按目标赛季表现与生涯阶段校准，原始 2K 数值仅作可追溯参考。</div>' +
+      '<div class="legend-era-picker-intro">按该年开赛日名单进入联盟，2003 年为 29 队，2004 年夏洛特加入。评分按赛季表现与生涯阶段校准，缺少样本的球员标注估值。</div>' +
       '<div class="legend-era-picker-grid">' +
         '<button class="legend-era-card" data-era="2003"><span class="legend-era-year">2003</span><span class="legend-era-copy"><strong>白金新章</strong><em>报纸 · 电台 · 早期论坛</em><small>从传统巨星林立的时代起步，面对一届新人涌入联盟后的全新秩序。</small></span></button>' +
         '<button class="legend-era-card" data-era="2010"><span class="legend-era-year">2010</span><span class="legend-era-copy"><strong>聚光灯时代</strong><em>电视辩论 · 社交媒体 · 球星联手</em><small>转会风暴重塑格局，每一次选择都会被放大成全国话题。</small></span></button>' +
@@ -1026,9 +1091,10 @@
     if (STATE.mode !== 'legend' || !STATE.eraStart) return originalProcessDraft.apply(this, arguments);
     var year = Number(STATE.eraStart) + Number(STATE.career && STATE.career.seasonCount || 0);
     var firstDraftYear = Number(STATE._eraFirstDraftYear || STATE.eraStart);
+    expandCharlotteIfDue(year);
     if (year < firstDraftYear) return; // 开局名单已包含该届新秀（2016 纪元已含 2016 届）
     if (!data().draftClasses[String(year)] || !data().draftClasses[String(year)].length) {
-      var order = (global.NBA2K_TEAMS || []).slice();
+      var order = getSpinTeams();
       STATE._leagueChanges = STATE._leagueChanges || {};
       STATE._leagueChanges.rookies = STATE._leagueChanges.rookies || [];
       for (var i = 0; i < order.length; i++) {

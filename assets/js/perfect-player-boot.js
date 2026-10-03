@@ -6,12 +6,12 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   var GROUPS = {
     create: [
-      ['assets/js/perfect-player-hupu-extensions.js?v=20261002-career-strip-v18', '角色扩展']
+      ['assets/js/perfect-player-hupu-extensions.js?v=20261003-career-strip-v19', '角色扩展']
     ],
     career: [
         ['assets/js/perfect-player-skills.js?v=20260827-style-economy-v9', '球风技能'],
       ['assets/js/perfect-player-awards.js?v=20260823-allstar-v3', '荣誉评选'],
-        ['assets/js/perfect-player-enhancements.js?v=20260827-evidence-legacy-v17', '成就特效']
+        ['assets/js/perfect-player-enhancements.js?v=20261004-pc-panels-v18', '成就特效']
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20261002-choice-forecast-v16', '赛季事件'],
@@ -324,7 +324,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20261003-era-economy-v31', { updateViaCache:'none' }).catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20261004-pc-rosters-v35', { updateViaCache:'none' }).catch(function () {});
   }
 
   function idleLoad() {

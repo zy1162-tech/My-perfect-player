@@ -17,7 +17,7 @@ for (const text of [html, fontsCss, premiumCss]) {
   assert.doesNotMatch(text, /fonts\.(?:googleapis|gstatic)\.com/i, 'no Google font request may remain');
 }
 assert.doesNotMatch(premiumCss, /@import\s+url/i, 'premium CSS should not import a remote font');
-assert.match(premiumCss, /--font-athletic:\s*'Fredoka','Arial Narrow','Noto Sans SC'/, 'athletic stack should use local Fredoka');
+assert.match(premiumCss, /--font-athletic:\s*var\(--font-display\)/, 'PC game headings should use the local condensed display stack');
 for (const name of ['fredoka-latin.woff2','nunito-latin.woff2','nunito-italic-latin.woff2']) {
   const data = fs.readFileSync(path.join(root, 'assets/fonts', name));
   assert.equal(data.subarray(0, 4).toString('ascii'), 'wOF2', `${name} must be a real WOFF2`);
@@ -137,7 +137,7 @@ const careerLoads = appended.slice(beforeCareer).map(node => node.src);
 assert.deepEqual(careerLoads, [
   'assets/js/perfect-player-skills.js?v=20260827-style-economy-v9',
   'assets/js/perfect-player-awards.js?v=20260823-allstar-v3',
-  'assets/js/perfect-player-enhancements.js?v=20260827-evidence-legacy-v17'
+  'assets/js/perfect-player-enhancements.js?v=20261004-pc-panels-v18'
 ], 'career must load skills -> awards -> enhancements in order');
 assert.equal(await context.__PP_openCareerFeature('legacy'), true);
 assert.equal(legacyOpens, 1);

@@ -1,0 +1,5605 @@
+[
+  {
+    "era": 2003,
+    "team": "ATL",
+    "url": "https://basketball.realgm.com/nba/teams/Atlanta-Hawks/1/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Shareef Abdur-Rahim",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 225
+      },
+      {
+        "name": "Terrell Brandon",
+        "position": "PG",
+        "height": "5-11",
+        "weight": 180
+      },
+      {
+        "name": "Chris Crawford",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "Boris Diaw",
+        "position": "PF/C",
+        "height": "6-8",
+        "weight": 250
+      },
+      {
+        "name": "Dan Dickau",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 190
+      },
+      {
+        "name": "Obinna Ekezie",
+        "position": "C",
+        "height": "6-9",
+        "weight": 270
+      },
+      {
+        "name": "Dion Glover",
+        "position": "G-F",
+        "height": "6-5",
+        "weight": 228
+      },
+      {
+        "name": "Travis Hansen",
+        "position": "G-F",
+        "height": "6-6",
+        "weight": 205
+      },
+      {
+        "name": "Alan Henderson",
+        "position": "F-C",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "Stephen Jackson",
+        "position": "SF/SG",
+        "height": "6-8",
+        "weight": 220
+      },
+      {
+        "name": "Nazr Mohammed",
+        "position": "C",
+        "height": "6-10",
+        "weight": 250
+      },
+      {
+        "name": "Lee Nailon",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 238
+      },
+      {
+        "name": "Theo Ratliff",
+        "position": "C",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "Jason Terry",
+        "position": "PG/SG",
+        "height": "6-2",
+        "weight": 185
+      },
+      {
+        "name": "Jacque Vaughn",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 190
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "BOS",
+    "url": "https://basketball.realgm.com/nba/teams/Boston-Celtics/2/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Vin Baker",
+        "position": "F-C",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Marcus Banks",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 200
+      },
+      {
+        "name": "Tony Battie",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 230
+      },
+      {
+        "name": "Mark Blount",
+        "position": "C-F",
+        "height": "7-0",
+        "weight": 250
+      },
+      {
+        "name": "Kedrick Brown",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 222
+      },
+      {
+        "name": "Brandon Hunter",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 260
+      },
+      {
+        "name": "Mike James",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 188
+      },
+      {
+        "name": "Jumaine Jones",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 218
+      },
+      {
+        "name": "Raef LaFrentz",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 245
+      },
+      {
+        "name": "Walter McCarty",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Chris Mills",
+        "position": "SF",
+        "height": "6-5",
+        "weight": 215
+      },
+      {
+        "name": "Kendrick Perkins",
+        "position": "C",
+        "height": "6-10",
+        "weight": 270
+      },
+      {
+        "name": "Paul Pierce",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 235
+      },
+      {
+        "name": "Jiri Welsch",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 208
+      },
+      {
+        "name": "Eric Williams",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 220
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "CHI",
+    "url": "https://basketball.realgm.com/nba/teams/Chicago-Bulls/4/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Lonny Baxter",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 260
+      },
+      {
+        "name": "Corie Blount",
+        "position": "F-C",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Tyson Chandler",
+        "position": "C",
+        "height": "7-1",
+        "weight": 240
+      },
+      {
+        "name": "Jamal Crawford",
+        "position": "SG/PG",
+        "height": "6-5",
+        "weight": 195
+      },
+      {
+        "name": "Eddy Curry",
+        "position": "C",
+        "height": "7-0",
+        "weight": 295
+      },
+      {
+        "name": "Marcus Fizer",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 246
+      },
+      {
+        "name": "Kendall Gill",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 195
+      },
+      {
+        "name": "Kirk Hinrich",
+        "position": "PG",
+        "height": "6-4",
+        "weight": 190
+      },
+      {
+        "name": "Linton Johnson",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 205
+      },
+      {
+        "name": "Donyell Marshall",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 245
+      },
+      {
+        "name": "Roger Mason",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 205
+      },
+      {
+        "name": "Scottie Pippen",
+        "position": "F-G",
+        "height": "6-8",
+        "weight": 228
+      },
+      {
+        "name": "Eddie Robinson",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 210
+      },
+      {
+        "name": "Jalen Rose",
+        "position": "SG",
+        "height": "6-8",
+        "weight": 210
+      },
+      {
+        "name": "Jay Williams",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 195
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "CLE",
+    "url": "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Carlos Boozer",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 266
+      },
+      {
+        "name": "J.R. Bremer",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 185
+      },
+      {
+        "name": "Ricky Davis",
+        "position": "F-G",
+        "height": "6-7",
+        "weight": 195
+      },
+      {
+        "name": "DeSagana Diop",
+        "position": "C",
+        "height": "7-0",
+        "weight": 280
+      },
+      {
+        "name": "Zydrunas Ilgauskas",
+        "position": "C",
+        "height": "7-3",
+        "weight": 260
+      },
+      {
+        "name": "LeBron James",
+        "position": "SF/PF",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "Jason Kapono",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 213
+      },
+      {
+        "name": "Jelani McCoy",
+        "position": "F-C",
+        "height": "6-10",
+        "weight": 245
+      },
+      {
+        "name": "Chris Mihm",
+        "position": "C",
+        "height": "7-0",
+        "weight": 265
+      },
+      {
+        "name": "Darius Miles",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 210
+      },
+      {
+        "name": "Ira Newble",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 220
+      },
+      {
+        "name": "Kevin Ollie",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 195
+      },
+      {
+        "name": "Michael Stewart",
+        "position": "C",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Bruno Sundov",
+        "position": "C",
+        "height": "7-2",
+        "weight": 220
+      },
+      {
+        "name": "Dajuan Wagner",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 200
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "DAL",
+    "url": "https://basketball.realgm.com/nba/teams/Dallas-Mavericks/6/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Travis Best",
+        "position": "PG",
+        "height": "5-11",
+        "weight": 182
+      },
+      {
+        "name": "Shawn Bradley",
+        "position": "C",
+        "height": "7-6",
+        "weight": 235
+      },
+      {
+        "name": "Marquis Daniels",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 200
+      },
+      {
+        "name": "Tony Delk",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 189
+      },
+      {
+        "name": "Michael Finley",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Danny Fortson",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 260
+      },
+      {
+        "name": "Josh Howard",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Antawn Jamison",
+        "position": "PF/SF",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "Eduardo Najera",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 235
+      },
+      {
+        "name": "Steve Nash",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 178
+      },
+      {
+        "name": "Dirk Nowitzki",
+        "position": "PF",
+        "height": "7-0",
+        "weight": 245
+      },
+      {
+        "name": "Tariq Abdul-Wahad",
+        "position": "F-G",
+        "height": "6-6",
+        "weight": 223
+      },
+      {
+        "name": "Jon Stefansson",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 200
+      },
+      {
+        "name": "Antoine Walker",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 265
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "DEN",
+    "url": "https://basketball.realgm.com/nba/teams/Denver-Nuggets/7/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Chris Andersen",
+        "position": "C/PF",
+        "height": "6-10",
+        "weight": 245
+      },
+      {
+        "name": "Carmelo Anthony",
+        "position": "SF",
+        "height": "6-8",
+        "weight": 240
+      },
+      {
+        "name": "Jon Barry",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 195
+      },
+      {
+        "name": "Ryan Bowen",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 218
+      },
+      {
+        "name": "Earl Boykins",
+        "position": "PG",
+        "height": "5-5",
+        "weight": 135
+      },
+      {
+        "name": "Marcus Camby",
+        "position": "C",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Francisco Elson",
+        "position": "C",
+        "height": "7-0",
+        "weight": 235
+      },
+      {
+        "name": "Nene Hilario",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 250
+      },
+      {
+        "name": "Voshon Lenard",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 205
+      },
+      {
+        "name": "Chris Marcus",
+        "position": "C",
+        "height": "7-1",
+        "weight": 285
+      },
+      {
+        "name": "Andre Miller",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Mark Pope",
+        "position": "C-F",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "Jeff Trepagnier",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 200
+      },
+      {
+        "name": "Nikoloz Tskitishvili",
+        "position": "PF",
+        "height": "7-0",
+        "weight": 225
+      },
+      {
+        "name": "Rodney White",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 238
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "DET",
+    "url": "https://basketball.realgm.com/nba/teams/Detroit-Pistons/8/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Chucky Atkins",
+        "position": "PG",
+        "height": "5-11",
+        "weight": 185
+      },
+      {
+        "name": "Chauncey Billups",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 210
+      },
+      {
+        "name": "Elden Campbell",
+        "position": "C-F",
+        "height": "6-11",
+        "weight": 215
+      },
+      {
+        "name": "Hubert Davis",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 183
+      },
+      {
+        "name": "Tremaine Fowlkes",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 220
+      },
+      {
+        "name": "Darvin Ham",
+        "position": "F-G",
+        "height": "6-7",
+        "weight": 220
+      },
+      {
+        "name": "Richard Hamilton",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 193
+      },
+      {
+        "name": "Lindsey Hunter",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 195
+      },
+      {
+        "name": "Darko Milicic",
+        "position": "C/PF",
+        "height": "7-0",
+        "weight": 275
+      },
+      {
+        "name": "Mehmet Okur",
+        "position": "C",
+        "height": "6-11",
+        "weight": 249
+      },
+      {
+        "name": "Tayshaun Prince",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 212
+      },
+      {
+        "name": "Zeljko Rebraca",
+        "position": "C",
+        "height": "7-0",
+        "weight": 265
+      },
+      {
+        "name": "Bob Sura",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 200
+      },
+      {
+        "name": "Ben Wallace",
+        "position": "C/PF",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Corliss Williamson",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 245
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "HOU",
+    "url": "https://basketball.realgm.com/nba/teams/Houston-Rockets/10/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "John Amaechi",
+        "position": "C-F",
+        "height": "6-10",
+        "weight": 270
+      },
+      {
+        "name": "Torraye Braggs",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 245
+      },
+      {
+        "name": "Kelvin Cato",
+        "position": "C",
+        "height": "6-11",
+        "weight": 255
+      },
+      {
+        "name": "Ben Davis",
+        "position": "FC",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Steve Francis",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 195
+      },
+      {
+        "name": "Adrian Griffin",
+        "position": "G-F",
+        "height": "6-5",
+        "weight": 217
+      },
+      {
+        "name": "Eddie Griffin",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 220
+      },
+      {
+        "name": "Jim Jackson",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Cuttino Mobley",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 190
+      },
+      {
+        "name": "Bostjan Nachbar",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 220
+      },
+      {
+        "name": "Moochie Norris",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 175
+      },
+      {
+        "name": "Scott Padgett",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Eric Piatkowski",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Mo Taylor",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 265
+      },
+      {
+        "name": "Mike Wilks",
+        "position": "PG",
+        "height": "5-10",
+        "weight": 185
+      },
+      {
+        "name": "Yao Ming",
+        "position": "C",
+        "height": "7-6",
+        "weight": 310
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "LAL",
+    "url": "https://basketball.realgm.com/nba/teams/Los-Angeles-Lakers/13/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Kobe Bryant",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 212
+      },
+      {
+        "name": "Brian Cook",
+        "position": "PF/SF",
+        "height": "6-9",
+        "weight": 234
+      },
+      {
+        "name": "Derek Fisher",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 210
+      },
+      {
+        "name": "Rick Fox",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 230
+      },
+      {
+        "name": "Devean George",
+        "position": "SF/SG",
+        "height": "6-8",
+        "weight": 235
+      },
+      {
+        "name": "Horace Grant",
+        "position": "F-C",
+        "height": "6-10",
+        "weight": 255
+      },
+      {
+        "name": "Karl Malone",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 265
+      },
+      {
+        "name": "Slava Medvedenko",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 250
+      },
+      {
+        "name": "Shaquille O'Neal",
+        "position": "C",
+        "height": "7-1",
+        "weight": 325
+      },
+      {
+        "name": "Jannero Pargo",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 185
+      },
+      {
+        "name": "Gary Payton",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 180
+      },
+      {
+        "name": "Kareem Rush",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 201
+      },
+      {
+        "name": "Bryon Russell",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Jamal Sampson",
+        "position": "C-F",
+        "height": "6-11",
+        "weight": 235
+      },
+      {
+        "name": "Luke Walton",
+        "position": "PF/SF",
+        "height": "6-8",
+        "weight": 235
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "MEM",
+    "url": "https://basketball.realgm.com/nba/teams/Memphis-Grizzlies/14/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Shane Battier",
+        "position": "SF/PF",
+        "height": "6-8",
+        "weight": 220
+      },
+      {
+        "name": "Troy Bell",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 180
+      },
+      {
+        "name": "Pau Gasol",
+        "position": "C/PF",
+        "height": "7-0",
+        "weight": 250
+      },
+      {
+        "name": "Ryan Humphrey",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 235
+      },
+      {
+        "name": "Dahntay Jones",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 225
+      },
+      {
+        "name": "Mike Miller",
+        "position": "SF/SG",
+        "height": "6-8",
+        "weight": 218
+      },
+      {
+        "name": "Bo Outlaw",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 210
+      },
+      {
+        "name": "Wesley Person",
+        "position": "G-F",
+        "height": "6-6",
+        "weight": 195
+      },
+      {
+        "name": "James Posey",
+        "position": "SF/PF",
+        "height": "6-8",
+        "weight": 217
+      },
+      {
+        "name": "Theron Smith",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 225
+      },
+      {
+        "name": "Stromile Swift",
+        "position": "F-C",
+        "height": "6-9",
+        "weight": 225
+      },
+      {
+        "name": "Jake Tsakalidis",
+        "position": "C",
+        "height": "7-2",
+        "weight": 285
+      },
+      {
+        "name": "Earl Watson",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 199
+      },
+      {
+        "name": "Jason Williams",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 190
+      },
+      {
+        "name": "Lorenzen Wright",
+        "position": "F-C",
+        "height": "6-11",
+        "weight": 255
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "MIL",
+    "url": "https://basketball.realgm.com/nba/teams/Milwaukee-Bucks/16/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "T.J. Ford",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 165
+      },
+      {
+        "name": "Dan Gadzuric",
+        "position": "C",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Marcus Haislip",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Damon Jones",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 185
+      },
+      {
+        "name": "Toni Kukoc",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 235
+      },
+      {
+        "name": "Desmond Mason",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 224
+      },
+      {
+        "name": "Joel Przybilla",
+        "position": "C",
+        "height": "7-1",
+        "weight": 245
+      },
+      {
+        "name": "Michael Redd",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Daniel Santiago",
+        "position": "C",
+        "height": "7-0",
+        "weight": 256
+      },
+      {
+        "name": "Brian Skinner",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 255
+      },
+      {
+        "name": "Joe Smith",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 225
+      },
+      {
+        "name": "Erick Strickland",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 210
+      },
+      {
+        "name": "Tim Thomas",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 240
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "MIN",
+    "url": "https://basketball.realgm.com/nba/teams/Minnesota-Timberwolves/17/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Sam Cassell",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 185
+      },
+      {
+        "name": "Ndudi Ebi",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 231
+      },
+      {
+        "name": "Kevin Garnett",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Trenton Hassell",
+        "position": "SF",
+        "height": "6-5",
+        "weight": 227
+      },
+      {
+        "name": "Fred Hoiberg",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 203
+      },
+      {
+        "name": "Troy Hudson",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 170
+      },
+      {
+        "name": "Ervin Johnson",
+        "position": "C",
+        "height": "6-11",
+        "weight": 245
+      },
+      {
+        "name": "Quincy Lewis",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 215
+      },
+      {
+        "name": "Mark Madsen",
+        "position": "C-F",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Keith McLeod",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 190
+      },
+      {
+        "name": "Michael Olowokandi",
+        "position": "C",
+        "height": "7-0",
+        "weight": 270
+      },
+      {
+        "name": "Latrell Sprewell",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 190
+      },
+      {
+        "name": "Wally Szczerbiak",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 240
+      },
+      {
+        "name": "Gary Trent",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 250
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "NOP",
+    "url": "https://basketball.realgm.com/nba/teams/New-Orleans-Pelicans/19/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Courtney Alexander",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 205
+      },
+      {
+        "name": "Darrell Armstrong",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 170
+      },
+      {
+        "name": "Stacey Augmon",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 205
+      },
+      {
+        "name": "P.J. Brown",
+        "position": "C-F",
+        "height": "6-11",
+        "weight": 225
+      },
+      {
+        "name": "Baron Davis",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 215
+      },
+      {
+        "name": "Bryce Drew",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 185
+      },
+      {
+        "name": "James Lang",
+        "position": "C",
+        "height": "6-10",
+        "weight": 285
+      },
+      {
+        "name": "George Lynch",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 218
+      },
+      {
+        "name": "Jamaal Magloire",
+        "position": "C",
+        "height": "6-11",
+        "weight": 259
+      },
+      {
+        "name": "Jamal Mashburn",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 247
+      },
+      {
+        "name": "Sean Rooks",
+        "position": "C",
+        "height": "6-10",
+        "weight": 250
+      },
+      {
+        "name": "Steve Smith",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 200
+      },
+      {
+        "name": "Robert Traylor",
+        "position": "F-C",
+        "height": "6-8",
+        "weight": 284
+      },
+      {
+        "name": "David Wesley",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 190
+      },
+      {
+        "name": "David West",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 250
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "NYK",
+    "url": "https://basketball.realgm.com/nba/teams/New-York-Knicks/20/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Shandon Anderson",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 208
+      },
+      {
+        "name": "Michael Doleac",
+        "position": "C",
+        "height": "6-11",
+        "weight": 262
+      },
+      {
+        "name": "Howard Eisley",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 177
+      },
+      {
+        "name": "Othella Harrington",
+        "position": "F-C",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "Allan Houston",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 205
+      },
+      {
+        "name": "Maciej Lampe",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 275
+      },
+      {
+        "name": "Antonio McDyess",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 245
+      },
+      {
+        "name": "Dikembe Mutombo",
+        "position": "C",
+        "height": "7-2",
+        "weight": 260
+      },
+      {
+        "name": "Mike Sweetney",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 275
+      },
+      {
+        "name": "Kurt Thomas",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Keith Van Horn",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 220
+      },
+      {
+        "name": "Slavko Vranes",
+        "position": "C",
+        "height": "7-6",
+        "weight": 282
+      },
+      {
+        "name": "Charlie Ward",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 190
+      },
+      {
+        "name": "Clarence Weatherspoon",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 240
+      },
+      {
+        "name": "Frankie Williams",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 212
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "OKC",
+    "url": "https://basketball.realgm.com/nba/teams/Seattle-SuperSonics/27/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Ray Allen",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 205
+      },
+      {
+        "name": "Brent Barry",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Calvin Booth",
+        "position": "C",
+        "height": "6-11",
+        "weight": 230
+      },
+      {
+        "name": "Nick Collison",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 255
+      },
+      {
+        "name": "Antonio Daniels",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 195
+      },
+      {
+        "name": "Reggie Evans",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 245
+      },
+      {
+        "name": "Richie Frahm",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 210
+      },
+      {
+        "name": "Jerome James",
+        "position": "C",
+        "height": "7-0",
+        "weight": 300
+      },
+      {
+        "name": "Rashard Lewis",
+        "position": "SF/PF",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "Flip Murray",
+        "position": "SG/PG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Vitaly Potapenko",
+        "position": "C-F",
+        "height": "6-10",
+        "weight": 280
+      },
+      {
+        "name": "Vladimir Radmanovic",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "Luke Ridnour",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 175
+      },
+      {
+        "name": "Ansu Sesay",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 225
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "ORL",
+    "url": "https://basketball.realgm.com/nba/teams/Orlando-Magic/21/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Keith Bogans",
+        "position": "SG/SF",
+        "height": "6-5",
+        "weight": 215
+      },
+      {
+        "name": "Andrew DeClercq",
+        "position": "C",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Reece Gaines",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 210
+      },
+      {
+        "name": "Pat Garrity",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 238
+      },
+      {
+        "name": "Gordan Giricek",
+        "position": "G-F",
+        "height": "6-6",
+        "weight": 210
+      },
+      {
+        "name": "Drew Gooden",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 250
+      },
+      {
+        "name": "Donnell Harvey",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 220
+      },
+      {
+        "name": "Grant Hill",
+        "position": "SF",
+        "height": "6-8",
+        "weight": 225
+      },
+      {
+        "name": "Juwan Howard",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Steven Hunter",
+        "position": "F-C",
+        "height": "7-0",
+        "weight": 240
+      },
+      {
+        "name": "Britton Johnsen",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 210
+      },
+      {
+        "name": "Tyronn Lue",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 170
+      },
+      {
+        "name": "Tracy McGrady",
+        "position": "SG/SF",
+        "height": "6-8",
+        "weight": 210
+      },
+      {
+        "name": "Zaza Pachulia",
+        "position": "C",
+        "height": "6-11",
+        "weight": 270
+      },
+      {
+        "name": "Shammond Williams",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 201
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "PHI",
+    "url": "https://basketball.realgm.com/nba/teams/Philadelphia-Sixers/22/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Greg Buckner",
+        "position": "G-F",
+        "height": "6-4",
+        "weight": 210
+      },
+      {
+        "name": "Derrick Coleman",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Samuel Dalembert",
+        "position": "C",
+        "height": "6-11",
+        "weight": 250
+      },
+      {
+        "name": "Willie Green",
+        "position": "SG",
+        "height": "6-3",
+        "weight": 201
+      },
+      {
+        "name": "Allen Iverson",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 165
+      },
+      {
+        "name": "Marc Jackson",
+        "position": "C",
+        "height": "6-10",
+        "weight": 270
+      },
+      {
+        "name": "Kyle Korver",
+        "position": "SF/SG",
+        "height": "6-7",
+        "weight": 212
+      },
+      {
+        "name": "Todd MacCulloch",
+        "position": "C",
+        "height": "7-0",
+        "weight": 280
+      },
+      {
+        "name": "Amal McCaskill",
+        "position": "C",
+        "height": "6-11",
+        "weight": 235
+      },
+      {
+        "name": "Aaron McKie",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 209
+      },
+      {
+        "name": "Glenn Robinson",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "John Salmons",
+        "position": "SF/SG",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Eric Snow",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 190
+      },
+      {
+        "name": "Kenny Thomas",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 245
+      },
+      {
+        "name": "Monty Williams",
+        "position": "F-G",
+        "height": "6-8",
+        "weight": 225
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "PHX",
+    "url": "https://basketball.realgm.com/nba/teams/Phoenix-Suns/23/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Robert Archibald",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 250
+      },
+      {
+        "name": "Leandro Barbosa",
+        "position": "PG/SG",
+        "height": "6-3",
+        "weight": 194
+      },
+      {
+        "name": "Zarko Cabarkapa",
+        "position": "F-C",
+        "height": "6-11",
+        "weight": 235
+      },
+      {
+        "name": "Tom Gugliotta",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 240
+      },
+      {
+        "name": "Penny Hardaway",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 195
+      },
+      {
+        "name": "Casey Jacobsen",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 214
+      },
+      {
+        "name": "Joe Johnson",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 240
+      },
+      {
+        "name": "Brevin Knight",
+        "position": "PG",
+        "height": "5-10",
+        "weight": 170
+      },
+      {
+        "name": "Stephon Marbury",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 180
+      },
+      {
+        "name": "Shawn Marion",
+        "position": "SF/PF",
+        "height": "6-7",
+        "weight": 228
+      },
+      {
+        "name": "Amar'e Stoudemire",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 245
+      },
+      {
+        "name": "Cezary Trybanski",
+        "position": "C",
+        "height": "7-2",
+        "weight": 240
+      },
+      {
+        "name": "Jake Voskuhl",
+        "position": "C",
+        "height": "6-11",
+        "weight": 245
+      },
+      {
+        "name": "Scott Williams",
+        "position": "F-C",
+        "height": "6-10",
+        "weight": 230
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "POR",
+    "url": "https://basketball.realgm.com/nba/teams/Portland-Trail-Blazers/24/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Derek Anderson",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 194
+      },
+      {
+        "name": "Ruben Boumtje-Boumtje",
+        "position": "C",
+        "height": "7-0",
+        "weight": 260
+      },
+      {
+        "name": "Dale Davis",
+        "position": "C-F",
+        "height": "6-11",
+        "weight": 252
+      },
+      {
+        "name": "Jeff McInnis",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 190
+      },
+      {
+        "name": "Tracy Murray",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Travis Outlaw",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 207
+      },
+      {
+        "name": "Ruben Patterson",
+        "position": "F-G",
+        "height": "6-5",
+        "weight": 223
+      },
+      {
+        "name": "Zach Randolph",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 260
+      },
+      {
+        "name": "Vladimir Stepania",
+        "position": "C",
+        "height": "7-0",
+        "weight": 235
+      },
+      {
+        "name": "Damon Stoudamire",
+        "position": "PG",
+        "height": "5-10",
+        "weight": 171
+      },
+      {
+        "name": "Rasheed Wallace",
+        "position": "PF/C",
+        "height": "6-11",
+        "weight": 230
+      },
+      {
+        "name": "Bonzi Wells",
+        "position": "SG/SF",
+        "height": "6-5",
+        "weight": 210
+      },
+      {
+        "name": "Qyntel Woods",
+        "position": "F-G",
+        "height": "6-8",
+        "weight": 221
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "SAS",
+    "url": "https://basketball.realgm.com/nba/teams/San-Antonio-Spurs/26/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Bruce Bowen",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 200
+      },
+      {
+        "name": "Devin Brown",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 220
+      },
+      {
+        "name": "Anthony Carter",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 190
+      },
+      {
+        "name": "Tim Duncan",
+        "position": "PF/C",
+        "height": "6-11",
+        "weight": 250
+      },
+      {
+        "name": "Alex Garcia",
+        "position": "G-F",
+        "height": "6-2",
+        "weight": 220
+      },
+      {
+        "name": "Manu Ginobili",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 205
+      },
+      {
+        "name": "Shane Heal",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 183
+      },
+      {
+        "name": "Robert Horry",
+        "position": "F-C",
+        "height": "6-9",
+        "weight": 220
+      },
+      {
+        "name": "Sean Marks",
+        "position": "F-C",
+        "height": "6-10",
+        "weight": 250
+      },
+      {
+        "name": "Ron Mercer",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Rasho Nesterovic",
+        "position": "C",
+        "height": "7-0",
+        "weight": 255
+      },
+      {
+        "name": "Tony Parker",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 185
+      },
+      {
+        "name": "Malik Rose",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 250
+      },
+      {
+        "name": "Hedo Turkoglu",
+        "position": "SF",
+        "height": "6-10",
+        "weight": 220
+      },
+      {
+        "name": "Kevin Willis",
+        "position": "C-F",
+        "height": "7-0",
+        "weight": 245
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "UTA",
+    "url": "https://basketball.realgm.com/nba/teams/Utah-Jazz/29/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Carlos Arroyo",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 202
+      },
+      {
+        "name": "Raja Bell",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 204
+      },
+      {
+        "name": "Curtis Borchardt",
+        "position": "C",
+        "height": "7-0",
+        "weight": 240
+      },
+      {
+        "name": "Keon Clark",
+        "position": "C-F",
+        "height": "6-11",
+        "weight": 221
+      },
+      {
+        "name": "Jarron Collins",
+        "position": "C",
+        "height": "6-11",
+        "weight": 248
+      },
+      {
+        "name": "Ben Handlogten",
+        "position": "C",
+        "height": "6-10",
+        "weight": 240
+      },
+      {
+        "name": "Matt Harpring",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 230
+      },
+      {
+        "name": "Andrei Kirilenko",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "Raul Lopez",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 175
+      },
+      {
+        "name": "Greg Ostertag",
+        "position": "C",
+        "height": "7-2",
+        "weight": 280
+      },
+      {
+        "name": "Sasha Pavlovic",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 235
+      },
+      {
+        "name": "Michael Ruffin",
+        "position": "F-C",
+        "height": "6-9",
+        "weight": 245
+      },
+      {
+        "name": "DeShawn Stevenson",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 218
+      },
+      {
+        "name": "Mo Williams",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 198
+      }
+    ]
+  },
+  {
+    "era": 2003,
+    "team": "WAS",
+    "url": "https://basketball.realgm.com/nba/teams/Washington-Wizards/30/Rosters/Opening_Day/2004",
+    "players": [
+      {
+        "name": "Gilbert Arenas",
+        "position": "PG/SG",
+        "height": "6-3",
+        "weight": 191
+      },
+      {
+        "name": "Steve Blake",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 172
+      },
+      {
+        "name": "Kwame Brown",
+        "position": "C",
+        "height": "6-11",
+        "weight": 290
+      },
+      {
+        "name": "Mitchell Butler",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 210
+      },
+      {
+        "name": "Juan Dixon",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 164
+      },
+      {
+        "name": "Jarvis Hayes",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Brendan Haywood",
+        "position": "C",
+        "height": "7-0",
+        "weight": 263
+      },
+      {
+        "name": "Larry Hughes",
+        "position": "PG/SG",
+        "height": "6-5",
+        "weight": 184
+      },
+      {
+        "name": "Jared Jeffries",
+        "position": "PF/C",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Christian Laettner",
+        "position": "F-C",
+        "height": "6-11",
+        "weight": 245
+      },
+      {
+        "name": "Jerry Stackhouse",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 218
+      },
+      {
+        "name": "Etan Thomas",
+        "position": "C",
+        "height": "6-9",
+        "weight": 256
+      },
+      {
+        "name": "Jahidi White",
+        "position": "C-F",
+        "height": "6-9",
+        "weight": 290
+      },
+      {
+        "name": "Chris Whitney",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 168
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "ATL",
+    "url": "https://basketball.realgm.com/nba/teams/Atlanta-Hawks/1/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Mike Bibby",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 195
+      },
+      {
+        "name": "Jason Collins",
+        "position": "C",
+        "height": "7-0",
+        "weight": 255
+      },
+      {
+        "name": "Jamal Crawford",
+        "position": "SG/PG",
+        "height": "6-5",
+        "weight": 195
+      },
+      {
+        "name": "Jordan Crawford",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 195
+      },
+      {
+        "name": "Maurice Evans",
+        "position": "SG/SF",
+        "height": "6-5",
+        "weight": 220
+      },
+      {
+        "name": "Al Horford",
+        "position": "C/PF",
+        "height": "6-8",
+        "weight": 258
+      },
+      {
+        "name": "Joe Johnson",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 240
+      },
+      {
+        "name": "Zaza Pachulia",
+        "position": "C",
+        "height": "6-11",
+        "weight": 270
+      },
+      {
+        "name": "Josh Powell",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 225
+      },
+      {
+        "name": "Josh Smith",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 225
+      },
+      {
+        "name": "Pape Sy",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 224
+      },
+      {
+        "name": "Jeff Teague",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 195
+      },
+      {
+        "name": "Etan Thomas",
+        "position": "C",
+        "height": "6-9",
+        "weight": 256
+      },
+      {
+        "name": "Marvin Williams",
+        "position": "PF/SF",
+        "height": "6-9",
+        "weight": 237
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "BOS",
+    "url": "https://basketball.realgm.com/nba/teams/Boston-Celtics/2/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Ray Allen",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 205
+      },
+      {
+        "name": "Avery Bradley",
+        "position": "SG",
+        "height": "6-3",
+        "weight": 180
+      },
+      {
+        "name": "Marquis Daniels",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 200
+      },
+      {
+        "name": "Glen Davis",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 289
+      },
+      {
+        "name": "Semih Erden",
+        "position": "C",
+        "height": "7-0",
+        "weight": 240
+      },
+      {
+        "name": "Kevin Garnett",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Luke Harangody",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 245
+      },
+      {
+        "name": "Jermaine O'Neal",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 235
+      },
+      {
+        "name": "Shaquille O'Neal",
+        "position": "C",
+        "height": "7-1",
+        "weight": 325
+      },
+      {
+        "name": "Kendrick Perkins",
+        "position": "C",
+        "height": "6-10",
+        "weight": 270
+      },
+      {
+        "name": "Paul Pierce",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 235
+      },
+      {
+        "name": "Nate Robinson",
+        "position": "PG",
+        "height": "5-9",
+        "weight": 180
+      },
+      {
+        "name": "Rajon Rondo",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 180
+      },
+      {
+        "name": "Von Wafer",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 210
+      },
+      {
+        "name": "Delonte West",
+        "position": "SG/PG",
+        "height": "6-3",
+        "weight": 180
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "BKN",
+    "url": "https://basketball.realgm.com/nba/teams/Brooklyn-Nets/38/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Jordan Farmar",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 180
+      },
+      {
+        "name": "Derrick Favors",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 265
+      },
+      {
+        "name": "Stephen Graham",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 215
+      },
+      {
+        "name": "Devin Harris",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 185
+      },
+      {
+        "name": "Kris Humphries",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "Damion James",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Brook Lopez",
+        "position": "C",
+        "height": "7-1",
+        "weight": 282
+      },
+      {
+        "name": "Anthony Morrow",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 210
+      },
+      {
+        "name": "Troy Murphy",
+        "position": "PF/C",
+        "height": "6-11",
+        "weight": 245
+      },
+      {
+        "name": "Travis Outlaw",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 207
+      },
+      {
+        "name": "Johan Petro",
+        "position": "C",
+        "height": "7-0",
+        "weight": 247
+      },
+      {
+        "name": "Quinton Ross",
+        "position": "G-F",
+        "height": "6-6",
+        "weight": 195
+      },
+      {
+        "name": "Joe Smith",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 225
+      },
+      {
+        "name": "Ben Uzoh",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 205
+      },
+      {
+        "name": "Terrence Williams",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 220
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "CHA",
+    "url": "https://basketball.realgm.com/nba/teams/Charlotte-Hornets/3/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "D.J. Augustin",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 183
+      },
+      {
+        "name": "Derrick Brown",
+        "position": "PF",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Kwame Brown",
+        "position": "C",
+        "height": "6-11",
+        "weight": 290
+      },
+      {
+        "name": "Matt Carroll",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 212
+      },
+      {
+        "name": "Sherron Collins",
+        "position": "PG",
+        "height": "5-11",
+        "weight": 205
+      },
+      {
+        "name": "Boris Diaw",
+        "position": "PF/C",
+        "height": "6-8",
+        "weight": 250
+      },
+      {
+        "name": "DeSagana Diop",
+        "position": "C",
+        "height": "7-0",
+        "weight": 280
+      },
+      {
+        "name": "Gerald Henderson",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 215
+      },
+      {
+        "name": "Stephen Jackson",
+        "position": "SF/SG",
+        "height": "6-8",
+        "weight": 220
+      },
+      {
+        "name": "Shaun Livingston",
+        "position": "PG",
+        "height": "6-7",
+        "weight": 192
+      },
+      {
+        "name": "Dominic McGuire",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "Nazr Mohammed",
+        "position": "C",
+        "height": "6-10",
+        "weight": 250
+      },
+      {
+        "name": "Eduardo Najera",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 235
+      },
+      {
+        "name": "Tyrus Thomas",
+        "position": "PF/SF",
+        "height": "6-9",
+        "weight": 215
+      },
+      {
+        "name": "Gerald Wallace",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 220
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "CHI",
+    "url": "https://basketball.realgm.com/nba/teams/Chicago-Bulls/4/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Omer Asik",
+        "position": "C",
+        "height": "7-0",
+        "weight": 255
+      },
+      {
+        "name": "Keith Bogans",
+        "position": "SG/SF",
+        "height": "6-5",
+        "weight": 215
+      },
+      {
+        "name": "Carlos Boozer",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 266
+      },
+      {
+        "name": "Ronnie Brewer",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 235
+      },
+      {
+        "name": "Luol Deng",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 220
+      },
+      {
+        "name": "Taj Gibson",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 232
+      },
+      {
+        "name": "James Johnson",
+        "position": "PF",
+        "height": "6-7",
+        "weight": 240
+      },
+      {
+        "name": "Kyle Korver",
+        "position": "SF/SG",
+        "height": "6-7",
+        "weight": 212
+      },
+      {
+        "name": "Joakim Noah",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 230
+      },
+      {
+        "name": "Derrick Rose",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Brian Scalabrine",
+        "position": "C-F",
+        "height": "6-9",
+        "weight": 241
+      },
+      {
+        "name": "Kurt Thomas",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "C.J. Watson",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 175
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "CLE",
+    "url": "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Christian Eyenga",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Daniel Gibson",
+        "position": "SG/PG",
+        "height": "6-2",
+        "weight": 200
+      },
+      {
+        "name": "Joey Graham",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Manny Harris",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 185
+      },
+      {
+        "name": "J.J. Hickson",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 242
+      },
+      {
+        "name": "Ryan Hollins",
+        "position": "C",
+        "height": "7-0",
+        "weight": 230
+      },
+      {
+        "name": "Antawn Jamison",
+        "position": "PF/SF",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "Jamario Moon",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 205
+      },
+      {
+        "name": "Anthony Parker",
+        "position": "G-F",
+        "height": "6-6",
+        "weight": 215
+      },
+      {
+        "name": "Leon Powe",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 240
+      },
+      {
+        "name": "Samardo Samuels",
+        "position": "C",
+        "height": "6-9",
+        "weight": 260
+      },
+      {
+        "name": "Ramon Sessions",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 190
+      },
+      {
+        "name": "Anderson Varejao",
+        "position": "C/PF",
+        "height": "6-10",
+        "weight": 273
+      },
+      {
+        "name": "Jawad Williams",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 225
+      },
+      {
+        "name": "Mo Williams",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 198
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "DAL",
+    "url": "https://basketball.realgm.com/nba/teams/Dallas-Mavericks/6/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Alexis Ajinca",
+        "position": "C",
+        "height": "7-2",
+        "weight": 248
+      },
+      {
+        "name": "J.J. Barea",
+        "position": "PG",
+        "height": "5-10",
+        "weight": 180
+      },
+      {
+        "name": "Rodrigue Beaubois",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 183
+      },
+      {
+        "name": "Caron Butler",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 228
+      },
+      {
+        "name": "Brian Cardinal",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 245
+      },
+      {
+        "name": "Tyson Chandler",
+        "position": "C",
+        "height": "7-1",
+        "weight": 240
+      },
+      {
+        "name": "Brendan Haywood",
+        "position": "C",
+        "height": "7-0",
+        "weight": 263
+      },
+      {
+        "name": "Dominique Jones",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 215
+      },
+      {
+        "name": "Jason Kidd",
+        "position": "PG",
+        "height": "6-4",
+        "weight": 210
+      },
+      {
+        "name": "Ian Mahinmi",
+        "position": "C",
+        "height": "6-11",
+        "weight": 262
+      },
+      {
+        "name": "Shawn Marion",
+        "position": "SF/PF",
+        "height": "6-7",
+        "weight": 228
+      },
+      {
+        "name": "Steve Novak",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 225
+      },
+      {
+        "name": "Dirk Nowitzki",
+        "position": "PF",
+        "height": "7-0",
+        "weight": 245
+      },
+      {
+        "name": "DeShawn Stevenson",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 218
+      },
+      {
+        "name": "Jason Terry",
+        "position": "PG/SG",
+        "height": "6-2",
+        "weight": 185
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "GSW",
+    "url": "https://basketball.realgm.com/nba/teams/Golden-State-Warriors/9/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Jeff Adrien",
+        "position": "PF",
+        "height": "6-7",
+        "weight": 245
+      },
+      {
+        "name": "Lou Amundson",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 220
+      },
+      {
+        "name": "Charlie Bell",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Andris Biedrins",
+        "position": "C",
+        "height": "7-0",
+        "weight": 250
+      },
+      {
+        "name": "Rodney Carney",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 205
+      },
+      {
+        "name": "Stephen Curry",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 200
+      },
+      {
+        "name": "Monta Ellis",
+        "position": "SG/PG",
+        "height": "6-3",
+        "weight": 185
+      },
+      {
+        "name": "Dan Gadzuric",
+        "position": "C",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "David Lee",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 245
+      },
+      {
+        "name": "Jeremy Lin",
+        "position": "PG/SG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Vladimir Radmanovic",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "Ekpe Udoh",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 245
+      },
+      {
+        "name": "Reggie Williams",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 205
+      },
+      {
+        "name": "Brandan Wright",
+        "position": "C/PF",
+        "height": "6-10",
+        "weight": 210
+      },
+      {
+        "name": "Dorell Wright",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 205
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "HOU",
+    "url": "https://basketball.realgm.com/nba/teams/Houston-Rockets/10/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Shane Battier",
+        "position": "SF/PF",
+        "height": "6-8",
+        "weight": 220
+      },
+      {
+        "name": "Aaron Brooks",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 161
+      },
+      {
+        "name": "Chase Budinger",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 215
+      },
+      {
+        "name": "Chuck Hayes",
+        "position": "PF/C",
+        "height": "6-6",
+        "weight": 240
+      },
+      {
+        "name": "Jordan Hill",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 240
+      },
+      {
+        "name": "Jared Jeffries",
+        "position": "PF/C",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Courtney Lee",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 215
+      },
+      {
+        "name": "Kyle Lowry",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 196
+      },
+      {
+        "name": "Kevin Martin",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 199
+      },
+      {
+        "name": "Brad Miller",
+        "position": "C",
+        "height": "7-0",
+        "weight": 261
+      },
+      {
+        "name": "Patrick Patterson",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 235
+      },
+      {
+        "name": "Luis Scola",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 241
+      },
+      {
+        "name": "Ish Smith",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 175
+      },
+      {
+        "name": "Jermaine Taylor",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 205
+      },
+      {
+        "name": "Yao Ming",
+        "position": "C",
+        "height": "7-6",
+        "weight": 310
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "IND",
+    "url": "https://basketball.realgm.com/nba/teams/Indiana-Pacers/11/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Darren Collison",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 175
+      },
+      {
+        "name": "Mike Dunleavy",
+        "position": "SF/SG",
+        "height": "6-9",
+        "weight": 230
+      },
+      {
+        "name": "T.J. Ford",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 165
+      },
+      {
+        "name": "Jeff Foster",
+        "position": "C",
+        "height": "6-11",
+        "weight": 236
+      },
+      {
+        "name": "Paul George",
+        "position": "SG/SF",
+        "height": "6-8",
+        "weight": 230
+      },
+      {
+        "name": "Danny Granger",
+        "position": "SF/SG",
+        "height": "6-9",
+        "weight": 222
+      },
+      {
+        "name": "Tyler Hansbrough",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "Roy Hibbert",
+        "position": "C",
+        "height": "7-2",
+        "weight": 270
+      },
+      {
+        "name": "Dahntay Jones",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 225
+      },
+      {
+        "name": "Solomon Jones",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Josh McRoberts",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 240
+      },
+      {
+        "name": "James Posey",
+        "position": "SF/PF",
+        "height": "6-8",
+        "weight": 217
+      },
+      {
+        "name": "A.J. Price",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 195
+      },
+      {
+        "name": "Brandon Rush",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Lance Stephenson",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 210
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "LAC",
+    "url": "https://basketball.realgm.com/nba/teams/Los-Angeles-Clippers/12/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Al-Farouq Aminu",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 220
+      },
+      {
+        "name": "Eric Bledsoe",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 214
+      },
+      {
+        "name": "Rasual Butler",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 215
+      },
+      {
+        "name": "Jarron Collins",
+        "position": "C",
+        "height": "6-11",
+        "weight": 248
+      },
+      {
+        "name": "Brian Cook",
+        "position": "PF/SF",
+        "height": "6-9",
+        "weight": 234
+      },
+      {
+        "name": "Baron Davis",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 215
+      },
+      {
+        "name": "Randy Foye",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 218
+      },
+      {
+        "name": "Ryan Gomes",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 245
+      },
+      {
+        "name": "Eric Gordon",
+        "position": "SG",
+        "height": "6-3",
+        "weight": 215
+      },
+      {
+        "name": "Blake Griffin",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "DeAndre Jordan",
+        "position": "C",
+        "height": "6-11",
+        "weight": 265
+      },
+      {
+        "name": "Chris Kaman",
+        "position": "C",
+        "height": "7-0",
+        "weight": 265
+      },
+      {
+        "name": "Craig Smith",
+        "position": "PF",
+        "height": "6-7",
+        "weight": 250
+      },
+      {
+        "name": "Willie Warren",
+        "position": "PG/SG",
+        "height": "6-4",
+        "weight": 200
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "LAL",
+    "url": "https://basketball.realgm.com/nba/teams/Los-Angeles-Lakers/13/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Metta World Peace",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 260
+      },
+      {
+        "name": "Matt Barnes",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 226
+      },
+      {
+        "name": "Steve Blake",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 172
+      },
+      {
+        "name": "Shannon Brown",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 210
+      },
+      {
+        "name": "Kobe Bryant",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 212
+      },
+      {
+        "name": "Andrew Bynum",
+        "position": "C",
+        "height": "7-0",
+        "weight": 285
+      },
+      {
+        "name": "Derrick Caracter",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 276
+      },
+      {
+        "name": "Devin Ebanks",
+        "position": "SF/PF",
+        "height": "6-9",
+        "weight": 215
+      },
+      {
+        "name": "Derek Fisher",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 210
+      },
+      {
+        "name": "Pau Gasol",
+        "position": "C/PF",
+        "height": "7-0",
+        "weight": 250
+      },
+      {
+        "name": "Lamar Odom",
+        "position": "SF/PF",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Theo Ratliff",
+        "position": "C",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "Sasha Vujacic",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 195
+      },
+      {
+        "name": "Luke Walton",
+        "position": "PF/SF",
+        "height": "6-8",
+        "weight": 235
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "MIA",
+    "url": "https://basketball.realgm.com/nba/teams/Miami-Heat/15/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Joel Anthony",
+        "position": "C",
+        "height": "6-9",
+        "weight": 245
+      },
+      {
+        "name": "Carlos Arroyo",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 202
+      },
+      {
+        "name": "Chris Bosh",
+        "position": "PF/C",
+        "height": "6-11",
+        "weight": 235
+      },
+      {
+        "name": "Mario Chalmers",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 190
+      },
+      {
+        "name": "Udonis Haslem",
+        "position": "C/PF",
+        "height": "6-7",
+        "weight": 235
+      },
+      {
+        "name": "Eddie House",
+        "position": "PG/SG",
+        "height": "6-1",
+        "weight": 190
+      },
+      {
+        "name": "Juwan Howard",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Zydrunas Ilgauskas",
+        "position": "C",
+        "height": "7-3",
+        "weight": 260
+      },
+      {
+        "name": "LeBron James",
+        "position": "SF/PF",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "James Jones",
+        "position": "SF",
+        "height": "6-8",
+        "weight": 218
+      },
+      {
+        "name": "Jamaal Magloire",
+        "position": "C",
+        "height": "6-11",
+        "weight": 259
+      },
+      {
+        "name": "Mike Miller",
+        "position": "SF/SG",
+        "height": "6-8",
+        "weight": 218
+      },
+      {
+        "name": "Dexter Pittman",
+        "position": "C",
+        "height": "6-11",
+        "weight": 285
+      },
+      {
+        "name": "Jerry Stackhouse",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 218
+      },
+      {
+        "name": "Dwyane Wade",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 220
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "MIL",
+    "url": "https://basketball.realgm.com/nba/teams/Milwaukee-Bucks/16/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Andrew Bogut",
+        "position": "C",
+        "height": "7-0",
+        "weight": 260
+      },
+      {
+        "name": "Earl Boykins",
+        "position": "PG",
+        "height": "5-5",
+        "weight": 135
+      },
+      {
+        "name": "Jon Brockman",
+        "position": "PF",
+        "height": "6-7",
+        "weight": 255
+      },
+      {
+        "name": "Carlos Delfino",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 230
+      },
+      {
+        "name": "Keyon Dooling",
+        "position": "PG/SG",
+        "height": "6-3",
+        "weight": 196
+      },
+      {
+        "name": "Chris Douglas-Roberts",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Drew Gooden",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 250
+      },
+      {
+        "name": "Darington Hobson",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Ersan Ilyasova",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "Brandon Jennings",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 170
+      },
+      {
+        "name": "Corey Maggette",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 225
+      },
+      {
+        "name": "Luc Mbah a Moute",
+        "position": "SF",
+        "height": "6-8",
+        "weight": 230
+      },
+      {
+        "name": "Michael Redd",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "John Salmons",
+        "position": "SF/SG",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Larry Sanders",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 235
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "MIN",
+    "url": "https://basketball.realgm.com/nba/teams/Minnesota-Timberwolves/17/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Maurice Ager",
+        "position": "F-G",
+        "height": "6-5",
+        "weight": 202
+      },
+      {
+        "name": "Michael Beasley",
+        "position": "PF/SF",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "Corey Brewer",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 186
+      },
+      {
+        "name": "Wayne Ellington",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 207
+      },
+      {
+        "name": "Jonny Flynn",
+        "position": "PG",
+        "height": "5-10",
+        "weight": 196
+      },
+      {
+        "name": "Lazar Hayward",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 225
+      },
+      {
+        "name": "Wesley Johnson",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 215
+      },
+      {
+        "name": "Kosta Koufos",
+        "position": "C",
+        "height": "7-0",
+        "weight": 265
+      },
+      {
+        "name": "Kevin Love",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 251
+      },
+      {
+        "name": "Darko Milicic",
+        "position": "C/PF",
+        "height": "7-0",
+        "weight": 275
+      },
+      {
+        "name": "Nikola Pekovic",
+        "position": "C",
+        "height": "6-11",
+        "weight": 307
+      },
+      {
+        "name": "Luke Ridnour",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 175
+      },
+      {
+        "name": "Sebastian Telfair",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 170
+      },
+      {
+        "name": "Anthony Tolliver",
+        "position": "C/PF",
+        "height": "6-8",
+        "weight": 245
+      },
+      {
+        "name": "Martell Webster",
+        "position": "SF/SG",
+        "height": "6-7",
+        "weight": 230
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "NYK",
+    "url": "https://basketball.realgm.com/nba/teams/New-York-Knicks/20/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Kelenna Azubuike",
+        "position": "SF/SG",
+        "height": "6-5",
+        "weight": 220
+      },
+      {
+        "name": "Wilson Chandler",
+        "position": "PF/SF",
+        "height": "6-9",
+        "weight": 225
+      },
+      {
+        "name": "Eddy Curry",
+        "position": "C",
+        "height": "7-0",
+        "weight": 295
+      },
+      {
+        "name": "Toney Douglas",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 195
+      },
+      {
+        "name": "Raymond Felton",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 205
+      },
+      {
+        "name": "Landry Fields",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Danilo Gallinari",
+        "position": "SF",
+        "height": "6-10",
+        "weight": 236
+      },
+      {
+        "name": "Roger Mason",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 205
+      },
+      {
+        "name": "Timofey Mozgov",
+        "position": "C",
+        "height": "7-1",
+        "weight": 275
+      },
+      {
+        "name": "Anthony Randolph",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 225
+      },
+      {
+        "name": "Andy Rautins",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 190
+      },
+      {
+        "name": "Amar'e Stoudemire",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 245
+      },
+      {
+        "name": "Ronny Turiaf",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 241
+      },
+      {
+        "name": "Henry Walker",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 235
+      },
+      {
+        "name": "Shawne Williams",
+        "position": "SF/PF",
+        "height": "6-10",
+        "weight": 230
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "OKC",
+    "url": "https://basketball.realgm.com/nba/teams/Oklahoma-City-Thunder/33/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Cole Aldrich",
+        "position": "C",
+        "height": "6-11",
+        "weight": 253
+      },
+      {
+        "name": "Nick Collison",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 255
+      },
+      {
+        "name": "Daequan Cook",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 205
+      },
+      {
+        "name": "Kevin Durant",
+        "position": "SF/SG",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Jeff Green",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 235
+      },
+      {
+        "name": "James Harden",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 220
+      },
+      {
+        "name": "Serge Ibaka",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "Royal Ivey",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 215
+      },
+      {
+        "name": "Nenad Krstic",
+        "position": "C",
+        "height": "6-10",
+        "weight": 255
+      },
+      {
+        "name": "Eric Maynor",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 175
+      },
+      {
+        "name": "Byron Mullens",
+        "position": "C",
+        "height": "7-0",
+        "weight": 270
+      },
+      {
+        "name": "Morris Peterson",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 220
+      },
+      {
+        "name": "Thabo Sefolosha",
+        "position": "SF/SG",
+        "height": "6-7",
+        "weight": 220
+      },
+      {
+        "name": "Russell Westbrook",
+        "position": "PG",
+        "height": "6-4",
+        "weight": 200
+      },
+      {
+        "name": "D.J. White",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 250
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "PHI",
+    "url": "https://basketball.realgm.com/nba/teams/Philadelphia-Sixers/22/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Tony Battie",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 230
+      },
+      {
+        "name": "Craig Brackins",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Elton Brand",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 254
+      },
+      {
+        "name": "Spencer Hawes",
+        "position": "C/PF",
+        "height": "7-1",
+        "weight": 245
+      },
+      {
+        "name": "Jrue Holiday",
+        "position": "PG",
+        "height": "6-4",
+        "weight": 220
+      },
+      {
+        "name": "Andre Iguodala",
+        "position": "SF/SG",
+        "height": "6-6",
+        "weight": 215
+      },
+      {
+        "name": "Jason Kapono",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 213
+      },
+      {
+        "name": "Jodie Meeks",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 210
+      },
+      {
+        "name": "Andres Nocioni",
+        "position": "SF/PF",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Darius Songaila",
+        "position": "C",
+        "height": "6-8",
+        "weight": 248
+      },
+      {
+        "name": "Marreese Speights",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 255
+      },
+      {
+        "name": "Evan Turner",
+        "position": "SF/SG",
+        "height": "6-7",
+        "weight": 220
+      },
+      {
+        "name": "Lou Williams",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 175
+      },
+      {
+        "name": "Thaddeus Young",
+        "position": "PF/SF",
+        "height": "6-8",
+        "weight": 225
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "PHX",
+    "url": "https://basketball.realgm.com/nba/teams/Phoenix-Suns/23/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Josh Childress",
+        "position": "SG/SF",
+        "height": "6-8",
+        "weight": 210
+      },
+      {
+        "name": "Earl Clark",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 234
+      },
+      {
+        "name": "Goran Dragic",
+        "position": "PG",
+        "height": "6-4",
+        "weight": 190
+      },
+      {
+        "name": "Jared Dudley",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 237
+      },
+      {
+        "name": "Channing Frye",
+        "position": "PF/C",
+        "height": "7-0",
+        "weight": 255
+      },
+      {
+        "name": "Grant Hill",
+        "position": "SF",
+        "height": "6-8",
+        "weight": 225
+      },
+      {
+        "name": "Matt Janning",
+        "position": "G-F",
+        "height": "6-4",
+        "weight": 198
+      },
+      {
+        "name": "Gani Lawal",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 234
+      },
+      {
+        "name": "Robin Lopez",
+        "position": "C/PF",
+        "height": "7-1",
+        "weight": 281
+      },
+      {
+        "name": "Steve Nash",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 178
+      },
+      {
+        "name": "Jason Richardson",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 225
+      },
+      {
+        "name": "Garret Siler",
+        "position": "C",
+        "height": "6-11",
+        "weight": 305
+      },
+      {
+        "name": "Hedo Turkoglu",
+        "position": "SF",
+        "height": "6-10",
+        "weight": 220
+      },
+      {
+        "name": "Hakim Warrick",
+        "position": "SF/PF",
+        "height": "6-9",
+        "weight": 219
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "POR",
+    "url": "https://basketball.realgm.com/nba/teams/Portland-Trail-Blazers/24/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "LaMarcus Aldridge",
+        "position": "PF/C",
+        "height": "6-11",
+        "weight": 265
+      },
+      {
+        "name": "Luke Babbitt",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 225
+      },
+      {
+        "name": "Nicolas Batum",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 230
+      },
+      {
+        "name": "Marcus Camby",
+        "position": "C",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Dante Cunningham",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 230
+      },
+      {
+        "name": "Rudy Fernandez",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 185
+      },
+      {
+        "name": "Armon Johnson",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 195
+      },
+      {
+        "name": "Wesley Matthews",
+        "position": "SG/SF",
+        "height": "6-5",
+        "weight": 220
+      },
+      {
+        "name": "Andre Miller",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Patty Mills",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 180
+      },
+      {
+        "name": "Fabricio Oberto",
+        "position": "C",
+        "height": "6-10",
+        "weight": 245
+      },
+      {
+        "name": "Greg Oden",
+        "position": "C",
+        "height": "7-0",
+        "weight": 273
+      },
+      {
+        "name": "Joel Przybilla",
+        "position": "C",
+        "height": "7-1",
+        "weight": 245
+      },
+      {
+        "name": "Brandon Roy",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 211
+      },
+      {
+        "name": "Elliot Williams",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 190
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "SAC",
+    "url": "https://basketball.realgm.com/nba/teams/Sacramento-Kings/25/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Omri Casspi",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 225
+      },
+      {
+        "name": "DeMarcus Cousins",
+        "position": "C",
+        "height": "6-11",
+        "weight": 270
+      },
+      {
+        "name": "Samuel Dalembert",
+        "position": "C",
+        "height": "6-11",
+        "weight": 250
+      },
+      {
+        "name": "Tyreke Evans",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Francisco Garcia",
+        "position": "SF/SG",
+        "height": "6-7",
+        "weight": 195
+      },
+      {
+        "name": "Donte Greene",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 226
+      },
+      {
+        "name": "Luther Head",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 185
+      },
+      {
+        "name": "Darnell Jackson",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 241
+      },
+      {
+        "name": "Pooh Jeter",
+        "position": "PG",
+        "height": "5-11",
+        "weight": 176
+      },
+      {
+        "name": "Carl Landry",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 248
+      },
+      {
+        "name": "Jason Thompson",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 250
+      },
+      {
+        "name": "Beno Udrih",
+        "position": "PG",
+        "height": "6-4",
+        "weight": 205
+      },
+      {
+        "name": "Hassan Whiteside",
+        "position": "C",
+        "height": "7-0",
+        "weight": 265
+      },
+      {
+        "name": "Antoine Wright",
+        "position": "G-F",
+        "height": "6-7",
+        "weight": 210
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "SAS",
+    "url": "https://basketball.realgm.com/nba/teams/San-Antonio-Spurs/26/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "James Anderson",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 210
+      },
+      {
+        "name": "DeJuan Blair",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 270
+      },
+      {
+        "name": "Matt Bonner",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "Tim Duncan",
+        "position": "PF/C",
+        "height": "6-11",
+        "weight": 250
+      },
+      {
+        "name": "Alonzo Gee",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 225
+      },
+      {
+        "name": "Manu Ginobili",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 205
+      },
+      {
+        "name": "George Hill",
+        "position": "PG/SG",
+        "height": "6-3",
+        "weight": 188
+      },
+      {
+        "name": "Richard Jefferson",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 233
+      },
+      {
+        "name": "Antonio McDyess",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 245
+      },
+      {
+        "name": "Gary Neal",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 210
+      },
+      {
+        "name": "Tony Parker",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 185
+      },
+      {
+        "name": "Bobby Simmons",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 235
+      },
+      {
+        "name": "Tiago Splitter",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 245
+      },
+      {
+        "name": "Garrett Temple",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 195
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "TOR",
+    "url": "https://basketball.realgm.com/nba/teams/Toronto-Raptors/28/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Solomon Alabi",
+        "position": "C",
+        "height": "7-1",
+        "weight": 250
+      },
+      {
+        "name": "David Andersen",
+        "position": "C/PF",
+        "height": "7-0",
+        "weight": 242
+      },
+      {
+        "name": "Marcus Banks",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 200
+      },
+      {
+        "name": "Leandro Barbosa",
+        "position": "PG/SG",
+        "height": "6-3",
+        "weight": 194
+      },
+      {
+        "name": "Andrea Bargnani",
+        "position": "PF/C",
+        "height": "7-0",
+        "weight": 245
+      },
+      {
+        "name": "Jose Calderon",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Ed Davis",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 218
+      },
+      {
+        "name": "DeMar DeRozan",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Joey Dorsey",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 275
+      },
+      {
+        "name": "Reggie Evans",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 245
+      },
+      {
+        "name": "Jarrett Jack",
+        "position": "PG/SG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Amir Johnson",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Linas Kleiza",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 234
+      },
+      {
+        "name": "Sonny Weems",
+        "position": "G-F",
+        "height": "6-6",
+        "weight": 205
+      },
+      {
+        "name": "Julian Wright",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 225
+      }
+    ]
+  },
+  {
+    "era": 2010,
+    "team": "UTA",
+    "url": "https://basketball.realgm.com/nba/teams/Utah-Jazz/29/Rosters/Opening_Day/2011",
+    "players": [
+      {
+        "name": "Raja Bell",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 204
+      },
+      {
+        "name": "Francisco Elson",
+        "position": "C",
+        "height": "7-0",
+        "weight": 235
+      },
+      {
+        "name": "Jeremy Evans",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 200
+      },
+      {
+        "name": "Kyrylo Fesenko",
+        "position": "C",
+        "height": "7-1",
+        "weight": 280
+      },
+      {
+        "name": "Gordon Hayward",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Al Jefferson",
+        "position": "C/PF",
+        "height": "6-10",
+        "weight": 289
+      },
+      {
+        "name": "Andrei Kirilenko",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 235
+      },
+      {
+        "name": "C.J. Miles",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Paul Millsap",
+        "position": "PF/C",
+        "height": "6-7",
+        "weight": 250
+      },
+      {
+        "name": "Mehmet Okur",
+        "position": "C",
+        "height": "6-11",
+        "weight": 249
+      },
+      {
+        "name": "Ronnie Price",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 190
+      },
+      {
+        "name": "Earl Watson",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 199
+      },
+      {
+        "name": "Deron Williams",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "BOS",
+    "url": "https://basketball.realgm.com/nba/teams/Boston-Celtics/2/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Avery Bradley",
+        "position": "SG",
+        "height": "6-3",
+        "weight": 180
+      },
+      {
+        "name": "Jaylen Brown",
+        "position": "G-F",
+        "height": "6-6",
+        "weight": 223
+      },
+      {
+        "name": "Jae Crowder",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 235
+      },
+      {
+        "name": "Gerald Green",
+        "position": "SF/SG",
+        "height": "6-7",
+        "weight": 205
+      },
+      {
+        "name": "Al Horford",
+        "position": "C/PF",
+        "height": "6-8",
+        "weight": 240
+      },
+      {
+        "name": "Demetrius Jackson",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 200
+      },
+      {
+        "name": "Jonas Jerebko",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 231
+      },
+      {
+        "name": "Amir Johnson",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 240
+      },
+      {
+        "name": "Jordan Mickey",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 235
+      },
+      {
+        "name": "Kelly Olynyk",
+        "position": "C/PF",
+        "height": "7-0",
+        "weight": 240
+      },
+      {
+        "name": "Terry Rozier",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 190
+      },
+      {
+        "name": "Marcus Smart",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 220
+      },
+      {
+        "name": "Isaiah Thomas",
+        "position": "PG",
+        "height": "5-9",
+        "weight": 185
+      },
+      {
+        "name": "James Young",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 215
+      },
+      {
+        "name": "Tyler Zeller",
+        "position": "C/PF",
+        "height": "7-0",
+        "weight": 250
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "BKN",
+    "url": "https://basketball.realgm.com/nba/teams/Brooklyn-Nets/38/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Anthony Bennett",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 245
+      },
+      {
+        "name": "Bojan Bogdanovic",
+        "position": "SF/PF",
+        "height": "6-7",
+        "weight": 226
+      },
+      {
+        "name": "Trevor Booker",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 228
+      },
+      {
+        "name": "Randy Foye",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 218
+      },
+      {
+        "name": "Justin Hamilton",
+        "position": "C",
+        "height": "7-0",
+        "weight": 255
+      },
+      {
+        "name": "Joe Harris",
+        "position": "G-F",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Rondae Hollis-Jefferson",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 217
+      },
+      {
+        "name": "Sean Kilpatrick",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 212
+      },
+      {
+        "name": "Caris LeVert",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 205
+      },
+      {
+        "name": "Jeremy Lin",
+        "position": "PG/SG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Brook Lopez",
+        "position": "C",
+        "height": "7-1",
+        "weight": 282
+      },
+      {
+        "name": "Chris McCullough",
+        "position": "PF",
+        "height": "6-11",
+        "weight": 200
+      },
+      {
+        "name": "Luis Scola",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 241
+      },
+      {
+        "name": "Greivis Vasquez",
+        "position": "PG",
+        "height": "6-6",
+        "weight": 217
+      },
+      {
+        "name": "Isaiah Whitehead",
+        "position": "PG/SG",
+        "height": "6-4",
+        "weight": 213
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "CHA",
+    "url": "https://basketball.realgm.com/nba/teams/Charlotte-Hornets/3/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Nicolas Batum",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 230
+      },
+      {
+        "name": "Marco Belinelli",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 225
+      },
+      {
+        "name": "Michael Kidd-Gilchrist",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 232
+      },
+      {
+        "name": "Treveon Graham",
+        "position": "G-F",
+        "height": "6-5",
+        "weight": 219
+      },
+      {
+        "name": "Aaron Harrison",
+        "position": "SF/SG",
+        "height": "6-6",
+        "weight": 210
+      },
+      {
+        "name": "Spencer Hawes",
+        "position": "C/PF",
+        "height": "7-1",
+        "weight": 245
+      },
+      {
+        "name": "Roy Hibbert",
+        "position": "C",
+        "height": "7-2",
+        "weight": 270
+      },
+      {
+        "name": "Frank Kaminsky",
+        "position": "F-C",
+        "height": "7-0",
+        "weight": 240
+      },
+      {
+        "name": "Jeremy Lamb",
+        "position": "SG/SF",
+        "height": "6-5",
+        "weight": 180
+      },
+      {
+        "name": "Brian Roberts",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 173
+      },
+      {
+        "name": "Ramon Sessions",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 190
+      },
+      {
+        "name": "Kemba Walker",
+        "position": "PG/SG",
+        "height": "6-0",
+        "weight": 184
+      },
+      {
+        "name": "Marvin Williams",
+        "position": "PF/SF",
+        "height": "6-9",
+        "weight": 237
+      },
+      {
+        "name": "Christian Wood",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 214
+      },
+      {
+        "name": "Cody Zeller",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 240
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "CHI",
+    "url": "https://basketball.realgm.com/nba/teams/Chicago-Bulls/4/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Jimmy Butler III",
+        "position": "SF/SG",
+        "height": "6-6",
+        "weight": 230
+      },
+      {
+        "name": "Isaiah Canaan",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 200
+      },
+      {
+        "name": "Michael Carter-Williams",
+        "position": "PG/SG",
+        "height": "6-5",
+        "weight": 190
+      },
+      {
+        "name": "Cristiano Felicio",
+        "position": "C",
+        "height": "6-10",
+        "weight": 275
+      },
+      {
+        "name": "Taj Gibson",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 232
+      },
+      {
+        "name": "Jerian Grant",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 198
+      },
+      {
+        "name": "R.J. Hunter",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 185
+      },
+      {
+        "name": "Robin Lopez",
+        "position": "C/PF",
+        "height": "7-1",
+        "weight": 281
+      },
+      {
+        "name": "Doug McDermott",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Nikola Mirotic",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 250
+      },
+      {
+        "name": "Bobby Portis",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "Rajon Rondo",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 180
+      },
+      {
+        "name": "Denzel Valentine",
+        "position": "SF",
+        "height": "6-4",
+        "weight": 220
+      },
+      {
+        "name": "Dwyane Wade",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 220
+      },
+      {
+        "name": "Paul Zipser",
+        "position": "SF/PF",
+        "height": "6-8",
+        "weight": 226
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "CLE",
+    "url": "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Chris Andersen",
+        "position": "C/PF",
+        "height": "6-10",
+        "weight": 245
+      },
+      {
+        "name": "Mike Dunleavy",
+        "position": "SF/SG",
+        "height": "6-9",
+        "weight": 230
+      },
+      {
+        "name": "Kay Felder",
+        "position": "PG",
+        "height": "5-9",
+        "weight": 176
+      },
+      {
+        "name": "Channing Frye",
+        "position": "PF/C",
+        "height": "7-0",
+        "weight": 255
+      },
+      {
+        "name": "Kyrie Irving",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 195
+      },
+      {
+        "name": "LeBron James",
+        "position": "SF/PF",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "Richard Jefferson",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 233
+      },
+      {
+        "name": "James Jones",
+        "position": "SF",
+        "height": "6-8",
+        "weight": 218
+      },
+      {
+        "name": "DeAndre Liggins",
+        "position": "SG/SF",
+        "height": "6-6",
+        "weight": 210
+      },
+      {
+        "name": "Kevin Love",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 251
+      },
+      {
+        "name": "Jordan McRae",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 179
+      },
+      {
+        "name": "Iman Shumpert",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 220
+      },
+      {
+        "name": "J.R. Smith",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 225
+      },
+      {
+        "name": "Tristan Thompson",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 254
+      },
+      {
+        "name": "Mo Williams",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 198
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "DAL",
+    "url": "https://basketball.realgm.com/nba/teams/Dallas-Mavericks/6/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Quincy Acy",
+        "position": "PF",
+        "height": "6-7",
+        "weight": 240
+      },
+      {
+        "name": "Justin Anderson",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 230
+      },
+      {
+        "name": "J.J. Barea",
+        "position": "PG",
+        "height": "5-10",
+        "weight": 180
+      },
+      {
+        "name": "Harrison Barnes",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 225
+      },
+      {
+        "name": "Andrew Bogut",
+        "position": "C",
+        "height": "7-0",
+        "weight": 260
+      },
+      {
+        "name": "Nicolas Brussino",
+        "position": "SG",
+        "height": "6-8",
+        "weight": 195
+      },
+      {
+        "name": "Seth Curry",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 185
+      },
+      {
+        "name": "Dorian Finney-Smith",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 220
+      },
+      {
+        "name": "A.J. Hammons",
+        "position": "C",
+        "height": "7-0",
+        "weight": 250
+      },
+      {
+        "name": "Devin Harris",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 185
+      },
+      {
+        "name": "Wesley Matthews",
+        "position": "SG/SF",
+        "height": "6-5",
+        "weight": 220
+      },
+      {
+        "name": "Salah Mejri",
+        "position": "C",
+        "height": "7-1",
+        "weight": 235
+      },
+      {
+        "name": "Dirk Nowitzki",
+        "position": "PF",
+        "height": "7-0",
+        "weight": 245
+      },
+      {
+        "name": "Dwight Powell",
+        "position": "F-C",
+        "height": "6-10",
+        "weight": 240
+      },
+      {
+        "name": "Deron Williams",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "GSW",
+    "url": "https://basketball.realgm.com/nba/teams/Golden-State-Warriors/9/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Ian Clark",
+        "position": "SG",
+        "height": "6-3",
+        "weight": 175
+      },
+      {
+        "name": "Stephen Curry",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 185
+      },
+      {
+        "name": "Kevin Durant",
+        "position": "SF/SG",
+        "height": "6-11",
+        "weight": 240
+      },
+      {
+        "name": "Draymond Green",
+        "position": "PF",
+        "height": "6-6",
+        "weight": 230
+      },
+      {
+        "name": "Andre Iguodala",
+        "position": "SF/SG",
+        "height": "6-6",
+        "weight": 215
+      },
+      {
+        "name": "Damian Jones",
+        "position": "C",
+        "height": "6-10",
+        "weight": 245
+      },
+      {
+        "name": "Shaun Livingston",
+        "position": "PG",
+        "height": "6-7",
+        "weight": 192
+      },
+      {
+        "name": "Kevon Looney",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 222
+      },
+      {
+        "name": "James McAdoo",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 230
+      },
+      {
+        "name": "Patrick McCaw",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 181
+      },
+      {
+        "name": "JaVale McGee",
+        "position": "C/PF",
+        "height": "7-0",
+        "weight": 270
+      },
+      {
+        "name": "Zaza Pachulia",
+        "position": "C",
+        "height": "6-11",
+        "weight": 270
+      },
+      {
+        "name": "Klay Thompson",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 220
+      },
+      {
+        "name": "Anderson Varejao",
+        "position": "C/PF",
+        "height": "6-10",
+        "weight": 273
+      },
+      {
+        "name": "David West",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 250
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "HOU",
+    "url": "https://basketball.realgm.com/nba/teams/Houston-Rockets/10/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Ryan Anderson",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 240
+      },
+      {
+        "name": "Trevor Ariza",
+        "position": "SF",
+        "height": "6-8",
+        "weight": 215
+      },
+      {
+        "name": "Patrick Beverley",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 180
+      },
+      {
+        "name": "Corey Brewer",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 186
+      },
+      {
+        "name": "Bobby Brown",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 175
+      },
+      {
+        "name": "Sam Dekker",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 230
+      },
+      {
+        "name": "Eric Gordon",
+        "position": "SG",
+        "height": "6-3",
+        "weight": 215
+      },
+      {
+        "name": "James Harden",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 220
+      },
+      {
+        "name": "Montrezl Harrell",
+        "position": "F-C",
+        "height": "6-7",
+        "weight": 240
+      },
+      {
+        "name": "Nene Hilario",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 250
+      },
+      {
+        "name": "K.J. McDaniels",
+        "position": "GF",
+        "height": "6-6",
+        "weight": 205
+      },
+      {
+        "name": "Tyler Ennis",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 182
+      },
+      {
+        "name": "Clint Capela",
+        "position": "C",
+        "height": "6-10",
+        "weight": 256
+      },
+      {
+        "name": "Chinanu Onuaku",
+        "position": "C",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "Kyle Wiltjer",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 240
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "LAC",
+    "url": "https://basketball.realgm.com/nba/teams/Los-Angeles-Clippers/12/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Alan Anderson",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Brandon Bass",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 250
+      },
+      {
+        "name": "Jamal Crawford",
+        "position": "SG/PG",
+        "height": "6-5",
+        "weight": 195
+      },
+      {
+        "name": "Raymond Felton",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 205
+      },
+      {
+        "name": "Blake Griffin",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "Brice Johnson",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Wesley Johnson",
+        "position": "SG/SF",
+        "height": "6-7",
+        "weight": 215
+      },
+      {
+        "name": "DeAndre Jordan",
+        "position": "C",
+        "height": "6-11",
+        "weight": 265
+      },
+      {
+        "name": "Luc Mbah a Moute",
+        "position": "SF",
+        "height": "6-8",
+        "weight": 230
+      },
+      {
+        "name": "Chris Paul",
+        "position": "PG",
+        "height": "6-0",
+        "weight": 175
+      },
+      {
+        "name": "Paul Pierce",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 235
+      },
+      {
+        "name": "J.J. Redick",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 200
+      },
+      {
+        "name": "Austin Rivers",
+        "position": "PG/SG",
+        "height": "6-4",
+        "weight": 200
+      },
+      {
+        "name": "Marreese Speights",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 255
+      },
+      {
+        "name": "Diamond Stone",
+        "position": "C",
+        "height": "6-11",
+        "weight": 255
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "LAL",
+    "url": "https://basketball.realgm.com/nba/teams/Los-Angeles-Lakers/13/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Metta World Peace",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 260
+      },
+      {
+        "name": "Tarik Black",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "Jose Calderon",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Jordan Clarkson",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 194
+      },
+      {
+        "name": "Luol Deng",
+        "position": "SF",
+        "height": "6-9",
+        "weight": 220
+      },
+      {
+        "name": "Brandon Ingram",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 190
+      },
+      {
+        "name": "Timofey Mozgov",
+        "position": "C",
+        "height": "7-1",
+        "weight": 275
+      },
+      {
+        "name": "Larry Nance, Jr.",
+        "position": "F-C",
+        "height": "6-6",
+        "weight": 245
+      },
+      {
+        "name": "Julius Randle",
+        "position": "F-C",
+        "height": "6-9",
+        "weight": 250
+      },
+      {
+        "name": "Thomas Robinson",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 235
+      },
+      {
+        "name": "D'Angelo Russell",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 193
+      },
+      {
+        "name": "Marcelinho Huertas",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Lou Williams",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 175
+      },
+      {
+        "name": "Nick Young",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Ivica Zubac",
+        "position": "C",
+        "height": "7-0",
+        "weight": 240
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "MEM",
+    "url": "https://basketball.realgm.com/nba/teams/Memphis-Grizzlies/14/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Tony Allen",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 213
+      },
+      {
+        "name": "Wade Baldwin IV",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 220
+      },
+      {
+        "name": "Vince Carter",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 220
+      },
+      {
+        "name": "Mike Conley",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 175
+      },
+      {
+        "name": "Troy Daniels",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 205
+      },
+      {
+        "name": "Deyonta Davis",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 237
+      },
+      {
+        "name": "James Ennis",
+        "position": "GF",
+        "height": "6-6",
+        "weight": 215
+      },
+      {
+        "name": "Marc Gasol",
+        "position": "C",
+        "height": "7-1",
+        "weight": 255
+      },
+      {
+        "name": "JaMychal Green",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 227
+      },
+      {
+        "name": "Andrew Harrison",
+        "position": "PG",
+        "height": "6-4",
+        "weight": 210
+      },
+      {
+        "name": "Jarell Martin",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 239
+      },
+      {
+        "name": "Chandler Parsons",
+        "position": "SF",
+        "height": "6-10",
+        "weight": 230
+      },
+      {
+        "name": "Zach Randolph",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 260
+      },
+      {
+        "name": "Troy Williams",
+        "position": "SF",
+        "height": "6-7",
+        "weight": 210
+      },
+      {
+        "name": "Brandan Wright",
+        "position": "C/PF",
+        "height": "6-10",
+        "weight": 210
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "NYK",
+    "url": "https://basketball.realgm.com/nba/teams/New-York-Knicks/20/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "Carmelo Anthony",
+        "position": "SF",
+        "height": "6-8",
+        "weight": 240
+      },
+      {
+        "name": "Ron Baker",
+        "position": "SG",
+        "height": "6-4",
+        "weight": 220
+      },
+      {
+        "name": "Willy Hernangomez",
+        "position": "C-F",
+        "height": "6-11",
+        "weight": 250
+      },
+      {
+        "name": "Justin Holiday",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 180
+      },
+      {
+        "name": "Brandon Jennings",
+        "position": "PG",
+        "height": "6-1",
+        "weight": 170
+      },
+      {
+        "name": "Mindaugas Kuzminskas",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 215
+      },
+      {
+        "name": "Courtney Lee",
+        "position": "SG",
+        "height": "6-5",
+        "weight": 215
+      },
+      {
+        "name": "Maurice Ndour",
+        "position": "PF",
+        "height": "6-9",
+        "weight": 200
+      },
+      {
+        "name": "Joakim Noah",
+        "position": "C/PF",
+        "height": "6-11",
+        "weight": 230
+      },
+      {
+        "name": "Kyle O'Quinn",
+        "position": "PF/C",
+        "height": "6-10",
+        "weight": 250
+      },
+      {
+        "name": "Marshall Plumlee",
+        "position": "C",
+        "height": "7-1",
+        "weight": 250
+      },
+      {
+        "name": "Kristaps Porzingis",
+        "position": "F-C",
+        "height": "7-2",
+        "weight": 240
+      },
+      {
+        "name": "Derrick Rose",
+        "position": "PG",
+        "height": "6-3",
+        "weight": 200
+      },
+      {
+        "name": "Lance Thomas",
+        "position": "PF",
+        "height": "6-8",
+        "weight": 240
+      },
+      {
+        "name": "Sasha Vujacic",
+        "position": "SG",
+        "height": "6-7",
+        "weight": 195
+      }
+    ]
+  },
+  {
+    "era": 2016,
+    "team": "SAS",
+    "url": "https://basketball.realgm.com/nba/teams/San-Antonio-Spurs/26/Rosters/Opening_Day/2017",
+    "players": [
+      {
+        "name": "LaMarcus Aldridge",
+        "position": "PF/C",
+        "height": "6-11",
+        "weight": 265
+      },
+      {
+        "name": "Kyle Anderson",
+        "position": "F-G",
+        "height": "6-8",
+        "weight": 230
+      },
+      {
+        "name": "Davis Bertans",
+        "position": "SF/PF",
+        "height": "6-10",
+        "weight": 225
+      },
+      {
+        "name": "Dewayne Dedmon",
+        "position": "PF",
+        "height": "6-10",
+        "weight": 245
+      },
+      {
+        "name": "Bryn Forbes",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 205
+      },
+      {
+        "name": "Pau Gasol",
+        "position": "C/PF",
+        "height": "7-0",
+        "weight": 250
+      },
+      {
+        "name": "Manu Ginobili",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 205
+      },
+      {
+        "name": "Danny Green",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 215
+      },
+      {
+        "name": "Nicolas Laprovittola",
+        "position": "PG",
+        "height": "6-4",
+        "weight": 180
+      },
+      {
+        "name": "David Lee",
+        "position": "PF/C",
+        "height": "6-9",
+        "weight": 245
+      },
+      {
+        "name": "Kawhi Leonard",
+        "position": "SF",
+        "height": "6-6",
+        "weight": 225
+      },
+      {
+        "name": "Patty Mills",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 180
+      },
+      {
+        "name": "Dejounte Murray",
+        "position": "PG/SG",
+        "height": "6-4",
+        "weight": 180
+      },
+      {
+        "name": "Tony Parker",
+        "position": "PG",
+        "height": "6-2",
+        "weight": 185
+      },
+      {
+        "name": "Jonathon Simmons",
+        "position": "SG",
+        "height": "6-6",
+        "weight": 195
+      }
+    ]
+  }
+]
