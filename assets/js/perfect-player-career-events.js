@@ -1,6 +1,156 @@
 /* 生涯事件：定义 → 选择 → 比赛消费 → 结算。核心引擎显式调用，不包装旧函数。 */
 'use strict';
 
+// 公开工资帽、底薪与首轮顺位表；来源与估算边界见 tools/artifacts/career-salary-calibration.md。
+var CAREER_SALARY_CAPS = {"2003":43840000,"2004":43870000,"2005":49500000,"2006":53135000,"2007":55630000,"2008":58680000,"2009":57700000,"2010":58044000,"2011":58044000,"2012":58044000,"2013":58679000,"2014":63065000,"2015":70000000,"2016":94143000,"2017":99093000,"2018":101869000,"2019":109140000,"2020":109140000,"2021":112414000,"2022":123655000,"2023":136021000,"2024":140588000,"2025":154647000,"2026":164961000}; // 2003-04 至 2026-27
+var CAREER_MINIMUM_SALARIES = {
+  2003:[366931,563679,638679,663679,688679,751179,813679,876179,938679,1000000,1070000],
+  2004:[385277,620046,695046,720046,745046,807546,870046,932546,995046,1000000,1100000],
+  2005:[398762,641748,719373,745248,771123,835810,900498,965185,1029873,1035000,1138500],
+  2006:[412718,664209,744551,771331,798112,865063,932015,998967,1065918,1071225,1178348],
+  2007:[427163,687456,770610,798328,826046,895341,964636,1033930,1103225,1108718,1219590],
+  2008:[442114,711517,797581,826269,854957,926678,998398,1070118,1141838,1147523,1262275],
+  2009:[457588,736420,825497,855189,884881,959111,1033342,1107572,1181803,1187686,1306455],
+  2010:[473604,762195,854389,885120,915852,992680,1069509,1146337,1223166,1229255,1352181],
+  2011:[473604,762195,854389,885120,915852,992680,1069509,1146337,1223166,1229255,1352181],
+  2012:[473604,762195,854389,885120,915852,992680,1069509,1146337,1223166,1229255,1352181],
+  2013:[490180,788872,884293,916099,947907,1027424,1106942,1186459,1265977,1272279,1399507],
+  2014:[507336,816482,915243,948163,981084,1063384,1145685,1227985,1310286,1316809,1448490],
+  2015:[525093,845059,947276,981348,1015421,1100602,1185784,1270964,1356146,1362897,1499187],
+  2016:[543471,874636,980431,1015696,1050961,1139123,1227286,1315448,1403611,1410598,1551659],
+  2024:[1157153,1862265,2087519,2162606,2237691,2425403,2613120,2800834,2988550,3003427,3303771],
+};
+// 每行：第 1/2/3 年基准工资、第四年涨幅（百分比）；首轮按常见的 120% 签约。
+var CAREER_ROOKIE_SCALES = {
+  2003:[
+    [3349100,3600300,3851500,26.1],
+    [2996500,3221200,3446000,26.2],
+    [2691000,2892800,3094700,26.4],
+    [2426100,2608100,2790000,26.5],
+    [2197000,2361800,2526600,26.7],
+    [1995500,2145200,2294800,26.8],
+    [1821600,1958200,2094900,27],
+    [1668900,1794000,1919200,27.2],
+    [1534000,1649100,1764100,27.4],
+    [1457300,1566600,1675900,27.5],
+    [1384400,1488300,1592100,32.7],
+    [1315200,1413900,1512500,37.8],
+    [1249500,1343200,1436900,42.9],
+    [1187000,1276000,1365000,48.1],
+    [1127600,1212200,1296800,53.3],
+    [1071200,1151600,1231900,53.4],
+    [1017700,1094000,1170300,53.6],
+    [966800,1039300,1111800,53.8],
+    [923300,992500,1061800,54],
+    [886400,952800,1019300,54.2],
+    [850900,914700,978500,59.3],
+    [816900,878100,939400,64.5],
+    [784200,843000,901800,69.7],
+    [752800,809300,865800,74.9],
+    [722700,776900,831100,80.1],
+    [698800,751200,803600,80.3],
+    [678600,729500,780400,80.4],
+    [674400,725000,775500,80.5],
+    [669500,719700,769900,80.5]
+  ],
+  2010:[
+    [4286900,4608400,4929900,26.1],
+    [3835600,4123200,4410900,26.2],
+    [3444400,3702800,3961100,26.4],
+    [3105500,3338400,3571300,26.5],
+    [2812200,3023100,3234000,26.7],
+    [2554200,2745800,2937400,26.8],
+    [2331700,2506600,2681400,27],
+    [2136100,2296300,2456500,27.2],
+    [1963600,2110800,2258100,27.4],
+    [1865300,2005200,2145100,27.5],
+    [1772100,1905000,2037900,32.7],
+    [1683500,1809700,1936000,37.8],
+    [1599300,1719200,1839200,42.9],
+    [1519400,1633300,1747300,48.1],
+    [1443300,1551600,1659800,53.3],
+    [1371200,1474000,1576900,53.4],
+    [1302600,1400300,1498000,53.6],
+    [1237500,1330300,1423100,53.8],
+    [1181800,1270400,1359000,54],
+    [1134500,1219600,1304700,54.2],
+    [1089100,1170800,1252500,59.3],
+    [1045600,1124000,1202400,64.5],
+    [1003800,1079100,1154400,69.7],
+    [963600,1035900,1108100,74.9],
+    [925100,994400,1063800,80.1],
+    [894400,961500,1028600,80.3],
+    [868600,933700,998900,80.4],
+    [863300,928000,992700,80.5],
+    [857000,921300,985500,80.5],
+    [850800,914600,978400,80.5]
+  ],
+  2016:[
+    [4919300,5140700,5362100,26.1],
+    [4401400,4599500,4797600,26.2],
+    [3952500,4130400,4308300,26.4],
+    [3563600,3724000,3884400,26.5],
+    [3227100,3372300,3517500,26.7],
+    [2931000,3062900,3194800,26.8],
+    [2675700,2796100,2916500,27],
+    [2451200,2561500,2671800,27.2],
+    [2253300,2354700,2456100,27.4],
+    [2140500,2236800,2333100,27.5],
+    [2033500,2125000,2216500,32.7],
+    [1931900,2018800,2105700,37.8],
+    [1835200,1917800,2000400,42.9],
+    [1743500,1822000,1900500,48.1],
+    [1656200,1730700,1805300,53.3],
+    [1573500,1644300,1715100,53.4],
+    [1494800,1562000,1629300,53.6],
+    [1420100,1484000,1547900,53.8],
+    [1356100,1417200,1478200,54],
+    [1301900,1360400,1419000,54.2],
+    [1249800,1306000,1362200,59.3],
+    [1199900,1253800,1307800,64.5],
+    [1151900,1203700,1255600,69.7],
+    [1105800,1155500,1205300,74.9],
+    [1061600,1109300,1157100,80.1],
+    [1026300,1072500,1118700,80.3],
+    [996700,1041600,1086400,80.4],
+    [990700,1035200,1079800,80.5],
+    [983400,1027700,1071900,80.5],
+    [976300,1020200,1064200,80.5]
+  ],
+  2026:[
+    [12290000,12904800,13519200,26.1],
+    [10996100,11546100,12096100,26.2],
+    [9874800,10368200,10862400,26.4],
+    [8903100,9348300,9793600,26.5],
+    [8062300,8465200,8868300,26.7],
+    [7322500,7688700,8055000,26.8],
+    [6684700,7019100,7353000,27],
+    [6123900,6430100,6736400,27.2],
+    [5629000,5910900,6192200,27.4],
+    [5347800,5615000,5882100,27.5],
+    [5080200,5334400,5588500,32.7],
+    [4826400,5067900,5309300,37.8],
+    [4585000,4814400,5043500,42.9],
+    [4356000,4573800,4791800,48.1],
+    [4137900,4344800,4551600,53.3],
+    [3931100,4127700,4324500,53.4],
+    [3734400,3921200,4107800,53.6],
+    [3547900,3725000,3902600,53.8],
+    [3388100,3557400,3727200,54],
+    [3252300,3414900,3577400,54.2],
+    [3122300,3278600,3434800,59.3],
+    [2997600,3147300,3297300,64.5],
+    [2877800,3021800,3165300,69.7],
+    [2762800,2900900,3039000,74.9],
+    [2651900,2784400,2917400,80.1],
+    [2564100,2692100,2820400,80.3],
+    [2490100,2614700,2739500,80.4],
+    [2474600,2598800,2722400,80.5],
+    [2456900,2579700,2702600,80.5],
+    [2439000,2560900,2683200,80.5]
+  ],
+};
+
 var CAREER_EXPERIENCE_EVENTS = [
   { id:'rotation_tryout', arc:'rotation', stage:0, title:'教练给了你三场试用',
     scene:'下一段轮换表空出了时间。教练问你：要不要用三场比赛，证明自己值得更多机会？',
@@ -89,16 +239,66 @@ function careerExperienceMoney(value) {
   return new Intl.NumberFormat('zh-CN', { style:'currency', currency:'USD', maximumFractionDigits:0 }).format(value || 0);
 }
 
-// 金额是游戏合约规则；旧档只记录启用账本之后的收入，不补造历史工资。
-function estimateCareerAnnualSalary() {
-  var c = STATE.career || {};
-  if ((c.seasonCount || 0) === 0) {
-    var type = c.draft && c.draft.type;
-    return type === 'lottery' ? 6000000 : type === 'first' ? 3000000 : 1500000;
+function getCareerEconomicYear(seasonCount) {
+  var start = STATE.mode === 'legend' ? Number(STATE.eraStart) || 2003 : 2026;
+  return start + (seasonCount == null ? Number(STATE.career && STATE.career.seasonCount) || 0 : seasonCount);
+}
+
+function getCareerSalaryMarket(year) {
+  year = year == null ? getCareerEconomicYear() : year;
+  var dataYear = Math.max(2003, Math.min(2026, year));
+  var cap = CAREER_SALARY_CAPS[dataYear];
+  var minimum = CAREER_MINIMUM_SALARIES[dataYear];
+  if (!minimum) minimum = CAREER_MINIMUM_SALARIES[2024].map(function(value) { return Math.round(value * cap / CAREER_SALARY_CAPS[2024]); });
+  return { year:year, dataYear:dataYear, cap:cap, minimum:minimum, projected:year > 2026 };
+}
+
+function createCareerSalaryContract(options) {
+  options = options || {};
+  var c = STATE.career || {}, season = Number(c.seasonCount) || 0;
+  var market = getCareerSalaryMarket(), draft = c.draft || {};
+  var years = Math.max(1, Math.min(5, Number(c.contract) || 4));
+  var salaries = [], type = 'market';
+  var firstRound = draft.round === 1 || draft.type === 'lottery' || draft.type === 'first';
+  var rookieYears = Math.min(4, Number(draft.contractYears) || 4);
+  if (!options.renewed && firstRound && season < rookieYears) {
+    type = 'rookie';
+    var openingYear = getCareerEconomicYear(0);
+    var scale = CAREER_ROOKIE_SCALES[openingYear] || CAREER_ROOKIE_SCALES[2026];
+    var pick = Math.max(1, Math.min(scale.length, Number(draft.pick) || (draft.type === 'lottery' ? 8 : 24)));
+    var row = scale[pick - 1];
+    var rookiePay = [row[0], row[1], row[2], row[2] * (1 + row[3] / 100)];
+    for (var i = season; i < Math.min(rookieYears, season + years); i++) salaries.push(Math.round(rookiePay[i] * 1.2));
+  } else if (!options.renewed && draft.twoWay && market.year >= 2023 && season < (Number(draft.contractYears) || 1)) {
+    type = 'two_way';
+    for (var tw = 0; tw < years; tw++) salaries.push(Math.round(getCareerSalaryMarket(market.year + tw).minimum[0] * 0.5));
+  } else {
+    var ovr = Number(STATE.finalOVR) || 60;
+    var maxShare = season >= 10 ? 0.35 : season >= 7 ? 0.30 : 0.25;
+    var share = ovr >= 95 ? maxShare : ovr >= 90 ? 0.24 : ovr >= 85 ? 0.17 : ovr >= 80 ? 0.095 : ovr >= 75 ? 0.045 : ovr >= 68 ? 0.018 : 0;
+    var minimumPay = market.minimum[Math.min(10, season)];
+    var startingPay = Math.max(minimumPay, Math.round(market.cap * share));
+    if (!season && !firstRound) startingPay = minimumPay;
+    if (ovr >= 95 && options.previousSalary) startingPay = Math.max(startingPay, Math.round(options.previousSalary * 1.05));
+    type = startingPay === minimumPay ? 'minimum' : 'market';
+    var sameTeam = options.sameTeam !== false;
+    var raise = market.year < 2005 ? (sameTeam ? 0.125 : 0.10) : market.year < 2011 ? (sameTeam ? 0.105 : 0.08) : market.year < 2017 ? (sameTeam ? 0.075 : 0.045) : (sameTeam ? 0.08 : 0.05);
+    for (var y = 0; y < years; y++) {
+      var futureMinimum = getCareerSalaryMarket(market.year + y).minimum[Math.min(10, season + y)];
+      salaries.push(type === 'minimum' ? futureMinimum : Math.max(futureMinimum, Math.round(startingPay * (1 + raise * y))));
+    }
   }
-  var ovr = Number(STATE.finalOVR) || 60;
-  return ovr >= 95 ? 42000000 : ovr >= 90 ? 30000000 : ovr >= 85 ? 18000000 :
-    ovr >= 80 ? 9000000 : ovr >= 75 ? 4500000 : ovr >= 68 ? 2500000 : 1500000;
+  return { type:type, startSeason:season, salaries:salaries };
+}
+
+function estimateCareerAnnualSalary() {
+  return createCareerSalaryContract().salaries[0];
+}
+
+function getCareerChoiceEffect(choice) {
+  var effect = Object.assign({}, choice.effect);
+  if (effect.cash) effect.cash = Math.round(effect.cash * getCareerSalaryMarket().cap / CAREER_SALARY_CAPS[2026]);
+  return effect;
 }
 
 function getCareerExperience() {
@@ -106,9 +306,9 @@ function getCareerExperience() {
   var c = STATE.career;
   if (!c.eventExperience) {
     c.eventExperience = {
-      version:1, team:STATE.careerTeam, arcs:{ rotation:0, rival:0, recovery:0 },
+      version:2, team:STATE.careerTeam, arcs:{ rotation:0, rival:0, recovery:0 },
       effects:[], task:null, feedback:null, recoveryDue:false,
-      money:{ cash:0, earned:0, salary:0, offcourt:0, spent:0, annualSalary:estimateCareerAnnualSalary(),
+      money:{ cash:0, earned:0, salary:0, offcourt:0, spent:0, annualSalary:0, contract:createCareerSalaryContract(),
         fromSeason:c.seasonCount || 0, fromGame:(STATE.season && STATE.season.games || []).length, entries:[] },
       season:{ number:-1 }, coaches:{}
     };
@@ -128,6 +328,13 @@ function getCareerExperience() {
     e.pending = null;
     e.awaitingGameKey = null;
   }
+  if (!e.money.contract || e.version < 2) {
+    e.money.contract = createCareerSalaryContract();
+    e.version = 2;
+  }
+  var contract = e.money.contract;
+  var salaryIndex = Math.max(0, Math.min(contract.salaries.length - 1, (c.seasonCount || 0) - contract.startSeason));
+  e.money.annualSalary = contract.salaries[salaryIndex];
   return e;
 }
 
@@ -160,9 +367,12 @@ function recordCareerTransaction(id, kind, title, amount) {
   return true;
 }
 
-function renewCareerExperienceContract() {
+function signCareerExperienceContract(options) {
   var e = getCareerExperience();
-  if (e) e.money.annualSalary = estimateCareerAnnualSalary();
+  if (!e) return;
+  var previousSalary = e.money.salary > 0 && e.money.contract.type === 'market' && (!options || !options.rookie) ? e.money.annualSalary : 0;
+  e.money.contract = createCareerSalaryContract({ renewed:!options || !options.rookie, sameTeam:!options || options.sameTeam !== false, previousSalary:previousSalary });
+  e.money.annualSalary = e.money.contract.salaries[0];
 }
 
 function getCareerExperienceRole() {
@@ -325,10 +535,11 @@ function showCareerExperienceDecision() {
   var rival = STATE.career.flags && STATE.career.flags.storyRival;
   var name = rival && (rival.cname || rival.name) || '对方核心';
   var choices = def.choices.map(function(choice, index) {
-    var affordable = e.money.cash + (choice.effect.cash || 0) >= 0;
+    var effect = getCareerChoiceEffect(choice);
+    var affordable = e.money.cash + (effect.cash || 0) >= 0;
     return '<button class="ce-choice" onclick="chooseCareerExperienceDecision(' + index + ')"' + (affordable ? '' : ' disabled') +
       '><strong>' + careerExperienceEscape(choice.label) + '</strong><span>' +
-      careerExperienceEscape(careerExperienceEffectText(choice.effect)) + '</span>' +
+      careerExperienceEscape(careerExperienceEffectText(effect)) + '</span>' +
       (affordable ? '' : '<small>可用余额不足</small>') + '</button>';
   }).join('');
   showCareerExperienceModal('career-decision-modal', def.title.replace('{rival}', name),
@@ -342,7 +553,7 @@ function chooseCareerExperienceDecision(index) {
   var pending = e && e.pending;
   var def = pending && CAREER_EXPERIENCE_EVENTS.find(function(item) { return item.id === pending.id; });
   if (!def || !Number.isInteger(index) || !def.choices[index]) return false;
-  var choice = def.choices[index], fx = choice.effect;
+  var choice = def.choices[index], fx = getCareerChoiceEffect(choice);
   var rival = STATE.career.flags && STATE.career.flags.storyRival;
   var resolvedTitle = def.title.replace('{rival}', rival && (rival.cname || rival.name) || '对方核心');
   if (e.money.cash + (fx.cash || 0) < 0) return false;
@@ -429,13 +640,17 @@ function renderCareerExperienceStrip(pregame) {
   var entries = e.money.entries.slice().reverse().map(function(item) { return '<li><span>' + careerExperienceEscape(item.title) + '</span><b>' +
     (item.amount >= 0 ? '+' : '−') + careerExperienceMoney(Math.abs(item.amount)) + '</b></li>'; }).join('');
   var coach = e.coaches[STATE.careerTeam];
+  var salaryMarket = getCareerSalaryMarket();
+  var salaryType = { rookie:'首轮新秀合同', two_way:'双向合同', minimum:'底薪合同', market:'市场合同估值' }[e.money.contract.type];
   return '<section id="' + (pregame ? 'career-pregame-status' : 'player-state-strip') + '" class="ce-status-strip">' + cards +
     '<details class="player-state-details"><summary>本场安排、收支与制服组</summary><div class="ce-details">' +
     (e.lastNote ? '<p>上次选择：' + careerExperienceEscape(e.lastNote) + '</p>' : '') +
     (e.task ? '<p>当前安排：还剩 ' + e.task.remaining + '/' + e.task.total + ' 场，已完成 ' + e.task.successful + ' 场要求。</p>' : '') +
     (e.feedback ? '<p>' + careerExperienceEscape(e.feedback.text) + '</p>' : '') +
-    '<ul>' + effects + '</ul><p>模拟年薪 ' + careerExperienceMoney(e.money.annualSalary) + '；已领工资 ' + careerExperienceMoney(e.money.salary) +
+    '<ul>' + effects + '</ul><p>税前合同年薪 ' + careerExperienceMoney(e.money.annualSalary) + '；已领工资 ' + careerExperienceMoney(e.money.salary) +
     '；场外收入 ' + careerExperienceMoney(e.money.offcourt) + '；累计支出 ' + careerExperienceMoney(e.money.spent) + '。</p>' +
+    '<p class="ce-note">' + salaryMarket.year + ' 年工资环境 · 工资帽 ' + careerExperienceMoney(salaryMarket.cap) + ' · ' + (STATE.career.seasonCount || 0) + ' 年 NBA 资历 · ' + salaryType +
+    (salaryMarket.projected ? '。未来年份沿用 2026–27 工资环境估算' : '') + '。合同期内按已签年度工资支付，续约时重新估值。</p>' +
     '<p class="ce-note">账本从第 ' + (e.money.fromSeason + 1) + ' 赛季、第 ' + (e.money.fromGame + 1) + ' 场起记录。合约工资按常规赛球队比赛结算，伤病缺席也照常发放。</p>' +
     '<ul class="ce-ledger">' + entries + '</ul><p>' + careerExperienceEscape(coach ? '主教练：' + coach.name : '当前主教练沿用球队体系') +
     '</p><button class="btn btn-secondary btn-sm" onclick="openCareerCoachSearch()">寻找契合球风的教练</button></div></details></section>';
@@ -531,7 +746,8 @@ window.PP_CAREER_EVENTS = {
   resetTransient:resetCareerExperienceTransient,
   definitions:CAREER_EXPERIENCE_EVENTS, getState:getCareerExperience, getModifiers:getCareerExperienceModifiers,
   renderStateStrip:renderCareerExperienceStrip, prepareGame:prepareCareerExperienceGame,
-  matchKey:getCareerExperienceMatchKey, settleGame:settleCareerExperienceGame, renewContract:renewCareerExperienceContract,
+  matchKey:getCareerExperienceMatchKey, settleGame:settleCareerExperienceGame,
+  signContract:signCareerExperienceContract, renewContract:signCareerExperienceContract,
   choose:chooseCareerExperienceDecision, findDecision:findCareerExperienceDecision,
   showFeedback:showCareerExperienceFeedback, pauseForCoach:pauseCareerSimulationForCoach,
   getCoachAuthority:getCareerCoachAuthority, getCoachCandidates:getCareerCoachCandidates, hireCoach:hireCareerCoach

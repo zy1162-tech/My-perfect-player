@@ -3659,14 +3659,6 @@ function closePoster() {
   }
 }
 
-function getBranchEventById(id) {
-  var source = getBranchEventSource();
-  for (var i = 0; i < source.length; i++) {
-    if (source[i].id === id) return source[i];
-  }
-  return null;
-}
-
 function startPostCareerFlow() {
   if (!STATE.career || !STATE.career.retired) return;
   STATE.career.flags = STATE.career.flags || {};

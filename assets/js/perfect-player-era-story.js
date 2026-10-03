@@ -359,6 +359,7 @@
     config:{ minFirstGame:MIN_FIRST_GAME, cooldownGames:COOLDOWN_GAMES, maxPerSeason:MAX_PER_SEASON },
     events:EVENTS.slice(),
     ensureState:ensureState,
+    getPrologueEvent:function(era) { return PROLOGUES[era] ? prologueEvent(era, ensureState(null, era)) : null; },
     showPrologueIfDue:showPrologueIfDue,
     getPrologueStatus:getPrologueStatus,
     findDueEvent:findDueEvent,

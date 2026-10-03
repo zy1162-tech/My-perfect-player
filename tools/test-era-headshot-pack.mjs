@@ -99,7 +99,7 @@ assert.ok(html.indexOf('script-00-2678-58zyeprc-upload-1783508428855-12.js?v=202
 assert.ok(html.indexOf('era-headshot-index.js?v=20260826-era-headshots-v1') < html.indexOf('perfect-player-core.js?v='));
 assert.match(html, /perfect-player-era-mode\.js\?v=20261001-opening-roster-v34/);
 assert.match(html, /perfect-player\.css\?v=20260826-era-headshots-v2/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261003-career-life-v29'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261003-era-economy-v31'/);
 assert.match(sw, /\.\/assets\/js\/hupu\/script-00-2678-58zyeprc-upload-1783508428855-12\.js\?v=20260827-verified-names-v1/);
 assert.doesNotMatch(sw, /['"]\.\/assets\/images\/Player\/(?:hupu-era|nba-official)\//, 'large on-demand image directories must not be install-shell entries');
 

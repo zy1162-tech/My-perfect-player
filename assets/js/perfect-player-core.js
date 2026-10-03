@@ -60,7 +60,7 @@ const STATE = {
     leagueChampion: null,
     finalsMvp: null,
     finalsSeriesSummary: '',
-    events: { suspensionGamesLeft: 0, suspensionReason: '', injuryGamesLeft: 0, injuryReason: '', triggeredIds: [], storyTimeline: [], lastTriggerGameNum: null, playoffEventCount: 0, injuryRiskBonus: 0, majorInjuryThisSeason: false, playThroughPrompted: {}, regularPlayThroughPromptCount: 0 },
+    events: { suspensionGamesLeft: 0, suspensionReason: '', injuryGamesLeft: 0, injuryReason: '', triggeredIds: [], storyTimeline: [], lastTriggerGameNum: null, playoffEventCount: 0, majorInjuryThisSeason: false, playThroughPrompted: {}, regularPlayThroughPromptCount: 0 },
   },
 
   // 生涯
@@ -112,8 +112,13 @@ function getCurrentSeasonLabel() {
 function getNextSeasonMods() {
   var defaults = { injuryRiskBonus: 0, formVariance: 0, teamChemistry: 0, moraleBonus: 0, mediaPressure: 0, staminaLoad: 0 };
   if (!STATE.career) return defaults;
-  STATE.career.nextSeasonMods = Object.assign(defaults, STATE.career.nextSeasonMods || {});
-  return STATE.career.nextSeasonMods;
+  // 只在旧档没有这一项时迁移赛季缓存；此后所有选项和比赛共用生涯状态。
+  if (!STATE.career.nextSeasonMods || STATE.career.nextSeasonMods.injuryRiskBonus == null) {
+    defaults.injuryRiskBonus = Number(STATE.season && STATE.season.events && STATE.season.events.injuryRiskBonus) || 0;
+  }
+  var mods = STATE.career.nextSeasonMods || (STATE.career.nextSeasonMods = {});
+  Object.keys(defaults).forEach(function(key) { if (mods[key] == null) mods[key] = defaults[key]; });
+  return mods;
 }
 
 function clearSeasonModsForNewOffseason() {
@@ -324,6 +329,7 @@ function createFreshCareer() {
 }
 
 function initGame() {
+  resetBranchEventTransient();
   if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.resetTransient();
   restoreBaseLeagueRoster();
   _rngState = null;
@@ -350,6 +356,9 @@ function initGame() {
   delete STATE._offseasonQueue;
   delete STATE._offseasonEventIdx;
   delete STATE._seasonBranchEvent;
+  delete STATE._seasonBranchEventId;
+  delete STATE._seasonBranchDone;
+  delete STATE._offseasonResultDone;
   delete STATE._postCareerEvent;
   delete STATE._postCareerScenePage;
   delete STATE._countdownLegacyEvent;
@@ -2053,13 +2062,13 @@ function finalizeDraft(team, done) {
   var p = STATE._draftPending;
   var c = STATE.career;
   c.draft = {
-    year: 2026,
+    year: STATE.mode === 'legend' ? Number(STATE.eraStart) : 2026,
     round: p.round,
     pick: p.pick,
     team: team,
     type: p.type,
-    twoWay: !!p.twoWay,
-    guaranteed: !p.twoWay,
+    twoWay: !!p.twoWay && (STATE.mode !== 'legend' || Number(STATE.eraStart) >= 2017),
+    guaranteed: !p.twoWay || (STATE.mode === 'legend' && Number(STATE.eraStart) < 2017),
     prep: p.prep,
     agent: p.agent,
     projectedRank: p.projectedRank,
@@ -2072,6 +2081,7 @@ function finalizeDraft(team, done) {
   c.flags.draftDone = true;
   if (p.selfPicked) c.flags.draftTrade = true;
   c.contract = p.contractYears;
+  if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.signContract({ rookie:true });
   setBranchNode('draft_night', 'draft_done');
   STATE._draftPending = null;
   STATE._draftSelfPick = false;
@@ -2611,7 +2621,7 @@ function startSeason() {
     _gamesPlayed: {},
     _leagueGameLog: [],
     rankings: null,
-    events: { suspensionGamesLeft: 0, suspensionReason: '', injuryGamesLeft: 0, injuryReason: '', triggeredIds: [], storyTimeline: [], lastTriggerGameNum: null, playoffEventCount: 0, injuryRiskBonus: getNextSeasonMods().injuryRiskBonus || 0, majorInjuryThisSeason: false, playThroughPrompted: {}, regularPlayThroughPromptCount: 0 },
+    events: { suspensionGamesLeft: 0, suspensionReason: '', injuryGamesLeft: 0, injuryReason: '', triggeredIds: [], storyTimeline: [], lastTriggerGameNum: null, playoffEventCount: 0, majorInjuryThisSeason: false, playThroughPrompted: {}, regularPlayThroughPromptCount: 0 },
   };
   
   initStandings();
@@ -8725,9 +8735,10 @@ function beginOffseason() {
   // 本季临时状态到此结束；从现在起写入的休赛期选择将完整带入下一季。
   clearSeasonModsForNewOffseason();
   c.offseasonEventSeason = seasonKey;
-  STATE._offseasonQueue = buildBranchEventQueue('offseason');
+  STATE._offseasonQueue = buildBranchEventQueue('offseason').map(function(ev) { return ev.id; });
   STATE._offseasonEventIdx = 0;
   showNextOffseasonEvent();
+  autoSaveGame();
 }
 
 function buildOffseasonEventQueue() {
@@ -8754,6 +8765,32 @@ function closeRemovedAllStarStoryBranch() {
 function getBranchEventSource() {
   var source = (typeof STAGED_BRANCH_EVENTS !== 'undefined') ? STAGED_BRANCH_EVENTS : BRANCH_EVENTS;
   return source.filter(function(ev) { return !isRemovedBranchEvent(ev); });
+}
+
+function getBranchEventById(id) {
+  var event = getBranchEventSource().find(function(ev) { return ev.id === id; });
+  if (event) return event;
+  var prologue = /^era_prologue_(2003|2010|2016)$/.exec(id || '');
+  return prologue && window.PP_ERA_STORY ? PP_ERA_STORY.getPrologueEvent(Number(prologue[1])) : null;
+}
+
+function normalizeSavedBranchEvents() {
+  STATE._seasonBranchEventId = STATE._seasonBranchEventId || (STATE._seasonBranchEvent && STATE._seasonBranchEvent.id) || null;
+  if (isRemovedBranchEvent({ id: STATE._seasonBranchEventId })) STATE._seasonBranchEventId = null;
+  delete STATE._seasonBranchEvent;
+  delete STATE._seasonBranchDone;
+  delete STATE._offseasonResultDone;
+  // 旧档队列中的对象只取编号，重新使用正式事件库里的执行逻辑。
+  if (Array.isArray(STATE._offseasonQueue)) {
+    var oldIndex = STATE._offseasonEventIdx || 0;
+    var removedBefore = 0;
+    STATE._offseasonQueue = STATE._offseasonQueue.map(function(ev) { return typeof ev === 'string' ? ev : ev.id; }).filter(function(id, index) {
+      var removed = isRemovedBranchEvent({ id: id });
+      if (removed && index < oldIndex) removedBefore++;
+      return !removed;
+    });
+    STATE._offseasonEventIdx = Math.max(0, oldIndex - removedBefore);
+  }
 }
 
 function getEventPhases(ev) {
@@ -9796,16 +9833,29 @@ function checkSeasonBranchEvent(game, result, stats) {
   return picked;
 }
 
+var seasonBranchDone = null;
+var offseasonResultDone = null;
+
+function resetBranchEventTransient() {
+  seasonBranchDone = null;
+  offseasonResultDone = null;
+  ['season-branch-modal', 'season-branch-result-modal', 'offseason-event-modal', 'offseason-result-modal'].forEach(function(id) {
+    var modal = document.getElementById(id);
+    if (modal) modal.remove();
+  });
+}
+
 function showSeasonBranchEvent(ev, done) {
   if (!ev) return;
-  STATE._seasonBranchEvent = ev;
-  STATE._seasonBranchDone = typeof done === 'function' ? done : null;
+  STATE._seasonBranchEventId = ev.id;
+  seasonBranchDone = typeof done === 'function' ? done : null;
   STATE._seasonBranchScenePage = 0;
   showSeasonBranchEventModal();
+  autoSaveGame();
 }
 
 function showSeasonBranchEventModal() {
-  var ev = STATE._seasonBranchEvent;
+  var ev = getBranchEventById(STATE._seasonBranchEventId);
   if (!ev) return;
   var existing = document.getElementById('season-branch-modal');
   if (existing) existing.remove();
@@ -9836,7 +9886,7 @@ function showSeasonBranchEventModal() {
 }
 
 function chooseSeasonBranchEvent(choiceIdx) {
-  var ev = STATE._seasonBranchEvent;
+  var ev = getBranchEventById(STATE._seasonBranchEventId);
   if (!ev) return;
   var ch = ev.choices[choiceIdx];
   if (!ch || isBranchChoiceLocked(ch)) return;
@@ -9846,11 +9896,12 @@ function chooseSeasonBranchEvent(choiceIdx) {
   recordBranchChoice(ev, ch, msg, 'season');
   var modal = document.getElementById('season-branch-modal');
   if (modal) modal.remove();
-  STATE._seasonBranchEvent = null;
+  STATE._seasonBranchEventId = null;
   STATE._seasonBranchScenePage = 0;
   var attributeChanges = diffEventAttributeSnapshot(beforeAttributes);
   if (msg || attributeChanges.length) showSeasonBranchResultModal(ev.title, msg, attributeChanges);
   else finishSeasonBranchEvent();
+  autoSaveGame();
 }
 
 function showSeasonBranchResultModal(title, msg, attributeChanges) {
@@ -9870,20 +9921,22 @@ function showSeasonBranchResultModal(title, msg, attributeChanges) {
 function finishSeasonBranchEvent() {
   var modal = document.getElementById('season-branch-result-modal');
   if (modal) modal.remove();
-  var done = STATE._seasonBranchDone;
-  STATE._seasonBranchDone = null;
+  var done = seasonBranchDone;
+  seasonBranchDone = null;
   if (typeof done === 'function') done();
 }
 
-function showNextOffseasonEvent() {
+function showNextOffseasonEvent(resumeScene) {
   var queue = STATE._offseasonQueue || [];
   var idx = STATE._offseasonEventIdx || 0;
   if (idx >= queue.length) {
     renderTrainingCamp();
     return;
   }
-  STATE._branchScenePage = 0;
-  showOffseasonEventModal(queue[idx], idx + 1, queue.length);
+  if (!resumeScene) STATE._branchScenePage = 0;
+  var event = getBranchEventById(queue[idx]);
+  if (!event) throw new Error('休赛期剧情未找到：' + queue[idx]);
+  showOffseasonEventModal(event, idx + 1, queue.length);
 }
 
 function showOffseasonEventModal(ev, idx, total) {
@@ -9921,7 +9974,7 @@ function showOffseasonEventModal(ev, idx, total) {
 function continueOffseasonScene() {
   var queue = STATE._offseasonQueue || [];
   var idx = STATE._offseasonEventIdx || 0;
-  var ev = queue[idx];
+  var ev = getBranchEventById(queue[idx]);
   if (!ev) return;
   STATE._branchScenePage = (STATE._branchScenePage || 0) + 1;
   showOffseasonEventModal(ev, idx + 1, queue.length);
@@ -9930,7 +9983,7 @@ function continueOffseasonScene() {
 function chooseOffseasonEvent(choiceIdx) {
   var queue = STATE._offseasonQueue || [];
   var idx = STATE._offseasonEventIdx || 0;
-  var ev = queue[idx];
+  var ev = getBranchEventById(queue[idx]);
   if (!ev) return;
   var ch = ev.choices[choiceIdx];
   if (!ch || isBranchChoiceLocked(ch)) return;
@@ -9946,19 +9999,20 @@ function chooseOffseasonEvent(choiceIdx) {
   var attributeChanges = diffEventAttributeSnapshot(beforeAttributes);
   if (msg || attributeChanges.length) showOffseasonResultModal(ev.title, msg, null, attributeChanges);
   else showNextOffseasonEvent();
+  autoSaveGame();
 }
 
 function showOffseasonResultModal(title, msg, done, attributeChanges) {
   var existing = document.getElementById('offseason-result-modal');
   if (existing) existing.remove();
-  STATE._offseasonResultDone = typeof done === 'function' ? done : null;
+  offseasonResultDone = typeof done === 'function' ? done : null;
   var html = '<div class="team-picker-overlay" id="offseason-result-modal">';
   html += '<div class="team-picker-modal">';
   html += '<div class="team-picker-header"><span>' + getPlayerFacingBranchTitle(title) + '</span></div>';
   html += '<div class="event-result-body">';
   html += formatBranchResultText(fillBranchEventText(msg));
   html += renderEventAttributeChanges(attributeChanges);
-  html += '<button class="btn btn-primary btn-sm" style="width:100%;" onclick="' + (STATE._offseasonResultDone ? 'continueOffseasonResultWithCallback()' : 'continueOffseasonEvent()') + '">继续</button>';
+  html += '<button class="btn btn-primary btn-sm" style="width:100%;" onclick="' + (offseasonResultDone ? 'continueOffseasonResultWithCallback()' : 'continueOffseasonEvent()') + '">继续</button>';
   html += '</div></div></div>';
   document.body.insertAdjacentHTML('beforeend', html);
 }
@@ -9966,8 +10020,8 @@ function showOffseasonResultModal(title, msg, done, attributeChanges) {
 function continueOffseasonResultWithCallback() {
   var modal = document.getElementById('offseason-result-modal');
   if (modal) modal.remove();
-  var done = STATE._offseasonResultDone;
-  STATE._offseasonResultDone = null;
+  var done = offseasonResultDone;
+  offseasonResultDone = null;
   if (typeof done === 'function') done();
 }
 
@@ -10091,7 +10145,7 @@ function formatBranchResultText(msg) {
 function continueOffseasonEvent() {
   var modal = document.getElementById('offseason-result-modal');
   if (modal) modal.remove();
-  STATE._offseasonResultDone = null;
+  offseasonResultDone = null;
   if (STATE.career && STATE.career.flags && STATE.career.flags.countdownDone) {
     // 告别剧情不再直接强制退役；玩家可按当前年龄与能力决定继续，直到 42 岁赛季。
     STATE._retirementOfferPhase = 'pre-training';
@@ -14442,7 +14496,7 @@ function renderTrainingCamp() {
 // 现役与传奇分别保留一个自动存档，互不覆盖。旧版存档继续沿用第一个键。
 var MANUAL_SAVE_KEYS = ['lenf_auto_slot', 'lenf_legend_auto_slot'];
 var MANUAL_SAVE_META = {};
-var AUTO_SAVE_WRITE_CHAIN = Promise.resolve();
+var SAVE_WRITE_CHAIN = Promise.resolve();
 
 function getManualSaveSummary(slot) {
   return MANUAL_SAVE_META[slot] || null;
@@ -14505,7 +14559,7 @@ function buildManualSaveSnapshot() {
     rawState.season._processedDays = Array.from(STATE.season._processedDays);
   }
   return {
-    v: 1,
+    v: 2,
     savedAt: Date.now(),
     label: (STATE.career ? '第' + (STATE.career.seasonCount + 1) + '赛季 · ' + STATE.career.currentAge + '岁' : '未开始'),
     screen: (document.querySelector('.screen.active') || {}).id || '',
@@ -14561,33 +14615,44 @@ function decompressText(b64) {
   });
 }
 
+async function persistSaveSnapshot(slot, snap, raw) {
+  var stored = raw;
+  if (typeof CompressionStream !== 'undefined' && typeof DecompressionStream !== 'undefined') {
+    try {
+      var compressed = await compressText(raw);
+      stored = JSON.stringify({ c: 1, d: compressed, label: snap.label, savedAt: snap.savedAt, mode: snap.state.mode || 'current' });
+    } catch(e) {
+      // 压缩失败仍保存原始快照，写入失败则交给调用方报告。
+    }
+  }
+  await storageSet(MANUAL_SAVE_KEYS[slot - 1], stored);
+  MANUAL_SAVE_META[slot] = { label: snap.label, savedAt: snap.savedAt, mode: snap.state.mode || 'current' };
+}
+
+function queueSaveSnapshot(slot, snap) {
+  var raw = JSON.stringify(snap);
+  function persist() { return persistSaveSnapshot(slot, snap, raw); }
+  // 自动与手动保存共用队列，快照在请求时确定，压缩和写入按请求顺序完成。
+  SAVE_WRITE_CHAIN = SAVE_WRITE_CHAIN.then(persist, persist);
+  return SAVE_WRITE_CHAIN;
+}
+
 function manualSaveGame(slot) {
   var snap;
   try {
     snap = buildManualSaveSnapshot();
   } catch(e) {
     showManualSaveToast('保存失败：' + e.message);
-    return;
+    return Promise.resolve(false);
   }
-  var key = MANUAL_SAVE_KEYS[slot - 1];
-  var raw = JSON.stringify(snap);
-  function write(rawStr) {
-    return storageSet(key, rawStr).then(function() {
-      var meta = null;
-      try { var parsed = JSON.parse(rawStr); meta = { label: parsed.label || '自动存档', savedAt: parsed.savedAt || 0 }; } catch(e) {}
-      MANUAL_SAVE_META[slot] = meta && Object.assign(meta, { mode: snap.state.mode || 'current' });
-      // 保存检查点；比赛仍由当前的赛前、赛后回调继续。
-      renderMenuSavePanel();
-      showManualSaveToast('已保存到存档' + slot + '（' + snap.label + '）');
-    });
-  }
-  if (typeof CompressionStream === 'undefined' || typeof DecompressionStream === 'undefined') {
-    return write(raw);
-  }
-  return compressText(raw).then(function(compressed) {
-    return write(JSON.stringify({ c: 1, d: compressed, label: snap.label, savedAt: snap.savedAt, mode: snap.state.mode || 'current' }));
-  }, function() {
-    return write(raw);
+  return queueSaveSnapshot(slot, snap).then(function() {
+    renderMenuSavePanel();
+    refreshContinueActivityButton();
+    showManualSaveToast('已保存到存档' + slot + '（' + snap.label + '）');
+    return true;
+  }, function(e) {
+    showManualSaveToast('保存失败：' + e.message);
+    return false;
   });
 }
 
@@ -14598,34 +14663,24 @@ function autoSaveGame() {
   try {
     snap = buildManualSaveSnapshot();
   } catch(e) {
-    return;
+    console.error('[Save] 创建自动快照失败:', e);
+    return Promise.resolve(false);
   }
   var slot = STATE.mode === 'legend' ? 2 : 1;
-  var key = MANUAL_SAVE_KEYS[slot - 1];
-  var raw = JSON.stringify(snap);
-  function write(rawStr) {
-    return storageSet(key, rawStr).then(function() {
-      var meta = null;
-      try { var parsed = JSON.parse(rawStr); meta = { label: parsed.label || '自动存档', savedAt: parsed.savedAt || 0 }; } catch(e) {}
-      MANUAL_SAVE_META[slot] = meta && Object.assign(meta, { mode: snap.state.mode || 'current' });
-      refreshContinueActivityButton();
-    });
-  }
-  function persistSnapshot() {
-    if (typeof CompressionStream === 'undefined' || typeof DecompressionStream === 'undefined') return write(raw);
-    return compressText(raw).then(function(compressed) {
-      return write(JSON.stringify({ c: 1, d: compressed, label: snap.label, savedAt: snap.savedAt, mode: snap.state.mode || 'current' }));
-    }, function() {
-      return write(raw);
-    });
-  }
-  // 大存档压缩是异步的，串行写入可防止较旧检查点后完成、反而覆盖新进度。
-  AUTO_SAVE_WRITE_CHAIN = AUTO_SAVE_WRITE_CHAIN.then(persistSnapshot, persistSnapshot);
-  return AUTO_SAVE_WRITE_CHAIN;
+  return queueSaveSnapshot(slot, snap).then(function() {
+    refreshContinueActivityButton();
+    return true;
+  }, function(e) {
+    console.error('[Save] 自动保存失败:', e);
+    return false;
+  });
 }
 
 function manualLoadGame(slot) {
-  storageGet(MANUAL_SAVE_KEYS[slot - 1]).then(function(raw) {
+  // 点下恢复时，先等此前请求的保存完成。
+  return SAVE_WRITE_CHAIN.then(function() {}, function() {}).then(function() {
+    return storageGet(MANUAL_SAVE_KEYS[slot - 1]);
+  }).then(function(raw) {
     if (raw == null || raw === '') {
       showManualSaveToast('暂无自动存档');
       return;
@@ -14640,7 +14695,11 @@ function manualLoadGame(slot) {
         // STATE 与 NBA2K_DATA 是 const，只能原地清空后填充，保证所有引用仍然有效
         Object.keys(STATE).forEach(function(k) { delete STATE[k]; });
         if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.resetTransient();
+        resetBranchEventTransient();
         Object.assign(STATE, snap.state);
+        getNextSeasonMods();
+        normalizeSavedBranchEvents();
+        if (window.PP_MOD_V4 && STATE.careerTeam) PP_MOD_V4.setTeamSystem((STATE.teamSystems || {})[STATE.careerTeam] || 'balanced');
         if (typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.normalizeLoadedState) PP_SEASON_REPORT.normalizeLoadedState(STATE);
         if (typeof PP_SKILLS !== 'undefined' && PP_SKILLS.ensureSkillState) PP_SKILLS.ensureSkillState();
         // 旧存档没有模拟广告计数和当前抽取快照时，按新规则补齐默认值。
@@ -14675,7 +14734,7 @@ function manualLoadGame(slot) {
           HUPU_USER.isLogin = !!snap.hupuUser.isLogin;
           HUPU_USER.source = snap.hupuUser.source || HUPU_USER.source;
         }
-        ['player-retirement-choice', 'contract-modal', 'contract-retirement-choice', 'legacy-modal', 'offseason-event-modal', 'offseason-result-modal', 'countdown-legacy-modal', 'countdown-legacy-result-modal', 'load-menu-modal'].forEach(function(id) {
+        ['player-retirement-choice', 'contract-modal', 'contract-retirement-choice', 'legacy-modal', 'countdown-legacy-modal', 'countdown-legacy-result-modal', 'load-menu-modal'].forEach(function(id) {
           var el = document.getElementById(id);
           if (el) el.remove();
         });
@@ -14692,7 +14751,7 @@ function manualLoadGame(slot) {
         return;
       }
       MANUAL_SAVE_META[slot] = { label: data.label || '', savedAt: data.savedAt || 0 };
-      decompressText(data.d).then(restoreJson, function() {
+      return decompressText(data.d).then(restoreJson, function() {
         showManualSaveToast('自动存档解压失败');
       });
     } else {
@@ -14722,6 +14781,18 @@ function manualClearSave(slot) {
 }
 
 function renderAfterSaveLoad(targetScreen) {
+  if (STATE._seasonBranchEventId) {
+    if (!getBranchEventById(STATE._seasonBranchEventId)) throw new Error('赛季剧情未找到：' + STATE._seasonBranchEventId);
+    showScreen(targetScreen || 'screen-season');
+    if (targetScreen === 'screen-season' && typeof renderSeasonScreenDOM === 'function') renderSeasonScreenDOM();
+    seasonBranchDone = function() { renderAfterSaveLoad(targetScreen); };
+    showSeasonBranchEventModal();
+    return;
+  }
+  if (STATE._offseasonQueue && (STATE._offseasonEventIdx || 0) < STATE._offseasonQueue.length) {
+    showNextOffseasonEvent(true);
+    return;
+  }
   if (targetScreen === 'screen-roster-review' && typeof showRosterReview === 'function') {
     showRosterReview();
   } else if (targetScreen === 'screen-season' && STATE.season && Array.isArray(STATE.season.schedule)) {
@@ -15340,7 +15411,7 @@ function getCurrentPlayerLongevityContext() {
   var events = STATE.season && STATE.season.events || {};
   return {
     staminaLoad: Number(mods.staminaLoad) || 0,
-    injuryRiskBonus: (Number(mods.injuryRiskBonus) || 0) + (Number(events.injuryRiskBonus) || 0),
+    injuryRiskBonus: Number(mods.injuryRiskBonus) || 0,
     majorInjuryThisSeason: !!events.majorInjuryThisSeason
   };
 }
@@ -17770,7 +17841,7 @@ function selectContractOption(team, years) {
     STATE.career.contract = clampCareerContractYears((STATE.career.flags && STATE.career.flags.freeAgentChoice === 'stay') ? 3 : 2, STATE.career.currentAge);
   }
   if (STATE.career && STATE.career.flags) STATE.career.flags.waived = false;
-  if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.renewContract();
+  if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.renewContract({ sameTeam: !changedTeam });
   if (STATE.career && STATE.career.flags && STATE.career.flags.superstarRecruitInterest) {
     STATE.career.flags.lastSuperstarRecruitChoiceTeam = team;
     delete STATE.career.flags.superstarRecruitInterest;
@@ -18044,7 +18115,7 @@ function resetForNewSeason() {
     playoffBracket: null, otherBracket: null,
     leagueFinale: null, leagueChampion: null, finalsMvp: null, finalsSeriesSummary: '',
     _viewConf: null, _gamesPlayed: {}, _leagueGameLog: [], rankings: null,
-    events: { suspensionGamesLeft:0, suspensionReason:'', injuryGamesLeft:0, injuryReason:'', triggeredIds:[], storyTimeline:[], lastTriggerGameNum:null, playoffEventCount:0, injuryRiskBonus: getNextSeasonMods().injuryRiskBonus || 0, majorInjuryThisSeason:false, playThroughPrompted:{}, regularPlayThroughPromptCount:0 },
+    events: { suspensionGamesLeft:0, suspensionReason:'', injuryGamesLeft:0, injuryReason:'', triggeredIds:[], storyTimeline:[], lastTriggerGameNum:null, playoffEventCount:0, majorInjuryThisSeason:false, playThroughPrompted:{}, regularPlayThroughPromptCount:0 },
   };
   STATE.careerTeam = oldTeam;
   if (STATE.career && STATE.career.flags) delete STATE.career.flags.startBench;

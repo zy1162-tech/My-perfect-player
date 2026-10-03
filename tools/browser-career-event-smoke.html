@@ -12,15 +12,19 @@ body{margin:0;background:#f4f1eb;font:14px system-ui;color:#17283d}header{paddin
 <button onclick="prepareCareerSmoke()">准备正常赛季验证</button>
 <button onclick="prepareMedicalSmoke()">准备恢复事件验证</button>
 <button onclick="prepareCoachSmoke()">准备教练与账本验证</button>
+<button onclick="prepareBranchContinuitySmoke()">准备旧剧情读档验证</button>
+<select id="salary-era" aria-label="工资验证场景"><option value="veteran">现代十年资历巨星</option><option value="current">现代状元新秀</option><option value="2003">2003 状元新秀</option><option value="2010">2010 状元新秀</option><option value="2016">2016 状元新秀</option></select>
+<button onclick="prepareSalarySmoke()">准备年代工资验证</button>
 <button onclick="advanceCoachSmoke()">继续检查团队联动</button>
+<button onclick="gameWindow.showTeamSystemChooser()">检查更换球队体系</button>
 <button onclick="saveCareerSmoke()">保存测试进度</button>
 <button onclick="loadCareerSmoke()">恢复测试进度</button>
 <button onclick="reportCareerSmoke()">读取实际结果</button>
 <div id="report">等待准备。</div>
 </header>
-<iframe id="game" src="../nba-perfect-player.html?career-events-smoke=1" title="正式游戏"></iframe>
+<iframe id="game" src="../nba-perfect-player.html?career-events-smoke=20261003-era-economy-v7" title="正式游戏"></iframe>
 <script>
-var gameWindow, gameState, smokeResult = [], nextCoachStep = 0, savedCareerSmoke = null;
+var gameWindow, gameState, smokeResult = [], nextCoachStep = 0, savedCareerSmoke = null, branchContinuity = null;
 async function prepareCareerSmokeBase(ovr) {
   gameWindow = document.getElementById('game').contentWindow;
   if (!gameWindow.__PP_ensure) throw new Error('页面仍在加载，请稍后准备');
@@ -36,6 +40,7 @@ async function prepareCareerSmokeBase(ovr) {
   gameWindow.eval('HUPU_USER').nickname = '生涯验证球员';
   smokeResult = [];
   savedCareerSmoke = null;
+  branchContinuity = null;
   return s;
 }
 async function prepareCareerSmoke() {
@@ -74,19 +79,63 @@ function advanceCoachSmoke() {
   nextCoachStep++;
   gameWindow.showCareerExperienceDecision();
 }
+async function prepareBranchContinuitySmoke() {
+  try {
+    var s = await prepareCareerSmokeBase(80);
+    gameWindow.startSeason();
+    // 等真实模拟停在赛前，再结束测试前的回调，使用读档路径重新续接。
+    for (var i = 0; i < 100 && !gameWindow.document.getElementById('career-pregame-modal'); i++) {
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    if (!gameWindow.document.getElementById('career-pregame-modal')) throw new Error('正式模拟没有进入赛前');
+    gameWindow.PP_CAREER_EVENTS.resetTransient();
+    s.career.currentAge = 35;
+    var event = gameWindow.getBranchEventById('fan_culture_score');
+    branchContinuity = {beforeRisk:gameWindow.getSeasonInjuryEventRate(),attrs:JSON.stringify(s.attrs),ovr:s.finalOVR};
+    gameWindow.showSeasonBranchEvent(event);
+    await gameWindow.manualSaveGame(1);
+    // 重现旧版真实存档格式：事件对象经过 JSON 后已经没有 apply 函数。
+    var snapshot = gameWindow.buildManualSaveSnapshot();
+    snapshot.v = 1;
+    snapshot.state._seasonBranchEvent = JSON.parse(JSON.stringify(event));
+    delete snapshot.state._seasonBranchEventId;
+    await gameWindow.storageSet(gameWindow.eval('MANUAL_SAVE_KEYS[0]'), JSON.stringify(snapshot));
+    await gameWindow.manualLoadGame(1);
+    document.getElementById('report').textContent = '已通过正式读档恢复旧剧情。选择“把评分当成镜子”，继续后模拟一场，再读取实际结果；伤病率应立即从 2.2 降到 1.2，剧情记录只应增加一次。';
+  } catch(e) { document.getElementById('report').textContent = 'FAIL '+e.message; }
+}
+async function prepareSalarySmoke() {
+  try {
+    var s = await prepareCareerSmokeBase(96);
+    var scene = document.getElementById('salary-era').value;
+    if (scene !== 'current') {
+      s.mode = 'legend'; s.eraStart = scene === 'veteran' ? 2016 : Number(scene);
+      gameWindow.applyLegendEraLeague();
+    }
+    if (scene === 'veteran') {
+      s.career.seasonCount = 10; s.career.currentAge = 29; s.career.contract = 3;
+      gameWindow.PP_CAREER_EVENTS.renewContract({sameTeam:true});
+    } else {
+      s._draftPending = {round:1,pick:1,type:'lottery',contractYears:4};
+      gameWindow.finalizeDraft('LAL');
+    }
+    gameWindow.startSeason();
+    document.getElementById('report').textContent = '已按正式签约入口准备。可展开赛前收支查看工资帽、资历与税前年薪；模拟比赛后读取实际到账金额。';
+  } catch(e) { document.getElementById('report').textContent = 'FAIL '+e.message; }
+}
 function careerSmokeSaveFields() {
   var e = gameWindow.PP_CAREER_EVENTS.getState();
   return {cash:e.money.cash,earned:e.money.earned,effects:e.effects,task:e.task,pending:e.pending,
     awaitingGameKey:e.awaitingGameKey,coaches:e.coaches,ovr:gameState.finalOVR,attrs:gameState.attrs};
 }
-function saveCareerSmoke() {
+async function saveCareerSmoke() {
   savedCareerSmoke = JSON.stringify(careerSmokeSaveFields());
-  gameWindow.manualSaveGame(1);
-  document.getElementById('report').textContent = '已调用正式保存。请检查游戏的保存提示，再恢复测试进度。';
+  await gameWindow.manualSaveGame(1);
+  document.getElementById('report').textContent = '正式保存已完成，可以恢复测试进度。';
 }
-function loadCareerSmoke() {
-  gameWindow.manualLoadGame(1);
-  document.getElementById('report').textContent = '已调用正式读档。恢复提示出现后，读取实际结果检查余额、效果与角色是否保留。';
+async function loadCareerSmoke() {
+  await gameWindow.manualLoadGame(1);
+  document.getElementById('report').textContent = '正式读档已完成，可读取实际结果检查余额、效果与角色是否保留。';
 }
 function reportCareerSmoke() {
   try {
@@ -98,10 +147,13 @@ function reportCareerSmoke() {
       smokeResult.push({check:'真实分钟上限',limit:fx.limit,direct:direct.stats.mins,watched:watched.stats.mins,
         passed:direct.stats.mins<=fx.limit && watched.stats.mins<=fx.limit});
     }
-    var rows = (s.season.games||[]).map((entry,i)=>({game:i+1,minutes:entry.stats&&entry.stats.mins,points:entry.stats&&entry.stats.pts}));
-    document.getElementById('report').textContent = JSON.stringify({saveRestored:savedCareerSmoke ? savedCareerSmoke===JSON.stringify(careerSmokeSaveFields()) : null,cash:e.money.cash,earned:e.money.earned,salary:e.money.salary,
+    var rows = (s.season.games||[]).map((entry,i)=>({game:i+1,opponent:entry.game&&entry.game.opponent,day:entry.game&&entry.game.day,minutes:entry.stats&&entry.stats.mins,points:entry.stats&&entry.stats.pts}));
+    var continuity = branchContinuity ? {beforeRisk:branchContinuity.beforeRisk,currentRisk:gameWindow.getSeasonInjuryEventRate(),node:gameWindow.getBranchNode('fan_culture'),
+      choiceCount:s.career.branchHistory.filter(row=>row.eventId==='fan_culture_score').length,
+      attrsPreserved:branchContinuity.attrs===JSON.stringify(s.attrs),ovrPreserved:branchContinuity.ovr===s.finalOVR,pendingEvent:s._seasonBranchEventId} : null;
+    document.getElementById('report').textContent = JSON.stringify({salaryMarket:gameWindow.getCareerSalaryMarket(),annualSalary:e.money.annualSalary,salaryContract:e.money.contract,continuity:continuity,scheduledResults:(s.season.schedule||[]).filter(game=>game.simulated).length,saveRestored:savedCareerSmoke ? savedCareerSmoke===JSON.stringify(careerSmokeSaveFields()) : null,cash:e.money.cash,earned:e.money.earned,salary:e.money.salary,
       offcourt:e.money.offcourt,spent:e.money.spent,modifiers:fx,coach:gameWindow.getTeamSystemEffects('LAL').name,
-      authority:gameWindow.PP_CAREER_EVENTS.getCoachAuthority(),effects:e.effects,task:e.task,feedback:e.feedback,games:rows,checks:smokeResult},null,2);
+      coachRecord:e.coaches[s.careerTeam]||null,authority:gameWindow.PP_CAREER_EVENTS.getCoachAuthority(),effects:e.effects,task:e.task,feedback:e.feedback,games:rows,checks:smokeResult},null,2);
   } catch(e) { document.getElementById('report').textContent = 'FAIL '+e.message; }
 }
 </script>

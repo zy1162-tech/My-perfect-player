@@ -195,7 +195,14 @@
     if (!TEAM_SYSTEMS[key] || !STATE.careerTeam) return false;
     STATE.teamSystems = STATE.teamSystems || {};
     STATE.teamSystems[STATE.careerTeam] = key;
+    var experience = STATE.career && STATE.career.eventExperience;
+    var coach = experience && experience.coaches && experience.coaches[STATE.careerTeam];
+    if (coach) {
+      coach.id = key;
+      coach.name = TEAM_SYSTEMS[key].name + '教练';
+    }
     if (typeof clearLineupCache === 'function') clearLineupCache();
+    if (typeof refreshPlayerStateStripLive === 'function') refreshPlayerStateStripLive();
     return true;
   }
 
