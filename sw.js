@@ -2,7 +2,7 @@
 'use strict';
 
 var CACHE_PREFIX = 'perfect-player-shell-';
-var CACHE_NAME = CACHE_PREFIX + '20261004-career-legacy-v41';
+var CACHE_NAME = CACHE_PREFIX + '20261004-career-legacy-v42';
 var SHELL = [
   './',
   './nba-perfect-player.html',
@@ -35,7 +35,7 @@ var SHELL = [
   './assets/js/hupu/script-04-2678-mdo4zerc-upload-1783494754597-21.js',
   './assets/js/hupu/script-05-2678-qlg35lrc-upload-1783494754597-24.js',
   './assets/js/perfect-player-core.js?v=20261004-career-legacy-v15',
-  './assets/js/perfect-player-season-report.js?v=20261004-honor-report-v4',
+  './assets/js/perfect-player-season-report.js?v=20261004-honor-report-v5',
   './assets/js/perfect-player-mod-v4.js?v=20261004-roster-priority-v21',
   './assets/js/perfect-player-career-events.js?v=20261004-career-impact-v10',
   './assets/js/perfect-player-era-mode.js?v=20261004-opening-roster-v37',

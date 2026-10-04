@@ -574,8 +574,7 @@
     finale = finale || ensureLeagueFinale();
     if (!finale) return '<div class="sr-section season-report-card"><div class="sr-section-title">🏆 联盟收官</div><div class="season-report-empty">旧赛季缺少完整季后赛数据，无法还原联盟冠军。</div></div>';
     var mvp = finale.finalsMvp || {};
-    var stat = mvp.preservedExisting ? '沿用已完成赛季的 FMVP 记录' :
-      (mvp.ppg == null ? '旧数据确定性兜底' : (mvp.ppg.toFixed(1) + '分 · ' + mvp.rpg.toFixed(1) + '板 · ' + mvp.apg.toFixed(1) + '助'));
+    var stat = mvp.ppg == null ? '' : (mvp.ppg.toFixed(1) + '分 · ' + mvp.rpg.toFixed(1) + '板 · ' + mvp.apg.toFixed(1) + '助');
     return '<div class="sr-section season-report-card league-finale-card' + (finale.isPlayerChampion ? ' is-player-champion' : '') + '">' +
       '<div class="sr-section-title">🏆 联盟收官</div>' +
       '<div class="season-report-title">' + escapeHtml(finale.championName) + '夺得总冠军</div>' +
@@ -592,7 +591,7 @@
       '<div class="sr-section-title">📜 历史荣誉分</div>' +
       '<div class="legacy-preview-grid"><div><strong>' + preview.score + '</strong><span>生涯累计</span></div><div><strong>' + (preview.added >= 0 ? '+' : '') + preview.added + '</strong><span>本赛季新增</span></div><div><strong>第 ' + preview.historicalRank + ' 名</strong><span>模拟历史排名</span></div></div>' +
       '<div class="legacy-preview-footer"><span>' + escapeHtml(preview.tier) + '</span><span>' + (next.gap > 0 ? '距“' + escapeHtml(next.label) + '”还差 ' + next.gap + ' 分' : '已进入最高目标区间') + '</span></div>' +
-      '<small class="legacy-preview-note">游戏内模拟评价，不是联网排行榜；重复查看不会增加分数。</small></div>';
+      '</div>';
   }
 
   function renderHistoricalSeasonFragment(record) {

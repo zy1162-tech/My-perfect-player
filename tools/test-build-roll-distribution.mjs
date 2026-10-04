@@ -213,6 +213,6 @@ assert.match(html, /perfect-player-core\.js\?v=20261004-career-legacy-v15/);
 assert.match(html, /perfect-player-era-mode\.js\?v=20261004-opening-roster-v37/);
 assert.match(sw, /perfect-player-core\.js\?v=20261004-career-legacy-v15/);
 assert.match(sw, /perfect-player-era-mode\.js\?v=20261004-opening-roster-v37/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-career-legacy-v41'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-career-legacy-v42'/);
 
 console.log(`✓ build roll: ${rounds} seeded rounds, special=${(specialRate * 100).toFixed(2)}%, mixed-fixture HOF=${(hofShare * 100).toFixed(2)}%, real-pool HOF=${(realHofShare * 100).toFixed(2)}%, normal cards=${(normalShare * 100).toFixed(2)}%`);

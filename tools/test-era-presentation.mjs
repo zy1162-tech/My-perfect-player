@@ -96,7 +96,7 @@ assert.ok(sw.includes("'./assets/js/perfect-player-core.js?v=20261004-career-leg
 assert.ok(html.includes('assets/data/era-headshot-index.js?v=20260826-era-headshots-v1'));
 assert.ok(sw.includes("'./assets/data/era-headshot-index.js?v=20260826-era-headshots-v1'"));
 assert.doesNotMatch(sw, /['"]\.\/assets\/images\/Player\/hupu-era\//, '934 large images must remain runtime cache-first, not install-shell assets');
-assert.match(sw, /CACHE_PREFIX = 'perfect-player-shell-'[\s\S]*CACHE_NAME = CACHE_PREFIX \+ '20261004-career-legacy-v41'/);
+assert.match(sw, /CACHE_PREFIX = 'perfect-player-shell-'[\s\S]*CACHE_NAME = CACHE_PREFIX \+ '20261004-career-legacy-v42'/);
 const premiumVersion = '20261004-career-legacy-v15';
 assert.match(html, new RegExp('perfect-player-premium\\.css\\?v=' + premiumVersion));
 assert.match(liveSimHtml, new RegExp('perfect-player-premium\\.css\\?v=' + premiumVersion));

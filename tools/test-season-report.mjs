@@ -284,7 +284,7 @@ const env = {
     assert.ok(core.includes(field), `seasonRecord 应保存 ${field}`);
   });
 assert.match(html, /perfect-player-core\.js\?v=20261004-career-legacy-v15/);
-  assert.match(html, /perfect-player-season-report\.js\?v=20261004-honor-report-v4/);
+  assert.match(html, /perfect-player-season-report\.js\?v=20261004-honor-report-v5/);
   assert.match(html, /perfect-player-season-report\.css\?v=20260826-season-report-v1/);
 }
 

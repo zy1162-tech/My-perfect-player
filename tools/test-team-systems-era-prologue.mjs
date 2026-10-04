@@ -96,7 +96,7 @@ assert.match(coreSource, /openLegendEraPrologue\(false\)/);
 assert.match(html, /perfect-player-core\.js\?v=20261004-career-legacy-v15/);
 assert.match(html, /perfect-player-mod-v4\.js\?v=20261004-roster-priority-v21/);
 assert.match(boot, /perfect-player-era-story\.js\?v=20261004-era-story-v5/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-career-legacy-v41'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-career-legacy-v42'/);
 assert.match(sw, /perfect-player-era-story\.js\?v=20261004-era-story-v5/);
 
 console.log('✓ team systems + era prologue: 5 systems, production simulation wiring, offseason order, 3 one-shot prologues, legacy-safe initialization');
