@@ -22,7 +22,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
     ],
     live: [
     ['assets/js/perfect-player-live-court.js?v=20260824-era-positions-v7', '俯瞰球场'],
-        ['assets/js/perfect-player-live-sim.js?v=20261002-career-minutes-v20', '文字直播']
+        ['assets/js/perfect-player-live-sim.js?v=20261004-match-plan-live-v21', '文字直播']
     ]
   };
 
@@ -324,7 +324,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20261004-pc-rosters-v35', { updateViaCache:'none' }).catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20261004-game-flow-v38', { updateViaCache:'none' }).catch(function () {});
   }
 
   function idleLoad() {

@@ -27,10 +27,10 @@ assert.doesNotMatch(archiveBlock[1], /navy|#09182a|#071321|color:\s*#fff|backgro
 assert.match(premium, /\.mode-local-nav \.mode-local-nav-btn \{[^}]*min-height:72px[^}]*border-radius:12px[^}]*background:linear-gradient/s);
 assert.match(premium, /\.menu-arena\s*\{[^}]*grid-template-columns/s, 'PC home should compose copy, player and playable modes');
 assert.match(html, /arena-player-model[\s\S]*career-avatar-v1\.png/);
-assert.match(html, /perfect-player-premium\.css\?v=20261004-pc-rosters-v9/);
-assert.match(html, /perfect-player-era-mode\.js\?v=20261004-opening-roster-v36/);
-assert.match(html, /perfect-player-core\.js\?v=20261004-pc-rosters-v9/);
-assert.match(html, /perfect-player-boot\.js\?v=20261004-pc-rosters-boot-v23/);
+assert.match(html, /perfect-player-premium\.css\?v=20261004-game-flow-v12/);
+assert.match(html, /perfect-player-era-mode\.js\?v=20261004-opening-roster-v37/);
+assert.match(html, /perfect-player-core\.js\?v=20261004-game-flow-v12/);
+assert.match(html, /perfect-player-boot\.js\?v=20261004-game-flow-boot-v26/);
 assert.match(core, /__PP_openCareerFeature\(\\'achievements\\'\)/);
 assert.match(core, /__PP_openCareerFeature\(\\'legacy\\'\)/);
 assert.doesNotMatch(core, /if\(window\.PP_FX\) PP_FX\.open(?:Legacy)?Panel/);

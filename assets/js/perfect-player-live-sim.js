@@ -266,6 +266,7 @@
   }
 
   function expectedUserLine(attrs, bp, isPlayoff) {
+    var plan = bp.matchPlan || { three:1, mid:1, rim:1, foul:1, assist:1, usage:1 };
     var pos = (typeof STATE !== 'undefined' && STATE.position) || 'SF';
     var pace = bp.pace;
     var mins = bp.userMins;
@@ -295,6 +296,7 @@
     var scoringAverage = productionRating((attr(attrs, 'threePT') + attr(attrs, 'MID') + attr(attrs, 'FIN')) / 3);
     var aggression = clamp(0.96 + (scoringAverage - 70) * 0.004, 0.78, 1.08);
     var scoringScale = (typeof USER_PLAYER_SCORING_SCALE === 'number') ? USER_PLAYER_SCORING_SCALE : 0.85;
+    usage *= plan.usage;
     var expectedFga = teamFGA * (mins / 48) * usage * aggression * (1 - defensePressure * 1.5) * 0.90 * scoringScale;
     var dist = (typeof SIM_CONFIG !== 'undefined' && SIM_CONFIG.SHOT_DIST[pos]) || { threePT: 0.32, MID: 0.22, FIN: 0.28 };
     var threeW = dist.threePT * (0.45 + Math.pow(productionSkill01(attr(attrs, 'threePT')), 1.15) * 1.25);
@@ -305,6 +307,7 @@
     midW *= 1 + (midM - 1) * 0.55;
     finW *= 1 + (dunkM - 1) * 0.50 + (postM - 1) * 0.60 + (breakM - 1) * 0.28;
     if (bp.systemA && bp.systemA.three) threeW = Math.max(0.01, threeW + bp.systemA.three);
+    threeW *= plan.three; midW *= plan.mid; finW *= plan.rim;
     var distTotal = Math.max(0.001, threeW + midW + finW);
     var form = 0;
     var midPressure = defensePressure * (1 - (midM - 1) * 0.7);
@@ -318,7 +321,7 @@
     var threeA = fga * (threeW / distTotal);
     var midA = fga * (midW / distTotal);
     var finA = Math.max(0, fga - threeA - midA);
-    var ftRate = clamp((0.07 + productionSkill01(attr(attrs, 'FIN')) * 0.20 + productionSkill01(attr(attrs, 'STR')) * 0.11 + productionSkill01(attr(attrs, 'HAN')) * 0.06) * productionSkillMul(finishM, 0.70), 0.07, 0.54);
+    var ftRate = clamp((0.07 + productionSkill01(attr(attrs, 'FIN')) * 0.20 + productionSkill01(attr(attrs, 'STR')) * 0.11 + productionSkill01(attr(attrs, 'HAN')) * 0.06) * productionSkillMul(finishM, 0.70) * plan.foul, 0.07, 0.54);
     var freeThrowRating = attr(attrs, 'CLU') * 0.5 + attr(attrs, 'MID') * 0.25 + attr(attrs, 'threePT') * 0.25;
     var ftPct = typeof calcShotPct === 'function' ? calcShotPct('FT', freeThrowRating, 0, 0, 0) : 0.78;
     ftPct = clampHalf(ftPct * iceM, 0.50, 0.96, 0.99);
@@ -331,7 +334,7 @@
     var legacyFx = legacyFxOf({ _isUser:true });
     var reb36 = Math.min(15.0, ((rebBase[pos] || 1.8) + Math.pow(productionSkill01(attr(attrs, 'REB')), 1.20) * (rebCeil[pos] || 7.8)) * productionSkillMul(boxM, 0.58) * legacyFx.reboundWeight);
     var ast36BeforeLegacy = Math.min(13.0, ((astBase[pos] || 0.6) + Math.pow(productionSkill01(playmaking), 1.32) * (astCeil[pos] || 7.7)) * productionSkillMul(tempoM, 0.62));
-    var ast36 = Math.min(14.0, ast36BeforeLegacy * legacyFx.assistWeight);
+    var ast36 = Math.min(14.0, ast36BeforeLegacy * legacyFx.assistWeight * plan.assist);
     var pointDefense = attr(attrs, 'PDEF') * 0.70 + attr(attrs, 'ATH') * 0.20 + attr(attrs, 'HAN') * 0.10;
     var stl36 = (0.25 + Math.pow(skill01(pointDefense), 1.25) * 2.05) * lockM * stealM;
     var rimDefense = attr(attrs, 'BLK') * 0.72 + attr(attrs, 'IDEF') * 0.20 + attr(attrs, 'ATH') * 0.08;
@@ -365,8 +368,8 @@
     var powerA = options.customPowerA || (typeof calcTeamPowerWithPlayer === 'function' ? calcTeamPowerWithPlayer(teamA) : { offense: 70, defense: 70, athletic: 70, clutch: 70, depth: 70 });
     var powerB = options.customPowerB || (typeof calcTeamPowerWithPlayer === 'function' ? calcTeamPowerWithPlayer(teamB) : { offense: 70, defense: 70, athletic: 70, clutch: 70, depth: 70 });
     var baseline = typeof getSimulationPowerBaseline === 'function' ? getSimulationPowerBaseline() : { offense: 70, defense: 70, athletic: 70, depth: 70 };
-    var modA = options.neutralState ? { offense: 0, defense: 0, variance: 0 } : (typeof getCareerTeamGameModifiers === 'function' ? getCareerTeamGameModifiers(teamA) : { offense: 0, defense: 0, variance: 0 });
-    var modB = options.neutralState ? { offense: 0, defense: 0, variance: 0 } : (typeof getCareerTeamGameModifiers === 'function' ? getCareerTeamGameModifiers(teamB) : { offense: 0, defense: 0, variance: 0 });
+    var modA = options.neutralState ? { offense: 0, defense: 0, variance: 0 } : (typeof getCareerTeamGameModifiers === 'function' ? getCareerTeamGameModifiers(teamA,teamB) : { offense: 0, defense: 0, variance: 0 });
+    var modB = options.neutralState ? { offense: 0, defense: 0, variance: 0 } : (typeof getCareerTeamGameModifiers === 'function' ? getCareerTeamGameModifiers(teamB,teamA) : { offense: 0, defense: 0, variance: 0 });
     var neutralSystem = { offense:0, defense:0, pace:0, three:0 };
     var systemA = !options.neutralState && typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamA) : neutralSystem;
     var systemB = !options.neutralState && typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamB) : neutralSystem;
@@ -429,6 +432,7 @@
       pace: pace, efficiencyA: efficiencyA, efficiencyB: efficiencyB,
       edgeA: edgeA, edgeB: edgeB, modA: modA, modB: modB,
       systemA:systemA, systemB:systemB,
+      matchPlan:!options.neutralState && options.isPlayoff && teamA === STATE.careerTeam && window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.getMatchPlanModifiers ? PP_CAREER_EVENTS.getMatchPlanModifiers(teamB) : null,
       expA: pace * efficiencyA, expB: pace * efficiencyB,
       lineupA: lineupA, lineupB: lineupB,
       rosterA: rosterFromLineup(lineupA, rosterSize), rosterB: rosterFromLineup(lineupB, rosterSize),
@@ -822,7 +826,7 @@
     });
   }
 
-  function pickShotType(player, distHint, styles, systemThree) {
+  function pickShotType(player, distHint, styles, systemThree, matchPlan) {
     var pos = posOf(player);
     var dist = (typeof SIM_CONFIG !== 'undefined' && SIM_CONFIG.SHOT_DIST[pos]) || { threePT: 0.3, MID: 0.22, FIN: 0.3 };
     var three = dist.threePT * (0.45 + Math.pow(skill01(attr(player, 'threePT')), 1.15) * 1.25);
@@ -834,6 +838,7 @@
       fin *= 1 + (st(styles, 'dunk_threat') - 1) * 0.50 + (st(styles, 'post_bully') - 1) * 0.60 + (st(styles, 'fast_break') - 1) * 0.28;
     }
     if (systemThree) three = Math.max(0.01, three + systemThree);
+    if (player && player._isUser && matchPlan) { three *= matchPlan.three; mid *= matchPlan.mid; fin *= matchPlan.rim; }
     if (distHint === 'three') { three *= 2.2; mid *= 0.6; fin *= 0.5; }
     if (distHint === 'MID') { mid *= 2.1; }
     if (distHint === 'FIN') { fin *= 2.2; three *= 0.45; }
@@ -2291,7 +2296,7 @@
     else if (chance(0.62 + (ctx.userOn ? (st(game.styles, 'tempo_master') - 1) * 0.18 : 0))) {
       passer = pickWeighted(ctx.offCourt.filter(function (p) { return p && pid(p) !== pid(shooter); }), function (p) {
         var w = 0.2 + skill01(attr(p, 'PAS')) * 1.6;
-        if (p._isUser) w *= 1.75 * st(game.styles, 'tempo_master');
+        if (p._isUser) w *= 1.75 * st(game.styles, 'tempo_master') * (game.bp.matchPlan ? game.bp.matchPlan.assist : 1);
         return w * legacyFxOf(p).assistWeight;
       });
     }
@@ -2301,7 +2306,7 @@
     else {
       var hint = fx.shot === 'three' ? 'threePT' : fx.shot;
       var system = ctx.side === 'A' ? game.bp.systemA : game.bp.systemB;
-      shot = hint || pickShotType(shooter, null, game.styles, system && system.three);
+      shot = hint || pickShotType(shooter, null, game.styles, system && system.three,game.bp.matchPlan);
       if (shot === 'three') shot = 'threePT';
     }
     var evHint = eventActionHint(ev, fx);
@@ -2434,7 +2439,7 @@
     pct = clampHalf(pct, 0.16, 0.80, 0.90);
 
     var ftRate = clamp(0.07 + skill01(attr(shooter, 'FIN')) * 0.20 + skill01(attr(shooter, 'STR')) * 0.11 + skill01(attr(shooter, 'HAN')) * 0.06, 0.07, 0.62);
-    if (shooter && shooter._isUser) ftRate = clamp(ftRate * 0.82 * st(game.styles, 'finisher'), 0.07, 0.62);
+    if (shooter && shooter._isUser) ftRate = clamp(ftRate * 0.82 * st(game.styles, 'finisher') * (game.bp.matchPlan ? game.bp.matchPlan.foul : 1), 0.07, 0.62);
     var foulP = shot === 'FIN' ? ftRate * 0.82 : ftRate * 0.38;
     if (fx.hack) foulP = 1;
     else if (fx.foul) foulP = Math.max(foulP, 0.72);

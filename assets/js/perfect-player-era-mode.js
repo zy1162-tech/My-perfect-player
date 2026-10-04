@@ -1066,7 +1066,7 @@
     overlay.id = 'legend-era-picker';
     overlay.innerHTML = '<div class="team-picker-modal legend-era-picker-modal">' +
       '<div class="team-picker-header"><span>🏆 选择传奇年代</span><button class="modal-close" id="legend-era-close">✕</button></div>' +
-      '<div class="legend-era-picker-intro">按该年开赛日名单进入联盟，2003 年为 29 队，2004 年夏洛特加入。评分按赛季表现与生涯阶段校准，缺少样本的球员标注估值。</div>' +
+      '<div class="legend-era-picker-intro">选一个年代，开启你的生涯。</div>' +
       '<div class="legend-era-picker-grid">' +
         '<button class="legend-era-card" data-era="2003"><span class="legend-era-year">2003</span><span class="legend-era-copy"><strong>白金新章</strong><em>报纸 · 电台 · 早期论坛</em><small>从传统巨星林立的时代起步，面对一届新人涌入联盟后的全新秩序。</small></span></button>' +
         '<button class="legend-era-card" data-era="2010"><span class="legend-era-year">2010</span><span class="legend-era-copy"><strong>聚光灯时代</strong><em>电视辩论 · 社交媒体 · 球星联手</em><small>转会风暴重塑格局，每一次选择都会被放大成全国话题。</small></span></button>' +

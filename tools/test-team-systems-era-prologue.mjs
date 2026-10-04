@@ -92,10 +92,10 @@ assert.equal(current.context.PP_ERA_STORY.showPrologueIfDue(), false, 'current c
 
 assert.match(coreSource, /id="era-prologue-entry"/);
 assert.match(coreSource, /openLegendEraPrologue\(false\)/);
-assert.match(html, /perfect-player-core\.js\?v=20261004-pc-rosters-v9/);
+assert.match(html, /perfect-player-core\.js\?v=20261004-game-flow-v12/);
 assert.match(html, /perfect-player-mod-v4\.js\?v=20261003-coach-state-v20/);
 assert.match(boot, /perfect-player-era-story\.js\?v=20261003-prologue-save-v4/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-pc-rosters-v35'/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-game-flow-v38'/);
 assert.match(sw, /perfect-player-era-story\.js\?v=20261003-prologue-save-v4/);
 
 console.log('✓ team systems + era prologue: 5 systems, production simulation wiring, offseason order, 3 one-shot prologues, legacy-safe initialization');

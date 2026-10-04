@@ -401,8 +401,6 @@ function initGame() {
 function renderModeSelect() {
   const container = html('feature-grid');
   container.innerHTML = '';
-  var rosterLabel = document.getElementById('league-snapshot-label');
-  if (rosterLabel && window.PP_CURRENT_ROSTER_META) rosterLabel.textContent = PP_CURRENT_ROSTER_META.season + ' · 名单核对 ' + PP_CURRENT_ROSTER_META.asOf;
   
   // 现役生涯与本地独立实现的传奇年代并列保留。
   const cards = [
@@ -989,7 +987,6 @@ function renderRosterPlayers(team, shown, allPool) {
     const hsStyle = getPlayerHeadshotStyle(p, 40);
     const ovrGrade = getOvrGrade(parseInt(p.ovr) || 50);
     const historicalCard = p._sourceKind === 'historical';
-    const estimatedRating = !historicalCard && /estimate/.test(p.ratingBasis || '');
     const hallOfFame = p._sourceKind === 'historical' && p._historicalTier === 'hall-of-fame';
     const peakAllStar = historicalCard && !hallOfFame;
     const used = (STATE.usedPlayers || []).indexOf(p.name) >= 0;
@@ -998,7 +995,7 @@ function renderRosterPlayers(team, shown, allPool) {
         <div class="bp-headshot" style="${hsStyle}"></div>
         <div>
           <div class="bp-name">${p.cname || p.name}</div>
-          <div class="bp-detail">${playerPos} · ${historicalCard ? (hallOfFame ? '史诗 · 名人堂惊喜' : '全明星惊喜') : (estimatedRating ? (STATE.mode === 'legend' ? '资料不足 · 估值' : '新赛季评级估算') : ovrGrade)}${historicalCard && p._historicalPeak ? ' · 巅峰' : ''}</div>
+          <div class="bp-detail">${playerPos} · ${historicalCard ? (hallOfFame ? '史诗 · 名人堂惊喜' : '全明星惊喜') : ovrGrade}${historicalCard && p._historicalPeak ? ' · 巅峰' : ''}</div>
         </div>
       </div>
       <div class="bp-meta">
@@ -2653,7 +2650,7 @@ function startSeason() {
       '<span id="simStreak"></span>' +
     '</div>' +
     (typeof renderPlayerStateStrip === 'function' ? renderPlayerStateStrip() : '') +
-    renderEventStatus() +
+    renderEventStatus() + renderSeasonSimulationControls() +
     '<div class="dot-grid" id="simDotGrid">' +
       '<div style="display:flex;align-items:center;justify-content:center;width:100%;min-height:120px;">' +
         '<div class="loading-balls"><span class="loading-ball"></span><span class="loading-ball"></span><span class="loading-ball"></span></div>' +
@@ -2779,6 +2776,57 @@ function liveOrSkipUserPack(opponent, options, onPack) {
 
 var regularSeasonRun = null;
 
+function renderSeasonSimulationControls() {
+  var season = STATE.season;
+  if (!season || season.isPlayoffs || !season.schedule || !season.schedule.some(function(g) { return !g.simulated; })) return '';
+  var paused = !!season.simulationPaused, completed = season.schedule.filter(function(g) { return g.simulated; }).length;
+  return '<div class="season-playback" id="season-playback-controls"><button class="btn btn-secondary btn-sm" onclick="toggleSeasonSimulation()">' +
+    (paused ? '继续赛季' : '暂停赛季') + '</button><button class="btn btn-secondary btn-sm" onclick="resumeSeasonSimulation(true)"' +
+    (paused ? '' : ' disabled') + '>打下一场</button><span aria-live="polite">' + (paused ? '已暂停' : '赛季进行中') + ' · ' + completed + '/' + season.schedule.length + ' 场</span></div>';
+}
+
+function refreshSeasonSimulationControls() {
+  var controls = document.getElementById('season-playback-controls');
+  if (controls) controls.outerHTML = renderSeasonSimulationControls();
+  var season = STATE.season, status = document.getElementById('simStatus');
+  if (status && season && !season.isPlayoffs && season.schedule.some(function(g) { return !g.simulated; })) {
+    status.textContent = (season.simulationPaused ? '已暂停 ' : '模拟中 ') + season.schedule.filter(function(g) { return g.simulated; }).length + '/' + season.schedule.length;
+  }
+}
+
+function pauseSeasonSimulation() {
+  if (!STATE.season || STATE.season.isPlayoffs) return;
+  STATE.season.simulationPaused = true;
+  STATE.season.pauseAfterNextGame = false;
+  refreshSeasonSimulationControls();
+  if (typeof autoSaveGame === 'function') autoSaveGame();
+}
+
+function resumeSeasonSimulation(singleGame) {
+  if (!STATE.season || STATE.season.isPlayoffs) return;
+  STATE.season.simulationPaused = false;
+  STATE.season.pauseAfterNextGame = !!singleGame;
+  refreshSeasonSimulationControls();
+  if (window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.resumePrepared && PP_CAREER_EVENTS.resumePrepared()) return;
+  var run = regularSeasonRun;
+  if (run && run.season === STATE.season) { if (run.waiting) run.next(); }
+  else quickSimAllGames();
+}
+
+function toggleSeasonSimulation() {
+  if (STATE.season && STATE.season.simulationPaused) resumeSeasonSimulation(false);
+  else pauseSeasonSimulation();
+}
+
+function finishRegularPlaybackStep() {
+  if (STATE.season.pauseAfterNextGame) {
+    STATE.season.pauseAfterNextGame = false;
+    STATE.season.simulationPaused = true;
+    if (typeof autoSaveGame === 'function') autoSaveGame();
+  }
+  refreshSeasonSimulationControls();
+}
+
 // ★ 逐场模拟全部 82 场常规赛，点逐个出现
 function quickSimAllGames() {
   if (regularSeasonRun && regularSeasonRun.season === STATE.season) return;
@@ -2786,7 +2834,7 @@ function quickSimAllGames() {
   if (!schedule || schedule.length === 0) { console.error('[Sim] 赛程为空'); renderDotGrid(); return; }
   var games = schedule.filter(function(g) { return !g.simulated; });
   if (games.length === 0) { renderDotGrid(); return; }
-  var run = { season:STATE.season };
+  var run = { season:STATE.season, next:simNextWithDelay, waiting:false };
   regularSeasonRun = run;
 
   // 替换加载动画为占位点阵
@@ -2804,6 +2852,8 @@ function quickSimAllGames() {
   var gi = 0;
   function simNextWithDelay() {
     if (regularSeasonRun !== run || STATE.season !== run.season) return;
+    if (STATE.season.simulationPaused && gi < games.length) { run.waiting = true; refreshSeasonSimulationControls(); return; }
+    run.waiting = false;
     if (window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.pauseForCoach(simNextWithDelay)) return;
     if (gi >= games.length) {
       function finishRegularSeasonSim() {
@@ -2955,7 +3005,7 @@ function quickSimAllGames() {
           }
           var esEl = document.getElementById('eventStatusBar');
           if (esEl) esEl.outerHTML = renderEventStatus();
-          gi++;
+          gi++; finishRegularPlaybackStep();
           setTimeout(simNextWithDelay, 120);
         };
         var runPlayedThroughRegularGame = function(severity) {
@@ -3002,7 +3052,7 @@ function quickSimAllGames() {
           }
           var esH = document.getElementById('eventStatusBar');
           if (esH) esH.outerHTML = renderEventStatus();
-          gi++;
+          gi++; finishRegularPlaybackStep();
           setTimeout(simNextWithDelay, 120);
         };
         if (skipReason === 'injury' && isKeyInjuredRegularGame(g, gi, games.length) && shouldOfferPlayThroughInjury('reg-' + (STATE.season.games.length + 1), true)) {
@@ -3085,7 +3135,7 @@ function quickSimAllGames() {
         var esEl2 = document.getElementById('eventStatusBar');
         if (esEl2) esEl2.outerHTML = renderEventStatus();
 
-        gi++;
+        gi++; finishRegularPlaybackStep();
         function chainAfterGame() {
           if (regularSeasonRun !== run || STATE.season !== run.season) return;
           if (evData && typeof showEventModal === 'function') {
@@ -4539,13 +4589,14 @@ function splitRegulationScore(total) {
   return quarters;
 }
 
-function getCareerTeamGameModifiers(team) {
+function getCareerTeamGameModifiers(team, opponent) {
   if (team !== STATE.careerTeam || !STATE.career) return { offense:0, defense:0, variance:0 };
   var mods = getNextSeasonMods();
   var careerEffects = window.PP_CAREER_EVENTS ? PP_CAREER_EVENTS.getModifiers() : { load:0, chemistry:0 };
   var chemistry = Math.max(-10, Math.min(10, (Number(mods.teamChemistry) || 0) + careerEffects.chemistry));
   var load = (Number(mods.staminaLoad) || 0) + careerEffects.load;
   var profileEffects = typeof getCareerProfileEffects === 'function' ? getCareerProfileEffects() : { gameOffenseBonus:0, gameDefenseBonus:0, gameVarianceBonus:0 };
+  var matchPlan = window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.getMatchPlanModifiers ? PP_CAREER_EVENTS.getMatchPlanModifiers(opponent) : { offense:0 };
   var lockBonus = 0;
   var rimBonus = 0;
   var pnrBonus = 0;
@@ -4557,7 +4608,7 @@ function getCareerTeamGameModifiers(team) {
     leaderVar = (getStyleSkillMu('leader_aura') - 1) * -2.2;
   }
   return {
-    offense: (Number(mods.moraleBonus) || 0) * 0.35 + chemistry * 0.28 - (Number(mods.mediaPressure) || 0) * 0.16 - load * 0.34 + profileEffects.gameOffenseBonus + pnrBonus,
+    offense: (Number(mods.moraleBonus) || 0) * 0.35 + chemistry * 0.28 - (Number(mods.mediaPressure) || 0) * 0.16 - load * 0.34 + profileEffects.gameOffenseBonus + pnrBonus + matchPlan.offense,
     defense: chemistry * 0.32 + (Number(mods.moraleBonus) || 0) * 0.18 - load * 0.25 + profileEffects.gameDefenseBonus + lockBonus + rimBonus,
     variance: (Number(mods.formVariance) || 0) * 0.45 + profileEffects.gameVarianceBonus + leaderVar
   };
@@ -4588,8 +4639,8 @@ function simulate82StyleMatchup(teamA, teamB, options) {
   var systemA = typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamA) : { offense:0, defense:0, pace:0, three:0 };
   var systemB = typeof getTeamSystemEffects === 'function' ? getTeamSystemEffects(teamB) : { offense:0, defense:0, pace:0, three:0 };
   var baseline = getSimulationPowerBaseline();
-  var modA = options.neutralState ? { offense:0, defense:0, variance:0 } : getCareerTeamGameModifiers(teamA);
-  var modB = options.neutralState ? { offense:0, defense:0, variance:0 } : getCareerTeamGameModifiers(teamB);
+  var modA = options.neutralState ? { offense:0, defense:0, variance:0 } : getCareerTeamGameModifiers(teamA, teamB);
+  var modB = options.neutralState ? { offense:0, defense:0, variance:0 } : getCareerTeamGameModifiers(teamB, teamA);
   var teamAHome = options.teamAHome !== false;
   var homeA = teamAHome ? 0.018 : 0;
   var homeB = teamAHome ? 0 : 0.018;
@@ -4672,7 +4723,7 @@ function simulate82StyleMatchup(teamA, teamB, options) {
     qScoresA: qScoresA, qScoresB: qScoresB,
     highlight: ot > 0 || margin <= 3 || keyEvents.indexOf('💥 爆冷！') >= 0,
     keyEvents: keyEvents, ot: ot,
-    teamA: { power: powerA }, teamB: { power: powerB },
+    teamA: { id:teamA, power: powerA }, teamB: { id:teamB, power: powerB },
     pace: pace, possPerQ: Math.round(pace / 4), expectedWinProb: expectedWinProb,
     home: teamAHome,
     boxScore: options.includeBoxScore === false ? null : generateBoxScore(teamA, teamB, scoreA, scoreB)
@@ -5258,6 +5309,8 @@ function getFanHomeFormBonus(gameResult) {
 }
 
 function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
+  var opponentTeam = gameResult && gameResult.teamB && (gameResult.teamB.id || (typeof gameResult.teamB === 'string' ? gameResult.teamB : null));
+  var matchPlan = isPlayoff && window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.getMatchPlanModifiers ? PP_CAREER_EVENTS.getMatchPlanModifiers(opponentTeam) : { three:1, mid:1, rim:1, foul:1, assist:1, usage:1 };
   const pos = STATE.position || 'PG';
   const pace = Number(gameResult && gameResult.pace) || 99.4;
   const mins = getPlayerRotationMinutes(attrs, pos, isPlayoff);
@@ -5286,6 +5339,7 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   var iceM = styleRoll('ice_ft');
   usage *= 1 - (offBallM - 1) * 0.35;
   usage *= 1 + (breakM - 1) * 0.18;
+  usage *= matchPlan.usage;
   usage = Math.max(0.10, Math.min(0.36, usage));
 
   const baseline = getSimulationPowerBaseline();
@@ -5296,7 +5350,7 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   var oppDefPos = 0;
   try {
     if (gameResult && gameResult.teamB && STATE.position) {
-      var oppLineup = typeof calcTeamLineup === 'function' ? calcTeamLineup(gameResult.teamB) : null;
+      var oppLineup = opponentTeam && typeof calcTeamLineup === 'function' ? calcTeamLineup(opponentTeam) : null;
       var oppStarter = oppLineup && (oppLineup.starters[STATE.position] || null);
       if (oppStarter && !oppStarter._isUser) {
         var oppDef01 = simSkill01((parseInt(oppStarter.PDEF)||50) * 0.6 + (parseInt(oppStarter.IDEF)||50) * 0.2 + (parseInt(oppStarter.ATH)||50) * 0.2);
@@ -5328,6 +5382,7 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   distWeights.FIN *= 1 + (dunkM - 1) * 0.50 + (postM - 1) * 0.60 + (breakM - 1) * 0.28;
   var systemThree = typeof getTeamSystemEffects === 'function' ? (Number(getTeamSystemEffects(STATE.careerTeam).three) || 0) : 0;
   if (systemThree) distWeights.threePT = Math.max(0.01, distWeights.threePT + systemThree);
+  distWeights.threePT *= matchPlan.three; distWeights.MID *= matchPlan.mid; distWeights.FIN *= matchPlan.rim;
   const distTotal = Math.max(0.001, distWeights.threePT + distWeights.MID + distWeights.FIN);
   const threeA = Math.max(0, Math.min(fga, Math.round(fga * distWeights.threePT / distTotal)));
   const midA = Math.max(0, Math.min(fga - threeA, Math.round(fga * distWeights.MID / distTotal)));
@@ -5345,7 +5400,7 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   const finM = sampleBinomial(finA, finPct);
   const fgm = threeM + midMade + finM;
 
-  const ftRate = Math.max(0.07, Math.min(0.54, (0.07 + userProductionSkill01(attrs.FIN) * 0.20 + userProductionSkill01(attrs.STR) * 0.11 + userProductionSkill01(attrs.HAN) * 0.06) * dampenProductionSkill(finishM, 0.70)));
+  const ftRate = Math.max(0.07, Math.min(0.54, (0.07 + userProductionSkill01(attrs.FIN) * 0.20 + userProductionSkill01(attrs.STR) * 0.11 + userProductionSkill01(attrs.HAN) * 0.06) * dampenProductionSkill(finishM, 0.70) * matchPlan.foul));
   const fta = Math.max(0, Math.min(18, Math.round(simGaussian(fga * ftRate, 1.2))));
   const freeThrowRating = (parseInt(attrs.CLU)||50) * 0.50 + (parseInt(attrs.MID)||50) * 0.25 + (parseInt(attrs.threePT)||50) * 0.25;
   const ftPct = clampWithHalfOverflow(calcShotPct('FT', freeThrowRating, 0, 0, gameForm * 0.45) * iceM * clutchShot, 0.50, 0.96, 0.99);
@@ -5362,7 +5417,7 @@ function generatePlayerStatsNew(attrs, gameResult, isPlayoff) {
   const astBase = { PG:0.8, SG:0.6, SF:0.6, PF:0.5, C:0.5 };
   const astCeiling = { PG:10.8, SG:8.0, SF:7.7, PF:7.9, C:8.7 };
   const ast36BeforeLegacy = Math.min(13.0, (astBase[pos] + Math.pow(userProductionSkill01(playmaking), 1.32) * astCeiling[pos]) * dampenProductionSkill(tempoM, 0.62));
-  const ast36 = Math.min(14.0, ast36BeforeLegacy * legacyFx.assistWeight);
+  const ast36 = Math.min(14.0, ast36BeforeLegacy * legacyFx.assistWeight * matchPlan.assist);
   const pointDefense = (parseInt(attrs.PDEF)||50) * 0.70 + (parseInt(attrs.ATH)||50) * 0.20 + (parseInt(attrs.HAN)||50) * 0.10;
   const stl36 = (0.25 + Math.pow(simSkill01(pointDefense), 1.25) * 2.05) * lockM * stealM;
   const rimDefense = (parseInt(attrs.BLK)||50) * 0.72 + (parseInt(attrs.IDEF)||50) * 0.20 + (parseInt(attrs.ATH)||50) * 0.08;
@@ -6889,7 +6944,7 @@ function renderPlayoffBracketUI() {
         </div>`;
         h += `<div style="display:flex;gap:6px;margin-top:6px;">
           <button class="bv-s-btn" style="flex:1;margin:0;" onclick="showPlayoffMatchupPreview('${STATE.careerTeam}', '${opp}')">👥 阵容评分</button>
-          <button class="bv-s-btn" style="flex:1;margin:0;" onclick="this.disabled=true;simPlayoffSeries(${r}, ${idx})">${r === 2 ? '🏆 开始分区决赛' : r === 3 ? '🏆 开始总决赛' : '▶ 开始系列赛'}</button>
+          <button class="bv-s-btn" style="flex:1;margin:0;" onclick="this.disabled=true;simPlayoffSeries(${r}, ${idx})">${series.progress ? '▶ 继续系列赛' : r === 2 ? '🏆 开始分区决赛' : r === 3 ? '🏆 开始总决赛' : '▶ 开始系列赛'}</button>
         </div>`;
       } else {
         h += `<div class="bv-s-matchup" style="cursor:default;">
@@ -7076,8 +7131,18 @@ function getPlayoffSeriesGameContext(teamA, teamB, gameNum) {
   };
 }
 
+function savePlayoffSeriesProgress(round, seriesIdx, winsA, winsB, seriesGames, userGameStats) {
+  var series = STATE.season.playoffBracket && STATE.season.playoffBracket.rounds[round]?.[seriesIdx];
+  if (!series) return;
+  series.progress = { winsA:winsA, winsB:winsB, seriesGames:seriesGames, userGameStats:userGameStats };
+  autoSaveGame();
+}
+
 /** 单场模拟并更新简报（递归，一场一场模拟） */
-function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, winsA, winsB, seriesGames, userGameStats, roundName, onDone) {
+function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, winsA, winsB, seriesGames, userGameStats, roundName, onDone, runSeason) {
+  runSeason = runSeason || STATE.season;
+  if (STATE.season !== runSeason) return;
+  var settled = false;
   if (winsA >= 4 || winsB >= 4 || gameNum >= 7) {
     onDone(winsA, winsB, seriesGames, userGameStats);
     return;
@@ -7099,6 +7164,8 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
   }
   if (skipReason) {
     var runSkippedPlayoffGame = function() {
+      if (STATE.season !== runSeason || settled) return;
+      settled = true;
       if (skipReason === 'suspension') skipEv.suspensionGamesLeft--;
       else {
         skipEv.injuryGamesLeft--;
@@ -7123,13 +7190,16 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
       seriesGames.push(skipEntry);
       if (isMySeries && !legendImmune && window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.settleGame(
         PP_CAREER_EVENTS.matchKey(teamB, { isPlayoff:true, title:roundName + ' G' + (gameNum + 1) }), null, skipResult, { isPlayoff:true });
+      if (isMySeries && !legendImmune) savePlayoffSeriesProgress(round,seriesIdx,skipNewWinsA,skipNewWinsB,seriesGames,userGameStats);
       var continueSkippedGame = function() { setTimeout(function() {
-        simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, skipNewWinsA, skipNewWinsB, seriesGames, userGameStats, roundName, onDone);
+        simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, skipNewWinsA, skipNewWinsB, seriesGames, userGameStats, roundName, onDone, runSeason);
       }, isMySeries ? 120 : 50); };
       if (isMySeries) showPlayoffGameDataPanel(skipEntry, teamA, teamB, roundName, continueSkippedGame);
       else continueSkippedGame();
     };
     var runPlayedThroughPlayoffGame = function(severity) {
+      if (STATE.season !== runSeason || settled) return;
+      settled = true;
       skipEv.injuryGamesLeft = Math.max(0, (skipEv.injuryGamesLeft || 0) - 1);
       var hurtResult = simulateGameNew(teamA, teamB, seedBonus, getInjuryPlayWinMultiplier(severity), { teamAHome:seriesGame.teamAHome, isPlayoff:true });
       const hurtWon = hurtResult.won;
@@ -7160,8 +7230,9 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
         PP_CAREER_EVENTS.matchKey(teamB, { isPlayoff:true, title:roundName + ' G' + (gameNum + 1) }), hurtStats, hurtResult, { isPlayoff:true });
       renderPlayoffGameBrief(hurtEntry, teamA, teamB, true, roundName, gameNum + 1, 7, round, seriesIdx);
       maybeWorsenInjuryAfterPlaying(skipEv, severity);
+      if (isMySeries && !legendImmune) savePlayoffSeriesProgress(round,seriesIdx,hurtNewWinsA,hurtNewWinsB,seriesGames,userGameStats);
       var continueHurtGame = function() { setTimeout(function() {
-        simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, hurtNewWinsA, hurtNewWinsB, seriesGames, userGameStats, roundName, onDone);
+        simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, hurtNewWinsA, hurtNewWinsB, seriesGames, userGameStats, roundName, onDone, runSeason);
       }, 120); };
       showPlayoffGameDataPanel(hurtEntry, teamA, teamB, roundName, continueHurtGame);
     };
@@ -7176,6 +7247,8 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
   }
   
   var finishPlayoffGame = function (pack) {
+    if (STATE.season !== runSeason || settled) return;
+    settled = true;
     var gameResult = pack.result;
     var finalA = gameResult.scoreA;
     var finalB = gameResult.scoreB;
@@ -7210,7 +7283,10 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
     seriesGames.push(gameEntry);
     if (isMySeries && !legendImmune && window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.settleGame(
       PP_CAREER_EVENTS.matchKey(teamB, { isPlayoff:true, title:roundName + ' G' + (gameNum + 1) }), gameEntry.myStats, gameResult, { isPlayoff:true });
+    if (gameResult.careerMatchPlanReview) gameEntry.careerMatchPlanReview = gameResult.careerMatchPlanReview;
+    if (isMySeries && !legendImmune) savePlayoffSeriesProgress(round,seriesIdx,newWinsA,newWinsB,seriesGames,userGameStats);
     var continueAfterGamePanel = function() { setTimeout(function() {
+      if (STATE.season !== runSeason) return;
       if (isMySeries && !legendImmune) {
         try {
           var poEvData = checkRandomEvents({ opponent: teamB, isWin: won, day: 0, simulated: true }, { won: won, scoreA: finalA, scoreB: finalB }, gameEntry.myStats || null);
@@ -7223,7 +7299,7 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
             if (typeof showEventModal === 'function') {
               showEventModal(poEvData, function() {
                 setTimeout(function() {
-                  simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, newWinsA, newWinsB, seriesGames, userGameStats, roundName, onDone);
+                  simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, newWinsA, newWinsB, seriesGames, userGameStats, roundName, onDone, runSeason);
                 }, 600);
               });
               return;
@@ -7231,7 +7307,7 @@ function simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum, 
           }
         } catch(ex) {}
       }
-      simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, newWinsA, newWinsB, seriesGames, userGameStats, roundName, onDone);
+      simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, gameNum + 1, newWinsA, newWinsB, seriesGames, userGameStats, roundName, onDone, runSeason);
     }, isMySeries ? 120 : 50); };
     if (isMySeries) showPlayoffGameDataPanel(gameEntry, teamA, teamB, roundName, continueAfterGamePanel);
     else continueAfterGamePanel();
@@ -7274,7 +7350,7 @@ function simPlayoffSeries(round, seriesIdx) {
     teamB = series.low?.team;
   }
   
-  const roundName = ['首轮', '分区半决赛', '分区决赛'][round] || '第'+(round+1)+'轮';
+  const roundName = ['首轮', '分区半决赛', '分区决赛', '总决赛'][round] || '第'+(round+1)+'轮';
   
   // 清空旧简报，开始新的系列赛
   clearPlayoffGamecast();
@@ -7288,14 +7364,16 @@ function simPlayoffSeries(round, seriesIdx) {
     }
   }
   
-  // 用递归一场一场模拟
-  simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, 0, 0, 0, [], [], roundName, (winsA, winsB, seriesGames, userGameStats) => {
+  // 已结算的场次随系列赛保存，读档从下一场继续。
+  var progress = series.progress || { winsA:0,winsB:0,seriesGames:[],userGameStats:[] };
+  simOnePlayoffGame(round, seriesIdx, teamA, teamB, isMySeries, progress.seriesGames.length, progress.winsA, progress.winsB, progress.seriesGames, progress.userGameStats, roundName, (winsA, winsB, seriesGames, userGameStats) => {
     // ===== 系列赛结束 =====
     const aWon = winsA >= 4;
     const winner = aWon ? teamA : teamB;
     const winnerWins = aWon ? winsA : winsB;
     const loserWins = aWon ? winsB : winsA;
     series.winner = winner;
+    delete series.progress;
     
     const result = {
       round, seriesIdx, roundName,
@@ -8604,6 +8682,7 @@ function showPlayoffGameDataPanel(gameEntry, teamA, teamB, roundName, onContinue
     '<div class="modal-header"><span style="font-family:var(--font-display);">📊 ' + roundName + ' G' + gameEntry.game + ' · 赛后数据</span></div>' +
     '<div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:10px 14px;text-align:center;">' +
       '<strong>' + getTeamName(teamA) + '</strong><span style="font-family:var(--font-display);font-size:23px;color:var(--orange);">' + gameEntry.myScore + ' - ' + gameEntry.oppScore + '</span><strong>' + getTeamName(teamB) + '</strong></div>' +
+    (window.PP_CAREER_EVENTS && PP_CAREER_EVENTS.renderMatchPlanReview ? PP_CAREER_EVENTS.renderMatchPlanReview(gameEntry.careerMatchPlanReview) : '') +
     '<div style="padding:0 14px 8px;">' + statRow('篮板','reb') + statRow('助攻','ast') + statRow('抢断','stl') + statRow('盖帽','blk') + '</div>' +
     '<div class="pp-game-box-grid">' + teamBox(teamA, teamABox) + teamBox(teamB, teamBBox) + '</div>' +
     '<div style="padding:0 12px 13px;"><button class="btn btn-primary btn-sm" id="playoff-game-data-continue" style="width:100%;">继续下一场</button></div></div>';
@@ -14801,7 +14880,7 @@ function manualLoadGame(slot) {
           HUPU_USER.isLogin = !!snap.hupuUser.isLogin;
           HUPU_USER.source = snap.hupuUser.source || HUPU_USER.source;
         }
-        ['player-retirement-choice', 'contract-modal', 'contract-retirement-choice', 'legacy-modal', 'countdown-legacy-modal', 'countdown-legacy-result-modal', 'load-menu-modal'].forEach(function(id) {
+        ['player-retirement-choice', 'contract-modal', 'contract-retirement-choice', 'legacy-modal', 'countdown-legacy-modal', 'countdown-legacy-result-modal', 'load-menu-modal', 'playoff-game-data-panel'].forEach(function(id) {
           var el = document.getElementById(id);
           if (el) el.remove();
         });
@@ -18214,7 +18293,7 @@ function renderSeasonScreenDOM() {
       '<span id="simStreak"></span>' +
     '</div>' +
     (typeof renderPlayerStateStrip === 'function' ? renderPlayerStateStrip() : '') +
-    renderEventStatus() +
+    renderEventStatus() + renderSeasonSimulationControls() +
     '<div class="dot-grid" id="simDotGrid">' +
       '<div style="display:flex;align-items:center;justify-content:center;width:100%;min-height:120px;">' +
         '<div class="loading-balls"><span class="loading-ball"></span><span class="loading-ball"></span><span class="loading-ball"></span></div>' +

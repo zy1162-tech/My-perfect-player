@@ -45,13 +45,13 @@ html.pp-booting #app{visibility:hidden}
 <script src="assets/data/verified-headshots.js?v=20261002-verified-headshots-v2"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261004-pc-rosters-boot-v23" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20261004-pc-rosters-boot-v23"></script>
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261004-game-flow-boot-v26" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20261004-game-flow-boot-v26"></script>
   <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260826-era-headshots-v2">
   <link rel="stylesheet" href="assets/css/perfect-player-season-report.css?v=20260826-season-report-v1">
 
 
-<link href="assets/css/perfect-player-premium.css?v=20261004-pc-rosters-v9" rel="stylesheet">
+<link href="assets/css/perfect-player-premium.css?v=20261004-game-flow-v12" rel="stylesheet">
 </head>
 <body>
 
@@ -136,9 +136,9 @@ html.pp-booting #app{visibility:hidden}
         Object.keys(data).forEach(function (k) {
           var sk = scopedKey(k);
           if (data[k] === null || data[k] === undefined) {
-            try { localStorage.removeItem(sk); } catch (e) {}
+            localStorage.removeItem(sk);
           } else {
-            try { localStorage.setItem(sk, enc(data[k])); } catch (e) {}
+            localStorage.setItem(sk, enc(data[k]));
           }
         });
         return { ok: true };
@@ -201,14 +201,13 @@ html.pp-booting #app{visibility:hidden}
         <div class="hero-title">MY CAREER · 球员生涯</div>
         <div class="hero-headline">把名字<br><span class="hl">写进联盟</span></div>
         <div class="hero-desc">构筑自己的球员，走进选秀与更衣室。让训练、选择和每一场比赛，留下属于你的生涯。</div>
-        <div class="menu-season-tag"><span class="live-dot"></span><span id="league-snapshot-label">2026–27 · 现代与历史赛场</span></div>
         <div class="menu-feature-note"><b>01</b><span>进入球队 · 赢得轮换</span><b>02</b><span>建立配合 · 影响球队</span><b>03</b><span>留住荣誉 · 写下生涯</span></div>
       </div>
-      <div class="arena-player-stage" aria-label="虚拟球员形象展示">
+      <div class="arena-player-stage" aria-label="我的球员">
         <div class="arena-court-floor"></div>
         <span class="arena-stage-word" aria-hidden="true">PLAYER</span>
-        <img class="arena-player-model" src="assets/images/ui/career-avatar-v1.png" alt="穿 1 号球衣持球的虚拟球员展示形象">
-        <div class="arena-stage-caption"><strong>YOUR PLAYER.<br>YOUR LEGACY.</strong><small>虚拟形象展示 · 实际能力由你构筑</small></div>
+        <img class="arena-player-model" src="assets/images/ui/career-avatar-v1.png" alt="身穿 1 号球衣的篮球球员">
+        <div class="arena-stage-caption"><strong>YOUR PLAYER.<br>YOUR LEGACY.</strong></div>
       </div>
       <div class="menu-game-modes"><div class="menu-mode-heading"><span>PLAY</span><strong>选择你的赛场</strong></div><div class="feature-grid" id="feature-grid"></div></div>
     </div>
@@ -930,18 +929,13 @@ var Storage = {
   },
   setValue: function(data) {
     try {
-      if (!window.ColorboxAI || !window.ColorboxAI.storage) return Promise.resolve();
+      if (!window.ColorboxAI || !window.ColorboxAI.storage) return Promise.reject(new Error('存储尚未就绪'));
       for (var key in data) {
         if (!data.hasOwnProperty(key)) continue;
-        if (!Storage._validateKey(key)) { return Promise.resolve(); }
+        if (!Storage._validateKey(key)) { return Promise.reject(new Error('存储键无效')); }
       }
-      var serialized = JSON.stringify(data);
-      if (serialized.length > 200 * 1024) {
-        return Promise.resolve();
-      }
-      return window.ColorboxAI.storage.setValue(data).catch(function(){});
-    } catch(e) {}
-    return Promise.resolve();
+      return window.ColorboxAI.storage.setValue(data);
+    } catch(e) { return Promise.reject(e); }
   },
   getValue: function(key) {
     try {
@@ -968,11 +962,11 @@ var Storage = {
   }
 };
 </script>
-<script src="assets/js/perfect-player-core.js?v=20261004-pc-rosters-v9"></script>
+<script src="assets/js/perfect-player-core.js?v=20261004-game-flow-v12"></script>
 <script src="assets/js/perfect-player-season-report.js?v=20260826-season-report-v2"></script>
 <script src="assets/js/perfect-player-mod-v4.js?v=20261003-coach-state-v20"></script>
-<script src="assets/js/perfect-player-career-events.js?v=20261004-career-hub-v6"></script>
-<script src="assets/js/perfect-player-era-mode.js?v=20261004-opening-roster-v36"></script>
+<script src="assets/js/perfect-player-career-events.js?v=20261004-match-plan-v9"></script>
+<script src="assets/js/perfect-player-era-mode.js?v=20261004-opening-roster-v37"></script>
 
 <!-- ====== 随机事件系统 — EVENT REGISTRY ====== -->
 <script src="assets/js/perfect-player-event-runtime.js?v=20261003-risk-state-v10"></script>

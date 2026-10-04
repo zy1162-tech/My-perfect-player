@@ -221,6 +221,84 @@ var CAREER_EXPERIENCE_EVENTS = [
 ];
 
 var careerPreparedGame = null;
+
+var CAREER_MATCH_PLANS = {
+  balanced:{ name:'均衡执行', desc:'按教练安排分配球权', stat:null, effects:{} },
+  rim:{ name:'冲击篮筐', desc:'突破和内线终结，主动制造罚球', stat:'fta', unit:'次罚球', effects:{ three:0.85, mid:0.85, rim:1.65, foul:1.25 } },
+  space:{ name:'外线拉开', desc:'增加三分出手，为球队拉开空间', stat:'threeA', unit:'次三分出手', effects:{ three:1.65, mid:0.85, rim:0.85 } },
+  create:{ name:'串联队友', desc:'少一些单打，把球送到队友手里', stat:'ast', unit:'次助攻', effects:{ usage:0.88, assist:1.35 } }
+};
+
+function getCareerMatchPlanFit(plan) {
+  if (!plan || plan.id === 'balanced') return 0;
+  var attrs = STATE.attrs || {}, lineup = typeof calcTeamLineup === 'function' ? calcTeamLineup(plan.opponent) : null;
+  var defenders = lineup ? Object.values(lineup.starters).filter(Boolean) : [];
+  var key = plan.id === 'rim' ? 'IDEF' : 'PDEF';
+  var defense = defenders.length ? defenders.reduce(function(sum,p) { return sum + (Number(p[key]) || 50); },0) / defenders.length : 75;
+  var ability = plan.id === 'rim' ? (Number(attrs.FIN)||50)*0.72+(Number(attrs.DNK)||50)*0.28 :
+    plan.id === 'space' ? (Number(attrs.threePT)||50) : (Number(attrs.PAS)||50)*0.75+(Number(attrs.HAN)||50)*0.25;
+  return Math.max(-1.5,Math.min(1.5,(ability-defense)*0.10));
+}
+
+function getCareerMatchPlanModifiers(opponent) {
+  var neutral = { id:null, three:1, mid:1, rim:1, foul:1, assist:1, usage:1, offense:0 };
+  var e = getCareerExperience(), plan = e && e.matchPlan;
+  if (!plan || plan.status !== 'playing' || plan.opponent !== opponent || !CAREER_MATCH_PLANS[plan.id]) return neutral;
+  return Object.assign(neutral,CAREER_MATCH_PLANS[plan.id].effects,{ id:plan.id, offense:getCareerMatchPlanFit(plan) });
+}
+
+function selectCareerMatchPlan(id) {
+  var ctx = careerPreparedGame, definition = CAREER_MATCH_PLANS[id];
+  if (!ctx || !ctx.options.isPlayoff || !definition) return;
+  var minutes = typeof getPlayerRotationPlan === 'function' ? getPlayerRotationPlan(STATE.attrs,STATE.position,true) : 30;
+  var goal = definition.stat ? Math.max(2,Math.round(minutes / (id === 'rim' ? 8 : id === 'space' ? 5 : 7))) : 0;
+  getCareerExperience().matchPlan = { id:id, key:ctx.key, opponent:ctx.opponent, goal:goal, status:'ready' };
+  showCareerPreparedMatchup();
+  if (typeof autoSaveGame === 'function') autoSaveGame();
+}
+
+function renderCareerMatchPlanPicker() {
+  var e = getCareerExperience(), selected = e.matchPlan;
+  return '<section class="ce-match-plan-picker" aria-label="本场打法"><h3>本场怎么打</h3><div class="ce-plan-options">' +
+    Object.keys(CAREER_MATCH_PLANS).map(function(id) {
+      var plan = CAREER_MATCH_PLANS[id], active = selected && selected.id === id;
+      return '<button type="button" class="ce-plan-option' + (active ? ' selected' : '') + '" aria-pressed="' + !!active + '" onclick="selectCareerMatchPlan(\'' + id + '\')"><strong>' + plan.name + '</strong><span>' + plan.desc + '</span></button>';
+    }).join('') + '</div></section>';
+}
+
+function buildCareerMatchPlanReview(plan, stats, result) {
+  var definition = CAREER_MATCH_PLANS[plan.id], played = !!(stats && stats.mins > 0);
+  var value = played && definition.stat ? Number(stats[definition.stat]) || 0 : 0;
+  var passed = played && (!definition.stat || value >= plan.goal);
+  var contribution = !played ? '本场没有出战，打法未执行。' : plan.id === 'rim' ? '获得 ' + value + ' 次罚球，命中 ' + (stats.ftm || 0) + ' 球。' :
+    plan.id === 'space' ? '三分 ' + (stats.threeM || 0) + '/' + value + '，为球队贡献 ' + ((stats.threeM || 0)*3) + ' 分。' :
+    plan.id === 'create' ? '送出 ' + value + ' 次助攻，出现 ' + (stats.tov || 0) + ' 次失误。' : '本场 ' + (stats.pts || 0) + ' 分、' + (stats.reb || 0) + ' 篮板、' + (stats.ast || 0) + ' 助攻。';
+  var teamScore = Number(result && result.scoreA) || 0, opponentScore = Number(result && result.scoreB) || 0;
+  return { id:plan.id, key:plan.key, name:definition.name, played:played, passed:passed, goal:plan.goal, actual:value,
+    headline:!played ? '本场轮休' : definition.stat ? (passed ? '执行达标' : '未达目标') : '按计划完成',
+    summary:contribution + (definition.stat && played ? '目标 ' + plan.goal + ' ' + definition.unit + '。' : '') +
+      '球队 ' + teamScore + '–' + opponentScore + (result && result.won ? ' 获胜。' : ' 落败。'),
+    points:played ? Number(stats.pts)||0 : 0, teamScore:teamScore };
+}
+
+function renderCareerMatchPlanReview(review) {
+  if (!review) return '';
+  return '<section class="ce-plan-review"><div><small>本场打法 · ' + careerExperienceEscape(review.name) + '</small><strong>' + careerExperienceEscape(review.headline) +
+    '</strong></div><p>' + careerExperienceEscape(review.summary) + '</p>' + (review.played && review.teamScore > 0 ? '<span>你的 ' + review.points + ' 分占球队得分 ' + Math.round(review.points/review.teamScore*100) + '%</span>' : '') + '</section>';
+}
+
+function pauseCareerPreparedGame() {
+  if (!careerPreparedGame || careerPreparedGame.options.isPlayoff) return;
+  if (typeof pauseSeasonSimulation === 'function') pauseSeasonSimulation();
+  removeCareerExperienceModal('career-pregame-modal');
+}
+
+function resumeCareerPreparedGame() {
+  if (!careerPreparedGame || careerPreparedGame.options.isPlayoff) return false;
+  if (getCareerExperience().pending) { showCareerExperienceDecision(); return true; }
+  showCareerPreparedMatchup();
+  return true;
+}
 var careerCoachResume = null;
 
 function resetCareerExperienceTransient() {
@@ -315,6 +393,7 @@ function getCareerExperience() {
   }
   var e = c.eventExperience;
   if (e.season.number !== (c.seasonCount || 0)) {
+    e.matchPlan = null;
     e.season = { number:c.seasonCount || 0, settled:{}, receipts:{}, salaryGames:0, business:0, coachUsed:{} };
     e.effects = [];
     e.task = null;
@@ -322,6 +401,7 @@ function getCareerExperience() {
     e.awaitingGameKey = null;
   }
   if (e.team !== STATE.careerTeam) {
+    e.matchPlan = null;
     e.team = STATE.careerTeam;
     e.effects = [];
     e.task = null;
@@ -362,7 +442,7 @@ function recordCareerTransaction(id, kind, title, amount) {
     e.money.earned += amount;
     e.money[kind === 'salary' ? 'salary' : 'offcourt'] += amount;
   } else e.money.spent -= amount;
-  e.money.entries.push({ id:id, title:title, amount:amount, season:STATE.career.seasonCount || 0 });
+  e.money.entries.push({ id:id, kind:kind, title:title, amount:amount, season:STATE.career.seasonCount || 0 });
   e.money.entries = e.money.entries.slice(-16);
   return true;
 }
@@ -593,6 +673,11 @@ function settleCareerExperienceGame(key, stats, result, options) {
   options = options || {};
   if (!e || options.isLegendChallenge || e.season.settled[key]) return false;
   e.season.settled[key] = true;
+  if (options.isPlayoff && e.matchPlan && e.matchPlan.key === key && CAREER_MATCH_PLANS[e.matchPlan.id]) {
+    e.lastMatchPlanReview = buildCareerMatchPlanReview(e.matchPlan,stats,result);
+    if (result) result.careerMatchPlanReview = e.lastMatchPlanReview;
+    e.matchPlan = null;
+  }
   if (!options.isPlayoff) {
     var games = (STATE.season.schedule || []).length || 82;
     if (e.season.salaryGames < games) {
@@ -612,8 +697,8 @@ function settleCareerExperienceGame(key, stats, result, options) {
     task.remaining--;
     if (task.remaining <= 0) {
       var criterion = task.kind === 'minutes' ? '达到 ' + task.target + ' 分钟' : task.kind === 'recovery' ? '守住 ' + task.target + ' 分钟上限' : '球队获胜';
-      e.feedback = { title:task.title, text:'安排已完成：' + task.total + ' 场球队比赛，实际出战 ' + task.played + ' 场，合计 ' +
-        Math.round(task.minutes) + ' 分钟、' + task.points + ' 分。' + criterion + ' ' + task.successful + '/' + task.total + ' 场。' };
+      e.feedback = { title:task.title, text:task.title + '结束：出战 ' + task.played + ' 场，场均 ' + (task.played ? (task.minutes/task.played).toFixed(1) : '0') +
+        ' 分钟、' + (task.played ? (task.points/task.played).toFixed(1) : '0') + ' 分。' + criterion + '，' + task.successful + '/' + task.total + ' 场达标。' };
       e.task = null;
     }
   }
@@ -626,6 +711,8 @@ function settleCareerExperienceGame(key, stats, result, options) {
 function renderCareerExperienceStrip(pregame) {
   var e = getCareerExperience();
   if (!e || !STATE.careerTeam) return '';
+  var playoff = pregame && !!((careerPreparedGame && careerPreparedGame.options.isPlayoff) || (STATE.season && STATE.season.isPlayoffs));
+  var selectedPlan = CAREER_MATCH_PLANS[(e.matchPlan || {}).id] || CAREER_MATCH_PLANS.balanced;
   var fx = getCareerExperienceModifiers(), mods = getNextSeasonMods(), ev = STATE.season && STATE.season.events || {};
   var load = (Number(mods.staminaLoad) || 0) + fx.load;
   var body = ev.injuryGamesLeft > 0 ? '休战 ' + ev.injuryGamesLeft + ' 场' : fx.limit < 42 ? '限时 ' + fx.limit + ' 分钟' : load >= 2 ? '额外负荷' : load < 0 ? '恢复安排' : '状态正常';
@@ -635,29 +722,24 @@ function renderCareerExperienceStrip(pregame) {
   var cards = '<div class="ce-status-grid"><div><small>身体状态</small><strong>' + body + '</strong><span>负荷 ' + load + ' · 每场伤病率 ' + risk + '%</span></div>' +
     '<div><small>球队地位</small><strong>' + role + '</strong><span>' + (planned == null ? '等待轮换安排' : '轮换计划 ' + planned + ' 分钟') + '</span></div>' +
     '<div><small>场上默契</small><strong>' + (chemistry >= 6 ? '配合成熟' : chemistry >= 2 ? '逐渐熟悉' : '磨合中') + '</strong><span>' + chemistry + '/10</span></div>' +
-    '<div><small>场外收入 · 模拟</small><strong>' + careerExperienceMoney(e.money.cash) + '</strong><span>累计收入 ' + careerExperienceMoney(e.money.earned) + '</span></div></div>';
+    (playoff ? '<div><small>本场打法</small><strong>' + careerExperienceEscape(selectedPlan.name) + '</strong><span>' +
+      (e.matchPlan && e.matchPlan.goal && selectedPlan.unit ? '目标 ' + e.matchPlan.goal + ' ' + selectedPlan.unit : '按教练安排执行') + '</span></div></div>' :
+      '<div><small>账户余额</small><strong>' + careerExperienceMoney(e.money.cash) + '</strong><span>生涯收入 ' + careerExperienceMoney(e.money.earned) + '</span></div></div>');
   var effects = e.effects.map(function(item) { return '<li>' + careerExperienceEscape(careerExperienceEffectText(item)) +
     ' · 剩余 ' + item.gamesLeft + ' 场</li>'; }).join('');
-  var entries = e.money.entries.slice().reverse().map(function(item) { return '<li><span>' + careerExperienceEscape(item.title) + '</span><b>' +
+  var entries = e.money.entries.filter(function(item) { return item.kind !== 'salary' && String(item.id || '').indexOf('salary:') !== 0 && item.title !== '球队合约工资'; }).slice().reverse().map(function(item) { return '<li><span>' + careerExperienceEscape(item.title) + '</span><b>' +
     (item.amount >= 0 ? '+' : '−') + careerExperienceMoney(Math.abs(item.amount)) + '</b></li>'; }).join('');
   var coach = e.coaches[STATE.careerTeam];
-  var salaryMarket = getCareerSalaryMarket();
-  var salaryType = { rookie:'首轮新秀合同', two_way:'双向合同', minimum:'底薪合同', market:'市场合同估值' }[e.money.contract.type];
   var playerName = typeof getHupuDisplayName === 'function' ? getHupuDisplayName() : ((typeof HUPU_USER !== 'undefined' && HUPU_USER.nickname) || '我的球员');
-  var profile = pregame ? '' : '<div class="ce-profile-stage"><img src="assets/images/ui/career-avatar-v1.png" alt="虚拟球员展示形象"><div class="ce-profile-caption"><small>MY PLAYER · 虚拟展示形象</small><h2>' + careerExperienceEscape(playerName) + '</h2><p>' + careerExperienceEscape(STATE.position) + ' · <b>OVR ' + STATE.finalOVR + '</b></p></div></div>';
+  var profile = pregame ? '' : '<div class="ce-profile-stage"><img src="assets/images/ui/career-avatar-v1.png" alt="我的球员"><div class="ce-profile-caption"><small>MY PLAYER</small><h2>' + careerExperienceEscape(playerName) + '</h2><p>' + careerExperienceEscape(STATE.position) + ' · <b>OVR ' + STATE.finalOVR + '</b></p></div></div>';
   var actions = pregame ? '' : '<nav class="ce-hub-actions" aria-label="生涯功能"><button onclick="openCareerSkillPanel(this)">球风成长<span>属性与技能</span></button><button onclick="openCareerCoachSearch()">球队与教练<span>' + careerExperienceEscape(role) + ' · 默契 ' + chemistry + '</span></button><button onclick="openCareerLedger()">场外账本<span>收入与支出</span></button></nav>';
-  return '<section id="' + (pregame ? 'career-pregame-status' : 'player-state-strip') + '" class="ce-status-strip' + (pregame ? '' : ' ce-career-hub') + '">' + profile + '<div class="ce-hub-content"><div class="ce-hub-heading"><small>CAREER OVERVIEW</small><strong>本场生涯安排</strong></div>' + cards + actions +
-    '<details class="player-state-details"><summary>本场安排、收支与制服组</summary><div class="ce-details">' +
-    (e.lastNote ? '<p>上次选择：' + careerExperienceEscape(e.lastNote) + '</p>' : '') +
-    (e.task ? '<p>当前安排：还剩 ' + e.task.remaining + '/' + e.task.total + ' 场，已完成 ' + e.task.successful + ' 场要求。</p>' : '') +
+  return '<section id="' + (pregame ? 'career-pregame-status' : 'player-state-strip') + '" class="ce-status-strip' + (pregame ? '' : ' ce-career-hub') + '">' + profile + '<div class="ce-hub-content"><div class="ce-hub-heading"><small>' + (playoff ? 'PLAYOFFS' : 'MY CAREER') + '</small><strong>' + (playoff ? '本场状态' : '赛季中心') + '</strong></div>' + cards + actions +
+    '<details class="player-state-details"><summary>' + (playoff ? '轮换与体能' : '本场安排与账本') + '</summary><div class="ce-details">' +
+    (e.task ? '<p>' + careerExperienceEscape(e.task.title) + ' · 剩余 ' + e.task.remaining + ' 场，已达标 ' + e.task.successful + ' 场。</p>' : '') +
     (e.feedback ? '<p>' + careerExperienceEscape(e.feedback.text) + '</p>' : '') +
-    '<ul>' + effects + '</ul><p>税前合同年薪 ' + careerExperienceMoney(e.money.annualSalary) + '；已领工资 ' + careerExperienceMoney(e.money.salary) +
-    '；场外收入 ' + careerExperienceMoney(e.money.offcourt) + '；累计支出 ' + careerExperienceMoney(e.money.spent) + '。</p>' +
-    '<p class="ce-note">' + salaryMarket.year + ' 年工资环境 · 工资帽 ' + careerExperienceMoney(salaryMarket.cap) + ' · ' + (STATE.career.seasonCount || 0) + ' 年 NBA 资历 · ' + salaryType +
-    (salaryMarket.projected ? '。未来年份沿用 2026–27 工资环境估算' : '') + '。合同期内按已签年度工资支付，续约时重新估值。</p>' +
-    '<p class="ce-note">账本从第 ' + (e.money.fromSeason + 1) + ' 赛季、第 ' + (e.money.fromGame + 1) + ' 场起记录。合约工资按常规赛球队比赛结算，伤病缺席也照常发放。</p>' +
-    '<ul class="ce-ledger">' + entries + '</ul><p>' + careerExperienceEscape(coach ? '主教练：' + coach.name : '当前主教练沿用球队体系') +
-    '</p><button class="btn btn-secondary btn-sm" onclick="openCareerCoachSearch()">寻找契合球风的教练</button></div></details></div></section>';
+    (effects ? '<ul>' + effects + '</ul>' : '') + (playoff ? '' : '<p class="ce-contract-summary">年薪 ' + careerExperienceMoney(e.money.annualSalary) + ' · 已领工资 ' + careerExperienceMoney(e.money.salary) + '</p>' +
+    (entries ? '<ul class="ce-ledger">' + entries + '</ul>' : '') + '<p>' + careerExperienceEscape(coach ? '主教练：' + coach.name : '球队采用当前教练体系') +
+    '</p><button class="btn btn-secondary btn-sm" onclick="openCareerCoachSearch()">寻找契合球风的教练</button>') + '</div></details></div></section>';
 }
 
 function openCareerLedger() {
@@ -671,7 +753,7 @@ function showCareerExperienceModal(id, title, body) {
   removeCareerExperienceModal(id);
   document.body.insertAdjacentHTML('beforeend', '<div class="team-picker-overlay ce-overlay" id="' + id +
     '"><section class="ce-modal" role="dialog" aria-modal="true" aria-label="' + careerExperienceEscape(title) +
-    '"><header><small>PERFECT PLAYER · 生涯现场</small><h2>' + careerExperienceEscape(title) + '</h2></header><div class="ce-modal-body">' + body + '</div></section></div>');
+    '"><header><small>' + (id === 'career-pregame-modal' ? (STATE.season && STATE.season.isPlayoffs ? 'PLAYOFFS' : 'GAME DAY') : 'MY CAREER') + '</small><h2>' + careerExperienceEscape(title) + '</h2></header><div class="ce-modal-body">' + body + '</div></section></div>');
   var button = document.getElementById(id).querySelector('button:not(:disabled)');
   if (button) button.focus();
 }
@@ -683,7 +765,7 @@ function removeCareerExperienceModal(id) {
 
 function renderCareerMatchupPlayer(player, user) {
   var name = user ? (typeof getHupuDisplayName === 'function' ? getHupuDisplayName() : ((typeof HUPU_USER !== 'undefined' && HUPU_USER.nickname) || '我的球员')) : player.cname || player.name;
-  var visual = user ? '<div class="ce-user-stage"><img class="ce-user-model" src="assets/images/ui/career-avatar-v1.png" alt="虚拟球员展示形象"><span>MY PLAYER · 虚拟形象</span></div>' :
+  var visual = user ? '<div class="ce-user-stage"><img class="ce-user-model" src="assets/images/ui/career-avatar-v1.png" alt="我的球员"><span>MY PLAYER</span></div>' :
     '<div class="ce-player-photo" style="' + (typeof getPlayerHeadshotStyle === 'function' ? getPlayerHeadshotStyle(player, 128) : 'background:#fff') + '"></div>';
   var stats = user && STATE.season.playerStats ? STATE.season.playerStats : null;
   var average = stats && stats.games ? (stats.pts / stats.games).toFixed(1) + ' 分 · ' + (stats.reb / stats.games).toFixed(1) + ' 板 · ' + (stats.ast / stats.games).toFixed(1) + ' 助' : '等待本季比赛记录';
@@ -702,10 +784,11 @@ function showCareerPreparedMatchup() {
     (STATE.career.seasonCount ? '新赛季首战' : '生涯首战') : rival && rival.team === ctx.opponent ? '宿敌交手' : '今晚的出场安排');
   var info = '<div class="ce-matchup-teams">' + careerExperienceEscape(getTeamName(STATE.careerTeam)) + ' <b>VS</b> ' +
     careerExperienceEscape(getTeamName(ctx.opponent)) + '</div><div class="ce-matchup-players">' + renderCareerMatchupPlayer({}, true) +
-    renderCareerMatchupPlayer(player, false) + '</div>' + renderCareerExperienceStrip(true) +
+    renderCareerMatchupPlayer(player, false) + '</div>' + (ctx.options.isPlayoff ? renderCareerMatchPlanPicker() : '') + renderCareerExperienceStrip(true) +
     (e.feedback ? '<div class="ce-feedback">' + careerExperienceEscape(e.feedback.text) + '</div>' : '') +
     '<div class="ce-game-actions"><button class="btn btn-primary" onclick="runCareerPreparedGame(false)">模拟本场</button>' +
-    '<button class="btn btn-secondary" onclick="runCareerPreparedGame(true)"' + (window.PP_LIVE ? '' : ' disabled') + '>观看比赛</button></div>';
+    '<button class="btn btn-secondary" onclick="runCareerPreparedGame(true)"' + (window.PP_LIVE ? '' : ' disabled') + '>观看比赛</button>' +
+    (ctx.options.isPlayoff ? '' : '<button class="btn btn-secondary" onclick="pauseCareerPreparedGame()">返回赛季</button>') + '</div>';
   showCareerExperienceModal('career-pregame-modal', title, info);
 }
 
@@ -716,11 +799,15 @@ function prepareCareerExperienceGame(opponent, options, runSkip, runWatch) {
   var e = getCareerExperience(), key = getCareerExperienceMatchKey(opponent, options);
   var decision = findCareerExperienceDecision(opponent, options);
   var rival = STATE.career.flags && STATE.career.flags.storyRival;
-  var preview = decision || e.feedback || e.awaitingGameKey === key || options.isPlayoff || (STATE.season.games || []).length === 0 ||
+  var preview = decision || e.feedback || e.awaitingGameKey === key || options.isPlayoff || STATE.season.pauseAfterNextGame || (STATE.season.games || []).length === 0 ||
     (rival && rival.team === opponent && e.lastPreviewKey !== key);
   if (!preview) return false;
   e.awaitingGameKey = key;
   careerPreparedGame = { opponent:opponent, options:options, key:key, runSkip:runSkip, runWatch:runWatch };
+  if (options.isPlayoff) {
+    if (!e.matchPlan || e.matchPlan.key !== key || !CAREER_MATCH_PLANS[e.matchPlan.id]) e.matchPlan = { id:'balanced', key:key, opponent:opponent, goal:0, status:'ready' };
+    else e.matchPlan.status = 'ready';
+  }
   if (decision) beginCareerExperienceDecision(decision, opponent, options);
   else showCareerPreparedMatchup();
   return true;
@@ -731,6 +818,7 @@ function runCareerPreparedGame(watch) {
   if (!ctx || getCareerExperience().pending) return;
   careerPreparedGame = null;
   var e = getCareerExperience();
+  if (ctx.options.isPlayoff && e.matchPlan && e.matchPlan.key === ctx.key) e.matchPlan.status = 'playing';
   e.awaitingGameKey = null;
   e.lastPreviewKey = ctx.key;
   e.feedback = null;
@@ -758,6 +846,7 @@ window.PP_CAREER_EVENTS = {
   definitions:CAREER_EXPERIENCE_EVENTS, getState:getCareerExperience, getModifiers:getCareerExperienceModifiers,
   renderStateStrip:renderCareerExperienceStrip, prepareGame:prepareCareerExperienceGame,
   matchKey:getCareerExperienceMatchKey, settleGame:settleCareerExperienceGame,
+  getMatchPlanModifiers:getCareerMatchPlanModifiers, renderMatchPlanReview:renderCareerMatchPlanReview, resumePrepared:resumeCareerPreparedGame,
   signContract:signCareerExperienceContract, renewContract:signCareerExperienceContract,
   choose:chooseCareerExperienceDecision, findDecision:findCareerExperienceDecision,
   showFeedback:showCareerExperienceFeedback, pauseForCoach:pauseCareerSimulationForCoach,

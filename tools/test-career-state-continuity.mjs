@@ -5,6 +5,22 @@ import { createSimulation } from './bench-era-baseline.mjs';
 
 const read = file => fs.readFileSync(new URL('../' + file, import.meta.url), 'utf8');
 
+{
+  const html=read('nba-perfect-player.html'),scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
+  const values=new Map(),storageContext={window:{},localStorage:{
+    getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)
+  },btoa:text=>Buffer.from(text,'binary').toString('base64'),atob:text=>Buffer.from(text,'base64').toString('binary'),setTimeout};
+  vm.createContext(storageContext);
+  vm.runInContext(scripts.find(s=>s.includes('var PROJECT_ID')),storageContext);
+  vm.runInContext(scripts.find(s=>s.includes('var Storage =')),storageContext);
+  const payload='大型季后赛快照'.repeat(40000);
+  await storageContext.Storage.setValue({lenf_auto_slot:payload});
+  assert.equal(await storageContext.Storage.getValue('lenf_auto_slot'),payload,'browser saves over 200KB must reach actual storage');
+  storageContext.localStorage.setItem=()=>{throw new Error('QuotaExceededError');};
+  await assert.rejects(storageContext.Storage.setValue({lenf_auto_slot:'new'}),/QuotaExceededError/,'quota failure must reach the caller instead of reporting success');
+  assert.equal(await storageContext.Storage.getValue('lenf_auto_slot'),payload,'failed writes must preserve the old save');
+}
+
 function fixture() {
   const f = createSimulation('current', 73), c = f.context;
   c.HUPU_USER = {nickname:'Continuity Test Player',avatar:'',isLogin:false};
@@ -263,4 +279,55 @@ for (const legacy of [false, true]) {
   assert.equal(f.state.season.playerStats.games,2);
 }
 
-console.log('Career state continuity passed: injury and coach consistency, executable pending saves, ordered writes, historical league restoration, retryable failures, duplicate-run prevention and stale-result cancellation.');
+{
+  const f=fixture(),c=f.context,callbacks=[],elements=new Map();
+  c.document.getElementById=id=>{
+    if(!['simStatus','simRecord','simDotGrid','simInfo'].includes(id))return f.modals.get(id)||null;
+    if(!elements.has(id))elements.set(id,{style:{},innerHTML:'',textContent:''});return elements.get(id);
+  };
+  c.ensurePulseBoard=c.refreshPulseBoard=()=>{};c.checkRandomEvents=c.checkSeasonBranchEvent=()=>null;c.PP_CAREER_EVENTS.pauseForCoach=()=>false;
+  const keys=['pts','reb','ast','stl','blk','tov','fgm','fga','ftm','fta','threeM','threeA','games','mins'];
+  f.state.season={wins:0,losses:0,games:[],standings:{},playerStats:Object.fromEntries(keys.map(k=>[k,0])),playoffStats:{games:0},events:{injuryGamesLeft:0,suspensionGamesLeft:0,triggeredIds:[],storyTimeline:[]},isUserStarter:true};
+  c.initStandings();c.buildRealSchedule();f.state.season.schedule=f.state.season.schedule.slice(0,3);f.timers.length=0;
+  c.liveOrSkipUserPack=(opponent,options,done)=>{callbacks.push({opponent,done});return true;};
+  c.quickSimAllGames();assert.equal(callbacks.length,1);
+  c.pauseSeasonSimulation();
+  callbacks[0].done(c.skipUserGamePack(callbacks[0].opponent,false));
+  f.timers.shift()();
+  assert.equal(f.state.season.games.length,1);assert.equal(callbacks.length,1,'pausing must stop the next match from starting');
+  await c.manualSaveGame(1);await c.manualLoadGame(1);
+  assert.equal(f.state.season.simulationPaused,true,'loading a paused season must preserve its pause');
+  c.quickSimAllGames();assert.equal(callbacks.length,1);
+  c.resumeSeasonSimulation(true);assert.equal(callbacks.length,2);
+  callbacks[1].done(c.skipUserGamePack(callbacks[1].opponent,false));
+  assert.equal(f.state.season.simulationPaused,true);assert.equal(f.state.season.games.length,2);
+  while(f.timers.length)f.timers.shift()();
+  assert.equal(callbacks.length,2,'single-game advance must return to the pause');
+  c.resumeSeasonSimulation(false);assert.equal(callbacks.length,3);
+  const pack=c.skipUserGamePack(callbacks[2].opponent,false);callbacks[2].done(pack);callbacks[2].done(pack);
+  assert.equal(f.state.season.games.length,3);assert.equal(f.state.season.playerStats.games,3);
+}
+
+{
+  const f=fixture(),c=f.context,s=f.state,callbacks=[];
+  s.season.isPlayoffs=true;s.season.playoffStats=Object.fromEntries(['pts','reb','ast','stl','blk','tov','fgm','fga','ftm','fta','threeM','threeA','mins','games'].map(k=>[k,0]));
+  s.season.playoffBracket={rounds:[[{high:{team:'LAL'},low:{team:'BOS'},winner:null}],[null,null],[null],[null]],results:[],teams:[{team:'LAL',seed:1},{team:'BOS',seed:8}]};
+  c.document.querySelector=()=>({id:'screen-playoffs'});c.renderPlayoffBracketUI=c.renderPlayoffGameBrief=c.clearPlayoffGamecast=()=>{};
+  c.showPlayoffGameDataPanel=()=>{};
+  c.liveOrSkipUserPack=(opponent,options,done)=>callbacks.push({opponent,options,done});
+  c.simPlayoffSeries(0,0);
+  assert.equal(callbacks[0].options.title,'首轮 G1');
+  const pack=c.skipUserGamePack('BOS',true);callbacks[0].done(pack);callbacks[0].done(pack);
+  assert.equal(s.season.playoffStats.games,1,'duplicate playoff callbacks must not count twice');
+  assert.equal(s.season.playoffBracket.rounds[0][0].progress.seriesGames.length,1);
+  await c.manualSaveGame(1);await c.manualLoadGame(1);
+  c.simPlayoffSeries(0,0);
+  assert.equal(callbacks[1].options.title,'首轮 G2','saved series must resume the next game instead of replaying G1');
+  callbacks[0].done(pack);
+  assert.equal(s.season.playoffStats.games,1,'callbacks owned by the pre-load season must stop');
+  callbacks[1].done(c.skipUserGamePack('BOS',true));
+  assert.equal(s.season.playoffStats.games,2);
+  assert.equal(s.season.playoffBracket.rounds[0][0].progress.seriesGames.length,2);
+}
+
+console.log('Career state continuity passed: injury and coach consistency, real browser storage over 200KB and quota failures, historical restoration, duplicate/stale results, pause persistence, single-game advancement and playoff series checkpoints.');

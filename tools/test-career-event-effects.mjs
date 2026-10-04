@@ -66,7 +66,8 @@ for (const def of fixture().api.definitions) {
   }
   assert.equal(c.getPlayerRotationPlan(f.state.attrs, 'SG', false), base);
   assert.equal(c.getSeasonInjuryEventRate(), 0);
-  assert.match(e.feedback.text, /合计 .* 分钟、51 分/);
+  assert.match(e.feedback.text, /场均 31\.0 分钟、17\.0 分/);
+  assert.match(e.feedback.text, /3\/3 场达标/);
   assert.equal(e.task, null);
 }
 
