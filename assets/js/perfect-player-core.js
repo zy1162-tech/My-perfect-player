@@ -1625,13 +1625,13 @@ function getEventChoicePrediction(choice, event, choiceIndex) {
   if (hint && effectPreview && !hasEventChoiceOutcomeForecast(hint)) {
     hint = hint.replace(/[。；;，,\s]+$/, '') + '；' + effectPreview;
   } else if (hint && !hasEventChoiceOutcomeForecast(hint)) {
-    hint = hint.replace(/[。；;，,\s]+$/, '') + '；将改变后续剧情与人物评价';
+    hint = hint.replace(/[。；;，,\s]+$/, '') + '；继续这段经历';
   } else if (!hint && effectPreview) {
     hint = effectPreview;
   } else if (!hint) {
     var label = String(choice.label || ('选项' + ((choiceIndex || 0) + 1))).trim();
     var title = String(event && event.title || '本事件').replace(/^(赛季日常|赛季事件)[:：]\s*/, '');
-    hint = '选择“' + label + '”后将推进“' + title + '”路线，并影响后续剧情';
+    hint = '选择“' + label + '”后继续“' + title + '”';
   }
   return hint;
 }
@@ -9252,19 +9252,20 @@ function diffEventAttributeSnapshot(before) {
 
 function renderEventAttributeChanges(changes) {
   var html = '<div class="event-attribute-summary" data-event-attribute-summary>';
-  html += '<div class="event-attribute-title">本次实际数值变化</div>';
+  html += '<div class="event-attribute-title">选择结果</div>';
   if (!changes || !changes.length) {
-    html += '<div class="event-attribute-empty">本次无可见属性变化</div>';
+    html += '<div class="event-attribute-empty">经历已记录</div>';
   } else {
     html += '<div class="event-attribute-list">';
     changes.forEach(function(change) {
       var delta = change.delta;
       var deltaText = (delta > 0 ? '+' : '') + delta;
-      html += '<span class="event-attribute-chip ' + (delta > 0 ? 'up' : 'down') + '">' + change.label + ' <strong>' + deltaText + '</strong></span>';
+      html += '<span class="event-attribute-chip ' + (delta > 0 ? 'up' : 'down') + '">' + change.label + ' <strong>' + deltaText + '</strong>' +
+        (typeof change.value === 'number' ? '<span class="event-attribute-current"> → ' + change.value + '</span>' : '') + '</span>';
     });
     html += '</div>';
   }
-  return html + '</div>';
+  return html + (typeof renderCareerChoiceImpact === 'function' ? renderCareerChoiceImpact(changes) : '') + '</div>';
 }
 
 function getBranchStage(branchId) {
@@ -14602,6 +14603,7 @@ function renderTrainingCamp() {
   html += '</div>';
 
   var skillPts = 0;
+  if (typeof renderCareerRelationshipOverview === 'function') html += renderCareerRelationshipOverview();
   if (typeof PP_SKILLS !== 'undefined') {
     PP_SKILLS.ensureSkillState();
     skillPts = PP_SKILLS.availableStylePoints();

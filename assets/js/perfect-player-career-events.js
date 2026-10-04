@@ -304,7 +304,7 @@ var careerCoachResume = null;
 function resetCareerExperienceTransient() {
   careerPreparedGame = null;
   careerCoachResume = null;
-  ['career-decision-modal','career-pregame-modal','career-coach-modal','career-feedback-modal'].forEach(removeCareerExperienceModal);
+  ['career-decision-modal','career-pregame-modal','career-coach-modal','career-feedback-modal','career-influence-modal'].forEach(removeCareerExperienceModal);
 }
 
 function careerExperienceEscape(value) {
@@ -455,6 +455,69 @@ function signCareerExperienceContract(options) {
   e.money.annualSalary = e.money.contract.salaries[0];
 }
 
+var CAREER_STATE_IMPACTS = {
+  coachTrust:'影响轮换、首发竞争和续约', lockerRoomTrust:'影响球队进攻、首发竞争和续约',
+  leadership:'影响球队攻防和首发竞争', loyalty:'影响球队去留和续约',
+  fame:'影响全明星评选和自由市场热度', mediaTrust:'影响比赛状态和奖项评选',
+  controversy:'影响状态稳定、球队去留和续约', fanSupport:'影响主场表现、球队去留和续约',
+  businessValue:'影响续约意愿和自由市场报价数量', chinaPopularity:'影响自由市场热度',
+  legacyBonus:'计入生涯历史分', staminaLoad:'影响体能负荷、球队攻防和伤病风险',
+  injuryRiskBonus:'影响伤病风险', formVariance:'影响比赛状态的波动',
+  moraleBonus:'影响球队攻防', mediaPressure:'影响心理压力与球队进攻', teamChemistry:'影响球队攻防与教练建议资格'
+};
+
+function careerInfluenceSigned(value, digits) {
+  var rounded = Number((Number(value) || 0).toFixed(digits || 0));
+  return (rounded > 0 ? '+' : '') + rounded;
+}
+
+function renderCareerInfluenceEffects() {
+  var fx = getCareerProfileEffects();
+  return '<div class="ce-influence-effects"><span>轮换倾向 <b>' + careerInfluenceSigned((Math.sqrt(fx.minutesFactor)-1)*100,1) + '%</b></span>' +
+    '<span>首发竞争 <b>' + (fx.lineupBonus ? careerInfluenceSigned(fx.lineupBonus) : '尚无加成') + '</b></span>' +
+    '<span>续约意愿 <b>' + careerInfluenceSigned(fx.renewalChanceBonus*100,1) + ' 个百分点</b></span></div>';
+}
+
+function renderCareerRelationshipOverview() {
+  var p = getCareerProfile();
+  return '<div class="ce-relationship-overview"><div><strong>教练信任 ' + (Number(p.coachTrust)||0) + '</strong><span>更衣室信任 ' +
+    (Number(p.lockerRoomTrust)||0) + '</span></div><button class="btn btn-secondary btn-sm" onclick="openCareerInfluencePanel()">生涯关系</button></div>';
+}
+
+function renderCareerChoiceImpact(changes) {
+  var relevant = (changes || []).filter(function(change) { return /^(profile|mods)\./.test(change.key) && CAREER_STATE_IMPACTS[change.key.split('.').pop()]; });
+  if (!relevant.length) return '';
+  var descriptions = relevant.map(function(change) { return change.label + '：' + CAREER_STATE_IMPACTS[change.key.split('.').pop()]; });
+  var teamChange = relevant.some(function(change) { return /profile\.(coachTrust|lockerRoomTrust|leadership|loyalty|businessValue|controversy|fanSupport)$/.test(change.key); });
+  return '<div class="ce-choice-impact"><p>' + descriptions.map(careerExperienceEscape).join('<br>') + '</p>' + (teamChange ? renderCareerInfluenceEffects() : '') +
+    '<button class="btn btn-secondary btn-sm" onclick="openCareerInfluencePanel(\'' + relevant[0].key.split('.').pop() + '\')">查看生涯关系</button></div>';
+}
+
+function openCareerInfluencePanel(focusKey) {
+  if (!STATE.career) return;
+  if (STATE.careerTeam && STATE.season && !STATE.season.isPlayoffs && typeof pauseSeasonSimulation === 'function') pauseSeasonSimulation();
+  var p = getCareerProfile(), fx = getCareerProfileEffects(), mods = getNextSeasonMods();
+  var groups = [
+    { title:'球队关系', keys:['coachTrust','lockerRoomTrust','leadership','loyalty'], footer:renderCareerInfluenceEffects() },
+    { title:'公众形象', keys:['fame','mediaTrust','fanSupport','controversy'], footer:'' },
+    { title:'场外机会', keys:['businessValue','chinaPopularity'], footer:'<p class="ce-influence-total">自由市场报价 ' + careerInfluenceSigned(fx.contractOfferBonus) + ' 份</p>' },
+    { title:'生涯声望', keys:['legacyBonus'], footer:'<p class="ce-influence-total">历史评分 ' + careerInfluenceSigned(fx.legacyScoreContribution) + '</p>' },
+    { title:'本季状态', keys:['staminaLoad','injuryRiskBonus','formVariance','moraleBonus','mediaPressure','teamChemistry'], values:mods, footer:'' }
+  ];
+  var focused = groups.findIndex(function(group) { return group.keys.indexOf(focusKey) >= 0; });
+  var body = groups.map(function(group,index) {
+    return '<details class="ce-influence-group"' + (index === Math.max(0,focused) ? ' open' : '') + '><summary>' + group.title + '</summary><div class="ce-influence-values">' +
+      group.keys.map(function(key) { return '<div data-status-key="' + key + '"><span>' + EVENT_ATTRIBUTE_LABELS[key] + '</span><strong>' +
+        (Number((group.values || p)[key])||0) + '</strong><small>' + CAREER_STATE_IMPACTS[key] + '</small></div>'; }).join('') + '</div>' + group.footer + '</details>';
+  }).join('');
+  body += '<button class="btn btn-secondary" onclick="closeCareerInfluencePanel()">返回</button>';
+  showCareerExperienceModal('career-influence-modal','生涯关系',body);
+}
+
+function closeCareerInfluencePanel() {
+  removeCareerExperienceModal('career-influence-modal');
+}
+
 function getCareerExperienceRole() {
   var lineup = typeof calcTeamLineup === 'function' && STATE.careerTeam ? calcTeamLineup(STATE.careerTeam) : {};
   var players = (lineup.allPlayers || []).slice().sort(function(a, b) { return (Number(b.ovr) || 0) - (Number(a.ovr) || 0); });
@@ -515,7 +578,7 @@ function openCareerCoachSearch() {
       (coach.id === current ? ' · 当前体系' : '') + '</strong><span>与你的球风契合度 ' + coach.fit + '/100</span><small>' +
       careerExperienceEscape(coach.system.desc) + '</small></button>';
   }).join('');
-  showCareerExperienceModal('career-coach-modal', '制服组 · 主教练人选', '<p>' + careerExperienceEscape(authority.reason) +
+  showCareerExperienceModal('career-coach-modal', '制服组 · 主教练人选', renderCareerRelationshipOverview() + '<p>' + careerExperienceEscape(authority.reason) +
     '。每赛季可建议一次，费用由球队承担。</p><div class="ce-choices">' + cards +
     '</div><button class="btn btn-secondary" onclick="closeCareerCoachSearch()">返回</button>');
 }
@@ -716,11 +779,12 @@ function renderCareerExperienceStrip(pregame) {
   var fx = getCareerExperienceModifiers(), mods = getNextSeasonMods(), ev = STATE.season && STATE.season.events || {};
   var load = (Number(mods.staminaLoad) || 0) + fx.load;
   var body = ev.injuryGamesLeft > 0 ? '休战 ' + ev.injuryGamesLeft + ' 场' : fx.limit < 42 ? '限时 ' + fx.limit + ' 分钟' : load >= 2 ? '额外负荷' : load < 0 ? '恢复安排' : '状态正常';
-  var role = getCareerExperienceRole(), chemistry = getCareerExperienceChemistry();
+  var role = getCareerExperienceRole(), chemistry = getCareerExperienceChemistry(), careerProfile = getCareerProfile();
   var planned = STATE.season && typeof getPlayerRotationPlan === 'function' ? Math.round(getPlayerRotationPlan(STATE.attrs, STATE.position, !!STATE.season.isPlayoffs)) : null;
   var risk = typeof getSeasonInjuryEventRate === 'function' ? getSeasonInjuryEventRate().toFixed(1) : '—';
   var cards = '<div class="ce-status-grid"><div><small>身体状态</small><strong>' + body + '</strong><span>负荷 ' + load + ' · 每场伤病率 ' + risk + '%</span></div>' +
-    '<div><small>球队地位</small><strong>' + role + '</strong><span>' + (planned == null ? '等待轮换安排' : '轮换计划 ' + planned + ' 分钟') + '</span></div>' +
+    '<div><small>球队地位</small><strong>' + role + '</strong><span>' + (planned == null ? '等待轮换安排' : '轮换计划 ' + planned + ' 分钟') + '</span>' +
+      '<button class="ce-relationship-link" data-status-key="coachTrust" onclick="openCareerInfluencePanel()">教练信任 ' + (Number(careerProfile.coachTrust)||0) + ' ›</button></div>' +
     '<div><small>场上默契</small><strong>' + (chemistry >= 6 ? '配合成熟' : chemistry >= 2 ? '逐渐熟悉' : '磨合中') + '</strong><span>' + chemistry + '/10</span></div>' +
     (playoff ? '<div><small>本场打法</small><strong>' + careerExperienceEscape(selectedPlan.name) + '</strong><span>' +
       (e.matchPlan && e.matchPlan.goal && selectedPlan.unit ? '目标 ' + e.matchPlan.goal + ' ' + selectedPlan.unit : '按教练安排执行') + '</span></div></div>' :
@@ -752,10 +816,10 @@ function openCareerLedger() {
 function showCareerExperienceModal(id, title, body) {
   removeCareerExperienceModal(id);
   document.body.insertAdjacentHTML('beforeend', '<div class="team-picker-overlay ce-overlay" id="' + id +
-    '"><section class="ce-modal" role="dialog" aria-modal="true" aria-label="' + careerExperienceEscape(title) +
+    '"><section class="ce-modal" role="dialog" tabindex="-1" aria-modal="true" aria-label="' + careerExperienceEscape(title) +
     '"><header><small>' + (id === 'career-pregame-modal' ? (STATE.season && STATE.season.isPlayoffs ? 'PLAYOFFS' : 'GAME DAY') : 'MY CAREER') + '</small><h2>' + careerExperienceEscape(title) + '</h2></header><div class="ce-modal-body">' + body + '</div></section></div>');
-  var button = document.getElementById(id).querySelector('button:not(:disabled)');
-  if (button) button.focus();
+  var target = document.getElementById(id).querySelector(id === 'career-influence-modal' ? '.ce-modal' : 'button:not(:disabled)');
+  if (target) target.focus({ preventScroll:true });
 }
 
 function removeCareerExperienceModal(id) {

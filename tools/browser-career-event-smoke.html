@@ -14,6 +14,9 @@ body{margin:0;background:#f4f1eb;font:14px system-ui;color:#17283d}header{paddin
 <select id="roster-team" aria-label="阵容验证球队"><option value="PHI">PHI 费城</option><option value="BOS">BOS 波士顿</option><option value="LAL">LAL 洛杉矶</option><option value="CHA">CHA 夏洛特</option></select>
 <button onclick="prepareRosterSmoke()">展示真实建球名单</button>
 <button onclick="prepareCareerSmoke()">准备正常赛季验证</button>
+<button onclick="prepareDraftRelationshipSmoke()">准备选秀关系验证</button>
+<button onclick="prepareDraftTrainingSmoke()">预置签约至训练营</button>
+<button onclick="gameWindow.startSeason()">从当前角色开始赛季</button>
 <button onclick="preparePlayoffSmoke()">准备季后赛打法验证</button>
 <button onclick="prepareMedicalSmoke()">准备恢复事件验证</button>
 <button onclick="prepareCurrentRecoverySmoke()">继续检查恢复联动</button>
@@ -29,7 +32,7 @@ body{margin:0;background:#f4f1eb;font:14px system-ui;color:#17283d}header{paddin
 <button onclick="reportCareerSmoke()">读取实际结果</button>
 <div id="report">等待准备。</div>
 </header>
-<iframe id="game" src="../nba-perfect-player.html?career-events-smoke=20261004-game-flow-v12" title="正式游戏"></iframe>
+<iframe id="game" src="../nba-perfect-player.html?career-events-smoke=20261004-career-impact-v13" title="正式游戏"></iframe>
 <script>
 var gameWindow, gameState, smokeResult = [], nextCoachStep = 0, savedCareerSmoke = null, branchContinuity = null;
 async function prepareCareerSmokeBase(ovr) {
@@ -70,6 +73,22 @@ async function preparePlayoffSmoke() {
     gameWindow.simPlayoffSeries(0,series);
     document.getElementById('report').textContent='预置季后赛情景已进入正式系列赛流程；请选择本场打法，再模拟或观看比赛。';
   } catch(e){document.getElementById('report').textContent='FAIL '+e.message;}
+}
+async function prepareDraftRelationshipSmoke() {
+  try {
+    var s=await prepareCareerSmokeBase(80);
+    s.careerTeam=null;s._draftPending={round:1,pick:10,type:'lottery',contractYears:4};
+    gameWindow.showDraftAgentStep();
+    document.getElementById('report').textContent='已打开真实选秀经纪团队选择；选择中型团队后检查信任变化，再查看生涯关系。';
+  } catch(e) { document.getElementById('report').textContent='FAIL '+e.message; }
+}
+function prepareDraftTrainingSmoke() {
+  try {
+    gameState.careerTeam='LAL';gameWindow.finalizeDraft('LAL');
+    ['draft-modal','draft-result-modal'].forEach(id=>{var element=gameWindow.document.getElementById(id);if(element)element.remove();});
+    gameWindow.renderTrainingCamp();
+    document.getElementById('report').textContent='保留刚才的真实选择，预置完成签约进入正式训练营。';
+  } catch(e) { document.getElementById('report').textContent='FAIL '+e.message; }
 }
 async function prepareRosterSmoke() {
   try {
@@ -174,7 +193,7 @@ function careerSmokeSaveFields() {
   var e = gameWindow.PP_CAREER_EVENTS.getState();
   return {cash:e.money.cash,earned:e.money.earned,effects:e.effects,task:e.task,pending:e.pending,
     awaitingGameKey:e.awaitingGameKey,coaches:e.coaches,ovr:gameState.finalOVR,attrs:gameState.attrs,
-    simulationPaused:!!gameState.season.simulationPaused,playoffGames:gameState.season.playoffStats&&gameState.season.playoffStats.games};
+    simulationPaused:!!gameState.season.simulationPaused,playoffGames:gameState.season.playoffStats&&gameState.season.playoffStats.games,profile:gameState.career.profile};
 }
 async function saveCareerSmoke() {
   savedCareerSmoke = JSON.stringify(careerSmokeSaveFields());
@@ -207,7 +226,7 @@ function reportCareerSmoke() {
     var continuity = branchContinuity ? {beforeRisk:branchContinuity.beforeRisk,currentRisk:gameWindow.getSeasonInjuryEventRate(),node:gameWindow.getBranchNode('fan_culture'),
       choiceCount:s.career.branchHistory.filter(row=>row.eventId==='fan_culture_score').length,
       attrsPreserved:branchContinuity.attrs===JSON.stringify(s.attrs),ovrPreserved:branchContinuity.ovr===s.finalOVR,pendingEvent:s._seasonBranchEventId} : null;
-    document.getElementById('report').textContent = JSON.stringify({salaryMarket:gameWindow.getCareerSalaryMarket(),annualSalary:e.money.annualSalary,salaryContract:e.money.contract,continuity:continuity,scheduledResults:(s.season.schedule||[]).filter(game=>game.simulated).length,saveRestored:savedCareerSmoke ? savedCareerSmoke===JSON.stringify(careerSmokeSaveFields()) : null,cash:e.money.cash,earned:e.money.earned,salary:e.money.salary,
+    document.getElementById('report').textContent = JSON.stringify({profile:s.career.profile,profileEffects:gameWindow.getCareerProfileEffects(),salaryMarket:gameWindow.getCareerSalaryMarket(),annualSalary:e.money.annualSalary,salaryContract:e.money.contract,continuity:continuity,scheduledResults:(s.season.schedule||[]).filter(game=>game.simulated).length,saveRestored:savedCareerSmoke ? savedCareerSmoke===JSON.stringify(careerSmokeSaveFields()) : null,cash:e.money.cash,earned:e.money.earned,salary:e.money.salary,
       offcourt:e.money.offcourt,spent:e.money.spent,modifiers:fx,injuryRate:gameWindow.getSeasonInjuryEventRate(),rotationPlan:gameWindow.getPlayerRotationPlan(s.attrs,s.position,false),chemistry:gameWindow.getCareerExperienceChemistry(),coach:gameWindow.getTeamSystemEffects('LAL').name,
       coachRecord:e.coaches[s.careerTeam]||null,authority:gameWindow.PP_CAREER_EVENTS.getCoachAuthority(),effects:e.effects,task:e.task,feedback:e.feedback,games:rows,simulationPaused:!!s.season.simulationPaused,playoffGames:s.season.playoffStats&&s.season.playoffStats.games,matchPlan:e.matchPlan||null,planReview:e.lastMatchPlanReview||null,checks:smokeResult},null,2);
   } catch(e) { document.getElementById('report').textContent = 'FAIL '+e.message; }

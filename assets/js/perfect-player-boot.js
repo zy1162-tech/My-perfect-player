@@ -324,7 +324,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20261004-game-flow-v38', { updateViaCache:'none' }).catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20261004-career-impact-v39', { updateViaCache:'none' }).catch(function () {});
   }
 
   function idleLoad() {

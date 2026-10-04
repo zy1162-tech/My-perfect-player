@@ -309,6 +309,48 @@ for (const legacy of [false, true]) {
 }
 
 {
+  const f=fixture(),c=f.context,s=f.state;
+  s.finalOVR=80;s.attrs=Object.fromEntries(Object.keys(s.attrs).map(k=>[k,k==='STA'?0:80]));s.career.currentAge=22;
+  s.season._usageBias=1;s.season.isUserStarter=false;s._draftPending={round:1,pick:10,type:'lottery',contractYears:4};
+  const savedRandom=c.Math.random;
+  c.Math.random=()=>0.743;
+  const minutes=c.getPlayerRotationPlan(s.attrs,s.position,false),defense=c.getCareerTeamGameModifiers('LAL','BOS').defense;
+  assert.equal(c.getTeamRenewalWillingness(),false);
+  c.showDraftAgentStep();c.chooseDraftChoice(1);c.chooseDraftChoice(1);
+  assert.equal(s.career.profile.coachTrust,1,'the actual draft choice must apply exactly once');
+  assert.ok(c.getPlayerRotationPlan(s.attrs,s.position,false)>minutes,'coach trust must reach the real rotation planner');
+  assert.ok(c.getCareerTeamGameModifiers('LAL','BOS').defense>defense,'coach trust must reach the modifiers read by both engines');
+  assert.equal(c.getTeamRenewalWillingness(),true,'the real renewal decision must read the chosen trust value');
+  c.Math.random=savedRandom;
+  const modifierGetter=c.getCareerTeamGameModifiers,reads=[];
+  c.getCareerTeamGameModifiers=(...args)=>{const value=modifierGetter(...args);if(args[0]==='LAL')reads.push(value.defense);return value;};
+  c.skipUserGamePack('BOS',false);
+  assert.ok(reads.some(value=>value>defense),'direct games must read the trust-enhanced defense');
+  reads.length=0;vm.runInContext(read('assets/js/perfect-player-live-sim.js'),c);
+  c.PP_LIVE.run('LAL','BOS',{attrs:s.attrs});
+  assert.ok(reads.some(value=>value>defense),'watched games must read the same trust-enhanced defense');
+  assert.match(f.modals.get('draft-result-modal').html,/教练信任[\s\S]*\+1[\s\S]*→ 1/);
+  assert.match(f.modals.get('draft-result-modal').html,/轮换倾向[\s\S]*\+0\.1%/);
+  assert.match(c.renderCareerExperienceStrip(false),/data-status-key="coachTrust"[\s\S]*教练信任 1/);
+  assert.match(c.renderCareerExperienceStrip(true),/教练信任 1/);
+  c.openCareerInfluencePanel();assert.match(f.modals.get('career-influence-modal').html,/续约意愿[\s\S]*\+0\.6 个百分点/);
+  s.season.pauseAfterNextGame=true;f.api=c.PP_CAREER_EVENTS;
+  f.api.prepareGame('BOS',{},()=>{},()=>{});
+  c.showCareerExperienceModal('career-coach-modal','主教练','<button>返回</button>');
+  const preparedModal=f.modals.get('career-pregame-modal');
+  c.openCareerInfluencePanel();c.closeCareerInfluencePanel();
+  assert.equal(f.modals.get('career-pregame-modal'),preparedModal,'closing relations must reveal the original caller instead of rebuilding a different panel');
+  assert.ok(f.modals.has('career-coach-modal'));
+  await c.manualSaveGame(1);s.career.profile.coachTrust=0;await c.manualLoadGame(1);
+  assert.equal(s.career.profile.coachTrust,1);assert.equal(f.modals.has('career-influence-modal'),false);
+  c.addProfileDelta('businessValue',20);c.openCareerInfluencePanel('businessValue');
+  assert.match(f.modals.get('career-influence-modal').html,/open><summary>场外机会/);
+  assert.match(f.modals.get('career-influence-modal').html,/自由市场报价 \+1 份/);
+  c.addSeasonMod('formVariance',-1);c.openCareerInfluencePanel('formVariance');
+  assert.match(f.modals.get('career-influence-modal').html,/open><summary>本季状态/);
+}
+
+{
   const f=fixture(),c=f.context,s=f.state,callbacks=[];
   s.season.isPlayoffs=true;s.season.playoffStats=Object.fromEntries(['pts','reb','ast','stl','blk','tov','fgm','fga','ftm','fta','threeM','threeA','mins','games'].map(k=>[k,0]));
   s.season.playoffBracket={rounds:[[{high:{team:'LAL'},low:{team:'BOS'},winner:null}],[null,null],[null],[null]],results:[],teams:[{team:'LAL',seed:1},{team:'BOS',seed:8}]};
@@ -330,4 +372,4 @@ for (const legacy of [false, true]) {
   assert.equal(s.season.playoffBracket.rounds[0][0].progress.seriesGames.length,2);
 }
 
-console.log('Career state continuity passed: injury and coach consistency, real browser storage over 200KB and quota failures, historical restoration, duplicate/stale results, pause persistence, single-game advancement and playoff series checkpoints.');
+console.log('Career state continuity passed: actual draft choices, visible trust and effects, both game engines, renewal decisions and persistence; injury/coach consistency, large storage and quota failures, pause, duplicate/stale results and playoff checkpoints.');
