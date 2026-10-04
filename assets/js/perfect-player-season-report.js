@@ -603,6 +603,99 @@
     return finaleHtml + legacyHtml;
   }
 
+  function honorPlayerKey(name) {
+    return String(name || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9\u3400-\u9fff]/g, '');
+  }
+
+  function openingYear(state) {
+    return state.mode === 'legend' ? (number(state.eraStart) || 2003) : (number(state.career && state.career.draft && state.career.draft.year) || 2026);
+  }
+
+  function leagueHonorWinner(award) {
+    if (!award) return null;
+    if (award.winner === '无符合资格球员') return {noWinner:true};
+    var name = award.name || award.winner;
+    if (!name || name === '数据缺失') return null;
+    return {key:award.isUser ? 'user' : honorPlayerKey(award.nameEN || award.winnerEN || name), name:name, isUser:!!award.isUser, team:award.team || ''};
+  }
+
+  function buildLeagueHonorRecord(state, seasonNum, record) {
+    if (record && record.leagueHonors) return clone(record.leagueHonors);
+    var source = record || state.season || {};
+    var awards = source.awards || [];
+    var mvp = awards.find(function(award) { return award && typeof award === 'object' && award.act === 'mvp'; });
+    // Historical season awards contain only the user's honors. Do not infer NPC winners.
+    if (!mvp && record) {
+      var ownMvp = awards.find(function(award) { return honorCategory(honorLabel(award)) === 'mvp'; });
+      if (ownMvp) mvp = {winner:'我的球员', isUser:true};
+    }
+    return {seasonNum:seasonNum, year:openingYear(state) + seasonNum - 1,
+      mvp:leagueHonorWinner(mvp), fmvp:leagueHonorWinner(source.finalsMvp)};
+  }
+
+  function captureLeagueHonors(state, seasonNum) {
+    state = state || (typeof STATE !== 'undefined' ? STATE : {});
+    if (!state.career) return null;
+    var ledger = state.career.leagueHonors || (state.career.leagueHonors = {});
+    var key = String(seasonNum);
+    if (!ledger[key]) ledger[key] = buildLeagueHonorRecord(state, seasonNum);
+    return ledger[key];
+  }
+
+  function buildHonorTimeline(state) {
+    state = state || {};
+    var career = state.career || {}, history = global.PP_NBA_HONOR_HISTORY;
+    if (!history) return null;
+    var start = openingYear(state), count = number(career.seasonCount);
+    var seasonNum = Math.max(1, state._careerSaved ? count : count + 1);
+    var end = start + seasonNum - 1, records = Object.assign({}, career.leagueHonors || {});
+    (career.seasons || []).forEach(function(record) {
+      var num = number(record.seasonNum);
+      if (num > 0 && !records[num]) records[num] = buildLeagueHonorRecord(state, num, record);
+    });
+    if (!state._careerSaved && state.season) records[seasonNum] = records[seasonNum] || buildLeagueHonorRecord(state, seasonNum);
+    var spotlights = {
+      2003:['Tim Duncan','Shaquille O’Neal','Kobe Bryant','Kevin Garnett','LeBron James'],
+      2010:['Kobe Bryant','LeBron James','Dwyane Wade','Derrick Rose','Dirk Nowitzki'],
+      2016:['Stephen Curry','LeBron James','Kevin Durant','James Harden','Russell Westbrook'],
+      2026:['Shai Gilgeous-Alexander','Nikola Jokić','Giannis Antetokounmpo','Jayson Tatum','Jalen Brunson']
+    };
+    var complete = {mvp:start <= history.throughYear + 1, fmvp:start <= history.throughYear + 1};
+    for (var num = 1; num <= seasonNum; num++) {
+      ['mvp','fmvp'].forEach(function(kind) { if (!records[num] || !records[num][kind]) complete[kind] = false; });
+    }
+    var future = end > history.throughYear;
+    var rows = (spotlights[start] || spotlights[2026]).map(function(name) {
+      var key = honorPlayerKey(name), game = {}, real = {};
+      ['mvp','fmvp'].forEach(function(kind) {
+        var baseline = Object.keys(history[kind]).filter(function(year) { return Number(year) < start && honorPlayerKey(history[kind][year]) === key; }).length;
+        var earned = Object.keys(records).filter(function(num) { var winner=records[num][kind]; return Number(num)<=seasonNum && winner && !winner.isUser && winner.key === key; }).length;
+        game[kind] = baseline + earned;
+        real[kind] = future ? null : Object.keys(history[kind]).filter(function(year) { return Number(year) <= end && honorPlayerKey(history[kind][year]) === key; }).length;
+      });
+      var display = name;
+      if (typeof NBA2K_DATA !== 'undefined') Object.keys(NBA2K_DATA).some(function(team) {
+        var player = (NBA2K_DATA[team] || []).find(function(p) { return !p._isUser && honorPlayerKey(p.name || p.nameEN) === key; });
+        if (player) { display = displayName(player); return true; } return false;
+      });
+      return {key:key,name:display,game:game,real:real};
+    });
+    return {start:start,end:end,rows:rows,complete:complete,future:future};
+  }
+
+  function renderHonorTimeline(state) {
+    state = state || (typeof STATE !== 'undefined' ? STATE : {});
+    var timeline = buildHonorTimeline(state);
+    if (!timeline) return '';
+    var yearLabel = timeline.end + '–' + String((timeline.end + 1) % 100).padStart(2,'0');
+    var rows = timeline.rows.map(function(row) {
+      var game = ['mvp','fmvp'].map(function(kind) { return '<span>' + kind.toUpperCase() + ' ' + (timeline.complete[kind] ? row.game[kind] + '次' : (row.game[kind] ? '已知' + row.game[kind] + '次' : '记录不完整')) + '</span>'; }).join('');
+      var real = timeline.future ? '<span>尚无现实赛果</span>' : ['mvp','fmvp'].map(function(kind) { return '<span>' + kind.toUpperCase() + ' ' + row.real[kind] + '次</span>'; }).join('');
+      return '<div class="honor-history-row"><strong>' + escapeHtml(row.name) + '</strong><div><small>你的时间线</small>' + game + '</div><div><small>现实历史</small>' + real + '</div></div>';
+    }).join('');
+    return '<details class="sr-section season-report-card honor-history"><summary>这个时代的荣誉 · ' + yearLabel + '</summary><p>累计包含入场前的荣誉，以及此后每季的赛果。</p>' + (!timeline.complete.mvp || !timeline.complete.fmvp ? '<p>部分旧赛季未完整记录，已知荣誉保留。</p>' : '') + rows + '</details>';
+  }
+
   function captureOffseasonRosterSnapshot() {
     if (typeof STATE === 'undefined' || typeof NBA2K_DATA === 'undefined') return null;
     var teams = typeof NBA2K_TEAMS !== 'undefined' && Array.isArray(NBA2K_TEAMS) ? NBA2K_TEAMS : Object.keys(NBA2K_DATA);
@@ -725,6 +818,8 @@
         if (record.leagueChampion === undefined) record.leagueChampion = null;
         if (record.finalsMvp === undefined) record.finalsMvp = null;
         if (record.finalsSeriesSummary === undefined) record.finalsSeriesSummary = '';
+        state.career.leagueHonors = state.career.leagueHonors || {};
+        if (number(record.seasonNum) > 0 && !state.career.leagueHonors[record.seasonNum]) state.career.leagueHonors[record.seasonNum] = buildLeagueHonorRecord(state, number(record.seasonNum), record);
       });
     }
     return state;
@@ -736,6 +831,8 @@
     renderLeagueFinaleCard:renderLeagueFinaleCard,
     renderLegacyScoreCard:renderLegacyScoreCard,
     renderHistoricalSeasonFragment:renderHistoricalSeasonFragment,
+    captureLeagueHonors:captureLeagueHonors,
+    renderHonorTimeline:renderHonorTimeline,
     captureOffseasonRosterSnapshot:captureOffseasonRosterSnapshot,
     finalizeOffseasonRosterReport:finalizeOffseasonRosterReport,
     showOffseasonTeamReport:showOffseasonTeamReport,
@@ -747,7 +844,7 @@
       getSimulationRoster:getSimulationRoster, getPlayerPlayoffResultLabel:getPlayerPlayoffResultLabel,
       finalizeLeagueSeason:finalizeLeagueSeason, scoreLegacyState:scoreLegacyState,
       calculateLegacyScorePreview:calculateLegacyScorePreview, buildTeamRosterReport:buildTeamRosterReport,
-      normalizeLoadedState:normalizeLoadedState
+      normalizeLoadedState:normalizeLoadedState, buildHonorTimeline:buildHonorTimeline, buildLeagueHonorRecord:buildLeagueHonorRecord
     }
   };
 })(typeof window !== 'undefined' ? window : globalThis);

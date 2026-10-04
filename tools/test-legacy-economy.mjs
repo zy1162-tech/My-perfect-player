@@ -26,7 +26,7 @@ assert.match(source,/legacy\.spent = legacySpentForLevels\(legacy\.levels\);/);
 assert.match(source,/if \(unlocked\[id\]\)[\s\S]*?return false;/, 'repeat unlock remains idempotent');
 
 const unlockCtx = {PP_FX:{_suppressAchievementPopups:true},ACH_MAP:Object.fromEntries(ctx.ACHIEVEMENTS.map(a=>[a.id,a])),unlocked:{},
-  saveUnlocked(){},showUnlockPopup(){throw new Error('popup should stay suppressed');},setTimeout(fn){fn();}};
+  G:()=>null,saveUnlocked(){},showUnlockPopup(){throw new Error('popup should stay suppressed');},setTimeout(fn){fn();}};
 unlockCtx.unlockedCount = function(){ return Object.keys(unlockCtx.unlocked).filter(k=>unlockCtx.ACH_MAP[k]).length; };
 vm.createContext(unlockCtx);
 const u0=source.indexOf('PP_FX.unlock = function (id, evidence)'), u1=source.indexOf('// Deterministic reconciliation',u0);

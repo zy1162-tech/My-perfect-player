@@ -396,6 +396,11 @@
       return false;
     }
     unlocked[id] = { at: Date.now() };
+    var state = G();
+    if (state && state.career) unlocked[id].origin = {
+      gameId:String(state.gameId || ''), name:typeof getHupuDisplayName === 'function' ? getHupuDisplayName() : '我的球员',
+      team:state.careerTeam || '', season:Number(state.career.seasonCount || 0) + (state._careerSaved ? 0 : 1)
+    };
     if (evidence) unlocked[id].singleCareer = evidence;
     saveUnlocked(unlocked);
     if (!PP_FX._suppressAchievementPopups) showUnlockPopup(def);
@@ -490,7 +495,7 @@
         '</div>' +
         '<div class="pp-ach-meta">' +
           '<div class="pp-ach-name">' + (has ? a.name : '？？？') + '</div>' +
-          '<div class="pp-ach-desc">' + a.desc + '</div>' +
+          '<div class="pp-ach-desc">' + a.desc + '</div>' + (has ? '<div class="pp-ach-desc">' + legacyAchievementOrigin(unlocked[a.id]) + '</div>' : '') +
         '</div>' +
           '<div class="pp-ach-rarity">' + (RARITY_CN[a.rarity] || '') + ' · 🧬' + a.legacyPoints + '</div>' +
       '</div>';
@@ -930,10 +935,11 @@
   PP_FX.getPerkLevelCost = function(id, level) { return getPerkLevelCost(PERK_MAP[id], level); };
 
   // 计算某强化当前等级带来的属性增量表 {attrKey: delta}
-  function legacyAttrBonuses() {
+  function legacyAttrBonuses(levels) {
+    levels = levels || legacy.levels;
     var bon = {};
     LEGACY_PERKS.forEach(function (p) {
-      var lvl = legacy.levels[p.id] || 0;
+      var lvl = levels[p.id] || 0;
       if (!lvl) return;
       var per = p.step || 1;
       (p.attrs || []).forEach(function (a) { bon[a] = (bon[a] || 0) + per * lvl; });
@@ -941,18 +947,37 @@
     return bon;
   }
   PP_FX.legacyAttrBonuses = legacyAttrBonuses;
+  function freezeLegacySnapshot(state, migrated) {
+    state = state || G();
+    if (!state || !state.career) return null;
+    if (!state.career.legacySnapshot) {
+      var levels = {};
+      LEGACY_PERKS.forEach(function(perk) { levels[perk.id] = Math.max(0, Math.min(perk.max, Math.floor(Number(legacy.levels[perk.id]) || 0))); });
+      state.career.legacySnapshot = {version:1, levels:levels, migrated:!!migrated};
+    }
+    return state.career.legacySnapshot;
+  }
+  function currentLegacyLevels() {
+    var state = G();
+    if (!state || !state.career) return {};
+    var snapshot = state.career.legacySnapshot;
+    if (!snapshot && ((state.attrs && state.attrs.__legacyApplied) || state.careerTeam || Number(state.career.seasonCount) > 0)) snapshot = freezeLegacySnapshot(state, true);
+    return snapshot && snapshot.levels || {};
+  }
+  PP_FX.freezeLegacySnapshot = freezeLegacySnapshot;
   PP_FX.getLegacyTeamBoost = function(team) {
     if (typeof STATE === 'undefined' || !STATE || team !== STATE.careerTeam) return 0;
     var perk = PERK_MAP.leader;
-    return (Number(legacy.levels.leader) || 0) * (Number(perk && perk.teamBoost) || 0);
+    return (Number(currentLegacyLevels().leader) || 0) * (Number(perk && perk.teamBoost) || 0);
   };
   // 模拟特效与初始属性分离：保留旧 perk id / 等级，但不会再把控场大师或
   // 篮板嗅觉重复写入 HAN、PAS、REB。跳过与观看模拟都读取同一组倍率。
   PP_FX.getLegacySimulationEffects = function(player) {
     var isUser = !player || !!player._isUser;
     if (!isUser) return { assistWeight:1, turnoverRisk:1, reboundWeight:1 };
-    var floorLevel = Math.max(0, Math.min(5, Number(legacy.levels.floor_general) || 0));
-    var glassLevel = Math.max(0, Math.min(5, Number(legacy.levels.glass_cleaner) || 0));
+    var levels = currentLegacyLevels();
+    var floorLevel = Math.max(0, Math.min(5, Number(levels.floor_general) || 0));
+    var glassLevel = Math.max(0, Math.min(5, Number(levels.glass_cleaner) || 0));
     return {
       assistWeight: 1 + floorLevel * 0.03,
       turnoverRisk: 1 - floorLevel * 0.02,
@@ -982,12 +1007,35 @@
     saveLegacy(legacy);
   };
 
+  function legacyAchievementOrigin(record) {
+    if (!record) return '已解锁';
+    if (!record.origin) {
+      var proof = record.singleCareer || record.factEvidence;
+      if (!proof || !proof.gameId) return '已解锁';
+      var facts = {mvp:'MVP',champion:'总冠军',fmvp:'FMVP'};
+      return facts[proof.fact] && proof.count ? '生涯记录 · ' + facts[proof.fact] + ' ' + Number(proof.count) + '次' : '记录于一次生涯';
+    }
+    var origin = record.origin;
+    var label = (origin.name || '我的球员') + (origin.team ? ' · ' + (typeof getTeamName === 'function' ? getTeamName(origin.team) : origin.team) : '') + (origin.season ? ' · 第' + origin.season + '赛季' : '');
+    return label.replace(/[&<>"']/g, function(ch) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; });
+  }
+
   // 传承祭坛面板
+  function legacyPerkEffectText(perk, level) {
+    if (!level) return '无加成';
+    if (perk.attrs.length) return perk.attrs.map(function(key) { return (typeof attrCN === 'function' ? attrCN(key) : key) + ' +' + ((perk.step || 1) * level); }).join(' · ');
+    if (perk.id === 'floor_general') return '助攻争取 +' + (level * 3) + '% · 失误风险 −' + (level * 2) + '%';
+    if (perk.id === 'glass_cleaner') return '篮板争抢 +' + (level * 5) + '%';
+    return '队友攻防 +' + (level * 0.5);
+  }
   function legacyPerkCardHtml(p) {
     var lvl = legacy.levels[p.id] || 0;
     var maxed = lvl >= p.max;
     var nextCost = maxed ? 0 : getPerkLevelCost(p, lvl);
     var canBuy = !maxed && availableLP() >= nextCost;
+    var state = G();
+    var current = state && state.career && state.career.legacySnapshot;
+    var currentLevel = Number(current && current.levels && current.levels[p.id]) || 0;
     var pips = '';
     for (var i = 0; i < p.max; i++) {
       pips += '<span class="pp-lg-pip' + (i < lvl ? ' on' : '') + '"></span>';
@@ -995,7 +1043,9 @@
     return '<div class="pp-lg-perk' + (maxed ? ' maxed' : '') + '">' +
       '<div class="pp-lg-perk-ic">' + p.icon + '</div>' +
       '<div class="pp-lg-perk-body">' +
-        '<div class="pp-lg-perk-name">' + p.name + ' <span class="pp-lg-lvl">Lv.' + lvl + '/' + p.max + '</span></div>' +
+        '<div class="pp-lg-perk-name">' + p.name + ' <span class="pp-lg-lvl">下次 Lv.' + lvl + '/' + p.max + '</span></div>' +
+        (current ? '<div class="pp-lg-perk-desc">本次：' + (current.migrated && p.attrs.length ? '沿用存档能力' : legacyPerkEffectText(p, currentLevel)) + '</div>' : '') +
+        '<div class="pp-lg-perk-desc">下次：' + legacyPerkEffectText(p, lvl) + '</div>' +
         '<div class="pp-lg-perk-desc">' + p.desc + '</div>' +
         '<div class="pp-lg-pips">' + pips + '</div>' +
       '</div>' +
@@ -1007,7 +1057,7 @@
   function renderLegacyBody(root) {
     var avail = availableLP(), total = totalLP();
     root.querySelector('.pp-lg-lp').innerHTML =
-      '可用传承点 <b>' + avail + '</b> · 累计 ' + total + ' · 初始 30 / 成就池 150 / 技能树 150';
+      '可用传承点 <b>' + avail + '</b> · 累计 ' + total + '<div class="pp-lg-perk-desc">购买和重置用于下一位球员；当前生涯保留揭晓时的效果。</div>';
     root.querySelector('.pp-lg-grid').innerHTML =
       LEGACY_PERKS.map(legacyPerkCardHtml).join('');
     root.querySelectorAll('.pp-lg-buy').forEach(function (b) {
@@ -1168,9 +1218,10 @@
   // 0) 传承加成：在揭晓(计算OVR)之前，把已购强化加到初始属性上。每个生涯只应用一次。
   function applyLegacyBeforeReveal() {
     var s = G(); if (!s || !s.attrs) return;
+    var snapshot = freezeLegacySnapshot(s, !!s.attrs.__legacyApplied);
     // 用属性对象自身打标记，避免重复揭晓时叠加；换新生涯会得到全新 attrs。
     if (s.attrs.__legacyApplied) return;
-    var bon = legacyAttrBonuses();
+    var bon = legacyAttrBonuses(snapshot ? snapshot.levels : {});
     var keys = Object.keys(bon);
     if (!keys.length) { s.attrs.__legacyApplied = true; return; }
     keys.forEach(function (k) {

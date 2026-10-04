@@ -91,13 +91,13 @@ const eraModeTag = 'assets/js/perfect-player-era-mode.js?v=20261004-opening-rost
 assert.ok(html.indexOf(presentationTag) >= 0 && html.indexOf(presentationTag) < html.indexOf(eraModeTag), 'presentation data must load before era runtime');
 assert.ok(sw.includes(`'./${presentationTag}'`), 'service-worker shell must cache the exact presentation URL');
 assert.ok(sw.includes(`'./${eraModeTag}'`), 'service-worker shell must cache the exact era runtime URL');
-assert.ok(html.includes('assets/js/perfect-player-core.js?v=20261004-career-feedback-v14'));
-assert.ok(sw.includes("'./assets/js/perfect-player-core.js?v=20261004-career-feedback-v14'"));
+assert.ok(html.includes('assets/js/perfect-player-core.js?v=20261004-career-legacy-v15'));
+assert.ok(sw.includes("'./assets/js/perfect-player-core.js?v=20261004-career-legacy-v15'"));
 assert.ok(html.includes('assets/data/era-headshot-index.js?v=20260826-era-headshots-v1'));
 assert.ok(sw.includes("'./assets/data/era-headshot-index.js?v=20260826-era-headshots-v1'"));
 assert.doesNotMatch(sw, /['"]\.\/assets\/images\/Player\/hupu-era\//, '934 large images must remain runtime cache-first, not install-shell assets');
-assert.match(sw, /CACHE_PREFIX = 'perfect-player-shell-'[\s\S]*CACHE_NAME = CACHE_PREFIX \+ '20261004-career-feedback-v40'/);
-const premiumVersion = '20261004-career-feedback-v14';
+assert.match(sw, /CACHE_PREFIX = 'perfect-player-shell-'[\s\S]*CACHE_NAME = CACHE_PREFIX \+ '20261004-career-legacy-v41'/);
+const premiumVersion = '20261004-career-legacy-v15';
 assert.match(html, new RegExp('perfect-player-premium\\.css\\?v=' + premiumVersion));
 assert.match(liveSimHtml, new RegExp('perfect-player-premium\\.css\\?v=' + premiumVersion));
 assert.match(sw, new RegExp("\\./assets/css/perfect-player-premium\\.css\\?v=" + premiumVersion));

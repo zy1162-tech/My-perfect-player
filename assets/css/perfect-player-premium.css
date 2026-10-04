@@ -668,6 +668,7 @@ body {
   .ce-status-grid strong { font-size:14px; }
 }
 /* Career stories and scout review share the arena palette. */
+.honor-history summary{cursor:pointer;font-weight:800}.honor-history>p{color:var(--text-dim);font-size:12px;line-height:1.6}.honor-history-row{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--border-light);align-items:center}.honor-history-row strong{font-size:13px;line-height:1.5;overflow-wrap:anywhere}.honor-history-row small,.honor-history-row span{display:block;font-size:11px;line-height:1.7}.honor-history-row small{color:var(--text-dim)}
 .career-team-story{max-width:640px;margin:12px auto 0;font-size:13px;line-height:1.75;color:var(--text-dim);text-align:left}
 .training-scout{margin:10px 0 16px;padding:14px;border:1px solid var(--border-light);border-left:3px solid var(--orange);border-radius:12px;background:var(--bg-card)}
 .training-scout-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:8px}

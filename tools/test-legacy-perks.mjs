@@ -50,6 +50,11 @@ assert.equal(migrated.levels.floor_general, 5, 'old floor_general level should s
 assert.equal(migrated.levels.glass_cleaner, 5, 'old glass_cleaner level should survive migration');
 
 ctx.legacy = migrated;
+ctx.STATE = {career:{},careerTeam:'LAL'};
+ctx.G = () => ctx.STATE;
+const snapshotStart = source.indexOf('function freezeLegacySnapshot(');
+const snapshotEnd = source.indexOf('PP_FX.getLegacyTeamBoost',snapshotStart);
+vm.runInContext(source.slice(snapshotStart,snapshotEnd),ctx);
 vm.runInContext(source.slice(attrStart, attrEnd) + '\n' + source.slice(fxStart, fxEnd), ctx);
 const bonuses = ctx.legacyAttrBonuses();
 assert.equal(bonuses.HAN, 5, 'only playmaker should add HAN');

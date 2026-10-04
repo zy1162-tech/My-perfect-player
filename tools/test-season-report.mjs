@@ -283,8 +283,8 @@ const env = {
   ['leagueChampion:', 'finalsMvp:', 'finalsSeriesSummary:', 'legacyScore:', 'legacyScoreAdded:', 'historicalRank:'].forEach(field => {
     assert.ok(core.includes(field), `seasonRecord 应保存 ${field}`);
   });
-assert.match(html, /perfect-player-core\.js\?v=20261004-career-feedback-v14/);
-  assert.match(html, /perfect-player-season-report\.js\?v=20261004-roster-report-v3/);
+assert.match(html, /perfect-player-core\.js\?v=20261004-career-legacy-v15/);
+  assert.match(html, /perfect-player-season-report\.js\?v=20261004-honor-report-v4/);
   assert.match(html, /perfect-player-season-report\.css\?v=20260826-season-report-v1/);
 }
 

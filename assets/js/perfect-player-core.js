@@ -8071,6 +8071,7 @@ function showSeasonResults() {
       ${typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.renderLeagueFinaleCard ? PP_SEASON_REPORT.renderLeagueFinaleCard(leagueFinale) : ''}
 
       ${typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.renderLegacyScoreCard ? PP_SEASON_REPORT.renderLegacyScoreCard(legacyPreview) : ''}
+      ${typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.renderHonorTimeline ? PP_SEASON_REPORT.renderHonorTimeline(STATE) : ''}
 
       <!-- 最终属性 -->
       <div class="sr-section">
@@ -8485,6 +8486,7 @@ function saveCurrentSeasonToCareer() {
     legacyScore: legacyPreview ? legacyPreview.score : null,
     legacyScoreAdded: legacyPreview ? legacyPreview.added : null,
     historicalRank: legacyPreview ? legacyPreview.historicalRank : null,
+    leagueHonors:typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.captureLeagueHonors ? PP_SEASON_REPORT.captureLeagueHonors(STATE, c.seasonCount) : null,
   };
   c.seasons.push(seasonRecord);
   c.lastCompletedSeasonSnapshot = JSON.parse(JSON.stringify(seasonRecord));
@@ -14867,6 +14869,7 @@ function manualLoadGame(slot) {
         if (window.PP_CAREER_EVENTS) PP_CAREER_EVENTS.resetTransient();
         resetBranchEventTransient();
         Object.assign(STATE, snap.state);
+        if (window.PP_FX && PP_FX.freezeLegacySnapshot) PP_FX.freezeLegacySnapshot(STATE, true);
         getNextSeasonMods();
         normalizeSavedBranchEvents();
         if (window.PP_MOD_V4 && STATE.careerTeam) PP_MOD_V4.setTeamSystem((STATE.teamSystems || {})[STATE.careerTeam] || 'balanced');
