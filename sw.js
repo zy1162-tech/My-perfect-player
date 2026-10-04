@@ -2,14 +2,14 @@
 'use strict';
 
 var CACHE_PREFIX = 'perfect-player-shell-';
-var CACHE_NAME = CACHE_PREFIX + '20261004-career-impact-v39';
+var CACHE_NAME = CACHE_PREFIX + '20261004-career-feedback-v40';
 var SHELL = [
   './',
   './nba-perfect-player.html',
   './assets/css/fonts.css?v=20260826-performance-v1',
   './assets/css/perfect-player.css?v=20260826-era-headshots-v2',
   './assets/css/perfect-player-season-report.css?v=20260826-season-report-v1',
-  './assets/css/perfect-player-premium.css?v=20261004-career-impact-v13',
+  './assets/css/perfect-player-premium.css?v=20261004-career-feedback-v14',
   './assets/fonts/fredoka-latin.woff2',
   './assets/fonts/nunito-latin.woff2',
   './assets/fonts/nunito-italic-latin.woff2',
@@ -25,7 +25,7 @@ var SHELL = [
   './assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4',
   './assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10',
   './assets/images/ui/career-avatar-v1.png',
-  './assets/js/perfect-player-boot.js?v=20261004-career-impact-boot-v27',
+  './assets/js/perfect-player-boot.js?v=20261004-career-feedback-boot-v28',
   './assets/js/current-player-ratings-2026.js?v=20260826-rating-v1',
   './assets/js/hupu/script-00-2678-58zyeprc-upload-1783508428855-12.js?v=20260827-verified-names-v1',
   './assets/js/hupu/script-01-2678-5hu3djrc-upload-1783494754597-12.js?v=20261003-official-rosters-v2',
@@ -33,9 +33,9 @@ var SHELL = [
   './assets/js/hupu/script-03-2678-456sfprc-upload-1783494754597-18.js',
   './assets/js/hupu/script-04-2678-mdo4zerc-upload-1783494754597-21.js',
   './assets/js/hupu/script-05-2678-qlg35lrc-upload-1783494754597-24.js',
-  './assets/js/perfect-player-core.js?v=20261004-career-impact-v13',
-  './assets/js/perfect-player-season-report.js?v=20260826-season-report-v2',
-  './assets/js/perfect-player-mod-v4.js?v=20261003-coach-state-v20',
+  './assets/js/perfect-player-core.js?v=20261004-career-feedback-v14',
+  './assets/js/perfect-player-season-report.js?v=20261004-roster-report-v3',
+  './assets/js/perfect-player-mod-v4.js?v=20261004-roster-priority-v21',
   './assets/js/perfect-player-career-events.js?v=20261004-career-impact-v10',
   './assets/js/perfect-player-era-mode.js?v=20261004-opening-roster-v37',
   './assets/js/perfect-player-event-runtime.js?v=20261003-risk-state-v10',
@@ -46,7 +46,7 @@ var SHELL = [
   './assets/js/perfect-player-enhancements.js?v=20261004-pc-panels-v18',
   './assets/js/perfect-player-event-library.js?v=20261002-choice-forecast-v16',
   './assets/js/perfect-player-story-events.js?v=20260825-stamina-v14',
-  './assets/js/perfect-player-era-story.js?v=20261003-prologue-save-v4',
+  './assets/js/perfect-player-era-story.js?v=20261004-era-story-v5',
   './assets/js/perfect-player-legend-challenge.js?v=20260824-legend-v12',
   './assets/js/perfect-player-allstar.js?v=20260824-double-points-mod-v1',
   './assets/js/perfect-player-live-court.js?v=20260824-era-positions-v7',

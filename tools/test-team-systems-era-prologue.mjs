@@ -46,7 +46,8 @@ assert.match(inserted.at(-1), /双塔阵地/);
 modContext.chooseTeamSystem('defense_transition');
 assert.equal(chooserDone, 1);
 assert.equal(modContext.getTeamSystemEffects('PHX').defense, 1.7);
-assert.match(modSource, /processTrades\(\);[\s\S]*global\.showLeagueIntel\(function\(\) \{[\s\S]*global\.showTeamSystemChooser\(function\(\) \{[\s\S]*showRosterAuthority\(function\(\) \{[\s\S]*showRecruitmentMarket/);
+assert.match(modSource, /processTrades\(\);[\s\S]*STATE\._offseasonMarketStage = 'intel'/);
+assert.match(modSource, /case 'intel':[\s\S]*case 'system':[\s\S]*case 'authority':[\s\S]*case 'recruitment':[\s\S]*case 'assign':[\s\S]*case 'move':[\s\S]*case 'report':/);
 assert.match(coreSource, /systemA = typeof getTeamSystemEffects/);
 assert.match(coreSource, /systemB = typeof getTeamSystemEffects/);
 assert.match(coreSource, /Number\(systemA\.pace\)/);
@@ -92,10 +93,10 @@ assert.equal(current.context.PP_ERA_STORY.showPrologueIfDue(), false, 'current c
 
 assert.match(coreSource, /id="era-prologue-entry"/);
 assert.match(coreSource, /openLegendEraPrologue\(false\)/);
-assert.match(html, /perfect-player-core\.js\?v=20261004-career-impact-v13/);
-assert.match(html, /perfect-player-mod-v4\.js\?v=20261003-coach-state-v20/);
-assert.match(boot, /perfect-player-era-story\.js\?v=20261003-prologue-save-v4/);
-assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-career-impact-v39'/);
-assert.match(sw, /perfect-player-era-story\.js\?v=20261003-prologue-save-v4/);
+assert.match(html, /perfect-player-core\.js\?v=20261004-career-feedback-v14/);
+assert.match(html, /perfect-player-mod-v4\.js\?v=20261004-roster-priority-v21/);
+assert.match(boot, /perfect-player-era-story\.js\?v=20261004-era-story-v5/);
+assert.match(sw, /CACHE_NAME = CACHE_PREFIX \+ '20261004-career-feedback-v40'/);
+assert.match(sw, /perfect-player-era-story\.js\?v=20261004-era-story-v5/);
 
 console.log('✓ team systems + era prologue: 5 systems, production simulation wiring, offseason order, 3 one-shot prologues, legacy-safe initialization');

@@ -252,6 +252,54 @@
   }
 
   var rosterCutCandidates = [];
+  var ROSTER_FOCUS = {
+    organize:{label:'组织后卫', keys:['PAS','HAN'], positions:['PG']},
+    shooting:{label:'外线投射', keys:['threePT'], positions:['PG','SG','SF','PF','C']},
+    protect:{label:'内线护筐', keys:['IDEF','BLK'], positions:['PF','C']}
+  };
+  function rosterFocusScore(player, focus) {
+    var rule = ROSTER_FOCUS[focus];
+    if (!rule || !rule.positions.some(function(pos) { return canPlayPosition(player.pos || '', pos); })) return -1;
+    var values = rule.keys.map(function(key) { return Number(player[key]); });
+    if (!values.every(function(value) { return isFinite(value) && value > 0; })) return -1;
+    return values.reduce(function(sum, value) { return sum + value; }, 0) / values.length;
+  }
+  function applyRosterPriority() {
+    var career = STATE.career || {}, request = career.rosterPriority;
+    if (!request || request.status !== 'queued' || request.season !== Number(career.seasonCount || 0)) return null;
+    request.status = 'processed';
+    var rule = ROSTER_FOCUS[request.focus], roster = NBA2K_DATA[request.team] || [], pool = STATE._freeAgentPool || [];
+    if (!rule) { request.result = '管理层按原计划完成补强。'; return request; }
+    if (request.team !== STATE.careerTeam) { request.result = '你已离队，本次补强建议没有继续执行。'; return request; }
+    if (roster.length >= 12) { request.result = '名单已满，管理层保留了现有队友，没有为补强自动裁员。'; return request; }
+    var candidates = pool.filter(function(player) {
+      if (!player || player._isUser || !isFinite(Number(player.ovr)) || Number(player.ovr) > 82 || player._origTeam === request.team || roster.indexOf(player) >= 0 || rosterFocusScore(player, request.focus) < 0) return false;
+      var pos = (player.pos || 'SF').split('/')[0].trim();
+      return roster.filter(function(member) { return canPlayPosition(member.pos || '', pos); }).length < 2;
+    }).sort(function(a, b) {
+      return rosterFocusScore(b, request.focus) - rosterFocusScore(a, request.focus) || (Number(b.ovr) || 0) - (Number(a.ovr) || 0) || String(a.id || a._playerId || a.name || a.cname || '').localeCompare(String(b.id || b._playerId || b.name || b.cname || ''));
+    });
+    var player = candidates[0];
+    if (!player) { request.result = '市场上没有同时符合补强方向和位置名额的角色球员，本次没有优先签约。'; return request; }
+    pool.splice(pool.indexOf(player), 1);
+    roster.push(player);
+    player.contract = randomContractByAge(getLeaguePlayerAge(player));
+    player._justSigned = true;
+    request.player = {name:player.cname || player.name, nameEN:player.name, ovr:player.ovr, pos:player.pos};
+    request.abilities = rule.keys.map(function(key) { return {key:key, value:Number(player[key])}; });
+    request.result = '管理层按你的建议签下了' + request.player.name + '，加入轮换名单。';
+    STATE._leagueChanges = STATE._leagueChanges || {};
+    STATE._leagueChanges.freeSignings = STATE._leagueChanges.freeSignings || [];
+    STATE._leagueChanges.freeSignings.push({name:request.player.name,nameEN:player.name,from:player._origTeam,to:request.team,ovr:player.ovr,priority:request.focus});
+    if (typeof clearLineupCache === 'function') clearLineupCache();
+    return request;
+  }
+  global.setRosterPriorityFocus = function(focus) {
+    var request = STATE.career && STATE.career.rosterPriority;
+    if (!request || request.status !== 'choosing' || (focus !== 'balanced' && !ROSTER_FOCUS[focus])) return;
+    request.focus = focus;
+    autoSaveGame();
+  };
   function hasRosterAuthority() {
     var career = STATE.career || {};
     var profile = career.profile || {};
@@ -260,6 +308,8 @@
   }
 
   function completeRosterAuthorityFlow() {
+    var request = STATE.career && STATE.career.rosterPriority;
+    if (request && request.status === 'choosing') request.status = 'queued';
     var done = STATE._rosterAuthorityDone;
     STATE._rosterAuthorityDone = null;
     rosterCutCandidates = [];
@@ -271,21 +321,31 @@
     if (!career || !hasRosterAuthority()) { done(); return; }
     career.flags = career.flags || {};
     var seasonKey = Number(career.seasonCount) || 0;
+    var request = career.rosterPriority;
+    var resuming = request && request.season === seasonKey && request.team === STATE.careerTeam;
+    if (resuming && request.status !== 'choosing') { done(); return; }
     var lastAuthority = Number(career.flags.rosterAuthoritySeason) || 0;
-    if (lastAuthority && seasonKey - lastAuthority < 3) { done(); return; } // 每三年一次名单话语权
+    if (!resuming && lastAuthority && seasonKey - lastAuthority < 3) { done(); return; } // 每三年一次名单话语权
     var roster = NBA2K_DATA[STATE.careerTeam] || [];
     rosterCutCandidates = roster.filter(function(player) { return player && !player._isUser; }).sort(function(a, b) {
       return (Number(b.ovr) || 0) - (Number(a.ovr) || 0);
     });
     if (!rosterCutCandidates.length) { done(); return; }
     career.flags.rosterAuthoritySeason = seasonKey;
+    if (!resuming) career.rosterPriority = {season:seasonKey, team:STATE.careerTeam, focus:'balanced', status:'choosing'};
+    request = career.rosterPriority;
     STATE._rosterAuthorityDone = done;
 
     var old = document.getElementById('roster-authority-modal');
     if (old) old.remove();
     var html = '<div class="team-picker-overlay" id="roster-authority-modal"><div class="team-picker-modal">';
-    html += '<div class="team-picker-header"><span>👑 球队老大 · 名单话语权</span></div>';
-    html += '<div style="padding:10px 12px 7px;font-size:12px;color:var(--text-dim);line-height:1.65;">你的总评达到 90，或领导力达到 12 后，管理层每三年接受一次裁员建议（与主动招募同一周期）。裁掉的球员会进入自由市场；也可以保留原阵容。</div>';
+    html += '<div class="team-picker-header"><span>管理层会谈</span></div>';
+    html += '<div style="padding:10px 12px;font-size:12px;color:var(--text-dim);line-height:1.65;">管理层把名单推到你面前：“下一步，你认为我们最需要什么？”先定补强方向，再决定是否为新人腾出位置。</div>';
+    html += '<fieldset class="roster-focus"><legend>补强方向</legend><div class="roster-focus-options">';
+    ['balanced','organize','shooting','protect'].forEach(function(focus) {
+      html += '<label><input type="radio" name="roster-priority" value="' + focus + '" ' + (request.focus === focus ? 'checked' : '') + ' onchange="setRosterPriorityFocus(this.value)">' + (ROSTER_FOCUS[focus] ? ROSTER_FOCUS[focus].label : '维持安排') + '</label>';
+    });
+    html += '</div></fieldset>';
     html += '<div style="padding:2px 12px 8px;max-height:58vh;overflow-y:auto;">';
     rosterCutCandidates.forEach(function(player, idx) {
       var name = player.cname || player.name || '队友';
@@ -310,6 +370,8 @@
     var rosterIdx = roster.indexOf(player);
     if (!player || rosterIdx < 0) return;
     roster.splice(rosterIdx, 1);
+    rosterCutCandidates = [];
+    if (STATE.career.rosterPriority) STATE.career.rosterPriority.status = 'queued';
     player._origTeam = STATE.careerTeam;
     player._waivedByUser = true;
     STATE._freeAgentPool = STATE._freeAgentPool || [];
@@ -334,10 +396,12 @@
     c.flags = c.flags || {};
     var seasonKey = c.seasonCount || 0;
     var lastRecruit = Number(c.flags.userRecruitmentSeason) || 0;
-    if (lastRecruit && seasonKey - lastRecruit < 3) { done(); return; } // 每三年一次主动招募
+    var resuming = STATE._offseasonMarketStage === 'recruitment' && c.flags.userRecruitmentPending === seasonKey;
+    if (!resuming && lastRecruit && seasonKey - lastRecruit < 3) { done(); return; } // 每三年一次主动招募
     recruitmentCandidates = availableCandidates();
     if (!recruitmentCandidates.length) { done(); return; }
     c.flags.userRecruitmentSeason = seasonKey;
+    c.flags.userRecruitmentPending = seasonKey;
     STATE._userRecruitmentDone = done;
 
     var existing = document.getElementById('user-recruitment-modal');
@@ -368,6 +432,7 @@
   }
 
   function completeFlow() {
+    if (STATE.career && STATE.career.flags) delete STATE.career.flags.userRecruitmentPending;
     var done = STATE._userRecruitmentDone;
     STATE._userRecruitmentDone = null;
     recruitmentCandidates = [];
@@ -423,6 +488,8 @@
   global.chooseUserRecruitment = function(idx) {
     var player = recruitmentCandidates[idx];
     if (!player) return;
+    recruitmentCandidates = [];
+    if (STATE.career && STATE.career.flags) delete STATE.career.flags.userRecruitmentPending;
     var modal = document.getElementById('user-recruitment-modal');
     if (modal) modal.remove();
     var chance = recruitmentChance(player);
@@ -448,27 +515,41 @@
     showOffseasonResultModal('主动招募', result, completeFlow);
   };
 
+  function resumeOffseasonMarket() {
+    var stage = STATE._offseasonMarketStage;
+    var owner = STATE.career;
+    function next(nextStage) {
+      if (STATE.career !== owner || STATE._offseasonMarketStage !== stage) return;
+      STATE._offseasonMarketStage = nextStage;
+      autoSaveGame();
+      resumeOffseasonMarket();
+    }
+    switch (stage) {
+      case 'intel': global.showLeagueIntel(function() { next('system'); }); break;
+      case 'system': global.showTeamSystemChooser(function() { next('authority'); }); break;
+      case 'authority': showRosterAuthority(function() { next('recruitment'); }); break;
+      case 'recruitment': showRecruitmentMarket(function() { next('assign'); }); break;
+      case 'assign': assignFreeAgents(); next('move'); break;
+      case 'move': maybeMoveUserInOffseason(function() { next('report'); }); break;
+      case 'report':
+        if (typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.finalizeOffseasonRosterReport) PP_SEASON_REPORT.finalizeOffseasonRosterReport();
+        delete STATE._offseasonMarketStage;
+        finishOffseasonPipeline();
+        break;
+    }
+  }
   global.continueCareerAfterTraining = function() {
     if (STATE.career && STATE.career.retired) return;
+    if (STATE._offseasonMarketStage) { resumeOffseasonMarket(); return; }
     if (typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.captureOffseasonRosterSnapshot) PP_SEASON_REPORT.captureOffseasonRosterSnapshot();
     evolveLeague();
     saveStandings();
     processDraft();
     // 先完成所有可能让队友离开的交易，再让玩家依据最终核心阵容决定是否招募。
     processTrades();
-    global.showLeagueIntel(function() {
-      global.showTeamSystemChooser(function() {
-        showRosterAuthority(function() {
-          showRecruitmentMarket(function() {
-            assignFreeAgents();
-            maybeMoveUserInOffseason(function() {
-              if (typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.finalizeOffseasonRosterReport) PP_SEASON_REPORT.finalizeOffseasonRosterReport();
-              finishOffseasonPipeline();
-            });
-          });
-        });
-      });
-    });
+    STATE._offseasonMarketStage = 'intel';
+    autoSaveGame();
+    resumeOffseasonMarket();
   };
 
   global.PP_MOD_V4 = {
@@ -482,6 +563,8 @@
     setTeamSystem: setTeamSystem,
     getTeamSystemEffects: global.getTeamSystemEffects,
     hasRosterAuthority: hasRosterAuthority,
-    showRosterAuthority: showRosterAuthority
+    showRosterAuthority: showRosterAuthority,
+    applyRosterPriority: applyRosterPriority,
+    resumeOffseasonMarket: resumeOffseasonMarket
   };
 })(window);

@@ -356,6 +356,8 @@ function initGame() {
     season: { games: [], wins: 0, losses: 0, playerStats: {}, playoffStats: { pts:0, reb:0, ast:0, stl:0, blk:0, tov:0, fgm:0, fga:0, ftm:0, fta:0, threeM:0, threeA:0, mins:0, games:0 }, awards: [], playoffResult: null, playoffEliminated: false, standings: {}, isPlayoffs: false, playoffBracket: null, otherBracket: null, leagueFinale:null, leagueChampion:null, finalsMvp:null, finalsSeriesSummary:'', _viewConf: null },
   });
   delete STATE._tpPending;
+  delete STATE._trainingConfirmed;
+  delete STATE._offseasonMarketStage;
   delete STATE._careerSaved;
   delete STATE._offseasonQueue;
   delete STATE._offseasonEventIdx;
@@ -2108,9 +2110,10 @@ function renderCareerTeamReveal(team, cnName, role, rosterHtml) {
         <div style="font-size:13px;color:var(--text-dim);">${getCurrentSeasonLabel()} · 我的生涯球队${draftLine}</div>
         <div style="font-size:24px;font-weight:800;margin:6px 0;font-family:var(--font-display);letter-spacing:2px;">${cnName}</div>
         <div style="font-size:12px;color:var(--text-dim);">我担任的角色为${finalRole}${SIM_CONFIG.POSITIONS[STATE.position]}</div>
+        <p class="career-team-story">${getCareerTeamStory(team, finalRole)}</p>
         <div style="margin-top:12px;display:flex;flex-direction:column;gap:7px;">
           <button class="btn btn-primary" onclick="trackEvent({act:'click',blk:'BMC098',pos:'TC7',label:'开始赛季'});startSeason()">🏀 开始赛季</button>
-          ${STATE.mode === 'legend' ? '<button class="btn btn-secondary btn-sm" id="era-prologue-entry" onclick="openLegendEraPrologue(true)">📜 传奇主线 · 序章与触发说明</button>' : ''}
+          ${STATE.mode === 'legend' ? '<button class="btn btn-secondary btn-sm" id="era-prologue-entry" onclick="openLegendEraPrologue(true)">重温开场</button>' : ''}
         </div>
       </div>
       <div style="margin-top:8px;background:var(--bg-card);border:2px solid var(--border);border-radius:var(--radius-sm);padding:8px 4px;">
@@ -2121,6 +2124,26 @@ function renderCareerTeamReveal(team, cnName, role, rosterHtml) {
   if (STATE.mode === 'legend') setTimeout(function() { openLegendEraPrologue(false); }, 80);
 }
 
+function getCareerTeamStory(team, role) {
+  var roster = (NBA2K_DATA[team] || []).filter(function(p) { return p && !p._isUser; });
+  var leaders = roster.slice().sort(function(a, b) { return (Number(b.ovr) || 0) - (Number(a.ovr) || 0); }).slice(0, 2);
+  var rivals = roster.filter(function(p) { return canPlayPosition(p.pos || '', STATE.position); });
+  rivals.sort(function(a, b) { return (Number(b.ovr) || 0) - (Number(a.ovr) || 0); });
+  var names = leaders.map(function(p) { return p.cname || p.name; }).join('、');
+  var opening = '更衣室里已经挂好了你的球衣。';
+  var era = STATE.mode === 'legend' ? Number(STATE.eraStart) : 0;
+  var scenes = {
+    2003:{LAL:'洛杉矶的聚光灯从不等人。',CLE:'克利夫兰正等待新的答案。',DET:'底特律的球迷会记住每一次拼抢。'},
+    2010:{MIA:'迈阿密的每一场比赛都有人盯着。',CHI:'芝加哥的看台渴望再次沸腾。',BKN:'新泽西的更衣室里，新的位置正在等人争取。'},
+    2016:{GSW:'湾区的球不断转移，空位只停留一瞬。',CLE:'克利夫兰的期待写在每一张球票上。',MIL:'密尔沃基的年轻阵容，还在寻找自己的节奏。'}
+  };
+  if (scenes[era] && scenes[era][team]) opening = scenes[era][team];
+  var line = opening + (names ? '和' + names + '并肩，你需要找到自己的位置。' : '训练馆里，你需要让队友记住自己。');
+  if (rivals.length) line += '同位置的' + (rivals[0].cname || rivals[0].name) + '会让每一次训练都有分量。';
+  line += role === '首发' ? '第一场你将随首发出场，接下来要守住这个位置。' : '从替补席出发，让教练有理由把你留在场上。';
+  return line.replace(/[&<>"']/g, function(ch) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; });
+}
+
 function openLegendEraPrologue(manual) {
   if (STATE.mode !== 'legend') return Promise.resolve(false);
   function run() {
@@ -2128,7 +2151,7 @@ function openLegendEraPrologue(manual) {
     var shown = PP_ERA_STORY.showPrologueIfDue({ career:STATE.career, era:STATE.eraStart });
     if (manual && !shown) {
       var status = typeof PP_ERA_STORY.getPrologueStatus === 'function' ? PP_ERA_STORY.getPrologueStatus(STATE.career) : null;
-      var message = status && status.legacySkipped ? '旧档已安全接入年代主线；后续剧情按赛季进度触发。' : '传奇序章已读；首个年代主线将在第 8 场后出现。';
+      var message = status && status.legacySkipped ? '这一页已经翻过。接下来的故事，留在球场上。' : '开场已经落幕。你的赛季还在继续。';
       if (typeof PP_FX !== 'undefined' && PP_FX.toast) PP_FX.toast(message, { icon:'📜', duration:3200 });
     }
     return shown;
@@ -14608,10 +14631,10 @@ function renderTrainingCamp() {
     PP_SKILLS.ensureSkillState();
     skillPts = PP_SKILLS.availableStylePoints();
   }
-  html += '<div style="margin:8px 0 10px;padding:9px 11px;background:linear-gradient(120deg,#fffaf2,#fff1e6);border:1.5px solid #ffd2b8;border-radius:10px;">';
+  html += '<div style="margin:8px 0 10px;padding:9px 11px;background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;">';
   html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">';
   html += '<div style="min-width:0;">';
-  html += '<div style="font-size:12px;font-weight:800;color:#2d1f0e;">⚡ 球风点 <span style="color:#ff6b35;font-size:18px;">' + skillPts + '</span></div>';
+  html += '<div style="font-size:12px;font-weight:800;color:var(--text);">⚡ 球风点 <span style="color:var(--orange);font-size:18px;">' + skillPts + '</span></div>';
   html += '</div>';
   html += '<button type="button" class="btn btn-secondary btn-sm" onclick="openCareerSkillPanel(this)">技能</button>';
   html += '</div></div>';
@@ -14625,6 +14648,7 @@ function renderTrainingCamp() {
   }
 
   html += '<div class="tp-section-title">📈 分配属性点 <span style="font-size:12px;color:var(--text-muted);font-weight:400;">剩余 ' + remaining + ' 点</span></div>';
+  html += renderTrainingScout(tp);
   html += '<div class="tp-attrs" id="tp-attrs"></div>';
 
   html += '<div class="tp-actions" style="justify-content:center;">';
@@ -14882,7 +14906,7 @@ function manualLoadGame(slot) {
           HUPU_USER.isLogin = !!snap.hupuUser.isLogin;
           HUPU_USER.source = snap.hupuUser.source || HUPU_USER.source;
         }
-        ['player-retirement-choice', 'contract-modal', 'contract-retirement-choice', 'legacy-modal', 'countdown-legacy-modal', 'countdown-legacy-result-modal', 'load-menu-modal', 'playoff-game-data-panel'].forEach(function(id) {
+        ['roster-authority-modal','user-recruitment-modal','team-system-modal','league-intel-modal','offseason-result-modal','player-retirement-choice', 'contract-modal', 'contract-retirement-choice', 'legacy-modal', 'countdown-legacy-modal', 'countdown-legacy-result-modal', 'load-menu-modal', 'playoff-game-data-panel'].forEach(function(id) {
           var el = document.getElementById(id);
           if (el) el.remove();
         });
@@ -14929,6 +14953,11 @@ function manualClearSave(slot) {
 }
 
 function renderAfterSaveLoad(targetScreen) {
+  if (STATE._offseasonMarketStage && window.PP_MOD_V4) {
+    showScreen('screen-training');
+    PP_MOD_V4.resumeOffseasonMarket();
+    return;
+  }
   if (STATE._seasonBranchEventId) {
     if (!getBranchEventById(STATE._seasonBranchEventId)) throw new Error('赛季剧情未找到：' + STATE._seasonBranchEventId);
     showScreen(targetScreen || 'screen-season');
@@ -15346,6 +15375,47 @@ function getAgeInfo(age) {
   return { desc:'生涯末期 — 最多可坚持到 42 岁赛季', penalty:'高位属性回落更快，保养只能缓冲、不能逆转年龄' };
 }
 
+function getTrainingScoutSuggestions() {
+  return ATTR_KEYS.filter(function(key) { return typeof STATE.attrs[key] === 'number' && STATE.attrs[key] < 99; })
+    .sort(function(a, b) { return STATE.attrs[a] - STATE.attrs[b] || ATTR_KEYS.indexOf(a) - ATTR_KEYS.indexOf(b); }).slice(0, 3);
+}
+
+function renderTrainingScout(tp) {
+  var notes = {threePT:'空位出现时，把机会变成三分。',MID:'对手收缩禁区时，需要稳定的中距离。',FIN:'篮下对抗之后，仍要把球放进篮筐。',DNK:'突破后的起跳，需要更坚决的终结。',HAN:'紧逼防守下，先保护好球。',PAS:'包夹到来之前，找到下一位队友。',PDEF:'守住外线第一步，减少队友补防。',IDEF:'让对手进入禁区后也无法轻松得分。',BLK:'在正确的时机起跳，保护篮筐。',REB:'回合结束前，先收下篮板。',ATH:'追防和转换时，跟上比赛的速度。',STR:'卡位和对抗中，守住自己的空间。',CLU:'最后几个回合，需要稳定执行。'};
+  var pending = STATE._tpPending || {};
+  var preview = Object.assign({}, STATE.attrs);
+  ATTR_KEYS.forEach(function(key) { preview[key] = (Number(preview[key]) || 50) + (Number(pending[key]) || 0); });
+  var remaining = Math.max(0, tp - getPendingTrainingCost(pending));
+  var rows = getTrainingScoutSuggestions().map(function(key) {
+    var added = Number(pending[key]) || 0;
+    var cost = getPointCost(STATE.attrs[key] + added);
+    var disabled = added >= 8 || STATE.attrs[key] + added >= 99 || remaining < cost || cost > 2;
+    return '<div class="training-scout-row"><div><strong>' + attrCN(key) + ' ' + STATE.attrs[key] + (added ? ' → ' + preview[key] : '') + '</strong><p>' + (notes[key] || '把这项能力练得更稳。') + '</p></div><button class="btn btn-secondary btn-sm" onclick="suggestTrainingFocus(\'' + key + '\')" ' + (disabled ? 'disabled' : '') + '>重点训练</button>' + (added ? '<button class="btn btn-ghost btn-sm" onclick="withdrawTrainingFocus(\'' + key + '\')">撤回</button>' : '') + '</div>';
+  }).join('');
+  return '<section class="training-scout"><div class="training-scout-heading"><strong>球探复盘</strong><span>总评 ' + calcOVR(STATE.attrs) + ' → ' + calcOVR(preview) + '</span></div>' + (rows || '<p>各项能力已经达到训练上限。</p>') + '<p class="training-scout-budget">每次安排最多使用 2 个训练点；确认后计入能力。</p></section>';
+}
+
+function suggestTrainingFocus(key) {
+  if (STATE._trainingConfirmed || getTrainingScoutSuggestions().indexOf(key) < 0) return;
+  STATE._tpPending = STATE._tpPending || {};
+  var budget = Math.min(2, Math.max(0, calcTrainingPoints() - getPendingTrainingCost(STATE._tpPending)));
+  var added = Number(STATE._tpPending[key]) || 0;
+  var base = STATE.attrs[key];
+  while (added < 8 && base + added < 99) {
+    var cost = getPointCost(base + added);
+    if (cost > budget) break;
+    budget -= cost;
+    STATE._tpPending[key] = ++added;
+  }
+  renderTrainingCamp();
+}
+
+function withdrawTrainingFocus(key) {
+  if (STATE._trainingConfirmed || ATTR_KEYS.indexOf(key) < 0) return;
+  if (STATE._tpPending) delete STATE._tpPending[key];
+  renderTrainingCamp();
+}
+
 function renderTrainingAttrs(tp) {
   var pending = STATE._tpPending || {};
   var attrsEl = document.getElementById('tp-attrs');
@@ -15421,6 +15491,7 @@ function getMaxAdd(alreadyAdded, totalPoints, curVal) {
 }
 
 function addTrainingPoint(key) {
+  if (STATE._trainingConfirmed || ATTR_KEYS.indexOf(key) < 0) return;
   if (!STATE._tpPending) STATE._tpPending = {};
   var added = STATE._tpPending[key] || 0;
   var cur = STATE.attrs[key] || 50;
@@ -15440,7 +15511,11 @@ function resetTraining() {
 }
 
 function confirmTraining() {
+  if (STATE._trainingConfirmed || !STATE.career) return;
   var pending = STATE._tpPending || {};
+  if (getPendingTrainingCost(pending) > calcTrainingPoints()) return;
+  if (Object.keys(pending).some(function(key) { return ATTR_KEYS.indexOf(key) < 0 || !Number.isInteger(pending[key]) || pending[key] < 0 || pending[key] > 8 || STATE.attrs[key] + pending[key] > 99; })) return;
+  STATE._trainingConfirmed = true;
   var skillSnap = (typeof PP_SKILLS !== 'undefined') ? PP_SKILLS.snapshotEffectiveLevels() : {};
   for (var k in pending) {
     if (pending.hasOwnProperty(k)) STATE.attrs[k] = (STATE.attrs[k] || 50) + pending[k];
@@ -18249,6 +18324,7 @@ function startNewSeason() {
 }
 
 function resetForNewSeason() {
+  delete STATE._trainingConfirmed;
   saveCurrentSeasonToCareer();
   var oldTeam = STATE.careerTeam;
   STATE._careerSaved = false;
@@ -18500,6 +18576,7 @@ function randomContractByAge(age) {
 }
 
 function assignFreeAgents() {
+  if (window.PP_MOD_V4 && PP_MOD_V4.applyRosterPriority) PP_MOD_V4.applyRosterPriority();
   var pool = STATE._freeAgentPool || [];
   if (pool.length === 0) return;
 
@@ -18542,6 +18619,7 @@ function assignFreeAgents() {
       if (posCount < 2) {
         roster.push(fa);
         fa._justSigned = true;
+        if (!(Number(fa.contract) > 0)) fa.contract = randomContractByAge(getLeaguePlayerAge(fa));
         if (fa.ovr > 86) starSignedTeams[t] = true;
         STATE._leagueChanges.freeSignings.push({ name: fa.cname || fa.name, nameEN: fa.name, from: fa._origTeam, to: t, ovr: fa.ovr });
         if (t === STATE.careerTeam) {
@@ -18569,6 +18647,7 @@ function assignFreeAgents() {
       if (fbRoster && fbRoster.length < 12) {
         fbRoster.push(fa);
         fa._justSigned = true;
+        if (!(Number(fa.contract) > 0)) fa.contract = randomContractByAge(getLeaguePlayerAge(fa));
         if (fa.ovr > 86) starSignedTeams[fb] = true;
         STATE._leagueChanges.freeSignings.push({ name: fa.cname || fa.name, nameEN: fa.name, from: fa._origTeam, to: fb, ovr: fa.ovr });
         break;
@@ -18577,6 +18656,7 @@ function assignFreeAgents() {
   });
 
   STATE._freeAgentPool = [];
+  clearLineupCache();
 }
 
 // ==================== 交易系统 ====================

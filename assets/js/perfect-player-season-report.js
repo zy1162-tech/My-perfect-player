@@ -644,7 +644,8 @@
       version:REPORT_VERSION, team:finalTeam, oldTeam:previousTeam,
       beforeCount:mainDiff.beforeCount, afterCount:mainDiff.afterCount, departed:mainDiff.departed, joined:mainDiff.joined,
       previousTeamDiff:previousTeam !== finalTeam ? teamDiff(previousTeam) : null,
-      trades:clone(trades), freeAgents:clone(freeAgents), retirements:clone(retirements)
+      trades:clone(trades), freeAgents:clone(freeAgents), retirements:clone(retirements),
+      priority:typeof STATE !== 'undefined' && STATE.career && STATE.career.rosterPriority ? clone(STATE.career.rosterPriority) : null
     };
   }
 
@@ -680,6 +681,12 @@
     report.freeAgents.forEach(function (move) { relevant.push('自由球员：' + (move.name || '')); });
     report.retirements.forEach(function (move) { relevant.push('退役：' + (move.name || '')); });
     var detail = relevant.length ? '<div class="offseason-move-notes">' + relevant.map(function (line) { return '<span>' + escapeHtml(line) + '</span>'; }).join('') + '</div>' : '';
+    var priority = report.priority;
+    if (priority && priority.status === 'processed' && priority.season === number(STATE.career && STATE.career.seasonCount)) {
+      var focusLabels = {organize:'组织后卫',shooting:'外线投射',protect:'内线护筐',balanced:'维持安排'};
+      var abilities = (priority.abilities || []).map(function(ability) { return (typeof attrCN === 'function' ? attrCN(ability.key) : ability.key) + ' ' + ability.value; }).join(' · ');
+      detail += '<div class="roster-priority-result"><strong>' + escapeHtml((typeof getTeamName === 'function' ? getTeamName(priority.team) : priority.team) + ' · ' + (focusLabels[priority.focus] || '补强建议')) + '</strong><div>' + escapeHtml(priority.result || '') + '</div>' + (priority.player ? '<small>' + escapeHtml(priority.player.pos + ' · OVR ' + priority.player.ovr + ' · ' + abilities) + '</small>' : '') + '</div>';
+    }
     var overlay = document.createElement('div');
     overlay.className = 'team-picker-overlay';
     overlay.id = 'offseason-team-report';

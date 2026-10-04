@@ -111,10 +111,11 @@ assert.match(core, /hierarchyRank/);
 assert.match(core, /repairLegendEraPositions\(STATE\.eraStart\)/);
 assert.match(core, /getEraPlayerGrowthBonus/);
 assert.match(core, /PP_ERA_MODE\.generateRookie/);
-assert.match(v4, /球队老大 · 名单话语权/);
+assert.match(v4, /管理层会谈/);
 assert.match(v4, /showRosterAuthority\(function\(\)/);
 assert.ok(!/roster\.length\s*[<>]=?\s*18|newRoster\.length\s*<\s*18/.test(core), 'current-era roster logic should no longer target 18 players');
 assert.ok(!/roster\.length\s*>=\s*18/.test(eraMode + v4), 'signing and era roster logic should cap teams at 15 players');
-assert.ok(v4.indexOf('processTrades();') < v4.indexOf('showRecruitmentMarket(function()'), 'trades must finish before recruitment decision');
+const pipeline=v4.slice(v4.indexOf('global.continueCareerAfterTraining ='));
+assert.ok(pipeline.indexOf('processTrades();') < pipeline.indexOf("STATE._offseasonMarketStage = 'intel'"), 'trades must finish before management and recruitment decisions');
 
 console.log('Era integration checks passed: offseason rosters, preserved source ratings, same-team rookies, immutable saved OVR, per-game panel and dual saves.');
