@@ -11,7 +11,8 @@
   /* ---------- 小工具 ---------- */
   function $(id) { return document.getElementById(id); }
   function ce(tag, cls) { var e = document.createElement(tag); if (cls) e.className = cls; return e; }
-  function rand(min, max) { return min + Math.random() * (max - min); }
+  var visualRandom = window.ppVisualRandom || Math.random.bind(Math);
+  function rand(min, max) { return min + visualRandom() * (max - min); }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
   // 成就数据独立持久化（与主存档解耦），localStorage 直存。
@@ -218,12 +219,12 @@
       var sz = rand(6, 12);
       p.style.left = x + 'px'; p.style.top = y + 'px';
       p.style.width = sz + 'px'; p.style.height = sz + 'px';
-      p.style.background = colors[(Math.random() * colors.length) | 0];
+      p.style.background = colors[(visualRandom() * colors.length) | 0];
       p.style.setProperty('--dx', dx.toFixed(1) + 'px');
       p.style.setProperty('--dy', dy.toFixed(1) + 'px');
       p.style.setProperty('--rot', (rand(-360, 360)).toFixed(0) + 'deg');
       p.style.animationDelay = rand(0, 0.08).toFixed(2) + 's';
-      if (Math.random() < 0.5) p.style.borderRadius = '2px';
+      if (visualRandom() < 0.5) p.style.borderRadius = '2px';
       layer.appendChild(p);
       (function (el) { setTimeout(function () { el.remove(); }, 1200); })(p);
     }
@@ -247,7 +248,7 @@
     for (var i = 0; i < count; i++) {
       var c = ce('span', 'pp-confetti');
       c.style.left = rand(0, 100).toFixed(2) + '%';
-      c.style.background = colors[(Math.random() * colors.length) | 0];
+      c.style.background = colors[(visualRandom() * colors.length) | 0];
       var w = rand(6, 11);
       c.style.width = w + 'px';
       c.style.height = rand(9, 16) + 'px';
@@ -255,7 +256,7 @@
       c.style.animationDuration = rand(2.2, 3.6).toFixed(2) + 's';
       c.style.setProperty('--sway', rand(-70, 70).toFixed(0) + 'px');
       c.style.setProperty('--spin', rand(-720, 720).toFixed(0) + 'deg');
-      if (Math.random() < 0.4) c.style.borderRadius = '50%';
+      if (visualRandom() < 0.4) c.style.borderRadius = '50%';
       layer.appendChild(c);
       (function (el) { setTimeout(function () { el.remove(); }, dur + 1200); })(c);
     }

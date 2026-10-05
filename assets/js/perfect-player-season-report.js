@@ -607,7 +607,7 @@
   }
 
   function openingYear(state) {
-    return state.mode === 'legend' ? (number(state.eraStart) || 2003) : (number(state.career && state.career.draft && state.career.draft.year) || 2026);
+    return getSeasonStartYear(1, state);
   }
 
   function leagueHonorWinner(award) {

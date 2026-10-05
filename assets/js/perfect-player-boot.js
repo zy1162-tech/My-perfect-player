@@ -10,8 +10,8 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
     ],
     career: [
         ['assets/js/perfect-player-skills.js?v=20260827-style-economy-v9', '球风技能'],
-      ['assets/js/perfect-player-awards.js?v=20260823-allstar-v3', '荣誉评选'],
-        ['assets/js/perfect-player-enhancements.js?v=20261004-legacy-snapshot-v19', '成就特效']
+      ['assets/js/perfect-player-awards.js?v=20261005-season-calendar-v4', '荣誉评选'],
+        ['assets/js/perfect-player-enhancements.js?v=20261005-visual-rng-v20', '成就特效']
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20261002-choice-forecast-v16', '赛季事件'],
@@ -324,7 +324,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20261004-career-legacy-v41', { updateViaCache:'none' }).catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20261005-career-ui-v43', { updateViaCache:'none' }).catch(function () {});
   }
 
   function idleLoad() {

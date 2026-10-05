@@ -2476,7 +2476,7 @@ function buildBiographyFacts(r) {
   var shape = teams.length >= 3 ? '辗转多队' : (seasons.length >= 12 ? '巅峰漫长' : '慢慢长成');
   if ((c.currentAge || 0) >= 35 && (championships > 0 || mvp > 0)) shape = '老年封神';
   var bestHonor = (best.awards && best.awards.length) ? best.awards.map(function(a) { return a.label || a; }).join('、') : (best.playoffResult || '重要赛季');
-  function seasonYear(n) { return 2025 + (parseInt(n, 10) || 1); }
+  function seasonYear(n) { return getSeasonStartYear(n); }
   var coreHonor = joinPhraseParts([
     buildCountPhrase(championships, '座', '总冠军'),
     buildCountPhrase(mvp, '座', 'MVP'),
@@ -2618,7 +2618,7 @@ function analyzeTeamEras(facts) {
   });
   if (cur) eras.push(cur);
   function tn(team) { return (typeof getTeamName === 'function') ? getTeamName(team) : (team || '一支球队'); }
-  function seasonYear(n) { return 2025 + (parseInt(n, 10) || 1); }
+  function seasonYear(n) { return getSeasonStartYear(n); }
   eras.forEach(function(era, idx) {
     var nums = era.seasons.map(function(se) { return se.seasonNum; });
     var counts = getBiographyHonorCountsForSeasons(nums);
@@ -3140,7 +3140,7 @@ function generateCareerPoster() {
     }
   });
   honorEntries.sort(function(a, b) { return a.seasonNum - b.seasonNum; });
-  function seasonYear(n) { return 2025 + (parseInt(n, 10) || 1); }
+  function seasonYear(n) { return getSeasonStartYear(n); }
   function shortSeasonLabel(n) { var y = seasonYear(n); return y + '-' + String((y + 1) % 100); }
   // 按连续效力同一队的时代合并，一行展示该时代的全部荣誉
   var eraList = [];

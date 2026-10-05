@@ -39,7 +39,7 @@
   }
 
   function currentAwardSeasonStart() {
-    return 2026 + n(STATE && STATE.career && STATE.career.seasonCount, 0);
+    return getSeasonStartYear(n(STATE && STATE.career && STATE.career.seasonCount, 0) + 1);
   }
 
   function currentAwardSeasonKey() {

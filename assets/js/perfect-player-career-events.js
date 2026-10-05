@@ -318,8 +318,7 @@ function careerExperienceMoney(value) {
 }
 
 function getCareerEconomicYear(seasonCount) {
-  var start = STATE.mode === 'legend' ? Number(STATE.eraStart) || 2003 : 2026;
-  return start + (seasonCount == null ? Number(STATE.career && STATE.career.seasonCount) || 0 : seasonCount);
+  return getSeasonStartYear((seasonCount == null ? Number(STATE.career && STATE.career.seasonCount) || 0 : Number(seasonCount)) + 1);
 }
 
 function getCareerSalaryMarket(year) {

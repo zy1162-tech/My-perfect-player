@@ -46,13 +46,13 @@ html.pp-booting #app{visibility:hidden}
 <script src="assets/data/verified-headshots.js?v=20261002-verified-headshots-v2"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261004-career-legacy-boot-v29" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20261004-career-legacy-boot-v29"></script>
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261005-career-ui-boot-v30" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20261005-career-ui-boot-v30"></script>
   <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260826-era-headshots-v2">
   <link rel="stylesheet" href="assets/css/perfect-player-season-report.css?v=20260826-season-report-v1">
 
 
-<link href="assets/css/perfect-player-premium.css?v=20261004-career-legacy-v15" rel="stylesheet">
+<link href="assets/css/perfect-player-premium.css?v=20261005-career-ui-v16" rel="stylesheet">
 </head>
 <body>
 
@@ -199,18 +199,16 @@ html.pp-booting #app{visibility:hidden}
 
     <div class="menu-arena">
       <div class="hero">
-        <div class="hero-title">MY CAREER · 球员生涯</div>
-        <div class="hero-headline">把名字<br><span class="hl">写进联盟</span></div>
-        <div class="hero-desc">构筑自己的球员，走进选秀与更衣室。让训练、选择和每一场比赛，留下属于你的生涯。</div>
-        <div class="menu-feature-note"><b>01</b><span>进入球队 · 赢得轮换</span><b>02</b><span>建立配合 · 影响球队</span><b>03</b><span>留住荣誉 · 写下生涯</span></div>
+        <div class="hero-title">MY CAREER <span>球员生涯</span></div>
+        <div class="hero-headline">上场。<br><span class="hl">让联盟记住你。</span></div>
+        <div class="hero-desc">从选秀夜到总决赛。争取你的上场时间，找到自己的打法，把冠军留在这座城市。</div>
       </div>
       <div class="arena-player-stage" aria-label="我的球员">
         <div class="arena-court-floor"></div>
-        <span class="arena-stage-word" aria-hidden="true">PLAYER</span>
+        <span class="arena-stage-word" aria-hidden="true">01</span>
         <img class="arena-player-model" src="assets/images/ui/career-avatar-v1.png" alt="身穿 1 号球衣的篮球球员">
-        <div class="arena-stage-caption"><strong>YOUR PLAYER.<br>YOUR LEGACY.</strong></div>
       </div>
-      <div class="menu-game-modes"><div class="menu-mode-heading"><span>PLAY</span><strong>选择你的赛场</strong></div><div class="feature-grid" id="feature-grid"></div></div>
+      <div class="menu-game-modes"><div class="menu-mode-heading"><span>PLAY</span><strong>选择赛场</strong></div><div class="feature-grid" id="feature-grid"></div></div>
     </div>
 
     <div class="fc-footer"></div>
@@ -963,16 +961,16 @@ var Storage = {
   }
 };
 </script>
-<script src="assets/js/perfect-player-core.js?v=20261004-career-legacy-v15"></script>
-<script src="assets/js/perfect-player-season-report.js?v=20261004-honor-report-v5"></script>
+<script src="assets/js/perfect-player-core.js?v=20261005-career-ui-v16"></script>
+<script src="assets/js/perfect-player-season-report.js?v=20261005-season-calendar-v6"></script>
 <script src="assets/js/perfect-player-mod-v4.js?v=20261004-roster-priority-v21"></script>
-<script src="assets/js/perfect-player-career-events.js?v=20261004-career-impact-v10"></script>
+<script src="assets/js/perfect-player-career-events.js?v=20261005-season-calendar-v11"></script>
 <script src="assets/js/perfect-player-era-mode.js?v=20261004-opening-roster-v37"></script>
 
 <!-- ====== 随机事件系统 — EVENT REGISTRY ====== -->
 <script src="assets/js/perfect-player-event-runtime.js?v=20261003-risk-state-v10"></script>
 
-<script src="assets/js/perfect-player-poster.js?v=20261003-branch-source-v2"></script>
+<script src="assets/js/perfect-player-poster.js?v=20261005-season-calendar-v3"></script>
 
 
 <!-- ====== 自选球队（本地，无激励视频）====== -->
