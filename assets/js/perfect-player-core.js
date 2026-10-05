@@ -8093,10 +8093,16 @@ function showSeasonResults() {
 }
 
 // ==================== My Card（实时数据面板）====================
+function isSeasonFinished() {
+  var s = STATE.season;
+  return !!s && (!s.schedule || !s.schedule.some(function(game) { return !game.simulated; }))
+    && (!s.isPlayoffs || !!s.playoffsDone);
+}
+
 function showMyCard() {
   trackEvent({act:"click",blk:"BMC098",pos:"TC8",label:"我的数据"});
   showScreen('screen-mycard');
-  const isFinal = !STATE.season.schedule?.find(g => !g.simulated);
+  const isFinal = isSeasonFinished();
   renderMyCard(isFinal);
 }
 
@@ -8413,10 +8419,8 @@ function saveCurrentSeasonToCareer() {
   var c = STATE.career;
   if (!STATE.season || !STATE.season.playerStats) return;
   if (STATE._careerSaved) return;
-  if (STATE.season.schedule && STATE.season.schedule.some(function(g) { return !g.simulated; })) return;
+  if (!isSeasonFinished()) return;
   if (typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.ensureLeagueFinale) PP_SEASON_REPORT.ensureLeagueFinale();
-  // 季后赛没打完不允许提前存赛季，否则总冠军荣誉会丢失或错位
-  if (STATE.season.isPlayoffs && !STATE.season.playoffsDone) return;
 
   var legacyPreview = typeof PP_SEASON_REPORT !== 'undefined' && PP_SEASON_REPORT.calculateLegacyScorePreview
     ? PP_SEASON_REPORT.calculateLegacyScorePreview(STATE) : null;
@@ -8874,6 +8878,10 @@ function beginOffseason() {
   if (STATE.career && STATE.career.retired) {
     showCareerStats(1);
     return;
+  }
+  if (!isSeasonFinished()) {
+    showManualSaveToast('本赛季尚未结束');
+    return false;
   }
   if (typeof grantSeasonStylePoints === 'function') {
     var grant = grantSeasonStylePoints();

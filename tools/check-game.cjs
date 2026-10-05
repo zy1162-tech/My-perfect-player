@@ -16,6 +16,13 @@ const {chromium} = require('playwright');
     s.career = c.createFreshCareer();
     if (era === 'current') s.career.draft = {year:2025};
     assert.equal(c.getSeasonStartYear(2),(era === 'current' ? 2025 : era)+1);
+    s.season={schedule:[{simulated:true}],isPlayoffs:true,playoffsDone:false};
+    let advanced=false;
+    c.applyAnnualAttributeDrift=c.renderTrainingCamp=()=>{advanced=true;};
+    c.showManualSaveToast=()=>{};
+    assert.equal(c.isSeasonFinished(),false);
+    assert.equal(c.beginOffseason(),false);
+    assert.equal(advanced,false,'季后赛未结束不得推进成长或训练');
   }
   const browser = await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});
   const page = await browser.newPage({viewport:{width:1440,height:900}});
@@ -67,6 +74,8 @@ const {chromium} = require('playwright');
     assert.equal(restored.screen,'screen-mycard');assert.equal(restored.before,restored.after);assert.equal(restored.paused,true);
     await page.evaluate(()=>backToSeason());
     assert.equal(await page.evaluate(()=>document.querySelector('.screen.active').id),'screen-season');
+    await page.evaluate(()=>{STATE.season.schedule.forEach(g=>g.simulated=true);STATE.season.isPlayoffs=true;STATE.season.playoffsDone=false;showMyCard();});
+    assert.equal(await page.getByRole('button',{name:'进入休赛期',exact:false}).count(),0);
 
     const contracts=await page.evaluate(async()=>{
       STATE.career.contract=0;showContractOffers();const offers=JSON.stringify(STATE._contractOfferOptions);

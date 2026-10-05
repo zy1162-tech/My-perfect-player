@@ -2,7 +2,7 @@
 'use strict';
 
 var CACHE_PREFIX = 'perfect-player-shell-';
-var CACHE_NAME = CACHE_PREFIX + '20261005-career-ui-v43';
+var CACHE_NAME = CACHE_PREFIX + '20261005-career-ui-v44';
 var SHELL = [
   './',
   './nba-perfect-player.html',
@@ -26,7 +26,7 @@ var SHELL = [
   './assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4',
   './assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10',
   './assets/images/ui/career-avatar-v1.png',
-  './assets/js/perfect-player-boot.js?v=20261005-career-ui-boot-v30',
+  './assets/js/perfect-player-boot.js?v=20261005-career-ui-boot-v31',
   './assets/js/current-player-ratings-2026.js?v=20260826-rating-v1',
   './assets/js/hupu/script-00-2678-58zyeprc-upload-1783508428855-12.js?v=20260827-verified-names-v1',
   './assets/js/hupu/script-01-2678-5hu3djrc-upload-1783494754597-12.js?v=20261003-official-rosters-v2',
@@ -34,7 +34,7 @@ var SHELL = [
   './assets/js/hupu/script-03-2678-456sfprc-upload-1783494754597-18.js',
   './assets/js/hupu/script-04-2678-mdo4zerc-upload-1783494754597-21.js',
   './assets/js/hupu/script-05-2678-qlg35lrc-upload-1783494754597-24.js',
-  './assets/js/perfect-player-core.js?v=20261005-career-ui-v16',
+  './assets/js/perfect-player-core.js?v=20261005-career-ui-v17',
   './assets/js/perfect-player-season-report.js?v=20261005-season-calendar-v6',
   './assets/js/perfect-player-mod-v4.js?v=20261004-roster-priority-v21',
   './assets/js/perfect-player-career-events.js?v=20261005-season-calendar-v11',
