@@ -180,7 +180,7 @@
       '.pp-live-hero-nums{flex:1;display:flex;justify-content:space-between;gap:2px;min-width:0}' +
       '.pp-live-hero-stat{text-align:center;min-width:0}' +
       '.pp-live-hero-stat b{display:block;font-family:var(--font-display);font-size:15px;font-weight:700;line-height:1.1}' +
-      '.pp-live-hero-stat small{display:block;font-size:9px;color:var(--text-dim)}' +
+      '.pp-live-hero-stat small{display:block;font-size:11px;color:var(--text-dim)}' +
       '.pp-live-hero-stat.is-bump b{animation:ppHeroBump .38s ease}' +
       '@keyframes ppHeroBump{0%{transform:scale(1.28);color:var(--orange)}100%{transform:scale(1)}}' +
       '@media (prefers-reduced-motion: reduce){.pp-live-hero-stat.is-bump b{animation:none}}' +

@@ -6,12 +6,12 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   var GROUPS = {
     create: [
-      ['assets/js/perfect-player-hupu-extensions.js?v=20261003-career-strip-v19', '角色扩展']
+      ['assets/js/perfect-player-hupu-extensions.js?v=20261005-review-fixes-v20', '角色扩展']
     ],
     career: [
         ['assets/js/perfect-player-skills.js?v=20260827-style-economy-v9', '球风技能'],
       ['assets/js/perfect-player-awards.js?v=20261005-season-calendar-v4', '荣誉评选'],
-        ['assets/js/perfect-player-enhancements.js?v=20261005-visual-rng-v20', '成就特效']
+        ['assets/js/perfect-player-enhancements.js?v=20261005-review-fixes-v21', '成就特效']
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20261002-choice-forecast-v16', '赛季事件'],
@@ -21,8 +21,8 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
       ['assets/js/perfect-player-allstar.js?v=20260824-double-points-mod-v1', '全明星周末']
     ],
     live: [
-    ['assets/js/perfect-player-live-court.js?v=20260824-era-positions-v7', '俯瞰球场'],
-        ['assets/js/perfect-player-live-sim.js?v=20261004-match-plan-live-v21', '文字直播']
+    ['assets/js/perfect-player-live-court.js?v=20261005-review-fixes-v8', '俯瞰球场'],
+        ['assets/js/perfect-player-live-sim.js?v=20261005-review-fixes-v22', '文字直播']
     ]
   };
 
@@ -213,20 +213,33 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
     if (el) el.classList.remove('is-on');
   }
 
-  function showLoadFailure(message) {
+  // 核心里的 showToast 在成就模块加载前是空函数；加载失败时正是它可能缺席，所以这里自己显示提示。
+  function showLoadFailure(message, retry) {
     var text = message || '加载失败，请检查网络后重试';
-    if (typeof window.showToast === 'function') {
-      try { window.showToast(text); return; } catch (e) {}
-    }
     var old = document.getElementById('pp-load-failure-toast');
     if (old && old.parentNode) old.parentNode.removeChild(old);
     var toast = document.createElement('div');
+    var timer = null;
+    function remove() {
+      clearTimeout(timer);
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }
     toast.id = 'pp-load-failure-toast';
-    toast.setAttribute('role', 'status');
-    toast.textContent = text;
-    toast.style.cssText = 'position:fixed;left:50%;bottom:24px;z-index:2147483640;max-width:min(340px,88vw);transform:translateX(-50%);padding:10px 14px;border-radius:12px;background:#10223a;color:#fff;font-size:12px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.24);';
+    toast.setAttribute('role', 'alert');
+    toast.style.cssText = 'position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:2147483640;display:flex;align-items:center;gap:12px;max-width:min(360px,90vw);transform:translateX(-50%);padding:10px 12px 10px 16px;border:1px solid #2b3a50;border-radius:12px;background:#111a27;color:#edf3ff;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.4);';
+    var label = document.createElement('span');
+    label.textContent = text;
+    toast.appendChild(label);
+    if (typeof retry === 'function') {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = '重试';
+      button.style.cssText = 'flex-shrink:0;min-height:32px;padding:4px 14px;border:0;border-radius:8px;background:#ed3348;color:#fff;font:inherit;cursor:pointer;';
+      button.onclick = function () { remove(); retry(); };
+      toast.appendChild(button);
+    }
     document.body.appendChild(toast);
-    setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 3200);
+    timer = setTimeout(remove, typeof retry === 'function' ? 8000 : 3200);
   }
 
   function startBootGame() {
@@ -267,7 +280,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
         return run(true);
       }, function () {
         hideGate();
-        showLoadFailure('加载失败，点击可重试');
+        showLoadFailure('加载失败，请检查网络', function () { wrapped.apply(self, args); });
         return undefined;
       });
     };
@@ -291,14 +304,14 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
     return window.__PP_ensure('career').then(function () {
       hideGate();
       if (!window.PP_FX || typeof window.PP_FX[method] !== 'function') {
-        showLoadFailure('功能未完整加载，点击可重试');
+        showLoadFailure('功能未完整加载', function () { openCareerFeature(feature); });
         return false;
       }
       window.PP_FX[method]();
       return true;
     }, function () {
       hideGate();
-      showLoadFailure('加载失败，点击可重试');
+      showLoadFailure('加载失败，请检查网络', function () { openCareerFeature(feature); });
       return false;
     });
   }
@@ -324,7 +337,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20261005-career-ui-v44', { updateViaCache:'none' }).catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20261005-review-fixes-v45', { updateViaCache:'none' }).catch(function () {});
   }
 
   function idleLoad() {

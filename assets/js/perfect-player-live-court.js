@@ -1420,7 +1420,7 @@
   };
 
   /* ---------- SVG 球场（NBA 94×50） ---------- */
-  var svg, dotsG, ballEl, ballShadow, trailEls, wrap, raf, idleRaf, enabled = true, dotMap = {};
+  var svg, dotsG, ballEl, ballShadow, trailEls, wrap, raf, idleRaf, enabled = true, dotMap = {}, resizeBound = false;
   var pose = null;
   var poseBall = null;
   var camBox = null;
@@ -1962,8 +1962,9 @@
       layoutSvg();
       startIdle();
     });
-    if (!wrap._ppCourtResize) {
-      wrap._ppCourtResize = true;
+    // 每场比赛都会新建 wrap，标记放在模块里，避免每看一场就多注册一个 resize 监听。
+    if (!resizeBound) {
+      resizeBound = true;
       window.addEventListener('resize', function () {
         if (svg && wrap) layoutSvg();
       });

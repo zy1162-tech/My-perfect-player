@@ -76,7 +76,7 @@
       var src = avatar.src;
       var selected = src === selectedAvatar ? ' selected' : '';
       return '<button type="button" class="character-avatar' + selected + '" data-avatar="' + src + '" onclick="selectCharacterAvatar(\'' + src + '\')" aria-label="选择' + activeAvatarGroup + '头像' + (index + 1) + '">' +
-        '<img src="' + src + '?v=restore" alt="' + activeAvatarGroup + '球员头像' + (index + 1) + '">' +
+        '<img src="' + src + '?v=restore" loading="lazy" decoding="async" alt="' + activeAvatarGroup + '球员头像' + (index + 1) + '">' +
       '</button>';
     }).join('');
     input.oninput = function () {
@@ -97,6 +97,8 @@
 
   window.showCharacterCreate = function () {
     window.renderCharacterCreator();
+    var staleError = document.getElementById('character-error');
+    if (staleError) staleError.textContent = '';
     if (typeof showScreen === 'function') showScreen('screen-character');
     setTimeout(function () {
       var input = document.getElementById('character-name');
@@ -107,7 +109,9 @@
   window.confirmCharacter = function () {
     var input = document.getElementById('character-name');
     var error = document.getElementById('character-error');
-    var name = input ? input.value.trim() : '';
+    // 姓名会直接拼进各处界面 HTML，去掉尖括号、引号等会破坏标记的符号。
+    var name = input ? input.value.replace(/[<>&"'`\u0000-\u001f]/g, '').trim() : '';
+    if (input) input.value = name;
     if (!name) {
       if (error) error.textContent = '请输入球员姓名';
       if (input) input.focus();
@@ -483,7 +487,7 @@
     style.textContent =
       '.draft-projection-card{margin:8px 12px 0;padding:7px 6px;display:grid;grid-template-columns:1.08fr 1fr .88fr;gap:5px;background:linear-gradient(135deg,rgba(255,107,53,.14),rgba(255,255,255,.02));border:1px solid var(--orange-dim);border-radius:10px}' +
       '.draft-projection-cell{min-width:0;padding:1px 5px;border-left:1px solid var(--border);display:flex;flex-direction:column;gap:2px}' +
-      '.draft-projection-cell:first-child{border-left:0}.draft-projection-cell span{font-size:9px;color:var(--text-dim);white-space:nowrap}' +
+      '.draft-projection-cell:first-child{border-left:0}.draft-projection-cell span{font-size:11px;color:var(--text-dim);white-space:nowrap}' +
       '.draft-projection-cell strong{font-family:var(--font-display);font-size:11px;color:var(--text);line-height:1.25;white-space:normal}' +
       '.draft-projection-cell.is-primary strong{font-size:14px;color:var(--orange)}.draft-stock-value.is-up{color:#34c759!important}.draft-stock-value.is-down{color:var(--red)!important}' +
       '@media(max-width:360px){.draft-projection-card{margin-left:9px;margin-right:9px;padding-left:3px;padding-right:3px;gap:2px}.draft-projection-cell{padding-left:4px;padding-right:4px}.draft-projection-cell strong{font-size:10px}.draft-projection-cell.is-primary strong{font-size:13px}}';

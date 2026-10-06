@@ -46,13 +46,13 @@ html.pp-booting #app{visibility:hidden}
 <script src="assets/data/verified-headshots.js?v=20261002-verified-headshots-v2"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261005-career-ui-boot-v31" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20261005-career-ui-boot-v31"></script>
-  <link rel="stylesheet" href="assets/css/perfect-player.css?v=20260826-era-headshots-v2">
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261005-review-fixes-boot-v32" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20261005-review-fixes-boot-v32"></script>
+  <link rel="stylesheet" href="assets/css/perfect-player.css?v=20261005-review-fixes-v3">
   <link rel="stylesheet" href="assets/css/perfect-player-season-report.css?v=20260826-season-report-v1">
 
 
-<link href="assets/css/perfect-player-premium.css?v=20261005-career-ui-v16" rel="stylesheet">
+<link href="assets/css/perfect-player-premium.css?v=20261005-review-fixes-v17" rel="stylesheet">
 </head>
 <body>
 
@@ -118,8 +118,9 @@ html.pp-booting #app{visibility:hidden}
   function scopedKey(key) { return 'cb_storage:' + PROJECT_ID + ':' + key; }
   function enc(value) {
     if (value == null) return '';
-    var text = typeof value === 'string' ? value : JSON.stringify(value);
-    try { return '__b64__:' + btoa(unescape(encodeURIComponent(text))); } catch (e) { return text; }
+    // 直接保存文本：存档已经压缩并编码过，再转一次 Base64 只会多占三分之一空间。
+    // 旧数据的 __b64__ 前缀仍由 dec 读取。
+    return typeof value === 'string' ? value : JSON.stringify(value);
   }
   function dec(raw) {
     if (raw == null) return null;
@@ -206,7 +207,7 @@ html.pp-booting #app{visibility:hidden}
       <div class="arena-player-stage" aria-label="我的球员">
         <div class="arena-court-floor"></div>
         <span class="arena-stage-word" aria-hidden="true">01</span>
-        <img class="arena-player-model" src="assets/images/ui/career-avatar-v1.png" alt="身穿 1 号球衣的篮球球员">
+        <img class="arena-player-model" src="assets/images/ui/career-avatar-v1.webp" alt="身穿 1 号球衣的篮球球员">
       </div>
       <div class="menu-game-modes"><div class="menu-mode-heading"><span>PLAY</span><strong>选择赛场</strong></div><div class="feature-grid" id="feature-grid"></div></div>
     </div>
@@ -961,16 +962,16 @@ var Storage = {
   }
 };
 </script>
-<script src="assets/js/perfect-player-core.js?v=20261005-career-ui-v17"></script>
+<script src="assets/js/perfect-player-core.js?v=20261005-review-fixes-v18"></script>
 <script src="assets/js/perfect-player-season-report.js?v=20261005-season-calendar-v6"></script>
-<script src="assets/js/perfect-player-mod-v4.js?v=20261004-roster-priority-v21"></script>
-<script src="assets/js/perfect-player-career-events.js?v=20261005-season-calendar-v11"></script>
+<script src="assets/js/perfect-player-mod-v4.js?v=20261005-review-fixes-v22"></script>
+<script src="assets/js/perfect-player-career-events.js?v=20261005-review-fixes-v12"></script>
 <script src="assets/js/perfect-player-era-mode.js?v=20261004-opening-roster-v37"></script>
 
 <!-- ====== 随机事件系统 — EVENT REGISTRY ====== -->
 <script src="assets/js/perfect-player-event-runtime.js?v=20261003-risk-state-v10"></script>
 
-<script src="assets/js/perfect-player-poster.js?v=20261005-season-calendar-v3"></script>
+<script src="assets/js/perfect-player-poster.js?v=20261005-review-fixes-v4"></script>
 
 
 <!-- ====== 自选球队（本地，无激励视频）====== -->
