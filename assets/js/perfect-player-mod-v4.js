@@ -52,9 +52,9 @@
       var contract = p && p._isUser ? Number(STATE.career && STATE.career.contract) : Number(p && p.contract);
       var name = p && p._isUser ? '我的球员' : (p.cname || p.name || '球员');
       return '<div style="display:grid;grid-template-columns:24px minmax(0,1fr) 34px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-light);">' +
-        '<span style="font-size:9px;color:' + (isStarter ? 'var(--orange)' : 'var(--text-muted)') + ';font-weight:700;">' + (isStarter ? '首发' : (idx < 8 ? '轮换' : '替补')) + '</span>' +
+        '<span style="font-size:11px;color:' + (isStarter ? 'var(--orange)' : 'var(--text-muted)') + ';font-weight:700;">' + (isStarter ? '首发' : (idx < 8 ? '轮换' : '替补')) + '</span>' +
         '<span style="min-width:0;"><strong style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;' + (p && p._isUser ? 'color:var(--orange);' : '') + '">' + esc(name) + '</strong>' +
-          '<small style="display:block;color:var(--text-dim);font-size:9px;margin-top:1px;">' + esc(p.pos || '—') + ' · ' + age + '岁 · ' + (contract > 0 ? contract + '年合同' : '合同待定') + (p._ratingSource ? ' · ' + esc(p._ratingSource) : '') + '</small></span>' +
+          '<small style="display:block;color:var(--text-dim);font-size:11px;margin-top:1px;">' + esc(p.pos || '—') + ' · ' + age + '岁 · ' + (contract > 0 ? contract + '年合同' : '合同待定') + (p._ratingSource ? ' · ' + esc(p._ratingSource) : '') + '</small></span>' +
         '<strong style="text-align:right;font-family:var(--font-display);font-size:12px;">' + playerOvr(p) + '</strong></div>';
     }).join('');
   }
@@ -64,10 +64,10 @@
     return '<section style="min-width:0;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:9px 10px;">' +
       '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;">' +
         '<div><strong style="font-size:13px;">' + (typeof getTeamLogo === 'function' ? getTeamLogo(snapshot.team, 18) : '') + ' ' + esc(typeof getTeamName === 'function' ? getTeamName(snapshot.team) : snapshot.team) + '</strong>' +
-          '<div style="font-size:9px;color:var(--text-dim);margin-top:2px;">攻 ' + Math.round(Number(p.offense) || 0) + ' · 防 ' + Math.round(Number(p.defense) || 0) + ' · 深度 ' + Math.round(Number(p.depth) || 0) + '</div></div>' +
-        '<div style="text-align:right;"><strong style="display:block;color:var(--orange);font-size:18px;line-height:1;">' + snapshot.powerRating + '</strong><small style="font-size:8px;color:var(--text-muted);">球队评分</small></div>' +
+          '<div style="font-size:11px;color:var(--text-dim);margin-top:2px;">攻 ' + Math.round(Number(p.offense) || 0) + ' · 防 ' + Math.round(Number(p.defense) || 0) + ' · 深度 ' + Math.round(Number(p.depth) || 0) + '</div></div>' +
+        '<div style="text-align:right;"><strong style="display:block;color:var(--orange);font-size:18px;line-height:1;">' + snapshot.powerRating + '</strong><small style="font-size:10px;color:var(--text-muted);">球队评分</small></div>' +
       '</div>' + rosterRows(snapshot) +
-      '<div style="font-size:9px;color:var(--text-muted);padding-top:6px;">轮换评分 ' + snapshot.rotationRating + ' · 12 人大名单（真实轮换深度）</div></section>';
+      '<div style="font-size:11px;color:var(--text-muted);padding-top:6px;">轮换评分 ' + snapshot.rotationRating + ' · 12 人大名单（真实轮换深度）</div></section>';
   }
 
   global.showTeamRosterModal = function(team, compareTeam, title) {
@@ -155,9 +155,9 @@
       var name = player._isUser ? '我的球员' : (player.cname || player.name || '球员');
       var contract = player._isUser ? Number(STATE.career && STATE.career.contract) : Number(player.contract);
       return '<div style="display:grid;grid-template-columns:34px minmax(0,1fr) 40px 54px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-light);font-size:11px;">' +
-        '<span style="font-size:9px;color:' + (starter ? 'var(--orange)' : 'var(--text-muted)') + ';font-weight:700;">' + (starter ? '首发' : (idx < 10 ? '轮换' : '替补')) + '</span>' +
+        '<span style="font-size:11px;color:' + (starter ? 'var(--orange)' : 'var(--text-muted)') + ';font-weight:700;">' + (starter ? '首发' : (idx < 10 ? '轮换' : '替补')) + '</span>' +
         '<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><strong>' + esc(name) + '</strong><small style="display:block;color:var(--text-dim);">' + esc(player.pos || '—') + ' · ' + Math.max(0, contract) + '年合同</small></span>' +
-        '<strong style="text-align:right;">' + playerOvr(player) + '</strong><span style="text-align:right;font-size:9px;color:' + risk.color + ';font-weight:700;">' + risk.label + '</span></div>';
+        '<strong style="text-align:right;">' + playerOvr(player) + '</strong><span style="text-align:right;font-size:11px;color:' + risk.color + ';font-weight:700;">' + risk.label + '</span></div>';
     }).join('');
     var fa = freeAgents.length ? freeAgents.map(function(player) { return esc(player.cname || player.name) + ' ' + playerOvr(player); }).join(' · ') : '当前没有值得重点关注的自由球员';
     var modal = '<div class="team-picker-overlay" id="league-intel-modal"><div class="team-picker-modal" style="max-width:430px;">' +

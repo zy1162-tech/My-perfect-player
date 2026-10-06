@@ -81,23 +81,10 @@ function generateBuildPlayerPoster() {
 
   var ps = s.season.playerStats;
   var gp = Math.max(ps.games, 1);
-  var avg = {
-    pts: Math.round(ps.pts / gp * 10) / 10,
-    reb: Math.round(ps.reb / gp * 10) / 10,
-    ast: Math.round(ps.ast / gp * 10) / 10,
-    stl: Math.round(ps.stl / gp),
-    blk: Math.round(ps.blk / gp),
-    tov: Math.round(ps.tov / gp * 10) / 10,
-    fgm: Math.round(ps.fgm / gp * 10) / 10,
-    fga: Math.round(ps.fga / gp * 10) / 10,
-    ftm: Math.round(ps.ftm / gp * 10) / 10,
-    fta: Math.round(ps.fta / gp * 10) / 10,
-    threeM: Math.round(ps.threeM / gp * 10) / 10,
-    threeA: Math.round(ps.threeA / gp * 10) / 10,
-  };
-  var pct = avg.fga > 0 ? (avg.fgm / avg.fga * 100).toFixed(1) : '—';
-  var threePct = avg.threeA > 0 ? (avg.threeM / avg.threeA * 100).toFixed(1) : '—';
-  var ftPct = avg.fta > 0 ? (avg.ftm / avg.fta * 100).toFixed(1) : '—';
+  var avg = getPerGameLine(ps);
+  var pct = avg.fgPct;
+  var threePct = avg.threePct;
+  var ftPct = avg.ftPct;
   var ovrGrade = getOvrGrade ? getOvrGrade(s.finalOVR) : '';
   var teamName = getTeamName ? getTeamName(s.careerTeam) : s.careerTeam;
   var posName = (SIM_CONFIG && SIM_CONFIG.POSITIONS) ? SIM_CONFIG.POSITIONS[s.position] : s.position;
@@ -134,14 +121,7 @@ function generateBuildPlayerPoster() {
   var poAvg = null;
   if (hasPo) {
     var poG = po.games;
-    poAvg = {
-      pts: Math.round(po.pts / poG * 10) / 10,
-      reb: Math.round(po.reb / poG * 10) / 10,
-      ast: Math.round(po.ast / poG * 10) / 10,
-      stl: Math.round(po.stl / poG),
-      blk: Math.round(po.blk / poG),
-      tov: Math.round(po.tov / poG * 10) / 10,
-    };
+    poAvg = getPerGameLine(po);
   }
 
   // ── 模板信息 ──
