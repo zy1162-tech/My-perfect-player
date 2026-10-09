@@ -3,7 +3,7 @@
    ============================================================ */
 
 window.PP_DEBUG = false;
-// 画面特效使用原生随机数，不能推进存档中的比赛随机序列。
+// 比赛、事件、选秀等玩法一律调用 rngNext()（随存档保存的随机序列）；Math.random 保持原生，只给画面特效用。
 var ppVisualRandom = Math.random.bind(Math);
 
 // 魔改设置：新生涯进入联盟时的默认年龄。
@@ -780,7 +780,7 @@ function spinSlotMachine() {
   const copyLen = teamCount * itemH; // 一个完整复制的高度
   
   // 随机目标球队
-  const targetIdx = Math.floor(Math.random() * teamCount);
+  const targetIdx = Math.floor(rngNext() * teamCount);
   const targetTeam = sorted[targetIdx];
   
   // 目标位置：让 target 出现在窗口中间（第2个可见位）
@@ -924,13 +924,13 @@ function pickBuildSurprise(team) {
   const historical = uniqueBuildPlayers(getBuildHistoricalSurprisePool(team));
   const modern = historical.filter(function(player) { return player._historicalTier === 'modern-all-star'; });
   const hallOfFame = historical.filter(function(player) { return player._historicalTier === 'hall-of-fame'; });
-  if (!modern.length) return hallOfFame.length ? hallOfFame[Math.floor(Math.random() * hallOfFame.length)] : null;
-  if (!hallOfFame.length) return modern[Math.floor(Math.random() * modern.length)];
-  const preferHallOfFame = Math.random() < getMixedTeamHallOfFameShare();
+  if (!modern.length) return hallOfFame.length ? hallOfFame[Math.floor(rngNext() * hallOfFame.length)] : null;
+  if (!hallOfFame.length) return modern[Math.floor(rngNext() * modern.length)];
+  const preferHallOfFame = rngNext() < getMixedTeamHallOfFameShare();
   const preferred = preferHallOfFame ? hallOfFame : modern;
   const fallback = preferHallOfFame ? modern : hallOfFame;
   const tier = preferred.length ? preferred : fallback;
-  return tier.length ? tier[Math.floor(Math.random() * tier.length)] : null;
+  return tier.length ? tier[Math.floor(rngNext() * tier.length)] : null;
 }
 
 /** 普通池均匀抽卡；20% 概率用 1 张特殊卡替换普通卡，且同名的年代版/巅峰版不共存。 */
@@ -938,7 +938,7 @@ function drawBuildPlayers(pool, count, team) {
   const source = uniqueBuildPlayers(pool);
   const targetCount = Math.min(count || 5, source.length);
   if (!targetCount) return [];
-  if (Math.random() < HISTORICAL_SURPRISE_DRAW_CHANCE) {
+  if (rngNext() < HISTORICAL_SURPRISE_DRAW_CHANCE) {
     const surprise = pickBuildSurprise(team);
     if (surprise) {
       const surpriseKey = getBuildPlayerIdentity(surprise);
@@ -1790,7 +1790,7 @@ function showDraftPrepStep() {
       { label: '参加联合试训', hint: '曝光最高，也有状态风险', apply: function() {
         STATE._draftPending.prep = 'combine';
         setBranchNode('draft_night', 'draft_combine');
-        if (Math.random() < 0.1) {
+        if (rngNext() < 0.1) {
           STATE._draftPending.combineHurt = true;
           addSeasonMod('formVariance', 1, -10, 10);
           addSeasonMod('mediaPressure', 1, -10, 10);
@@ -1835,39 +1835,39 @@ function computeDraftBand() {
     p.projectedRange = projection ? [projection.rangeStart, projection.rangeEnd] : null;
     p.draftScore = projection ? projection.score : ovr;
     if (projection && projection.rank != null) {
-      var variance = Math.floor(Math.random() * 7) - 3;
+      var variance = Math.floor(rngNext() * 7) - 3;
       var actualPick = Math.max(1, Math.min(60, projection.rank + variance));
       p.pick = actualPick;
       p.round = actualPick <= 30 ? 1 : 2;
       p.type = actualPick <= 14 ? 'lottery' : (actualPick <= 30 ? 'first' : 'second');
-    } else if (projection && projection.score >= 62 && Math.random() < 0.28) {
-      p.type = 'second'; p.round = 2; p.pick = 56 + Math.floor(Math.random() * 5);
+    } else if (projection && projection.score >= 62 && rngNext() < 0.28) {
+      p.type = 'second'; p.round = 2; p.pick = 56 + Math.floor(rngNext() * 5);
     } else {
       p.type = 'undrafted'; p.round = 0; p.pick = 0;
     }
     if (p.type === 'lottery') p.contractYears = 4;
-    else if (p.type === 'first') p.contractYears = 3 + Math.floor(Math.random() * 2);
+    else if (p.type === 'first') p.contractYears = 3 + Math.floor(rngNext() * 2);
     else if (p.type === 'second') p.contractYears = 2;
     else p.contractYears = 1;
     return p;
   }
   var shift = 0;
   if (p.prep === 'combine') {
-    shift = p.combineHurt ? -2 : Math.floor(Math.random() * 4);
+    shift = p.combineHurt ? -2 : Math.floor(rngNext() * 4);
   } else if (p.prep === 'workouts') {
-    shift = Math.random() < 0.45 ? 1 : 0;
+    shift = rngNext() < 0.45 ? 1 : 0;
   } else if (p.prep === 'skip') {
-    shift = -(2 + Math.floor(Math.random() * 4));
+    shift = -(2 + Math.floor(rngNext() * 4));
   }
   shift += Number(p.draftStockBonus) || 0;
   var v = ovr + shift;
-  if (v >= 88) { p.type = 'lottery'; p.round = 1; p.pick = 1 + Math.floor(Math.random() * 5); }
-  else if (v >= 84) { p.type = 'lottery'; p.round = 1; p.pick = 6 + Math.floor(Math.random() * 9); }
-  else if (v >= 78) { p.type = 'first'; p.round = 1; p.pick = 15 + Math.floor(Math.random() * 16); }
-  else if (v >= 70) { p.type = 'second'; p.round = 2; p.pick = 31 + Math.floor(Math.random() * 15); }
+  if (v >= 88) { p.type = 'lottery'; p.round = 1; p.pick = 1 + Math.floor(rngNext() * 5); }
+  else if (v >= 84) { p.type = 'lottery'; p.round = 1; p.pick = 6 + Math.floor(rngNext() * 9); }
+  else if (v >= 78) { p.type = 'first'; p.round = 1; p.pick = 15 + Math.floor(rngNext() * 16); }
+  else if (v >= 70) { p.type = 'second'; p.round = 2; p.pick = 31 + Math.floor(rngNext() * 15); }
   else { p.type = 'undrafted'; p.round = 0; p.pick = 0; }
   if (p.type === 'lottery') p.contractYears = 4;
-  else if (p.type === 'first') p.contractYears = 3 + Math.floor(Math.random() * 2);
+  else if (p.type === 'first') p.contractYears = 3 + Math.floor(rngNext() * 2);
   else if (p.type === 'second') p.contractYears = 2;
   else p.contractYears = 1;
   return p;
@@ -1944,7 +1944,7 @@ function showDraftResultStep() {
           return '你接受了双向合同。没有盛大的发布会，只有一份在联盟和发展联盟之间来回的日程表。<br><br>效果：双向合同。';
         }},
         { label: '争全额保障', hint: '把身价谈出来', apply: function() {
-          if (Math.random() < 0.65) {
+          if (rngNext() < 0.65) {
             p.contractYears = 2;
             return '你坚持要一份正式合同。谈判磨了三天，最后球队让步了。<br><br>效果：2年正式合同。';
           }
@@ -2246,7 +2246,7 @@ function spinCareerSlot() {
   const itemH = 38;
   const copyLen = teamCount * itemH;
   
-  const targetIdx = Math.floor(Math.random() * teamCount);
+  const targetIdx = Math.floor(rngNext() * teamCount);
   const targetTeam = sorted[targetIdx];
   
   // 窗口显示5项，中间项索引=2，所以偏移到 targetIdx-2
@@ -2401,7 +2401,7 @@ function showCareerTeamPicker(teamList) {
     // 从已访问球队中随机选 pickCount 支
     allTeams = STATE._teamsVisited.length > 0 ? STATE._teamsVisited.slice() : [...NBA2K_TEAMS];
     for (var i = allTeams.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
+      var j = Math.floor(rngNext() * (i + 1));
       var tmp = allTeams[i]; allTeams[i] = allTeams[j]; allTeams[j] = tmp;
     }
     allTeams = allTeams.slice(0, pickCount);
@@ -2474,7 +2474,7 @@ function saveBuildPlayerData(team) {
 // ==================== 工具函数 ====================
 function shuffleArr(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rngNext() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
@@ -3522,7 +3522,7 @@ function calcSeasonAwards() {
         if (aOvr < 82) continue;
         var aPos = (ap.pos || 'SF').split('/')[0].trim();
         var est = {
-          pts: aOvr * 0.34 - 2 + Math.random() * 3,
+          pts: aOvr * 0.34 - 2 + rngNext() * 3,
           reb: aPos === 'C' ? aOvr * 0.16 + 1.5 : aPos === 'PF' ? aOvr * 0.13 + 1 : aOvr * 0.07 + 1,
           ast: aPos === 'PG' ? aOvr * 0.13 + 2 : aPos === 'SG' ? aOvr * 0.08 + 1 : aOvr * 0.05 + 1,
           stl: aOvr >= 88 ? 1.1 : 0.8,
@@ -3554,7 +3554,7 @@ function calcSeasonAwards() {
     if (userAllStarScore >= 42) {
       userAllStarSelected = true;
     } else if (userAllStarScore >= 38 && (parseInt(STATE.finalOVR) || 0) >= 84) {
-      userAllStarSelected = userAllStarRank <= 28 || Math.random() < (0.35 + (Number(awardFx.awardAllStarSwing) || 0));
+      userAllStarSelected = userAllStarRank <= 28 || rngNext() < (0.35 + (Number(awardFx.awardAllStarSwing) || 0));
     }
     if (g < 40) userAllStarSelected = false;
     var allStarUserRank = userAllStarSelected ? '⭐ 入选' : (g < 40 ? '出勤不足' : '未入围');
@@ -3599,7 +3599,7 @@ function calcSeasonAwards() {
       var mvpFx = typeof getCareerProfileEffects === 'function' ? getCareerProfileEffects() : {};
       var extraMvp = Number(mvpFx.awardMvpExtraTickets) || 0;
       userTickets += Math.floor(extraMvp);
-      if (Math.random() < (extraMvp - Math.floor(extraMvp))) userTickets++;
+      if (rngNext() < (extraMvp - Math.floor(extraMvp))) userTickets++;
       var userCand = { cname: getHupuDisplayName(), playerName: '', team: STATE.careerTeam, isUser: true, rank: userRankM };
       for (var _um = 0; _um < userTickets; _um++) mvpTickets.push(userCand);
     }
@@ -3608,7 +3608,7 @@ function calcSeasonAwards() {
     var fallbackMvp = lp('Nikola Jokić') || { cname:'尼古拉·约基奇', playerName:'Nikola Jokić', team:'DEN', isUser:false, rank:30 };
     mvpTickets.push(fallbackMvp);
   }
-  var mvpPick = mvpTickets[Math.floor(Math.random() * mvpTickets.length)];
+  var mvpPick = mvpTickets[Math.floor(rngNext() * mvpTickets.length)];
   var mvpUserRank = mvpPick.isUser ? '🥇 第一名' : (((parseInt(STATE.finalOVR) || 0) >= 92) ? '进入评选' : '未入围');
   if (!mvpPick.isUser && mvpUserRank !== '未入围' && getUserRankStreak('mvp', mvpUserRank) >= 2) {
     mvpUserRank = '未入围'; // 连续两届同奖项同名次，下一届波动
@@ -3673,7 +3673,7 @@ function calcSeasonAwards() {
         var pos2 = (p.pos || 'SF').split('/')[0].trim();
         var ovr2 = parseInt(p.ovr) || 50;
         // 简化估算：pts ≈ OVR * 0.4 - 5, reb/ast 按位置
-        var epts = ovr2 * 0.38 - 4 + Math.random() * 4;
+        var epts = ovr2 * 0.38 - 4 + rngNext() * 4;
         var ereb = pos2 === 'C' ? ovr2 * 0.18 + 2 : pos2 === 'PF' ? ovr2 * 0.14 + 1 : ovr2 * 0.08 + 1;
         var east = pos2 === 'PG' ? ovr2 * 0.14 + 2 : pos2 === 'SG' ? ovr2 * 0.09 + 1 : ovr2 * 0.06 + 1;
         var ageNow = getLeaguePlayerAge(p);
@@ -3787,7 +3787,7 @@ function calcSeasonAwards() {
         .map(function(p) { return p.cn; });
       var randomRookies = [];
       while (randomPool.length && randomRookies.length < 2) {
-        var pickIdx = Math.floor(Math.random() * randomPool.length);
+        var pickIdx = Math.floor(rngNext() * randomPool.length);
         randomRookies.push(randomPool.splice(pickIdx, 1)[0]);
       }
       while (randomRookies.length < 2) randomRookies.push('随机26届新秀');
@@ -3804,7 +3804,7 @@ function calcSeasonAwards() {
       STATE.season.awards.push({ act:'roty', label:'年度最佳新秀', winner:getHupuDisplayName(), winnerEN:'', team:STATE.careerTeam, isUser:true, userRank:'🥇 第一名' });
     } else {
       var pool = default2026RookieAwardPool;
-      var rp = pool[Math.floor(Math.random() * pool.length)];
+      var rp = pool[Math.floor(rngNext() * pool.length)];
       STATE.season.awards.push({ act:'roty', label:'年度最佳新秀', winner:rp.cname, winnerEN:rp.playerName || '', team:'', isUser:false, userRank:rotyRank });
     }
 
@@ -4658,8 +4658,8 @@ function calcTeamPowerWithPlayer(team) {
 
 /** Box-Muller 正态扰动，沿用 82 胜模式的“回合数 + 效率”思路。 */
 function simGaussian(mean, deviation) {
-  var u = Math.max(0.000001, Math.random());
-  var v = Math.max(0.000001, Math.random());
+  var u = Math.max(0.000001, rngNext());
+  var v = Math.max(0.000001, rngNext());
   return mean + Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v) * deviation;
 }
 
@@ -5009,7 +5009,7 @@ function generateBoxScore(teamA, teamB, totalA, totalB) {
     profiles.forEach(function(profile) {
       profile.hierarchyRank = hierarchy.indexOf(profile);
       var form = Math.max(0.74, Math.min(1.30, simGaussian(1, 0.12)));
-      var heatRoll = Math.random();
+      var heatRoll = rngNext();
       if (heatRoll < 0.14 && profile.hierarchyRank > 0) form = Math.min(1.70, form + 0.50); // 替补/次核心偶尔手热
       else if (profile.hierarchyRank === 0 && heatRoll > 0.84 && heatRoll <= 0.96) form *= 0.48; // 核心主动让权或手感一般
       else if (heatRoll > 0.96) form = Math.max(0.68, form - 0.18);
@@ -5179,7 +5179,7 @@ function getSeasonUsageBias() {
     else if (age <= 35) ageBase = 0.94;
     else if (age <= 39) ageBase = 0.78;
     else ageBase = 0.68;
-    STATE.season._usageBias = ageBase * (0.92 + Math.random() * 0.16);
+    STATE.season._usageBias = ageBase * (0.92 + rngNext() * 0.16);
   }
   var profileEffects = typeof getCareerProfileEffects === 'function' ? getCareerProfileEffects() : { minutesFactor:1 };
   return STATE.season._usageBias * profileEffects.minutesFactor;
@@ -5187,7 +5187,7 @@ function getSeasonUsageBias() {
 
 function sampleBinomial(attempts, probability) {
   var made = 0;
-  for (var i = 0; i < Math.max(0, Math.round(attempts)); i++) if (Math.random() < probability) made++;
+  for (var i = 0; i < Math.max(0, Math.round(attempts)); i++) if (rngNext() < probability) made++;
   return made;
 }
 
@@ -5198,7 +5198,7 @@ function samplePoisson(expected) {
   var limit = Math.exp(-expected);
   var product = 1;
   var count = 0;
-  do { count++; product *= Math.random(); } while (product > limit && count < 40);
+  do { count++; product *= rngNext(); } while (product > limit && count < 40);
   return Math.max(0, count - 1);
 }
 
@@ -6540,18 +6540,18 @@ function simPlayInGame(gameId) {
   const avgB = (powerB.offense + powerB.defense + powerB.depth) / 3;
   
   // 增加随机性，让附加赛更刺激
-  const rand = Math.random();
+  const rand = rngNext();
   const winProb = avgA / (avgA + avgB + 0.01);
   const adjustedProb = winProb * 0.6 + 0.2 + rand * 0.2; // 40-80%范围，增加变数
-  const aWins = Math.random() < adjustedProb;
+  const aWins = rngNext() < adjustedProb;
   
   const winner = aWins ? teamA : teamB;
   const loser = aWins ? teamB : teamA;
   
   const result = {
     winner, loser,
-    teamAScore: Math.round(avgA * (0.8 + Math.random() * 0.4)),
-    teamBScore: Math.round(avgB * (0.8 + Math.random() * 0.4)),
+    teamAScore: Math.round(avgA * (0.8 + rngNext() * 0.4)),
+    teamBScore: Math.round(avgB * (0.8 + rngNext() * 0.4)),
     label,
   };
   
@@ -7617,8 +7617,8 @@ function simOtherConference(conf) {
     const pB = calcTeamPowerWithPlayer(tB);
     let wA = 0, wB = 0;
     for (let g = 0; g < 7 && wA < 4 && wB < 4; g++) {
-      const sA = Math.round(pA.offense * (0.5 + Math.random() * 0.5) + pA.defense * 0.3);
-      const sB = Math.round(pB.offense * (0.5 + Math.random() * 0.5) + pB.defense * 0.3);
+      const sA = Math.round(pA.offense * (0.5 + rngNext() * 0.5) + pA.defense * 0.3);
+      const sB = Math.round(pB.offense * (0.5 + rngNext() * 0.5) + pB.defense * 0.3);
       if ((g < 4 ? sA + 3 : sA) >= (g < 4 ? sB : sB + 3)) wA++; else wB++;
     }
     return wA >= 4 ? tA : tB;
@@ -7692,7 +7692,7 @@ function pickChampionCelebrationCopy() {
       return { text: text, idx: idx };
     });
   }
-  var picked = available[Math.floor(Math.random() * available.length)];
+  var picked = available[Math.floor(rngNext() * available.length)];
   used.push(picked.idx);
   c.flags.usedChampionCopies = used;
   return picked.text
@@ -8282,7 +8282,14 @@ function showCareerStats(tab) {
   document.getElementById('career-stats-content').innerHTML = html;
 }
 
+// 赛季进行中先自动保存，回到主页后可以「继续生涯」；建球员和选秀阶段还没有存档，离开前先确认。
 function exitToHomepage() {
+  var career = STATE.career;
+  if (career && !career.retired && STATE.season && Array.isArray(STATE.season.schedule) && STATE.season.schedule.length) {
+    return Promise.resolve(autoSaveGame()).then(initGame);
+  }
+  var active = (document.querySelector('.screen.active') || {}).id;
+  if (!(career && career.retired) && active !== 'screen-character' && !window.confirm('还没有存档，返回主页会放弃当前进度。确定返回吗？')) return;
   initGame();
 }
 
@@ -8790,7 +8797,7 @@ function getAgeAttributeDeclinePlan(age, key, currentValue) {
 }
 
 function rollAnnualAttributeDelta(age, key, currentValue, maintenanceLevel, randomFn) {
-  var rng = typeof randomFn === 'function' ? randomFn : Math.random;
+  var rng = typeof randomFn === 'function' ? randomFn : rngNext;
   var plan = getAgeAttributeDeclinePlan(age, key, currentValue);
   if (!plan.chance || rng() >= plan.chance) return 0;
   var range = Math.max(0, plan.maxLoss - plan.minLoss);
@@ -8820,7 +8827,7 @@ function applyAnnualAttributeDrift() {
 
   function applyList(list, minDelta, maxDelta, label) {
     list.forEach(function(k) {
-      var delta = minDelta + Math.floor(Math.random() * (maxDelta - minDelta + 1));
+      var delta = minDelta + Math.floor(rngNext() * (maxDelta - minDelta + 1));
       if (delta < 0 && maintenanceLevel > 0) delta = Math.min(0, delta + maintenanceLevel);
       if (delta !== 0) {
         addAttrDelta(k, delta);
@@ -8833,8 +8840,8 @@ function applyAnnualAttributeDrift() {
     applyList(slowTech.concat(['FIN', 'ATH']), 0, 1, '成长');
   } else if (age <= 30) {
     ATTR_KEYS.forEach(function(k) {
-      if (Math.random() < 0.3) {
-        var d = Math.random() < 0.45 ? 1 : -1;
+      if (rngNext() < 0.3) {
+        var d = rngNext() < 0.45 ? 1 : -1;
         addAttrDelta(k, d);
         changes.push((d > 0 ? '+' : '') + d + ' ' + attrCN(k) + '（状态波动）');
       }
@@ -9003,7 +9010,7 @@ function buildBranchEventQueue(phase, maxCount) {
   var queue = [];
   while (pool.length && queue.length < (maxCount || 1)) {
     var total = pool.reduce(function(sum, ev) { return sum + getBranchEventWeight(ev); }, 0);
-    var roll = Math.random() * total;
+    var roll = rngNext() * total;
     var pickedIdx = 0;
     for (var i = 0; i < pool.length; i++) {
       roll -= getBranchEventWeight(pool[i]);
@@ -9115,7 +9122,7 @@ function pickBranchEvent(pool, preferOngoing) {
     if (ongoing.length > 0) candidates = ongoing;
   }
   var total = candidates.reduce(function(sum, ev) { return sum + getBranchEventWeight(ev); }, 0);
-  var roll = Math.random() * total;
+  var roll = rngNext() * total;
   for (var i = 0; i < candidates.length; i++) {
     roll -= getBranchEventWeight(candidates[i]);
     if (roll <= 0) return candidates[i];
@@ -9334,7 +9341,7 @@ function bindBondedTeammate() {
   var roster = NBA2K_DATA[STATE.careerTeam] || [];
   var candidates = roster.filter(function(p) { return p && !p._isUser; });
   if (!candidates.length) return null;
-  var pick = candidates[Math.floor(Math.random() * candidates.length)];
+  var pick = candidates[Math.floor(rngNext() * candidates.length)];
   STATE.career.flags = STATE.career.flags || {};
   STATE.career.flags.bondedTeammate = {
     name: pick.name,
@@ -9402,7 +9409,7 @@ function pickWeightedRecruitCandidate(candidates) {
     return sum + (c.recruitWeight || 1) * ovrBonus;
   }, 0);
   if (total <= 0) return candidates[0] || null;
-  var roll = Math.random() * total;
+  var roll = rngNext() * total;
   for (var i = 0; i < candidates.length; i++) {
     var weight = (candidates[i].recruitWeight || 1) * (1 + Math.max(0, (candidates[i].ovr || 0) - 88) * 0.04);
     roll -= weight;
@@ -9857,7 +9864,7 @@ function pickSeasonStateAwareEvent(pool, state) {
   var total = pool.reduce(function(sum, ev) {
     return sum + getSeasonEventPickWeight(ev, state);
   }, 0);
-  var roll = Math.random() * total;
+  var roll = rngNext() * total;
   for (var i = 0; i < pool.length; i++) {
     roll -= getSeasonEventPickWeight(pool[i], state);
     if (roll <= 0) return pool[i];
@@ -9989,7 +9996,7 @@ function checkSeasonBranchEvent(game, result, stats) {
   var openingEventDue = gamesPlayed >= 4
     && gamesPlayed <= SEASON_BRANCH_EVENT_CONFIG.openingGames
     && (c.branchSeasonEvents._count || 0) === 0;
-  if (!openingEventDue && Math.random() * 100 >= SEASON_BRANCH_EVENT_CONFIG.chancePercent) return null;
+  if (!openingEventDue && rngNext() * 100 >= SEASON_BRANCH_EVENT_CONFIG.chancePercent) return null;
   var maxRandomEvents = romanceStepPool.length > 0
     ? SEASON_BRANCH_EVENT_CONFIG.maxWithRelationship
     : SEASON_BRANCH_EVENT_CONFIG.maxPerSeason;
@@ -10421,7 +10428,7 @@ function chooseCityFarewell(choiceIdx) {
 }
 
 function pickOffseasonText(list) {
-  return list[Math.floor(Math.random() * list.length)];
+  return list[Math.floor(rngNext() * list.length)];
 }
 
 function getOffseasonSeasonStartYear() {
@@ -10459,7 +10466,7 @@ function getBreakthroughChance(key, base) {
 
 function applyTrainingOutcome(primary, secondary, pityKey, sceneList, labels) {
   var mods = getNextSeasonMods();
-  var roll = Math.random();
+  var roll = rngNext();
   var boomChance = getBreakthroughChance(pityKey, 0.16);
   var scene = pickOffseasonText(sceneList);
   if (roll < boomChance) {
@@ -10544,7 +10551,7 @@ const BRANCH_EVENTS = [
           tournament + '热身赛最后一攻，你在高位叫挡拆，吸引包夹后把球塞到底角。三分命中后，替补席全部站了起来，国内媒体第二天把标题写成了：中国队终于有了自己的核心。',
           tournament + '小组赛面对强硬防守，你连续几个回合被撞倒。你没有抱怨，下一回合直接顶着对抗杀进内线。那一晚之后，中国男篮更衣室默认你是关键时刻的第一选择。'
         ]);
-        var roll = Math.random();
+        var roll = rngNext();
         var result = '';
         if (roll < 0.18) {
           addAttrDelta('CLU', 1);
@@ -10586,8 +10593,8 @@ const BRANCH_EVENTS = [
     choices: [
       { label: '奥拉朱旺脚步训练', hint: '内线、防守、篮板提升', apply: function() {
         advanceBranch('mentor', 1, { lastMentor: 'hakeem' });
-        var great = Math.random() < 0.28;
-        var rough = !great && Math.random() < 0.18;
+        var great = rngNext() < 0.28;
+        var rough = !great && rngNext() < 0.18;
         addAttrDelta('FIN', great ? 3 : 2); addAttrDelta('IDEF', 1); addAttrDelta('REB', rough ? 0 : 1); STATE.finalOVR = calcOVR(STATE.attrs);
         var scene = pickOffseasonText([
           '奥拉朱旺没有急着教动作，他先让你在低位连续转身二十分钟。每次你以为找到了节奏，他都会轻轻摇头：脚先骗过人，球只是最后的证明。',
@@ -10600,8 +10607,8 @@ const BRANCH_EVENTS = [
       }},
       { label: '杜兰特投射训练', hint: '中投和三分提升', apply: function() {
         advanceBranch('mentor', 1, { lastMentor: 'durant' });
-        var great = Math.random() < 0.3;
-        var rough = !great && Math.random() < 0.16;
+        var great = rngNext() < 0.3;
+        var rough = !great && rngNext() < 0.16;
         addAttrDelta('MID', great ? 3 : 2); addAttrDelta('threePT', rough ? 0 : (great ? 2 : 1)); STATE.finalOVR = calcOVR(STATE.attrs);
         var scene = pickOffseasonText([
           '杜兰特看了你两组投篮，只说了一句：别急着摆脱，先学会在防守人面前舒服。之后整堂课，他都让你在贴身干扰下出手。',
@@ -10614,8 +10621,8 @@ const BRANCH_EVENTS = [
       }},
       { label: '詹姆斯身体训练', hint: '运动能力、力量、终结提升', apply: function() {
         advanceBranch('mentor', 1, { lastMentor: 'lebron' });
-        var great = Math.random() < 0.25;
-        var agency = Math.random() < 0.22;
+        var great = rngNext() < 0.25;
+        var agency = rngNext() < 0.22;
         addAttrDelta('ATH', great ? 2 : 1); addAttrDelta('STR', 1); addAttrDelta('FIN', 1); if (agency) addAttrDelta('PAS', 1); STATE.finalOVR = calcOVR(STATE.attrs);
         var scene = pickOffseasonText([
           '詹姆斯的训练不是单纯上重量。他会在冲刺、对抗、传球阅读之间来回切换，让你在最累的时候做最清醒的决定。',
@@ -10628,8 +10635,8 @@ const BRANCH_EVENTS = [
       }},
       { label: '保罗控场训练', hint: '控球、传球、关键球提升', apply: function() {
         advanceBranch('mentor', 1, { lastMentor: 'paul' });
-        var great = Math.random() < 0.28;
-        var rough = !great && Math.random() < 0.14;
+        var great = rngNext() < 0.28;
+        var rough = !great && rngNext() < 0.14;
         addAttrDelta('HAN', 1); addAttrDelta('PAS', great ? 3 : 2); addAttrDelta('CLU', rough ? 0 : 1); STATE.finalOVR = calcOVR(STATE.attrs);
         var scene = pickOffseasonText([
           '保罗训练你的方式很烦人：每个回合都要你先说出弱侧第二个防守人的站位。你答慢半秒，他就把球拿走重来。',
@@ -10736,7 +10743,7 @@ const BRANCH_EVENTS = [
         c.relationships = c.relationships || {};
         advanceBranch('relationship', 1, { status: 'dating' });
         var mods = getNextSeasonMods();
-        var roll = Math.random();
+        var roll = rngNext();
         var intro = pickOffseasonText([
           '你们第一次见面是在一个很低调的私人餐厅。她没有问你数据，也没有问合同，只问你赢球后为什么总是先低头。你突然发现，这个夏天可能不会只属于训练馆。',
           '她在演唱会后台给你留了一张通行证。灯光、尖叫和舞台烟雾把夜晚变得不真实，你坐在角落里，第一次感觉自己像是闯进了另一个联盟。',
@@ -10766,7 +10773,7 @@ const BRANCH_EVENTS = [
       }},
       { label: '礼貌拒绝，专注训练', hint: '放弃社交剧情，换取更稳定的夏天', apply: function() {
         advanceBranch('relationship', 1, { status: 'declined' });
-        var roll = Math.random();
+        var roll = rngNext();
         if (roll < 0.55) {
           addAttrDelta('STA', 1);
           STATE.finalOVR = calcOVR(STATE.attrs);
@@ -10793,7 +10800,7 @@ const BRANCH_EVENTS = [
         c.flags = c.flags || {};
         advanceBranch('network', 1, { status: 'golf' });
         var mods = getNextSeasonMods();
-        var roll = Math.random();
+        var roll = rngNext();
         var intro = pickOffseasonText([
           '你到球场时，几个熟悉的联盟面孔已经在练习果岭。这里没人穿球衣，但每一次寒暄都像在试探未来的合作空间。',
           '阳光很好，球车开得很慢。赞助商介绍你认识一桌人，有投资人、退役球员、经纪团队，也有几个你只在新闻里见过的名字。',
@@ -10990,14 +10997,14 @@ const STAGED_BRANCH_EVENTS = [
     choices: [
       { label: '最后一节自己解决', hint: '高声望高压力，成败都很重', apply: function() {
         var b = getBranchState('china_team');
-        var win = Math.random() < 0.58;
+        var win = rngNext() < 0.58;
         if (win) { setBranchNode('china_team', 'national_flag', { ending: 'hero_ball_win' }); b = getBranchState('china_team'); b.legend = (b.legend || 0) + 4; addAttrDelta('CLU', 2); STATE.finalOVR = calcOVR(STATE.attrs); return '你连续三个回合点名对手最强防守人。最后一次出手命中后，替补席冲进场内。<br><br>结果：关键战取胜；关键球+2。'; }
         setBranchNode('china_team', 'public_trial', { ending: 'hero_ball_loss' });
         b.controversy = (b.controversy || 0) + 3;
         return '最后一投砸在篮筐前沿。你站在原地，听见场馆里的声音一点点远去。<br><br>结果：遗憾失利；舆论压力上升。';
       }},
       { label: '相信队友，打团队篮球', hint: '提升传球和传承评价，但结果取决于全队回应', apply: function() {
-        var win = Math.random() < 0.68;
+        var win = rngNext() < 0.68;
         if (win) {
           var b = setBranchNode('china_team', 'team_revival', { ending: 'team_basketball_win' });
           b.legend = (b.legend || 0) + 2; b.chemistry = (b.chemistry || 0) + 3;
@@ -11061,7 +11068,7 @@ const STAGED_BRANCH_EVENTS = [
     requires: function() { return getBranchNode('china_team') === 'redemption_run'; },
     choices: [
       { label: '这次自己承担到底', hint: '高风险高收益', apply: function() {
-        var win = Math.random() < 0.62;
+        var win = rngNext() < 0.62;
         if (win) {
           var b = setBranchNode('china_team', 'national_flag', { redemption: 'won' });
           b.legend = (b.legend || 0) + 4;
@@ -11229,7 +11236,7 @@ const STAGED_BRANCH_EVENTS = [
         var mods = getNextSeasonMods();
         setBranchNode('relationship', 'volatile', { status: 'volatile' });
         if (STATE.career.relationships.partner) STATE.career.relationships.partner.status = 'volatile';
-        var hot = Math.random() < 0.45;
+        var hot = rngNext() < 0.45;
         if (hot) { addAttrDelta('CLU', 1); STATE.finalOVR = calcOVR(STATE.attrs); return '她开始频繁出现在你的主场。你每次看到场边那个位置，都像被多点燃了一点。<br><br>结果：状态火热；关键球+1。'; }
         mods.formVariance = Math.min(4, (mods.formVariance || 0) + 2);
         return '你开始频繁改训练时间，只为了配合她的行程。训练师没有明说，但白板上的缺席记录越来越显眼。<br><br>结果：乐不思蜀；下赛季状态波动上升。';
@@ -11506,7 +11513,7 @@ const STAGED_BRANCH_EVENTS = [
       { label: '参加高尔夫局', hint: '开启人脉线，可能遇到 Rich Paul 或库里圈子', apply: function() {
         var c = STATE.career; c.flags = c.flags || {};
         setBranchNode('network', 'golf_meet', { status: 'golf' });
-        if (Math.random() < 0.5) { c.flags.richPaulContact = true; return '你和 Rich Paul 的团队在第九洞聊了很久。他们没有直接招募你，只说未来可以坐下来谈职业版图。<br><br>结果：记录 Rich Paul 接触；人脉线进入二阶段。'; }
+        if (rngNext() < 0.5) { c.flags.richPaulContact = true; return '你和 Rich Paul 的团队在第九洞聊了很久。他们没有直接招募你，只说未来可以坐下来谈职业版图。<br><br>结果：记录 Rich Paul 接触；人脉线进入二阶段。'; }
         c.flags.curryCircle = true; addAttrDelta('threePT', 1); STATE.finalOVR = calcOVR(STATE.attrs);
         return '库里团队的人注意到你在果岭上的手感，玩笑说你的腕部控制像投篮。后来对方留下了联系方式。<br><br>效果：三分+1；记录库里圈子；人脉线进入二阶段。';
       }},
@@ -15695,7 +15702,7 @@ function shouldOfferPlayerRetirement(randomFn) {
   if (c.flags && c.flags.countdownDone) return true;
   if (age > PLAYER_CAREER_MAX_AGE) return true;
   var risk = getPlayerRetirementRisk(age, STATE.attrs, STATE.finalOVR, getCurrentPlayerLongevityContext());
-  var rng = typeof randomFn === 'function' ? randomFn : Math.random;
+  var rng = typeof randomFn === 'function' ? randomFn : rngNext;
   return rng() < risk;
 }
 
@@ -16100,7 +16107,7 @@ function buildJerseyCeremonyCopy(info) {
   var pool = JERSEY_TEAM_COPY[team] || JERSEY_TEAM_COPY_FALLBACK;
   var idx = 0;
   if (Array.isArray(pool)) {
-    idx = typeof info.copyVariant === 'number' ? (info.copyVariant % pool.length) : Math.floor(Math.random() * pool.length);
+    idx = typeof info.copyVariant === 'number' ? (info.copyVariant % pool.length) : Math.floor(rngNext() * pool.length);
   } else {
     pool = [pool];
   }
@@ -16338,7 +16345,7 @@ function buildCareerAchievement(r) {
 
 function buildHofCopy(r) {
   var pool = r.hof ? HOF_COPY : HOF_FAIL_COPY;
-  var idx = typeof r.hofCopyVariant === 'number' ? (r.hofCopyVariant % pool.length) : Math.floor(Math.random() * pool.length);
+  var idx = typeof r.hofCopyVariant === 'number' ? (r.hofCopyVariant % pool.length) : Math.floor(rngNext() * pool.length);
   var tpl = pool[idx] || pool[0];
   var vars = {
     achievement: buildHofAchievement(r),
@@ -16379,7 +16386,7 @@ var GOAT_HISTORY_COPY = [
 
 function buildGoatHistoryCopy(r) {
   var pool = GOAT_HISTORY_COPY;
-  var idx = typeof r.goatCopyVariant === 'number' ? (r.goatCopyVariant % pool.length) : Math.floor(Math.random() * pool.length);
+  var idx = typeof r.goatCopyVariant === 'number' ? (r.goatCopyVariant % pool.length) : Math.floor(rngNext() * pool.length);
   var tpl = pool[idx] || pool[0];
   var vars = {
     achievement: buildCareerAchievement(r),
@@ -16609,7 +16616,7 @@ var TOP100_FAIL_COPY = [
 
 function buildTop100Copy(r) {
   var pool = r.top100 ? TOP100_COPY : TOP100_FAIL_COPY;
-  var idx = typeof r.top100CopyVariant === 'number' ? (r.top100CopyVariant % pool.length) : Math.floor(Math.random() * pool.length);
+  var idx = typeof r.top100CopyVariant === 'number' ? (r.top100CopyVariant % pool.length) : Math.floor(rngNext() * pool.length);
   var tpl = pool[idx] || pool[0];
   var vars = {
     achievement: buildCareerAchievement(r),
@@ -17207,7 +17214,7 @@ function pickEndingMediaMoments(r, count) {
   var eligible = ENDING_MEDIA_STORIES.filter(function(story) { return endingMediaStoryEligible(story, r); });
   var special = eligible.filter(function(story) { return story.tag !== 'general'; });
   var general = eligible.filter(function(story) { return story.tag === 'general'; });
-  function shuffled(list) { return list.slice().sort(function() { return Math.random() - .5; }); }
+  function shuffled(list) { return list.slice().sort(function() { return rngNext() - .5; }); }
   var ordered = shuffled(special).concat(shuffled(general));
   var formats = shuffled(ENDING_MEDIA_FORMATS);
   var moments = [];
@@ -17249,7 +17256,7 @@ function renderEndingMediaMoment(moment, r, index, total) {
 function buildRetirementCopy(r) {
   var pool = r.goat ? GOAT_COPY : RETIREMENT_COPY;
   var variant = (r.goat && typeof r.goatCopyVariant === 'number') ? r.goatCopyVariant : r.retirementCopyVariant;
-  var idx = typeof variant === 'number' ? (variant % pool.length) : Math.floor(Math.random() * pool.length);
+  var idx = typeof variant === 'number' ? (variant % pool.length) : Math.floor(rngNext() * pool.length);
   var tpl = pool[idx] || pool[0];
   var vars = {
     achievement: buildCareerAchievement(r),
@@ -17324,12 +17331,12 @@ function calculateLegacyResult() {
   else if (score >= 100) tier = '名人堂稳进';
   else if (score >= 75) tier = '名人堂边缘';
   else if (score >= 60) tier = '队史传奇';
-  var hof = score >= 100 || (score >= 75 && Math.random() < (0.25 + (score - 75) * 0.025));
+  var hof = score >= 100 || (score >= 75 && rngNext() < (0.25 + (score - 75) * 0.025));
   var top100 = score >= 140;
-  var hofCopyVariant = Math.floor(Math.random() * (hof ? HOF_COPY : HOF_FAIL_COPY).length);
-  var top100CopyVariant = Math.floor(Math.random() * (top100 ? TOP100_COPY : TOP100_FAIL_COPY).length);
-  var retirementCopyVariant = Math.floor(Math.random() * RETIREMENT_COPY.length);
-  var goatCopyVariant = Math.floor(Math.random() * GOAT_COPY.length);
+  var hofCopyVariant = Math.floor(rngNext() * (hof ? HOF_COPY : HOF_FAIL_COPY).length);
+  var top100CopyVariant = Math.floor(rngNext() * (top100 ? TOP100_COPY : TOP100_FAIL_COPY).length);
+  var retirementCopyVariant = Math.floor(rngNext() * RETIREMENT_COPY.length);
+  var goatCopyVariant = Math.floor(rngNext() * GOAT_COPY.length);
   // 每支效力过的球队独立结算，所有达标的球队都会退役球衣，按生涯先后展示
   var seasonTeam = {};
   seasons.forEach(function(s) { seasonTeam[s.seasonNum] = s.team; });
@@ -17365,7 +17372,7 @@ function calculateLegacyResult() {
     td.teamLegacy = td.years * 7 + td.championships * 12 + td.mvp * 10 + td.fmvp * 8 + td.allStar * 2;
     if (td.teamLegacy >= 80 || (td.championships > 0 && td.years >= 5) || (td.mvp > 0 && td.years >= 4)) {
       var pool = JERSEY_TEAM_COPY[td.team] || JERSEY_TEAM_COPY_FALLBACK;
-      td.copyVariant = Math.floor(Math.random() * (Array.isArray(pool) ? pool.length : 1));
+      td.copyVariant = Math.floor(rngNext() * (Array.isArray(pool) ? pool.length : 1));
       jerseyTeams.push(td);
     }
   });
@@ -17540,7 +17547,7 @@ function getTeamRenewalWillingness() {
   if (ovr < 78) p -= 0.12;
   if (getLastSeasonWinRate() < 0.45) p -= 0.08;
   if (typeof getCareerProfileEffects === 'function') p += getCareerProfileEffects().renewalChanceBonus;
-  return Math.random() < Math.max(0.20, Math.min(0.99, p));
+  return rngNext() < Math.max(0.20, Math.min(0.99, p));
 }
 
 function pickTradeDestination() {
@@ -17573,7 +17580,7 @@ function pickTradeDestination() {
   }
   candidates.sort(function(a, b) { return b.score - a.score; });
   var top = candidates.slice(0, 6);
-  return top[Math.floor(Math.random() * top.length)].team;
+  return top[Math.floor(rngNext() * top.length)].team;
 }
 
 function recordMobilityHistory(moveType, title, detail) {
@@ -17711,7 +17718,7 @@ function maybeMoveUserInOffseason(done) {
   if (m.lastMoveSeason === (c.seasonCount || 0)) return done();
   if (getTeamInitiatedTradeCount() >= 1) {
     var waiveOnlyChance = getUserWaiveChance();
-    if (Math.random() * 100 < waiveOnlyChance) {
+    if (rngNext() * 100 < waiveOnlyChance) {
       doWaiveUser(done);
       return;
     }
@@ -17720,7 +17727,7 @@ function maybeMoveUserInOffseason(done) {
   }
   var tradeChance = getUserTradeChance();
   var waiveChance = getUserWaiveChance();
-  var roll = Math.random() * 100;
+  var roll = rngNext() * 100;
   if (roll < tradeChance) {
     var dest = pickTradeDestination();
     if (dest) { doTradeUser(dest, done); return; }
@@ -17779,9 +17786,9 @@ function generateContractOffers() {
     var topTwo = sorted.slice(0, 2);
 
     var years = (function(a) {
-      if (a <= 23) return 3 + Math.floor(Math.random() * 2);
-      if (a <= 26) return 2 + Math.floor(Math.random() * 2);
-      if (a <= 30) return 1 + Math.floor(Math.random() * 3);
+      if (a <= 23) return 3 + Math.floor(rngNext() * 2);
+      if (a <= 26) return 2 + Math.floor(rngNext() * 2);
+      if (a <= 30) return 1 + Math.floor(rngNext() * 3);
       return 1;
     })(myAge);
     if (choice === 'short') years = 2;
@@ -18518,8 +18525,8 @@ function draftOvrByPick(pick) {
 }
 
 function draftPosToCode(pos) {
-  if (pos === '后卫') return Math.random() < 0.5 ? 'PG' : 'SG';
-  if (pos === '前锋') return Math.random() < 0.5 ? 'SF' : 'PF';
+  if (pos === '后卫') return rngNext() < 0.5 ? 'PG' : 'SG';
+  if (pos === '前锋') return rngNext() < 0.5 ? 'SF' : 'PF';
   return 'C';
 }
 
@@ -18556,13 +18563,13 @@ function applyDraftClass2026() {
         height: pk.height,
         type: '新秀',
         ovr: ovr,
-        _age: 19 + Math.floor(Math.random() * 3),
+        _age: 19 + Math.floor(rngNext() * 3),
         _enterYear: 2026,
         contract: pk.pick <= 14 ? 3 : (pk.pick <= 30 ? 2 : 1),
         _awardStreak: {},
       };
       attrKeys.forEach(function(k) {
-        rookie[k] = Math.max(25, Math.min(99, ovr + Math.floor(Math.random() * 16) - 8));
+        rookie[k] = Math.max(25, Math.min(99, ovr + Math.floor(rngNext() * 16) - 8));
       });
       roster.push(rookie);
     });
@@ -19614,7 +19621,6 @@ function nextGeneratedRookiePortrait() {
   return 'assets/images/Player/generated-rookies/generated-rookie-' + String(portraitId).padStart(3, '0') + '.png';
 }
 
-Math.random = rngNext;
 STAR_ROOKIES.forEach(function(s) { _starRookieKeys[s.en] = true; });
 var ROOKIE_CANDIDATES = DRAFT_CLASS_2027
   .concat(ROOKIE_NAMES.map(function(x, i) { return { en: x.en, cn: x.cn, pick: i + 1 }; }))

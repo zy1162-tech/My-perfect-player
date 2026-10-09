@@ -42,17 +42,18 @@ html.pp-booting #app{visibility:hidden}
 <script src="assets/data/player-rating-calibration.js?v=20261001-season-stars-v5"></script>
 <script src="assets/data/era-presentation.js?v=20260826-era-presentation-v2"></script>
 <script src="assets/data/nba-award-history.js?v=20261004-honor-history-v1"></script>
+<script src="assets/data/player-cn-names.js?v=20261007-cn-names-v1"></script>
 <script src="assets/data/era-headshot-index.js?v=20260826-era-headshots-v1"></script>
 <script src="assets/data/verified-headshots.js?v=20261002-verified-headshots-v2"></script>
   <link rel="preload" href="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4" as="script">
   <script defer src="assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4"></script>
-  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261005-review-fixes-boot-v32" as="script">
-  <script defer src="assets/js/perfect-player-boot.js?v=20261005-review-fixes-boot-v32"></script>
+  <link rel="preload" href="assets/js/perfect-player-boot.js?v=20261007-round2-boot-v33" as="script">
+  <script defer src="assets/js/perfect-player-boot.js?v=20261007-round2-boot-v33"></script>
   <link rel="stylesheet" href="assets/css/perfect-player.css?v=20261005-review-fixes-v3">
   <link rel="stylesheet" href="assets/css/perfect-player-season-report.css?v=20260826-season-report-v1">
 
 
-<link href="assets/css/perfect-player-premium.css?v=20261005-review-fixes-v17" rel="stylesheet">
+<link href="assets/css/perfect-player-premium.css?v=20261007-round2-v18" rel="stylesheet">
 </head>
 <body>
 
@@ -183,6 +184,7 @@ html.pp-booting #app{visibility:hidden}
 
 <div id="app">
 
+  <button type="button" class="pp-home-btn" onclick="exitToHomepage()" aria-label="返回主页">⌂ 主页</button>
   <!-- ====== 全局当前赛季徽标 ====== -->
   <div id="seasonBadge" style="text-align:center;padding:6px 0 0;font-family:var(--font-display);font-size:12px;font-weight:700;color:var(--orange);"></div>
 
@@ -565,18 +567,25 @@ window.resolveVerifiedLocalPlayerHeadshot = function(player) {
   var names = player && typeof player === 'object'
     ? [player.nameEN, player.nameEn, player.name]
     : [player];
+  // 2K 风格球卡自带评分和品牌标识，会和游戏里的 OVR 冲突；有官方头像时不用它。
+  var card = '';
   for (var i = 0; i < names.length; i++) {
     var supplemental = window.__PP_VERIFIED_HEADSHOTS__ && window.__PP_VERIFIED_HEADSHOTS__.players[_hsPresentationKey(names[i])];
     if (supplemental && supplemental.p) return supplemental.p;
     var record = index[_hsPresentationKey(names[i])];
-    if (record && record.p) return record.p;
+    if (record && record.p) {
+      if (/historical\/headshots\//.test(record.p)) { card = card || record.p; continue; }
+      return record.p;
+    }
   }
   var safeOfficial = _hsGetNormIndex();
   for (var j = 0; j < names.length; j++) {
     var playerId = safeOfficial[_hsNormKey(names[j])] || safeOfficial[_hsReverseNormKey(names[j])];
     if (playerId) return _hsOfficialLocalPath(playerId);
   }
-  return '';
+  var officialId = card ? getOfficialPlayerHeadshotId(player) : 0;
+  if (officialId && _hsHasLocalOfficialId(officialId) && !_hsIsExcludedOfficialId(officialId)) return _hsOfficialLocalPath(officialId);
+  return card;
 };
 function _hsIsReliableRecordLocal(localPath, playerRecord, indexedLocal, playerId) {
   localPath = String(localPath || '');
@@ -765,11 +774,11 @@ function getPlayerHeadshotStyle(playerName, displaySize) {
 <script>
 // ── 中文名修正：可在旧存档覆盖联盟名单后安全重复调用 ──
 window.applyCurrentPlayerChineseDisplayFixes = function() {
-  var fixMap = { 'Tamar Bates': '塔马尔-贝茨', 'Trey Lyles': '特雷-莱尔斯', 'Adam Flagler': '亚当-弗拉格勒', 'Mo Bamba': '穆罕默德-班巴' };
+  var fixMap = window.PP_PLAYER_CN_NAMES || {};
   if (typeof NBA2K_TEAMS !== 'undefined' && typeof NBA2K_DATA !== 'undefined') {
     NBA2K_TEAMS.forEach(function(t) {
       (NBA2K_DATA[t] || []).forEach(function(p) {
-        var english = p && (p.nameEN || p.name);
+        var english = p && (p.nameEN || p.nameEn || p.name);
         if (fixMap[english]) p.cname = fixMap[english];
       });
     });
@@ -962,14 +971,14 @@ var Storage = {
   }
 };
 </script>
-<script src="assets/js/perfect-player-core.js?v=20261005-review-fixes-v18"></script>
+<script src="assets/js/perfect-player-core.js?v=20261007-round2-v19"></script>
 <script src="assets/js/perfect-player-season-report.js?v=20261005-season-calendar-v6"></script>
 <script src="assets/js/perfect-player-mod-v4.js?v=20261005-review-fixes-v22"></script>
-<script src="assets/js/perfect-player-career-events.js?v=20261005-review-fixes-v12"></script>
-<script src="assets/js/perfect-player-era-mode.js?v=20261004-opening-roster-v37"></script>
+<script src="assets/js/perfect-player-career-events.js?v=20261007-round2-v13"></script>
+<script src="assets/js/perfect-player-era-mode.js?v=20261007-round2-v38"></script>
 
 <!-- ====== 随机事件系统 — EVENT REGISTRY ====== -->
-<script src="assets/js/perfect-player-event-runtime.js?v=20261003-risk-state-v10"></script>
+<script src="assets/js/perfect-player-event-runtime.js?v=20261007-round2-v11"></script>
 
 <script src="assets/js/perfect-player-poster.js?v=20261005-review-fixes-v4"></script>
 

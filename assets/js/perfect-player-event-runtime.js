@@ -93,11 +93,11 @@ function scaleHurtStats(stats, severity) {
 function maybeWorsenInjuryAfterPlaying(ev, severity) {
   if (!ev) return '';
   var risk = severity === 'major' ? 0.28 : (severity === 'medium' ? 0.18 : 0.1);
-  if (Math.random() >= risk) return '';
+  if (rngNext() >= risk) return '';
   var extra = severity === 'major'
-    ? (5 + Math.floor(Math.random() * 9))
-    : (2 + Math.floor(Math.random() * 5));
-  if (severity === 'major' && Math.random() < 0.08) {
+    ? (5 + Math.floor(rngNext() * 9))
+    : (2 + Math.floor(rngNext() * 5));
+  if (severity === 'major' && rngNext() < 0.08) {
     extra = Math.max(extra, getSeasonEndingInjuryGamesLeft());
     ev.majorInjuryThisSeason = true;
   }
@@ -292,7 +292,7 @@ function pickWeightedEvent(candidates) {
   for (var ci = 0; ci < candidates.length; ci++) {
     totalWeight += candidates[ci].weight || 1;
   }
-  var roll = Math.random() * totalWeight;
+  var roll = rngNext() * totalWeight;
   var cum = 0;
   for (var cj = 0; cj < candidates.length; cj++) {
     cum += candidates[cj].weight || 1;
@@ -338,11 +338,11 @@ function checkRandomEvents(game, result, stats) {
 
   // 伤病事件单独调控：年轻期基础为 0，随年龄增加；休赛期选项只影响这颗伤病骰子。
   var injuryRate = getSeasonInjuryEventRate();
-  if (Math.random() * 100 >= injuryRate) return null;
+  if (rngNext() * 100 >= injuryRate) return null;
   var canMajor = majorCandidates.length > 0 && !ev.majorInjuryThisSeason;
   var majorRate = canMajor ? getMajorInjuryEventRate() : 0;
   var picked = null;
-  if (canMajor && Math.random() * 100 < majorRate) {
+  if (canMajor && rngNext() * 100 < majorRate) {
     picked = pickWeightedEvent(majorCandidates);
   } else {
     picked = pickWeightedEvent(candidates);
@@ -417,7 +417,7 @@ EVENT_REGISTRY.push({
   weight: 12,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🔥', title:'累积技犯被驱逐', body:'你第一节吃到了一个技术犯规，心里一直憋着一股火。第三节你被吹了一个进攻犯规后终于爆发了——你把球狠狠砸在地板上，球弹起来飞上了观众席。裁判立刻吹了你第二个技术犯规，举起右手做出驱逐手势。你愣住了，然后开始朝裁判走去，队友赶紧抱住你。"别！别！他把你驱逐了！你再过去又要追加禁赛！"你被队友们架着走向更衣室，全场响起了震天的嘘声。赛后联盟果然追加处罚，你被禁赛多场。', desc:'技犯被驱逐', _consequence:'suspension', _games:(1 + Math.floor(Math.random() * 2)) };
+    return { emoji:'🔥', title:'累积技犯被驱逐', body:'你第一节吃到了一个技术犯规，心里一直憋着一股火。第三节你被吹了一个进攻犯规后终于爆发了——你把球狠狠砸在地板上，球弹起来飞上了观众席。裁判立刻吹了你第二个技术犯规，举起右手做出驱逐手势。你愣住了，然后开始朝裁判走去，队友赶紧抱住你。"别！别！他把你驱逐了！你再过去又要追加禁赛！"你被队友们架着走向更衣室，全场响起了震天的嘘声。赛后联盟果然追加处罚，你被禁赛多场。', desc:'技犯被驱逐', _consequence:'suspension', _games:(1 + Math.floor(rngNext() * 2)) };
   },
 });
 
@@ -443,7 +443,7 @@ EVENT_REGISTRY.push({
   weight: 12,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🪚', title:'报复性恶犯', body:'你的队友在一次上篮中被对手从空中硬生生拉了下来，摔在地上半天没起来。裁判只吹了一个普通犯规。你火了。下一回合防守中，你直接一肩膀撞向了持球的对方球员——动作不大，但足够狠。他摔倒在地，球丢了。裁判给了你一个一级恶意犯规。你走下球场时，你的队友拍了拍你的肩膀："兄弟，够意思。"你回头看了一眼对面愤怒的教练席，觉得值了。赛后联盟回看录像，认为动作具有明显报复性，对你追加禁赛。', desc:'报复恶犯', _consequence:'suspension', _games:(1 + Math.floor(Math.random() * 2)) };
+    return { emoji:'🪚', title:'报复性恶犯', body:'你的队友在一次上篮中被对手从空中硬生生拉了下来，摔在地上半天没起来。裁判只吹了一个普通犯规。你火了。下一回合防守中，你直接一肩膀撞向了持球的对方球员——动作不大，但足够狠。他摔倒在地，球丢了。裁判给了你一个一级恶意犯规。你走下球场时，你的队友拍了拍你的肩膀："兄弟，够意思。"你回头看了一眼对面愤怒的教练席，觉得值了。赛后联盟回看录像，认为动作具有明显报复性，对你追加禁赛。', desc:'报复恶犯', _consequence:'suspension', _games:(1 + Math.floor(rngNext() * 2)) };
   },
 });
 
@@ -1165,7 +1165,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'💆', title:'背部痉挛', body:'你刚做了一个变向动作，突然感觉下背部像被电击了一样——肌肉完全锁死了。你僵在原地动弹不得，连呼吸都小心翼翼。队医把你扶到训练室，你趴在按摩床上发出了痛苦的呻吟。队医说："背部痉挛，至少休息几天。我知道你不愿意，但你的身体替你做了决定。"你没法反驳。', desc:'背部痉挛', _consequence:'injury', _games:(1 + Math.floor(Math.random() * 2)) };
+    return { emoji:'💆', title:'背部痉挛', body:'你刚做了一个变向动作，突然感觉下背部像被电击了一样——肌肉完全锁死了。你僵在原地动弹不得，连呼吸都小心翼翼。队医把你扶到训练室，你趴在按摩床上发出了痛苦的呻吟。队医说："背部痉挛，至少休息几天。我知道你不愿意，但你的身体替你做了决定。"你没法反驳。', desc:'背部痉挛', _consequence:'injury', _games:(1 + Math.floor(rngNext() * 2)) };
   },
 });
 
@@ -1176,7 +1176,7 @@ EVENT_REGISTRY.push({
   weight: 10,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'😵', title:'脑震荡', body:'你在争抢篮板时和对手的脑袋撞在了一起——一声闷响后你眼前一黑。你摔倒在地上，看什么都是双层的。队友的脸在你面前晃来晃去，但你听不清他们在说什么。队医用手电筒照了照你的瞳孔："可能脑震荡，必须离场。"你被送去医院做CT检查，头上缠着纱布的照片很快出现在了新闻上。', desc:'脑震荡', _consequence:'injury', _games:(5 + Math.floor(Math.random() * 6)) };
+    return { emoji:'😵', title:'脑震荡', body:'你在争抢篮板时和对手的脑袋撞在了一起——一声闷响后你眼前一黑。你摔倒在地上，看什么都是双层的。队友的脸在你面前晃来晃去，但你听不清他们在说什么。队医用手电筒照了照你的瞳孔："可能脑震荡，必须离场。"你被送去医院做CT检查，头上缠着纱布的照片很快出现在了新闻上。', desc:'脑震荡', _consequence:'injury', _games:(5 + Math.floor(rngNext() * 6)) };
   },
 });
 
@@ -1189,7 +1189,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🚗', title:'赛后停车场冲突', body:'赛后你在球员停车场被对方球员的言语激怒，两人从互喷升级为肢体冲突。你一拳挥过去正中对方下巴，保安和队友飞扑过来把你们拉开。这一幕被球迷用手机全程录下上传到社交平台。联盟以"损害联盟形象"为由对你处以禁赛{n}场的处罚。你在发布会上道了歉，但那一拳的视频已经被做成了GIF。', desc:'停车场斗殴禁赛', _consequence:'suspension', _games:(3 + Math.floor(Math.random() * 3)) };
+    return { emoji:'🚗', title:'赛后停车场冲突', body:'赛后你在球员停车场被对方球员的言语激怒，两人从互喷升级为肢体冲突。你一拳挥过去正中对方下巴，保安和队友飞扑过来把你们拉开。这一幕被球迷用手机全程录下上传到社交平台。联盟以"损害联盟形象"为由对你处以禁赛{n}场的处罚。你在发布会上道了歉，但那一拳的视频已经被做成了GIF。', desc:'停车场斗殴禁赛', _consequence:'suspension', _games:(3 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1200,7 +1200,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🪑', title:'脚踢替补席椅子', body:'你在一次争议吹罚后被换下场，怒火中烧的你一脚踢飞了替补席的折叠椅。椅子飞出去砸到了场边一位球迷的膝盖。虽然你立刻上前道歉，但联盟以"危险行为危害观众安全"为由对你处以禁赛{n}场的处罚。球队内部也对你进行了罚款。', desc:'怒踢椅子禁赛', _consequence:'suspension', _games:(1 + Math.floor(Math.random() * 2)) };
+    return { emoji:'🪑', title:'脚踢替补席椅子', body:'你在一次争议吹罚后被换下场，怒火中烧的你一脚踢飞了替补席的折叠椅。椅子飞出去砸到了场边一位球迷的膝盖。虽然你立刻上前道歉，但联盟以"危险行为危害观众安全"为由对你处以禁赛{n}场的处罚。球队内部也对你进行了罚款。', desc:'怒踢椅子禁赛', _consequence:'suspension', _games:(1 + Math.floor(rngNext() * 2)) };
   },
 });
 
@@ -1222,7 +1222,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'👨‍⚖️', title:'比赛中推搡裁判', body:'裁判的一次误判让你彻底失控。你冲到裁判面前，用手指着他的鼻子怒吼，在他转身离开时你伸手推了他一把——虽然力度不大，但裁判立刻转身给你一个二级恶意犯规外加驱逐出场。联盟对"肢体接触裁判"零容忍，宣布对你禁赛{n}场并罚款50,000美元。', desc:'推搡裁判禁赛', _consequence:'suspension', _games:(3 + Math.floor(Math.random() * 3)) };
+    return { emoji:'👨‍⚖️', title:'比赛中推搡裁判', body:'裁判的一次误判让你彻底失控。你冲到裁判面前，用手指着他的鼻子怒吼，在他转身离开时你伸手推了他一把——虽然力度不大，但裁判立刻转身给你一个二级恶意犯规外加驱逐出场。联盟对"肢体接触裁判"零容忍，宣布对你禁赛{n}场并罚款50,000美元。', desc:'推搡裁判禁赛', _consequence:'suspension', _games:(3 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1233,7 +1233,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'💊', title:'药检阳性', body:'联盟随机药检的结果出来了——你的样本中含有违禁物质。你在社交媒体上声明是"误服了含有违禁成分的补剂"，但联盟依然按照规定对你处以禁赛{n}场的处罚。你的名声受到了严重打击，赞助商也在观望。', desc:'药检阳性禁赛', _consequence:'suspension', _games:(5 + Math.floor(Math.random() * 6)) };
+    return { emoji:'💊', title:'药检阳性', body:'联盟随机药检的结果出来了——你的样本中含有违禁物质。你在社交媒体上声明是"误服了含有违禁成分的补剂"，但联盟依然按照规定对你处以禁赛{n}场的处罚。你的名声受到了严重打击，赞助商也在观望。', desc:'药检阳性禁赛', _consequence:'suspension', _games:(5 + Math.floor(rngNext() * 6)) };
   },
 });
 
@@ -1244,7 +1244,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'👊', title:'与队友训练中斗殴', body:'训练赛中你和队友因为一个犯规动作爆发了冲突。两人从互骂升级到互相推搡，最后你一拳打在了他的颧骨上。教练和助教把你们拉开，队友捂着脸去了医务室。球队管理层震怒，内部处罚你禁赛{n}场。更衣室的气氛降到了冰点。', desc:'内讧斗殴禁赛', _consequence:'suspension', _games:(2 + Math.floor(Math.random() * 3)) };
+    return { emoji:'👊', title:'与队友训练中斗殴', body:'训练赛中你和队友因为一个犯规动作爆发了冲突。两人从互骂升级到互相推搡，最后你一拳打在了他的颧骨上。教练和助教把你们拉开，队友捂着脸去了医务室。球队管理层震怒，内部处罚你禁赛{n}场。更衣室的气氛降到了冰点。', desc:'内讧斗殴禁赛', _consequence:'suspension', _games:(2 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1266,7 +1266,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'😡', title:'与球迷发生冲突', body:'客队球迷在你走出球员通道时朝你泼了一杯饮料。你瞬间暴怒，翻过围栏冲向那名球迷——安保人员及时拦住了你，但这一幕已经被摄像机全程记录。联盟决定对你处以禁赛{n}场的处罚。你在社交媒体上道了歉，但那个翻围栏的画面已经传遍了全网。', desc:'球迷冲突禁赛', _consequence:'suspension', _games:(2 + Math.floor(Math.random() * 3)) };
+    return { emoji:'😡', title:'与球迷发生冲突', body:'客队球迷在你走出球员通道时朝你泼了一杯饮料。你瞬间暴怒，翻过围栏冲向那名球迷——安保人员及时拦住了你，但这一幕已经被摄像机全程记录。联盟决定对你处以禁赛{n}场的处罚。你在社交媒体上道了歉，但那个翻围栏的画面已经传遍了全网。', desc:'球迷冲突禁赛', _consequence:'suspension', _games:(2 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1277,7 +1277,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🚪', title:'赛后与对手更衣室对峙', body:'终场哨响后你依然对对方球员的一个脏动作耿耿于怀。你穿过球员通道直接冲进了对方的更衣室——你踹开门，指着那个球员大喊："你有种当面做一次！"双方球员和教练组乱成一团。联盟以"闯入对方更衣室"为由对你禁赛{n}场。', desc:'更衣室对峙禁赛', _consequence:'suspension', _games:(3 + Math.floor(Math.random() * 3)) };
+    return { emoji:'🚪', title:'赛后与对手更衣室对峙', body:'终场哨响后你依然对对方球员的一个脏动作耿耿于怀。你穿过球员通道直接冲进了对方的更衣室——你踹开门，指着那个球员大喊："你有种当面做一次！"双方球员和教练组乱成一团。联盟以"闯入对方更衣室"为由对你禁赛{n}场。', desc:'更衣室对峙禁赛', _consequence:'suspension', _games:(3 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1288,7 +1288,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🐦', title:'社交媒体发布不当言论', body:'深夜你在推特上发了一条吐槽联盟裁判的推文——"这个联盟的裁判水平连高中联赛都不如"。第二天这条推文引爆了舆论。联盟办公室迅速做出反应，以"公开诋毁联盟官员"为由对你处以禁赛{n}场的处罚。你删掉了推文，但截图已经被所有人看过了。', desc:'社媒不当言论禁赛', _consequence:'suspension', _games:(1 + Math.floor(Math.random() * 2)) };
+    return { emoji:'🐦', title:'社交媒体发布不当言论', body:'深夜你在推特上发了一条吐槽联盟裁判的推文——"这个联盟的裁判水平连高中联赛都不如"。第二天这条推文引爆了舆论。联盟办公室迅速做出反应，以"公开诋毁联盟官员"为由对你处以禁赛{n}场的处罚。你删掉了推文，但截图已经被所有人看过了。', desc:'社媒不当言论禁赛', _consequence:'suspension', _games:(1 + Math.floor(rngNext() * 2)) };
   },
 });
 
@@ -1299,7 +1299,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🫀', title:'危险动作锁喉对手', body:'在一次争抢中你和对方球员纠缠在一起。情绪失控的你伸手卡住了对手的脖子——虽然只持续了两秒钟，但这个画面看起来极其恶劣。裁判和队友立刻把你拉开，对方球员倒地咳嗽。联盟回看录像后认定这是"暴力行为"，对你处以禁赛{n}场的重罚。', desc:'锁喉禁赛', _consequence:'suspension', _games:(4 + Math.floor(Math.random() * 4)) };
+    return { emoji:'🫀', title:'危险动作锁喉对手', body:'在一次争抢中你和对方球员纠缠在一起。情绪失控的你伸手卡住了对手的脖子——虽然只持续了两秒钟，但这个画面看起来极其恶劣。裁判和队友立刻把你拉开，对方球员倒地咳嗽。联盟回看录像后认定这是"暴力行为"，对你处以禁赛{n}场的重罚。', desc:'锁喉禁赛', _consequence:'suspension', _games:(4 + Math.floor(rngNext() * 4)) };
   },
 });
 
@@ -1310,7 +1310,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🦵', title:'训练中膝盖扭伤', body:'队内训练赛中你在做变向动作时突然感觉右膝传来一声闷响——你的膝盖在无对抗的情况下扭了一下。你痛苦地倒在地上，双手捂着膝盖。队医和教练冲了上来。MRI检查结果显示内侧副韧带拉伤，队医宣布你需要休养{n}场。', desc:'膝盖扭伤', _consequence:'injury', _games:(5 + Math.floor(Math.random() * 6)) };
+    return { emoji:'🦵', title:'训练中膝盖扭伤', body:'队内训练赛中你在做变向动作时突然感觉右膝传来一声闷响——你的膝盖在无对抗的情况下扭了一下。你痛苦地倒在地上，双手捂着膝盖。队医和教练冲了上来。MRI检查结果显示内侧副韧带拉伤，队医宣布你需要休养{n}场。', desc:'膝盖扭伤', _consequence:'injury', _games:(5 + Math.floor(rngNext() * 6)) };
   },
 });
 
@@ -1321,7 +1321,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🦴', title:'肩膀脱臼', body:'你在一次凶狠的拼抢中重重摔倒在地，左肩先着地——一阵剧痛从肩膀传来，你发现自己的左臂完全使不上力了。你试图活动肩膀，但每动一下都疼得龇牙咧嘴。队医检查后说肩膀脱臼了，需要休养{n}场。', desc:'肩膀脱臼', _consequence:'injury', _games:(4 + Math.floor(Math.random() * 5)) };
+    return { emoji:'🦴', title:'肩膀脱臼', body:'你在一次凶狠的拼抢中重重摔倒在地，左肩先着地——一阵剧痛从肩膀传来，你发现自己的左臂完全使不上力了。你试图活动肩膀，但每动一下都疼得龇牙咧嘴。队医检查后说肩膀脱臼了，需要休养{n}场。', desc:'肩膀脱臼', _consequence:'injury', _games:(4 + Math.floor(rngNext() * 5)) };
   },
 });
 
@@ -1332,7 +1332,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🤒', title:'流感缺席', body:'早上醒来你感觉浑身发冷、肌肉酸痛，体温计显示39.5度。队医检查后说你得了季节性流感，不建议你参加比赛。你躺在公寓的床上裹着被子瑟瑟发抖，手机屏幕上不断弹出队友们发来的"早日康复"。你至少需要休养{n}场。', desc:'流感缺阵', _consequence:'injury', _games:(1 + Math.floor(Math.random() * 3)) };
+    return { emoji:'🤒', title:'流感缺席', body:'早上醒来你感觉浑身发冷、肌肉酸痛，体温计显示39.5度。队医检查后说你得了季节性流感，不建议你参加比赛。你躺在公寓的床上裹着被子瑟瑟发抖，手机屏幕上不断弹出队友们发来的"早日康复"。你至少需要休养{n}场。', desc:'流感缺阵', _consequence:'injury', _games:(1 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1343,7 +1343,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🦶', title:'足底筋膜炎', body:'最近你的脚后跟在每天早上起床时都痛得像踩在钉子上。热身之后疼痛会减轻，但比赛后又会加重。队医诊断你患上了足底筋膜炎，建议你休息一段时间以免恶化。你不得不接受休养{n}场的康复计划。', desc:'足底筋膜炎', _consequence:'injury', _games:(3 + Math.floor(Math.random() * 4)) };
+    return { emoji:'🦶', title:'足底筋膜炎', body:'最近你的脚后跟在每天早上起床时都痛得像踩在钉子上。热身之后疼痛会减轻，但比赛后又会加重。队医诊断你患上了足底筋膜炎，建议你休息一段时间以免恶化。你不得不接受休养{n}场的康复计划。', desc:'足底筋膜炎', _consequence:'injury', _games:(3 + Math.floor(rngNext() * 4)) };
   },
 });
 
@@ -1354,7 +1354,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🦵', title:'大腿肌肉拉伤', body:'你在一次全力冲刺中突然感觉大腿前侧像被撕裂了一样——你立刻慢下来一瘸一拐地走向场边。你试图在边线上拉伸后继续比赛，但每发力一步都钻心地疼。队医宣布大腿肌肉二级拉伤，需要休养{n}场。', desc:'大腿拉伤', _consequence:'injury', _games:(5 + Math.floor(Math.random() * 6)) };
+    return { emoji:'🦵', title:'大腿肌肉拉伤', body:'你在一次全力冲刺中突然感觉大腿前侧像被撕裂了一样——你立刻慢下来一瘸一拐地走向场边。你试图在边线上拉伸后继续比赛，但每发力一步都钻心地疼。队医宣布大腿肌肉二级拉伤，需要休养{n}场。', desc:'大腿拉伤', _consequence:'injury', _games:(5 + Math.floor(rngNext() * 6)) };
   },
 });
 
@@ -1365,7 +1365,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'✋', title:'手腕扭伤', body:'你在一次摔倒时本能地用手撑地——手腕传来一阵剧痛。你甩了甩手想继续打，但每次投篮发力时手腕都会剧烈疼痛。你的命中率明显下降，教练最终决定让你轮休。队医给你缠上了护腕，建议休养{n}场。', desc:'手腕扭伤', _consequence:'injury', _games:(2 + Math.floor(Math.random() * 3)) };
+    return { emoji:'✋', title:'手腕扭伤', body:'你在一次摔倒时本能地用手撑地——手腕传来一阵剧痛。你甩了甩手想继续打，但每次投篮发力时手腕都会剧烈疼痛。你的命中率明显下降，教练最终决定让你轮休。队医给你缠上了护腕，建议休养{n}场。', desc:'手腕扭伤', _consequence:'injury', _games:(2 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1376,7 +1376,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🏥', title:'食物中毒住院', body:'深夜你被剧烈的胃痛和呕吐惊醒。你冲到卫生间吐了三次，整个人虚脱到站不稳。经纪人连夜把你送到急诊室，医生诊断为急性肠胃炎（食物中毒），需要住院观察。你至少缺席{n}场比赛。', desc:'食物中毒', _consequence:'injury', _games:(2 + Math.floor(Math.random() * 3)) };
+    return { emoji:'🏥', title:'食物中毒住院', body:'深夜你被剧烈的胃痛和呕吐惊醒。你冲到卫生间吐了三次，整个人虚脱到站不稳。经纪人连夜把你送到急诊室，医生诊断为急性肠胃炎（食物中毒），需要住院观察。你至少缺席{n}场比赛。', desc:'食物中毒', _consequence:'injury', _games:(2 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1387,7 +1387,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🤕', title:'腹股沟拉伤', body:'你在一次防守滑步中突然感觉大腿根部一阵撕裂感——你立刻停下来扶着腰，表情痛苦。腹股沟拉伤是运动员最烦人的伤病之一，虽然不算严重但非常容易复发。队医建议你休养{n}场以避免变成慢性伤病。', desc:'腹股沟拉伤', _consequence:'injury', _games:(3 + Math.floor(Math.random() * 4)) };
+    return { emoji:'🤕', title:'腹股沟拉伤', body:'你在一次防守滑步中突然感觉大腿根部一阵撕裂感——你立刻停下来扶着腰，表情痛苦。腹股沟拉伤是运动员最烦人的伤病之一，虽然不算严重但非常容易复发。队医建议你休养{n}场以避免变成慢性伤病。', desc:'腹股沟拉伤', _consequence:'injury', _games:(3 + Math.floor(rngNext() * 4)) };
   },
 });
 
@@ -1398,7 +1398,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🦵', title:'小腿肌肉痉挛', body:'第四节刚开始你的小腿突然抽筋了——肌肉硬得像一块石头，你痛得单膝跪地。队医上场给你拉伸，但每次你试图跑动时都会再次抽筋。教练无奈地把你换下。赛后队医说你严重脱水，需要休息{n}场来恢复。', desc:'小腿痉挛', _consequence:'injury', _games:(1 + Math.floor(Math.random() * 2)) };
+    return { emoji:'🦵', title:'小腿肌肉痉挛', body:'第四节刚开始你的小腿突然抽筋了——肌肉硬得像一块石头，你痛得单膝跪地。队医上场给你拉伸，但每次你试图跑动时都会再次抽筋。教练无奈地把你换下。赛后队医说你严重脱水，需要休息{n}场来恢复。', desc:'小腿痉挛', _consequence:'injury', _games:(1 + Math.floor(rngNext() * 2)) };
   },
 });
 
@@ -1409,7 +1409,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'👁️', title:'眼角膜擦伤', body:'争抢篮板时对方的手指直接戳进了你的眼睛——你惨叫一声捂着眼睛蹲在地上。泪水不停地流，你几乎睁不开那只眼睛。队医检查后发现你的眼角膜被划伤了，至少需要休养{n}场来恢复视力。', desc:'眼角膜擦伤', _consequence:'injury', _games:(2 + Math.floor(Math.random() * 3)) };
+    return { emoji:'👁️', title:'眼角膜擦伤', body:'争抢篮板时对方的手指直接戳进了你的眼睛——你惨叫一声捂着眼睛蹲在地上。泪水不停地流，你几乎睁不开那只眼睛。队医检查后发现你的眼角膜被划伤了，至少需要休养{n}场来恢复视力。', desc:'眼角膜擦伤', _consequence:'injury', _games:(2 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1420,7 +1420,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🩻', title:'肋骨挫伤', body:'你被对方一肘重重击中了侧腹部——你当场感觉呼吸都困难了。你捂着肋骨弯着腰，每一次深呼吸都伴随着刺痛。队医检查后说肋骨骨膜挫伤，虽然没有骨折但非常疼。你被列入每日观察名单，最终决定休养{n}场。', desc:'肋骨挫伤', _consequence:'injury', _games:(3 + Math.floor(Math.random() * 4)) };
+    return { emoji:'🩻', title:'肋骨挫伤', body:'你被对方一肘重重击中了侧腹部——你当场感觉呼吸都困难了。你捂着肋骨弯着腰，每一次深呼吸都伴随着刺痛。队医检查后说肋骨骨膜挫伤，虽然没有骨折但非常疼。你被列入每日观察名单，最终决定休养{n}场。', desc:'肋骨挫伤', _consequence:'injury', _games:(3 + Math.floor(rngNext() * 4)) };
   },
 });
 
@@ -1431,7 +1431,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🦵', title:'膝盖积液', body:'你的膝盖在最近几场比赛中越来越肿胀，每次弯曲都发出咯吱咯吱的声音。队医抽取了膝盖里的积液，足足抽出了20毫升黄色液体。他严肃地告诉你必须休息，否则会发展成慢性滑膜炎。你接受了休养{n}场的建议。', desc:'膝盖积液', _consequence:'injury', _games:(4 + Math.floor(Math.random() * 4)) };
+    return { emoji:'🦵', title:'膝盖积液', body:'你的膝盖在最近几场比赛中越来越肿胀，每次弯曲都发出咯吱咯吱的声音。队医抽取了膝盖里的积液，足足抽出了20毫升黄色液体。他严肃地告诉你必须休息，否则会发展成慢性滑膜炎。你接受了休养{n}场的建议。', desc:'膝盖积液', _consequence:'injury', _games:(4 + Math.floor(rngNext() * 4)) };
   },
 });
 
@@ -1442,7 +1442,7 @@ EVENT_REGISTRY.push({
   weight: 15,
   condition: (ctx) => true,
   execute: (ctx) => {
-    return { emoji:'🦷', title:'牙槽骨折', body:'你在争抢中被对方肘部击中了嘴巴——你吐出了半颗牙齿和一嘴血。队医把你带到更衣室止血，牙医检查后发现牙槽骨有轻微骨折。你需要在休赛期做牙科手术，目前只能吃流食。你缺席{n}场比赛。', desc:'牙齿受伤', _consequence:'injury', _games:(1 + Math.floor(Math.random() * 3)) };
+    return { emoji:'🦷', title:'牙槽骨折', body:'你在争抢中被对方肘部击中了嘴巴——你吐出了半颗牙齿和一嘴血。队医把你带到更衣室止血，牙医检查后发现牙槽骨有轻微骨折。你需要在休赛期做牙科手术，目前只能吃流食。你缺席{n}场比赛。', desc:'牙齿受伤', _consequence:'injury', _games:(1 + Math.floor(rngNext() * 3)) };
   },
 });
 
@@ -1454,7 +1454,7 @@ EVENT_REGISTRY.push({
   majorInjury: true,
   condition: (ctx) => true,
   execute: (ctx) => {
-    var games = 22 + Math.floor(Math.random() * 12);
+    var games = 22 + Math.floor(rngNext() * 12);
     return { emoji:'🏥', title:'腿筋三级拉伤', body:'你在一次反击冲刺中突然停住，右手立刻摸向大腿后侧。回放里没有对抗，只有你起速那一下身体明显一顿。MRI结果显示腿筋三级拉伤，队医给出的恢复周期接近两个月。球队宣布你将缺席{n}场比赛，所有训练计划都要重新排。', desc:'腿筋三级拉伤', _consequence:'injury', _games:games, _majorInjury:true };
   },
 });
@@ -1467,7 +1467,7 @@ EVENT_REGISTRY.push({
   majorInjury: true,
   condition: (ctx) => true,
   execute: (ctx) => {
-    var games = 32 + Math.floor(Math.random() * 14);
+    var games = 32 + Math.floor(rngNext() * 14);
     return { emoji:'🩼', title:'足部应力性骨折', body:'最近几周你的脚一直隐隐作痛，你以为只是疲劳，直到一次落地后疼痛直接钻到脚背。进一步检查显示足部出现应力性骨折，队医要求你立刻停止高强度训练。你至少要休养{n}场比赛，这段时间只能做低冲击康复。', desc:'足部应力性骨折', _consequence:'injury', _games:games, _majorInjury:true };
   },
 });

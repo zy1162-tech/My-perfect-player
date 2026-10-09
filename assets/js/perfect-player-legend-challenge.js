@@ -149,7 +149,7 @@
       return flags.defeated.indexOf(id) < 0;
     });
     if (!pool.length) return null;
-    var pickId = pool[Math.floor(Math.random() * pool.length)];
+    var pickId = pool[Math.floor(rngNext() * pool.length)];
     return getLegendTeamById(pickId);
   }
 

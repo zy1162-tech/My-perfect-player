@@ -6,7 +6,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   var GROUPS = {
     create: [
-      ['assets/js/perfect-player-hupu-extensions.js?v=20261005-review-fixes-v20', '角色扩展']
+      ['assets/js/perfect-player-hupu-extensions.js?v=20261007-round2-v21', '角色扩展']
     ],
     career: [
         ['assets/js/perfect-player-skills.js?v=20260827-style-economy-v9', '球风技能'],
@@ -15,14 +15,14 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
     ],
     story: [
       ['assets/js/perfect-player-event-library.js?v=20261002-choice-forecast-v16', '赛季事件'],
-      ['assets/js/perfect-player-story-events.js?v=20260825-stamina-v14', '生涯剧情'],
+      ['assets/js/perfect-player-story-events.js?v=20261007-round2-v15', '生涯剧情'],
       ['assets/js/perfect-player-era-story.js?v=20261004-era-story-v5', '年代主线'],
-      ['assets/js/perfect-player-legend-challenge.js?v=20260824-legend-v12', '传奇挑战'],
-      ['assets/js/perfect-player-allstar.js?v=20260824-double-points-mod-v1', '全明星周末']
+      ['assets/js/perfect-player-legend-challenge.js?v=20261007-round2-v13', '传奇挑战'],
+      ['assets/js/perfect-player-allstar.js?v=20261007-round2-v2', '全明星周末']
     ],
     live: [
     ['assets/js/perfect-player-live-court.js?v=20261005-review-fixes-v8', '俯瞰球场'],
-        ['assets/js/perfect-player-live-sim.js?v=20261005-review-fixes-v22', '文字直播']
+        ['assets/js/perfect-player-live-sim.js?v=20261007-round2-v23', '文字直播']
     ]
   };
 
@@ -337,7 +337,7 @@ var POOL = 'assets/data/perfect-player-pool.json?v=20260825-retirement-floor-v10
 
   function registerServiceWorker() {
     if (!canRegisterServiceWorker()) return;
-    window.navigator.serviceWorker.register('sw.js?v=20261005-review-fixes-v45', { updateViaCache:'none' }).catch(function () {});
+    window.navigator.serviceWorker.register('sw.js?v=20261007-round2-v46', { updateViaCache:'none' }).catch(function () {});
   }
 
   function idleLoad() {

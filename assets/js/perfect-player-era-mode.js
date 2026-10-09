@@ -521,7 +521,7 @@
     var ovr = clamp(rating.seasonOvr, ERA_MIN_OVR, 99);
     var curve = careerCurveFor(row);
     var attrs = row.attrs ? Object.assign({}, row.attrs) : generatedAttrs(mainPos(pos), ovr);
-    var nameEn = row.nameEn || ('Era Player ' + Math.random());
+    var nameEn = row.nameEn || ('Era Player ' + rngNext());
     var presentation = presentationFor(nameEn);
     var p = {
       name: nameEn,
@@ -1049,6 +1049,8 @@
     // 只在新建年代联盟组装完成时归一化；读档 repair 路径不会进入这里。
     applyOpeningMembership(start);
     normalizeOpeningLeagueRatings(start);
+    // 年代名单里缺中文名的球员统一用补全表。
+    if (typeof applyCurrentPlayerChineseDisplayFixes === 'function') applyCurrentPlayerChineseDisplayFixes();
     STATE._legendLeagueApplied = start;
     syncLegendEraState(start);
     if (typeof clearLineupCache === 'function') clearLineupCache();

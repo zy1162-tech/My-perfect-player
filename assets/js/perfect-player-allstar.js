@@ -18,7 +18,7 @@
   }
 
   function rand() {
-    return Math.random();
+    return rngNext();
   }
 
   function engine() {
