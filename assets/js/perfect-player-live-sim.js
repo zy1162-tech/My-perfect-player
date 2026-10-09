@@ -24,7 +24,7 @@
     if (!isFinite(v)) return 0;
     return v <= 99 ? v : 99 + (v - 99) * 0.5;
   }
-  function rand() { return Math.random(); }
+  function rand() { return rngNext(); }
   function chance(p) { return rand() < p; }
   function irand(a, b) { return a + Math.floor(rand() * (b - a + 1)); }
   function attr(p, k) { return parseInt(p && p[k], 10) || 50; }

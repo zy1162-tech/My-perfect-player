@@ -214,7 +214,7 @@
       weights.push(w);
       total += w;
     }
-    roll = Math.random() * total;
+    roll = rngNext() * total;
     for (i = 0; i < top.length; i++) {
       roll -= weights[i];
       if (roll <= 0) return top[i];
@@ -407,10 +407,10 @@
       }, pos);
     }
     var chinaPool = pool.filter(function (item) { return item.china; });
-    if (chinaPool.length && Math.random() < 0.55) {
-      return chinaPool[Math.floor(Math.random() * chinaPool.length)];
+    if (chinaPool.length && rngNext() < 0.55) {
+      return chinaPool[Math.floor(rngNext() * chinaPool.length)];
     }
-    return pool[Math.floor(Math.random() * pool.length)];
+    return pool[Math.floor(rngNext() * pool.length)];
   }
 
   function rafterPoolForTeam(team) {
@@ -439,7 +439,7 @@
       return flags.storyRafterStar;
     }
     var pool = rafterPoolForTeam(team);
-    var pick = pool.length ? pool[Math.floor(Math.random() * pool.length)] : {
+    var pick = pool.length ? pool[Math.floor(rngNext() * pool.length)] : {
       id: 'franchise',
       name: '本队名宿',
       city: (typeof getTeamName === 'function' && team) ? getTeamName(team) : '这座城市'
@@ -456,7 +456,7 @@
   function bindHometown() {
     var flags = ensureFlags();
     if (flags.storyHometown) return flags.storyHometown;
-    flags.storyHometown = HOMETOWN_POOL[Math.floor(Math.random() * HOMETOWN_POOL.length)];
+    flags.storyHometown = HOMETOWN_POOL[Math.floor(rngNext() * HOMETOWN_POOL.length)];
     return flags.storyHometown;
   }
 
@@ -1571,7 +1571,7 @@
       extra: { contextId: 'national' },
       choices: [
         { label: '要球', hint: '关键球大涨；失手则波动上升', apply: function () {
-          var miss = Math.random() < 0.42;
+          var miss = rngNext() < 0.42;
           var fx = { attrs: { CLU: 2 }, profile: { coachTrust: 1 }, result: '球到了你手里。你没有看控卫。<br><br>效果：关键球+2；教练信任+1。' };
           if (miss) {
             fx.mods = { formVariance: 1 };

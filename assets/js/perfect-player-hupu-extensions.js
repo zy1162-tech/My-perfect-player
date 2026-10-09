@@ -496,27 +496,27 @@
 
   var DRAFT_RANDOM_EVENTS = [
     { id:'medical_recheck', stage:'pre', title:'医疗复查', scene:'一支握有高顺位签的球队临时要求追加膝盖检查。检查室外已经站了几名记者，经纪人问你要不要公开结果。', choices:[
-      { label:'公开检查结果', hint:'透明，但结果也可能改变行情', apply:function() { var clean = Math.random() < 0.72; addProfileDelta('mediaTrust', 1); changeDraftStock(clean ? 1 : -1); if (!clean) addSeasonMod('injuryRiskBonus', 1, -4, 8); return clean ? '报告没有异常，球队对你的透明态度很满意。<br><br>效果：媒体信任+1；选秀行情上升。' : '报告里出现一处需要观察的小问题，消息很快传到各队。<br><br>效果：媒体信任+1；选秀行情下降；伤病风险+1。'; } },
+      { label:'公开检查结果', hint:'透明，但结果也可能改变行情', apply:function() { var clean = rngNext() < 0.72; addProfileDelta('mediaTrust', 1); changeDraftStock(clean ? 1 : -1); if (!clean) addSeasonMod('injuryRiskBonus', 1, -4, 8); return clean ? '报告没有异常，球队对你的透明态度很满意。<br><br>效果：媒体信任+1；选秀行情上升。' : '报告里出现一处需要观察的小问题，消息很快传到各队。<br><br>效果：媒体信任+1；选秀行情下降；伤病风险+1。'; } },
       { label:'只交给球队', hint:'控制消息，不让媒体介入', apply:function() { addProfileDelta('controversy', 1); addProfileDelta('mediaTrust', -1); return '报告只在球队之间流转。你避免了公开讨论，但媒体开始猜测你在隐瞒什么。<br><br>效果：争议+1；媒体信任-1。'; } }
     ]},
     { id:'elite_workout', stage:'pre', title:'加赛试训', scene:'试训结束后，球探临时安排你和另一名热门新秀打一组五分钟对抗。所有摄像机又重新开了起来。', choices:[
-      { label:'接下单挑', hint:'赢了大涨，输了也会被看见', apply:function() { var won = Math.random() < 0.58; changeDraftStock(won ? 2 : -1); if (won) addProfileDelta('fame', 1); else addSeasonMod('formVariance', 1, -10, 10); return won ? '你连续打成两个关键回合，球探席明显躁动起来。<br><br>效果：人气+1；选秀行情明显上升。' : '你强行接管比赛，却在最后两个回合失误。<br><br>效果：选秀行情下降；状态波动+1。'; } },
+      { label:'接下单挑', hint:'赢了大涨，输了也会被看见', apply:function() { var won = rngNext() < 0.58; changeDraftStock(won ? 2 : -1); if (won) addProfileDelta('fame', 1); else addSeasonMod('formVariance', 1, -10, 10); return won ? '你连续打成两个关键回合，球探席明显躁动起来。<br><br>效果：人气+1；选秀行情明显上升。' : '你强行接管比赛，却在最后两个回合失误。<br><br>效果：选秀行情下降；状态波动+1。'; } },
       { label:'按战术打完', hint:'不抢镜，展示执行力', apply:function() { addProfileDelta('coachTrust', 1); changeDraftStock(1); return '你没有把它当单挑，而是连续做出正确传球。主教练在报告上圈出了你的名字。<br><br>效果：教练信任+1；选秀行情小幅上升。'; } }
     ]},
     { id:'viral_interview', stage:'pre', title:'采访突然走红', scene:'你在训练馆门口的一段即兴采访突然登上热搜。经纪人建议趁热再录一段完整回应。', choices:[
-      { label:'趁热回应', hint:'扩大曝光，也增加压力', apply:function() { addProfileDelta('fame', 2); addSeasonMod('mediaPressure', 1, -10, 10); if (Math.random() < 0.35) changeDraftStock(1); return '第二段采访的播放量继续上涨，你的名字第一次冲出球探圈。<br><br>效果：人气+2；媒体压力+1。'; } },
+      { label:'趁热回应', hint:'扩大曝光，也增加压力', apply:function() { addProfileDelta('fame', 2); addSeasonMod('mediaPressure', 1, -10, 10); if (rngNext() < 0.35) changeDraftStock(1); return '第二段采访的播放量继续上涨，你的名字第一次冲出球探圈。<br><br>效果：人气+2；媒体压力+1。'; } },
       { label:'回训练馆', hint:'让热度自然过去', apply:function() { addSeasonMod('formVariance', -1, -10, 10); addProfileDelta('coachTrust', 1); return '你没有继续追热点。第二天球探收到的是你加练到深夜的消息。<br><br>效果：状态波动-1；教练信任+1。'; } }
     ]},
     { id:'team_promise', stage:'pre', title:'口头承诺', scene:'一支球队私下暗示会在自己的顺位选你，条件是你取消后面的所有试训。经纪人提醒：口头承诺随时可能变化。', choices:[
-      { label:'接受承诺', hint:'锁定下限，但把主动权交出去', apply:function() { var kept = Math.random() < 0.76; changeDraftStock(kept ? 1 : -2); addProfileDelta('loyalty', 1); return kept ? '球队兑现了大部分承诺，你的团队也停止向外放消息。<br><br>效果：忠诚+1；选秀行情稳定上升。' : '交易流言改变了球队计划，原来的承诺开始松动。<br><br>效果：忠诚+1；选秀行情明显下降。'; } },
+      { label:'接受承诺', hint:'锁定下限，但把主动权交出去', apply:function() { var kept = rngNext() < 0.76; changeDraftStock(kept ? 1 : -2); addProfileDelta('loyalty', 1); return kept ? '球队兑现了大部分承诺，你的团队也停止向外放消息。<br><br>效果：忠诚+1；选秀行情稳定上升。' : '交易流言改变了球队计划，原来的承诺开始松动。<br><br>效果：忠诚+1；选秀行情明显下降。'; } },
       { label:'继续全部试训', hint:'保留选择，承担体能消耗', apply:function() { addProfileDelta('coachTrust', 1); addSeasonMod('staminaLoad', 1, -10, 10); return '你按原计划完成剩余试训。几支球队认可你的职业态度，但连续奔波留下了疲劳。<br><br>效果：教练信任+1；体能负荷+1。'; } }
     ]},
     { id:'flight_delay', stage:'pre', title:'航班延误', scene:'前往最后一站试训的航班延误六小时。改签红眼航班还能赶上，推迟则可能错过球队最后的决策会。', choices:[
-      { label:'连夜赶过去', hint:'保住机会，状态未必在线', apply:function() { addSeasonMod('staminaLoad', 1, -10, 10); var sharp = Math.random() < 0.55; changeDraftStock(sharp ? 1 : -1); return sharp ? '你几乎没睡，却在投篮测试里保持了准度。<br><br>效果：体能负荷+1；选秀行情上升。' : '疲劳让你的横移和投篮都慢了半拍。<br><br>效果：体能负荷+1；选秀行情下降。'; } },
-      { label:'申请改期', hint:'保护身体，但球队未必等你', apply:function() { addSeasonMod('formVariance', -1, -10, 10); if (Math.random() < 0.35) changeDraftStock(-1); return '你选择先恢复身体。球队接受了说明，但没有保证会重新安排。<br><br>效果：状态波动-1。'; } }
+      { label:'连夜赶过去', hint:'保住机会，状态未必在线', apply:function() { addSeasonMod('staminaLoad', 1, -10, 10); var sharp = rngNext() < 0.55; changeDraftStock(sharp ? 1 : -1); return sharp ? '你几乎没睡，却在投篮测试里保持了准度。<br><br>效果：体能负荷+1；选秀行情上升。' : '疲劳让你的横移和投篮都慢了半拍。<br><br>效果：体能负荷+1；选秀行情下降。'; } },
+      { label:'申请改期', hint:'保护身体，但球队未必等你', apply:function() { addSeasonMod('formVariance', -1, -10, 10); if (rngNext() < 0.35) changeDraftStock(-1); return '你选择先恢复身体。球队接受了说明，但没有保证会重新安排。<br><br>效果：状态波动-1。'; } }
     ]},
     { id:'film_room_test', stage:'pre', title:'临场录像问答', scene:'试训结束前，教练突然暂停一段比赛录像，让你在十秒内说出场上五个人下一步该怎么站位。', choices:[
-      { label:'立刻回答', hint:'相信第一判断', apply:function() { var right = Math.random() < 0.66; changeDraftStock(right ? 1 : -1); return right ? '你的答案和教练的战术板几乎一致。<br><br>效果：选秀行情上升。' : '你看到了第一层机会，却漏掉弱侧轮转。<br><br>效果：选秀行情小幅下降。'; } },
+      { label:'立刻回答', hint:'相信第一判断', apply:function() { var right = rngNext() < 0.66; changeDraftStock(right ? 1 : -1); return right ? '你的答案和教练的战术板几乎一致。<br><br>效果：选秀行情上升。' : '你看到了第一层机会，却漏掉弱侧轮转。<br><br>效果：选秀行情小幅下降。'; } },
       { label:'先问战术原则', hint:'展示沟通和学习能力', apply:function() { addProfileDelta('coachTrust', 2); return '你先确认球队的防守原则，再给出完整答案。教练对这种沟通方式很满意。<br><br>效果：教练信任+2。'; } }
     ]},
     { id:'family_phone', stage:'post', title:'家人的电话', scene:'选秀结果出来后，家里第一个电话打了进来。电话那头很吵，所有人都在等你说第一句话。', choices:[
@@ -546,7 +546,7 @@
     // ===== 追加事件：扩充池子（弹出概率已在 runPerfectPlayerDraftRandomEvent 中收紧） =====
     { id:'shoe_deal_bidding', stage:'pre', title:'球鞋竞标', scene:'两家球鞋品牌在选秀前争抢你的签名。一家给的钱更多，另一家承诺给你专属产品线，但要你现在就站队。', choices:[
       { label:'选高报价合同', hint:'先把钱拿到手', apply:function() { addProfileDelta('businessValue', 3); addProfileDelta('loyalty', -1); return '你签下了报价更高的一份。数字很漂亮，但另一家在社媒上意味深长地祝你好运。<br><br>效果：商业价值+3；忠诚-1。'; } },
-      { label:'选专属产品线', hint:'赌长期价值', apply:function() { addProfileDelta('businessValue', 1); addProfileDelta('fame', 1); if (Math.random() < 0.4) changeDraftStock(1); return '你押注在能长期陪你成长的品牌上。发布会当天，你的名字第一次和一双鞋绑在了一起。<br><br>效果：商业价值+1；人气+1。'; } }
+      { label:'选专属产品线', hint:'赌长期价值', apply:function() { addProfileDelta('businessValue', 1); addProfileDelta('fame', 1); if (rngNext() < 0.4) changeDraftStock(1); return '你押注在能长期陪你成长的品牌上。发布会当天，你的名字第一次和一双鞋绑在了一起。<br><br>效果：商业价值+1；人气+1。'; } }
     ]},
     { id:'draft_night_outfit', stage:'pre', title:'选秀夜造型', scene:'造型团队准备了三套方案：低调经典、大胆先锋、还是带有家乡元素的定制款。镜头会记住你走上舞台的第一个画面。', choices:[
       { label:'大胆先锋造型', hint:'博眼球，也可能被议论', apply:function() { addProfileDelta('fame', 2); addProfileDelta('controversy', 1); return '你的造型当晚就上了时尚版热搜，评价两极，但没有人记不住你。<br><br>效果：人气+2；争议+1。'; } },
@@ -554,11 +554,11 @@
       { label:'低调经典造型', hint:'让实力说话', apply:function() { addProfileDelta('mediaTrust', 1); return '你穿了一套挑不出毛病的西装，把所有话题都留给了球场。<br><br>效果：媒体信任+1。'; } }
     ]},
     { id:'mock_draft_slip', stage:'pre', title:'模拟选秀下滑', scene:'一份权威模拟选秀把你的顺位往后调了几位，理由是"上限存疑"。经纪人问你要不要公开回应这份榜单。', choices:[
-      { label:'用训练视频回应', hint:'把质疑变成动力', apply:function() { if (Math.random() < 0.55) { changeDraftStock(1); return '你放出一段高强度训练视频，几家球队重新把你列入试训名单。<br><br>效果：选秀行情回升。'; } addSeasonMod('formVariance', 1, -10, 10); return '视频没有改变太多风向，但至少证明了你没有松懈。<br><br>效果：状态波动+1。'; } },
+      { label:'用训练视频回应', hint:'把质疑变成动力', apply:function() { if (rngNext() < 0.55) { changeDraftStock(1); return '你放出一段高强度训练视频，几家球队重新把你列入试训名单。<br><br>效果：选秀行情回升。'; } addSeasonMod('formVariance', 1, -10, 10); return '视频没有改变太多风向，但至少证明了你没有松懈。<br><br>效果：状态波动+1。'; } },
       { label:'不予理会', hint:'专注自己的节奏', apply:function() { addProfileDelta('mediaTrust', 1); addSeasonMod('formVariance', -1, -10, 10); return '你没有回应任何一份榜单，只是照常训练。安静反而让人高看一眼。<br><br>效果：媒体信任+1；状态波动-1。'; } }
     ]},
     { id:'agent_dinner', stage:'pre', title:'球队高层晚宴', scene:'一支彩票区球队约你共进晚餐。饭桌上没有谈篮球，全在聊你的性格和抗压能力。你意识到这也是一场考试。', choices:[
-      { label:'坦诚展现自己', hint:'真实，但风险自负', apply:function() { if (Math.random() < 0.6) { changeDraftStock(1); addProfileDelta('mediaTrust', 1); return '你没有背稿子，聊得很真诚。第二天球队管理层给了你很正面的评价。<br><br>效果：选秀行情上升；媒体信任+1。'; } addProfileDelta('controversy', 1); return '你说得太直接，有句玩笑被理解偏了。<br><br>效果：争议+1。'; } },
+      { label:'坦诚展现自己', hint:'真实，但风险自负', apply:function() { if (rngNext() < 0.6) { changeDraftStock(1); addProfileDelta('mediaTrust', 1); return '你没有背稿子，聊得很真诚。第二天球队管理层给了你很正面的评价。<br><br>效果：选秀行情上升；媒体信任+1。'; } addProfileDelta('controversy', 1); return '你说得太直接，有句玩笑被理解偏了。<br><br>效果：争议+1。'; } },
       { label:'滴水不漏地应对', hint:'安全，但少了记忆点', apply:function() { addProfileDelta('coachTrust', 1); return '你把每个问题都答得四平八稳。球队觉得你成熟，但也没什么惊喜。<br><br>效果：教练信任+1。'; } }
     ]},
     { id:'draft_charity', stage:'post', title:'第一笔慈善', scene:'签约奖金还没到账，家乡的青少年篮球营就发来求助信息。经纪团队提醒你现金流还很紧张。', choices:[
@@ -566,7 +566,7 @@
       { label:'承诺赛季后再帮', hint:'先稳住自己的脚跟', apply:function() { addProfileDelta('loyalty', 1); return '你回复说等站稳脚跟一定回来。这句话被截图保存，很多人在等你兑现。<br><br>效果：忠诚+1。'; } }
     ]},
     { id:'summer_league_buzz', stage:'post', title:'夏季联赛焦点', scene:'夏季联赛第一场你就打出亮眼表现，媒体开始造势。教练组却提醒你别被夏联的数据冲昏头。', choices:[
-      { label:'继续保持火力', hint:'趁热证明自己', apply:function() { if (Math.random() < 0.55) { addProfileDelta('fame', 2); return '你在夏联持续爆发，新秀榜上开始有了你的名字。<br><br>效果：人气+2。'; } addSeasonMod('staminaLoad', 1, -10, 10); return '你太想证明自己，出手选择有些勉强，教练在场边皱了眉。<br><br>效果：体能负荷+1。'; } },
+      { label:'继续保持火力', hint:'趁热证明自己', apply:function() { if (rngNext() < 0.55) { addProfileDelta('fame', 2); return '你在夏联持续爆发，新秀榜上开始有了你的名字。<br><br>效果：人气+2。'; } addSeasonMod('staminaLoad', 1, -10, 10); return '你太想证明自己，出手选择有些勉强，教练在场边皱了眉。<br><br>效果：体能负荷+1。'; } },
       { label:'打磨短板', hint:'把夏联当训练场', apply:function() { addProfileDelta('coachTrust', 2); return '你主动要求多打自己不擅长的位置。数据没那么华丽，但教练组记住了你的态度。<br><br>效果：教练信任+2。'; } }
     ]},
     { id:'hometown_return', stage:'post', title:'衣锦还乡', scene:'选秀结束后的第一个休息日，家乡想为你办一场欢迎仪式。这会占掉你宝贵的适应期时间。', choices:[
@@ -574,24 +574,24 @@
       { label:'留队投入训练', hint:'先抓住立足机会', apply:function() { addProfileDelta('coachTrust', 1); addSeasonMod('formVariance', -1, -10, 10); return '你婉拒了仪式，把时间全给了训练馆。家乡人有点失落，但更多人说理解。<br><br>效果：教练信任+1；状态波动-1。'; } }
     ]},
     { id:'measurement_day', stage:'pre', title:'体测数据争议', scene:'官方体测公布后，你的裸足身高比大学资料矮了两厘米。节目开始争论你能不能防住更高大的同位置球员。', choices:[
-      { label:'申请公开复测', hint:'用数据正面回应', apply:function() { var passed = Math.random() < 0.68; changeDraftStock(passed ? 1 : -1); addProfileDelta('mediaTrust', 1); return passed ? '复测结果证明误差来自设备，球队更新了你的资料。<br><br>效果：媒体信任+1；预测顺位上升。' : '复测没有改变数字，讨论反而持续了一整天。<br><br>效果：媒体信任+1；预测顺位下降。'; } },
+      { label:'申请公开复测', hint:'用数据正面回应', apply:function() { var passed = rngNext() < 0.68; changeDraftStock(passed ? 1 : -1); addProfileDelta('mediaTrust', 1); return passed ? '复测结果证明误差来自设备，球队更新了你的资料。<br><br>效果：媒体信任+1；预测顺位上升。' : '复测没有改变数字，讨论反而持续了一整天。<br><br>效果：媒体信任+1；预测顺位下降。'; } },
       { label:'用对抗录像回应', hint:'不争数字，展示换防能力', apply:function() { addProfileDelta('coachTrust', 1); addSeasonMod('formVariance', -1, -10, 10); return '你放出几段成功换防大个子的录像。数字没变，但球探报告里的担忧少了一条。<br><br>效果：教练信任+1；状态波动-1。'; } }
     ]},
     { id:'shooting_streak', stage:'pre', title:'投篮测试连中', scene:'公开投篮测试最后一组，你已经连续命中十球。场边开始有人计数，下一球会决定这段视频能不能登上当晚集锦。', choices:[
-      { label:'挑战更远距离', hint:'命中就会成为试训焦点', apply:function() { var hit = Math.random() < 0.54; changeDraftStock(hit ? 2 : -1); if (hit) addProfileDelta('fame', 1); return hit ? '篮球从中圈标志旁飞出，空心入网。球探席第一次集体抬头。<br><br>效果：人气+1；预测顺位明显上升。' : '球砸在篮筐前沿，连中纪录停住了，但没人忘记前面的十球。<br><br>效果：预测顺位小幅下降。'; } },
+      { label:'挑战更远距离', hint:'命中就会成为试训焦点', apply:function() { var hit = rngNext() < 0.54; changeDraftStock(hit ? 2 : -1); if (hit) addProfileDelta('fame', 1); return hit ? '篮球从中圈标志旁飞出，空心入网。球探席第一次集体抬头。<br><br>效果：人气+1；预测顺位明显上升。' : '球砸在篮筐前沿，连中纪录停住了，但没人忘记前面的十球。<br><br>效果：预测顺位小幅下降。'; } },
       { label:'收在最舒服的位置', hint:'保住稳定印象', apply:function() { changeDraftStock(1); addProfileDelta('coachTrust', 1); return '你在战术要求的位置再中两球，然后主动结束。球队更喜欢这种可复制的稳定。<br><br>效果：教练信任+1；预测顺位上升。'; } }
     ]},
     { id:'defense_assignment', stage:'pre', title:'防守专项考题', scene:'一支球队没有让你展示进攻，只要求你连续防守三种位置。最后一组对抗，对面正好是本届最会得分的新秀。', choices:[
-      { label:'全场贴防', hint:'消耗大，但态度最直接', apply:function() { var stopped = Math.random() < 0.6; addSeasonMod('staminaLoad', 1, -10, 10); changeDraftStock(stopped ? 2 : 0); return stopped ? '你把他逼出舒适区，最后一次出手只碰到篮板。<br><br>效果：体能负荷+1；预测顺位明显上升。' : '你没完全限制住他，但每个回合都追到了最后。<br><br>效果：体能负荷+1。'; } },
+      { label:'全场贴防', hint:'消耗大，但态度最直接', apply:function() { var stopped = rngNext() < 0.6; addSeasonMod('staminaLoad', 1, -10, 10); changeDraftStock(stopped ? 2 : 0); return stopped ? '你把他逼出舒适区，最后一次出手只碰到篮板。<br><br>效果：体能负荷+1；预测顺位明显上升。' : '你没完全限制住他，但每个回合都追到了最后。<br><br>效果：体能负荷+1。'; } },
       { label:'按球队体系协防', hint:'展示判断与执行力', apply:function() { addProfileDelta('coachTrust', 2); changeDraftStock(1); return '你没有追着球跑，而是提前封住了球队最在意的线路。教练在报告上写下：能立即进入体系。<br><br>效果：教练信任+2；预测顺位上升。'; } }
     ]},
     { id:'workout_report_leak', stage:'pre', title:'试训报告泄露', scene:'一份内部试训报告被发到了网上。优点写得很满，缺点也毫不留情。经纪团队怀疑是某支球队故意压价。', choices:[
-      { label:'要求球队澄清', hint:'保护行情，也可能激化关系', apply:function() { var owned = Math.random() < 0.45; addProfileDelta('controversy', 1); changeDraftStock(owned ? 1 : -1); return owned ? '球队承认报告未经授权流出，几家媒体撤回了负面标题。<br><br>效果：争议+1；预测顺位回升。' : '没有球队愿意出面，公开交涉反而让报告传播得更广。<br><br>效果：争议+1；预测顺位下降。'; } },
+      { label:'要求球队澄清', hint:'保护行情，也可能激化关系', apply:function() { var owned = rngNext() < 0.45; addProfileDelta('controversy', 1); changeDraftStock(owned ? 1 : -1); return owned ? '球队承认报告未经授权流出，几家媒体撤回了负面标题。<br><br>效果：争议+1；预测顺位回升。' : '没有球队愿意出面，公开交涉反而让报告传播得更广。<br><br>效果：争议+1；预测顺位下降。'; } },
       { label:'逐条补强短板', hint:'把报告当成免费反馈', apply:function() { addProfileDelta('coachTrust', 1); addSeasonMod('formVariance', -1, -10, 10); return '你把报告打印出来贴在训练馆，每解决一条就划掉一条。球探后来收到了这张写满笔记的纸。<br><br>效果：教练信任+1；状态波动-1。'; } }
     ]},
     { id:'last_minute_workout', stage:'pre', title:'最后一分钟试训邀请', scene:'选秀前四十八小时，一支此前没有联系过你的球队突然发来专机邀请。它的顺位正好处在你的预测区间。', choices:[
-      { label:'立即赴约', hint:'多一次机会，也多一次风险', apply:function() { var sharp = Math.random() < 0.62; addSeasonMod('staminaLoad', 1, -10, 10); changeDraftStock(sharp ? 2 : -1); return sharp ? '临时试训异常顺利，总经理亲自把你送到门口。<br><br>效果：体能负荷+1；预测顺位明显上升。' : '仓促行程影响了状态，你的最后几次出手都短了一点。<br><br>效果：体能负荷+1；预测顺位下降。'; } },
-      { label:'礼貌拒绝', hint:'保护已有评价', apply:function() { addProfileDelta('loyalty', 1); if (Math.random() < 0.25) changeDraftStock(-1); return '你选择相信已经完成的试训。球队表示理解，但没有透露他们是否还会考虑你。<br><br>效果：忠诚+1。'; } }
+      { label:'立即赴约', hint:'多一次机会，也多一次风险', apply:function() { var sharp = rngNext() < 0.62; addSeasonMod('staminaLoad', 1, -10, 10); changeDraftStock(sharp ? 2 : -1); return sharp ? '临时试训异常顺利，总经理亲自把你送到门口。<br><br>效果：体能负荷+1；预测顺位明显上升。' : '仓促行程影响了状态，你的最后几次出手都短了一点。<br><br>效果：体能负荷+1；预测顺位下降。'; } },
+      { label:'礼貌拒绝', hint:'保护已有评价', apply:function() { addProfileDelta('loyalty', 1); if (rngNext() < 0.25) changeDraftStock(-1); return '你选择相信已经完成的试训。球队表示理解，但没有透露他们是否还会考虑你。<br><br>效果：忠诚+1。'; } }
     ]},
     { id:'psychology_test', stage:'pre', title:'心理抗压测试', scene:'面试官故意连续否定你的回答，又突然问：如果前十顺位都不选你，你会怎么看自己？房间里没有一个人笑。', choices:[
       { label:'坦承会失望', hint:'真实地表达竞争心', apply:function() { addProfileDelta('mediaTrust', 2); addSeasonMod('mediaPressure', -1, -10, 10); return '你说会失望，但第二天仍会训练。面试官第一次放下笔，和你认真握手。<br><br>效果：媒体信任+2；媒体压力-1。'; } },
@@ -602,7 +602,7 @@
       { label:'请他谈个人性格', hint:'让球队相信你的长期价值', apply:function() { addProfileDelta('lockerRoomTrust', 1); addProfileDelta('mediaTrust', 1); return '他没有谈数据，只说你愿意听、也愿意承担。球队把这句话写进了最终报告。<br><br>效果：更衣室信任+1；媒体信任+1。'; } }
     ]},
     { id:'draft_week_flu', stage:'pre', title:'选秀周感冒', scene:'选秀周第一天醒来，你开始低烧。下午还有一场重要见面会，团队担心缺席会被理解成回避。', choices:[
-      { label:'戴口罩按时出席', hint:'守住承诺，但身体负荷增加', apply:function() { addSeasonMod('staminaLoad', 2, -10, 10); addProfileDelta('coachTrust', 1); if (Math.random() < 0.3) changeDraftStock(-1); return '你完成了全部会面，声音有些沙哑。球队认可态度，也记下了健康风险。<br><br>效果：教练信任+1；体能负荷+2。'; } },
+      { label:'戴口罩按时出席', hint:'守住承诺，但身体负荷增加', apply:function() { addSeasonMod('staminaLoad', 2, -10, 10); addProfileDelta('coachTrust', 1); if (rngNext() < 0.3) changeDraftStock(-1); return '你完成了全部会面，声音有些沙哑。球队认可态度，也记下了健康风险。<br><br>效果：教练信任+1；体能负荷+2。'; } },
       { label:'公开说明并休息', hint:'先把身体恢复好', apply:function() { addProfileDelta('mediaTrust', 1); addSeasonMod('formVariance', -1, -10, 10); return '你主动公布情况并取消行程。透明处理避免了猜测，第二天体温也恢复正常。<br><br>效果：媒体信任+1；状态波动-1。'; } }
     ]},
     { id:'rookie_orientation', stage:'post', title:'新秀说明会', scene:'联盟的新秀说明会上，工作人员列出社交媒体、赌博信息和财务陷阱。休息时，有人邀请你提前离场去参加派对。', choices:[
@@ -638,15 +638,15 @@
       { label:'协商错开训练时间', hint:'保护睡眠和状态', apply:function() { addSeasonMod('formVariance', -1, -10, 10); addProfileDelta('mediaTrust', 1); return '你们重新排了作息，各练各的，也学会了直接沟通。<br><br>效果：状态波动-1；媒体信任+1。'; } }
     ]},
     { id:'combine_shuttle', stage:'pre', title:'体测折返跑', scene:'联合试训的折返跑即将开始。体能教练让你选择：冲最好成绩，或按比赛节奏跑完避免拉伤。', choices:[
-      { label:'冲击最好成绩', hint:'数据更好，也更吃身体', apply:function() { var fast = Math.random() < 0.62; addSeasonMod('staminaLoad', 1, -10, 10); changeDraftStock(fast ? 1 : -1); return fast ? '你跑出了个人最佳。几支注重运动能力的球队当场更新了排名。<br><br>效果：体能负荷+1；选秀行情上升。' : '最后一次转身你慢了半步，成绩普通，体能也空了。<br><br>效果：体能负荷+1；选秀行情下降。'; } },
+      { label:'冲击最好成绩', hint:'数据更好，也更吃身体', apply:function() { var fast = rngNext() < 0.62; addSeasonMod('staminaLoad', 1, -10, 10); changeDraftStock(fast ? 1 : -1); return fast ? '你跑出了个人最佳。几支注重运动能力的球队当场更新了排名。<br><br>效果：体能负荷+1；选秀行情上升。' : '最后一次转身你慢了半步，成绩普通，体能也空了。<br><br>效果：体能负荷+1；选秀行情下降。'; } },
       { label:'按比赛节奏完成', hint:'展示可控，数据不炸', apply:function() { addProfileDelta('coachTrust', 1); return '你没有为体测改变跑法。教练组记下了：他知道自己在测什么。<br><br>效果：教练信任+1。'; } }
     ]},
     { id:'parent_agent_split', stage:'pre', title:'家人与经纪人意见相反', scene:'试训行程排满后，家人希望你回家休息两天，经纪人坚持再去一站高顺位球队。两人当着你的面停了下来。', choices:[
       { label:'听经纪人把行程跑完', hint:'多一次曝光，家人会失望', apply:function() { addSeasonMod('staminaLoad', 1, -10, 10); changeDraftStock(1); addProfileDelta('loyalty', -1); return '你按计划走完最后一站。球探多看到一次，家里的聊天记录却安静了一天。<br><br>效果：选秀行情上升；体能负荷+1；忠诚-1。'; } },
-      { label:'回家两天再出发', hint:'保护关系，可能错过窗口', apply:function() { addProfileDelta('loyalty', 2); if (Math.random() < 0.3) changeDraftStock(-1); return '你回家睡了两晚真正的觉。经纪人重排了部分会面，有一支球队没有再约。<br><br>效果：忠诚+2。'; } }
+      { label:'回家两天再出发', hint:'保护关系，可能错过窗口', apply:function() { addProfileDelta('loyalty', 2); if (rngNext() < 0.3) changeDraftStock(-1); return '你回家睡了两晚真正的觉。经纪人重排了部分会面，有一支球队没有再约。<br><br>效果：忠诚+2。'; } }
     ]},
     { id:'lottery_private_workout', stage:'pre', title:'乐透区封闭试训', scene:'一支乐透区球队把试训改成完全封闭。场上只有教练组和两名助理，他们要看你在无人起哄时怎么处理失败。', when:function() { var p = window.getPerfectPlayerDraftProjection && window.getPerfectPlayerDraftProjection(); return p && p.rank && p.rank <= 14; }, choices:[
-      { label:'主动要求加一组对抗', hint:'展示竞争心', apply:function() { var ok = Math.random() < 0.6; changeDraftStock(ok ? 2 : 0); addProfileDelta('coachTrust', 1); return ok ? '加练的那组你防下了两次错位。总经理看完只说：我们需要这种人。<br><br>效果：教练信任+1；选秀行情明显上升。' : '加练暴露了疲劳。球队欣赏态度，但记下了身体负荷。<br><br>效果：教练信任+1。'; } },
+      { label:'主动要求加一组对抗', hint:'展示竞争心', apply:function() { var ok = rngNext() < 0.6; changeDraftStock(ok ? 2 : 0); addProfileDelta('coachTrust', 1); return ok ? '加练的那组你防下了两次错位。总经理看完只说：我们需要这种人。<br><br>效果：教练信任+1；选秀行情明显上升。' : '加练暴露了疲劳。球队欣赏态度，但记下了身体负荷。<br><br>效果：教练信任+1。'; } },
       { label:'按他们的教案打完', hint:'展示可教性', apply:function() { addProfileDelta('coachTrust', 2); changeDraftStock(1); return '你把每个走位都问清楚再执行。封闭试训没有集锦，却有一份很厚的笔记。<br><br>效果：教练信任+2；选秀行情上升。'; } }
     ]},
     { id:'second_round_chip', stage:'pre', title:'次轮行情谈话', scene:'经纪人把模拟榜单翻到四十名以后：如果掉到次轮，是接受一张两年底薪，还是考虑海外一年再回来？', when:function() { var p = window.getPerfectPlayerDraftProjection && window.getPerfectPlayerDraftProjection(); return !p || p.rank == null || p.rank >= 28; }, choices:[
@@ -658,7 +658,7 @@
       { label:'在家里看转播', hint:'把这一夜留给家人', apply:function() { addProfileDelta('loyalty', 2); addProfileDelta('fanSupport', 1); return '你和家人挤在同一张沙发上。没有红毯，但电话响起来时，房间里的人都会记得。<br><br>效果：忠诚+2；球迷支持+1。'; } }
     ]},
     { id:'team_medical_history', stage:'pre', title:'家族病史问卷', scene:'一份医疗问卷问到直系亲属的手术和遗传病。经纪人说可以写得更模糊，球队医生希望写全。', choices:[
-      { label:'完整填写', hint:'透明，可能影响个别球队', apply:function() { addProfileDelta('mediaTrust', 1); if (Math.random() < 0.22) changeDraftStock(-1); else changeDraftStock(1); return '你把知道的都写了。多数球队把它当成职业态度，也有一份报告变得更谨慎。<br><br>效果：媒体信任+1。'; } },
+      { label:'完整填写', hint:'透明，可能影响个别球队', apply:function() { addProfileDelta('mediaTrust', 1); if (rngNext() < 0.22) changeDraftStock(-1); else changeDraftStock(1); return '你把知道的都写了。多数球队把它当成职业态度，也有一份报告变得更谨慎。<br><br>效果：媒体信任+1。'; } },
       { label:'只写已公开信息', hint:'控制风险，留下猜测', apply:function() { addProfileDelta('controversy', 1); return '问卷很短。没有球队公开质疑，但私下列了跟进检查。<br><br>效果：争议+1。'; } }
     ]},
     { id:'lottery_night_trade', stage:'post', title:'乐透夜交易风声', scene:'你的名字刚被叫到，现场已经有人说这笔签可能被打包。新东家的公关还没走到你面前。', when:function(p) { return p && p.round === 1 && p.pick <= 14; }, choices:[
@@ -705,7 +705,7 @@
       return true;
     });
     if (!pool.length) return null;
-    return pool[Math.floor(Math.random() * pool.length)].id;
+    return pool[Math.floor(rngNext() * pool.length)].id;
   };
   // Probability that a random event actually fires at each draft stage.
   // Why: the draft already runs a long fixed narrative chain (前夜→经纪→试训→结果→合同…),
@@ -720,7 +720,7 @@
     if ((pending.randomEventIds || []).length >= DRAFT_EVENT_MAX_PER_RUN) { if (done) done(); return; }
     var chance = DRAFT_EVENT_STAGE_CHANCE[stage];
     if (chance == null) chance = 0.4;
-    if (Math.random() >= chance) { if (done) done(); return; }
+    if (rngNext() >= chance) { if (done) done(); return; }
     var id = window.pickPerfectPlayerDraftEventId(stage, pending.randomEventIds);
     var event = DRAFT_RANDOM_EVENTS.find(function(item) { return item.id === id; });
     if (!event) { if (done) done(); return; }
@@ -776,7 +776,7 @@
         majorInjury: !!def.major,
         condition: function () { return true; },
         execute: function () {
-          var games = def.min + Math.floor(Math.random() * (def.max - def.min + 1));
+          var games = def.min + Math.floor(rngNext() * (def.max - def.min + 1));
           return { emoji:def.emoji, title:def.title, body:def.body, desc:def.desc, _consequence:'injury', _games:games, _majorInjury:!!def.major, _seasonEnding:!!def.seasonEnding };
         }
       });

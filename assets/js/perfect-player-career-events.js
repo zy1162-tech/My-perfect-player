@@ -797,7 +797,7 @@ function renderCareerExperienceStrip(pregame) {
     (item.amount >= 0 ? '+' : '−') + careerExperienceMoney(Math.abs(item.amount)) + '</b></li>'; }).join('');
   var coach = e.coaches[STATE.careerTeam];
   var playerName = typeof getHupuDisplayName === 'function' ? getHupuDisplayName() : ((typeof HUPU_USER !== 'undefined' && HUPU_USER.nickname) || '我的球员');
-  var profile = pregame ? '' : '<div class="ce-profile-stage"><img src="assets/images/ui/career-avatar-v1.webp" alt="我的球员"><div class="ce-profile-caption"><small>MY PLAYER</small><h2>' + careerExperienceEscape(playerName) + '</h2><p>' + careerExperienceEscape(STATE.position) + ' · <b>OVR ' + STATE.finalOVR + '</b></p></div></div>';
+  var profile = pregame ? '' : '<div class="ce-profile-stage"><img src="' + careerExperienceEscape(careerPlayerPortrait()) + '" alt="我的球员"><div class="ce-profile-caption"><small>MY PLAYER</small><h2>' + careerExperienceEscape(playerName) + '</h2><p>' + careerExperienceEscape(STATE.position) + ' · <b>OVR ' + STATE.finalOVR + '</b></p></div></div>';
   var actions = pregame ? '' : '<nav class="ce-hub-actions" aria-label="生涯功能"><button onclick="openCareerSkillPanel(this)">球风成长<span>属性与技能</span></button><button onclick="openCareerCoachSearch()">球队与教练<span>' + careerExperienceEscape(role) + ' · 默契 ' + chemistry + '</span></button><button onclick="openCareerLedger()">场外账本<span>收入与支出</span></button></nav>';
   return '<section id="' + (pregame ? 'career-pregame-status' : 'player-state-strip') + '" class="ce-status-strip' + (pregame ? '' : ' ce-career-hub') + '">' + profile + '<div class="ce-hub-content"><div class="ce-hub-heading"><small>' + (playoff ? 'PLAYOFFS' : 'MY CAREER') + '</small><strong>' + (playoff ? '本场状态' : '赛季中心') + '</strong></div>' + cards + actions +
     '<details class="player-state-details"><summary>' + (playoff ? '轮换与体能' : '本场安排与账本') + '</summary><div class="ce-details">' +
@@ -829,9 +829,14 @@ function removeCareerExperienceModal(id) {
   if (modal) modal.remove();
 }
 
+// 全身渲染图和创建角色时可选的头像都不是同一个人，赛季中心与赛前对比统一显示玩家自己选的头像。
+function careerPlayerPortrait() {
+  return (typeof getHupuAvatarUrl === 'function' && getHupuAvatarUrl()) || 'assets/images/Player/ai-avatars/avatar-asia-01.png';
+}
+
 function renderCareerMatchupPlayer(player, user) {
   var name = user ? (typeof getHupuDisplayName === 'function' ? getHupuDisplayName() : ((typeof HUPU_USER !== 'undefined' && HUPU_USER.nickname) || '我的球员')) : player.cname || player.name;
-  var visual = user ? '<div class="ce-user-stage"><img class="ce-user-model" src="assets/images/ui/career-avatar-v1.webp" alt="我的球员"><span>MY PLAYER</span></div>' :
+  var visual = user ? '<div class="ce-user-stage"><img class="ce-user-model" src="' + careerExperienceEscape(careerPlayerPortrait()) + '" alt="我的球员"><span>MY PLAYER</span></div>' :
     '<div class="ce-player-photo" style="' + (typeof getPlayerHeadshotStyle === 'function' ? getPlayerHeadshotStyle(player, 128) : 'background:#fff') + '"></div>';
   var stats = user && STATE.season.playerStats ? STATE.season.playerStats : null;
   var average = stats && stats.games ? (stats.pts / stats.games).toFixed(1) + ' 分 · ' + (stats.reb / stats.games).toFixed(1) + ' 板 · ' + (stats.ast / stats.games).toFixed(1) + ' 助' : '等待本季比赛记录';

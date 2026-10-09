@@ -40,7 +40,7 @@ export function createSimulation(era, seed) {
   context.window = context;
   vm.createContext(context);
   for (const [file, source] of scripts) vm.runInContext(source, context, { filename:file });
-  // core redirects Math.random to rngNext; seed its existing VM-local state before opening the era.
+  // game logic draws from core's rngNext; seed its VM-local state before opening the era.
   vm.runInContext(`_rngState = { s:${seed >>> 0}, c:0 };`, context);
   const state = vm.runInContext('STATE', context);
   state.mode = era === 'current' ? 'current' : 'legend';

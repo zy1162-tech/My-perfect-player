@@ -2,14 +2,14 @@
 'use strict';
 
 var CACHE_PREFIX = 'perfect-player-shell-';
-var CACHE_NAME = CACHE_PREFIX + '20261005-review-fixes-v45';
+var CACHE_NAME = CACHE_PREFIX + '20261007-round2-v46';
 var SHELL = [
   './',
   './nba-perfect-player.html',
   './assets/css/fonts.css?v=20260826-performance-v1',
   './assets/css/perfect-player.css?v=20261005-review-fixes-v3',
   './assets/css/perfect-player-season-report.css?v=20260826-season-report-v1',
-  './assets/css/perfect-player-premium.css?v=20261005-review-fixes-v17',
+  './assets/css/perfect-player-premium.css?v=20261007-round2-v18',
   './assets/fonts/fredoka-latin.woff2',
   './assets/fonts/nunito-latin.woff2',
   './assets/fonts/nunito-italic-latin.woff2',
@@ -21,11 +21,12 @@ var SHELL = [
   './assets/data/player-rating-calibration.js?v=20261001-season-stars-v5',
   './assets/data/era-presentation.js?v=20260826-era-presentation-v2',
   './assets/data/nba-award-history.js?v=20261004-honor-history-v1',
+  './assets/data/player-cn-names.js?v=20261007-cn-names-v1',
   './assets/data/era-headshot-index.js?v=20260826-era-headshots-v1',
   './assets/data/verified-headshots.js?v=20261002-verified-headshots-v2',
   './assets/data/historical/legend-team-rosters-local.js?v=20260824-legend-v4',
   './assets/images/ui/career-avatar-v1.webp',
-  './assets/js/perfect-player-boot.js?v=20261005-review-fixes-boot-v32',
+  './assets/js/perfect-player-boot.js?v=20261007-round2-boot-v33',
   './assets/js/current-player-ratings-2026.js?v=20260826-rating-v1',
   './assets/js/hupu/script-00-2678-58zyeprc-upload-1783508428855-12.js?v=20260827-verified-names-v1',
   './assets/js/hupu/script-01-2678-5hu3djrc-upload-1783494754597-12.js?v=20261003-official-rosters-v2',
@@ -33,24 +34,24 @@ var SHELL = [
   './assets/js/hupu/script-03-2678-456sfprc-upload-1783494754597-18.js',
   './assets/js/hupu/script-04-2678-mdo4zerc-upload-1783494754597-21.js',
   './assets/js/hupu/script-05-2678-qlg35lrc-upload-1783494754597-24.js',
-  './assets/js/perfect-player-core.js?v=20261005-review-fixes-v18',
+  './assets/js/perfect-player-core.js?v=20261007-round2-v19',
   './assets/js/perfect-player-season-report.js?v=20261005-season-calendar-v6',
   './assets/js/perfect-player-mod-v4.js?v=20261005-review-fixes-v22',
-  './assets/js/perfect-player-career-events.js?v=20261005-review-fixes-v12',
-  './assets/js/perfect-player-era-mode.js?v=20261004-opening-roster-v37',
-  './assets/js/perfect-player-event-runtime.js?v=20261003-risk-state-v10',
+  './assets/js/perfect-player-career-events.js?v=20261007-round2-v13',
+  './assets/js/perfect-player-era-mode.js?v=20261007-round2-v38',
+  './assets/js/perfect-player-event-runtime.js?v=20261007-round2-v11',
   './assets/js/perfect-player-poster.js?v=20261005-review-fixes-v4',
-  './assets/js/perfect-player-hupu-extensions.js?v=20261005-review-fixes-v20',
+  './assets/js/perfect-player-hupu-extensions.js?v=20261007-round2-v21',
   './assets/js/perfect-player-skills.js?v=20260827-style-economy-v9',
   './assets/js/perfect-player-awards.js?v=20261005-season-calendar-v4',
   './assets/js/perfect-player-enhancements.js?v=20261005-review-fixes-v21',
   './assets/js/perfect-player-event-library.js?v=20261002-choice-forecast-v16',
-  './assets/js/perfect-player-story-events.js?v=20260825-stamina-v14',
+  './assets/js/perfect-player-story-events.js?v=20261007-round2-v15',
   './assets/js/perfect-player-era-story.js?v=20261004-era-story-v5',
-  './assets/js/perfect-player-legend-challenge.js?v=20260824-legend-v12',
-  './assets/js/perfect-player-allstar.js?v=20260824-double-points-mod-v1',
+  './assets/js/perfect-player-legend-challenge.js?v=20261007-round2-v13',
+  './assets/js/perfect-player-allstar.js?v=20261007-round2-v2',
   './assets/js/perfect-player-live-court.js?v=20261005-review-fixes-v8',
-  './assets/js/perfect-player-live-sim.js?v=20261005-review-fixes-v22'
+  './assets/js/perfect-player-live-sim.js?v=20261007-round2-v23'
 ];
 
 // 带 ?v= 的文件内容随版本号固定：旧缓存里已有同一地址就直接复制，只下载真正更新过的文件。
